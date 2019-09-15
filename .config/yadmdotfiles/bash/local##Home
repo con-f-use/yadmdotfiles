@@ -1,0 +1,5 @@
+#!/bin/bash
+
+alias wconvo='wakeonlan  00:01:80:77:6f:d3'
+alias fldr='export fldir=~/Downloads/HT/antbar/$(date "+%Y%m%d"); mkdir -p "$fldir"; cd "$fldir" && python -c "import pyperclip; print(pyperclip.paste())" | sort -uR | yudlf - --ignore-errors -r 5M'
+alias condat='sudo -u jan pmount -w -p /home/jan/.cry-con/cry-con-dat -e /dev/sdb1 condat1'

@@ -1,0 +1,1 @@
+.config/yadmdotfiles/gnuplot/gnuplotrc

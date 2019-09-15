@@ -1,0 +1,42 @@
+Host conserve
+    User confus
+    Compression yes
+
+Host naserve
+    User conserve
+    ForwardX11 yes
+
+Host *serve
+    #HostName conserve.no-ip.org
+    HostName conserve.dynu.net
+    UserKnownHostsFile /dev/null
+    StrictHostKeyChecking no
+    LogLevel ERROR
+    #IdentityFile ~/.ssh/id_rsa_confusion
+    Compression yes
+    ControlMaster auto
+    ControlPath /tmp/ssh-%l@%n.%r@%h.%p
+    ControlPersist 360000
+    VisualHostKey yes
+
+Host maren
+    HostName marentoaster.dyndns.org
+    User maren
+    UserKnownHostsFile /dev/null
+    StrictHostKeyChecking no
+    Compression yes
+
+Host franzsrv
+    HostName 77.7.71.236
+    User diffdoff
+    #HostName senam.hopto.org
+
+Host convolve
+    HostName 192.168.0.100
+    User confus
+    Compression yes
+    ForwardX11 yes
+    ControlMaster auto
+    ControlPath /tmp/ssh-%l@%n.%r@%h.%p
+    ControlPersist 360000
+

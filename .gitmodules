@@ -1,0 +1,4 @@
+[submodule ".config/yadmdotfiles/bash/bash-it"]
+	path = .config/yadmdotfiles/bash/bash-it
+	url = https://github.com/Bash-it/bash-it.git
+

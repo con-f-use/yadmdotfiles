@@ -1,0 +1,8 @@
+#!/bin/sh
+
+sudo apt-get update -y &&
+    sudo apt-get dist-upgrade -y
+sudo apt-get autoremove -y
+sudo apt-get auto-clean
+sudo -H pip2 install -U pip
+sudo -H pip3 install -U pip

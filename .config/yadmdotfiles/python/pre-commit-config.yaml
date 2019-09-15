@@ -1,0 +1,23 @@
+fail_fast: true
+repos:
+    - repo: https://github.com/pre-commit/pre-commit-hooks
+      rev: v2.0.0
+      language_version: python2.7
+      hooks:
+      - id: check-ast
+    # - repo: https://github.com/pre-commit/mirrors-yapf
+    #   rev: v0.25.0
+    #   language_version: python2.7
+    #   hooks:
+    #   - id: yapf
+    - repo: https://github.com/pre-commit/pre-commit-hooks
+      rev: v2.0.0
+      language_version: python2.7
+      hooks:
+      - id: flake8
+    - repo: https://github.com/pre-commit/mirrors-pylint
+      rev: f431e1c
+      language_version: python2.7
+      hooks:
+      - id: pylint
+        entry: pylint2

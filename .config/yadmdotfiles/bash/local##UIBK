@@ -1,0 +1,67 @@
+#! /bin/bash
+
+############################################
+# HPC related stuff at Innsbruck University
+############################################
+
+export GADRUNSDIR=/scratch/c706149/runs/
+export GIZMO_SYSTYPE='leo3'
+export SGE_DEFAULT_Q='std.q'
+if [ "$HPC_SYSTEM" == 'leo2' ]; then
+    OLDCDPATH="$CDPATH"
+    CDPATH='.:~:/scratch/c706149/'
+    module load intel/11.0 \
+        openmpi/1.3.3 \
+        load gsl/1.12 \
+        fftw/2.1.5 \
+        argtable libconfig \
+    &> /tmp/moduleload.log
+elif [ "$HPC_SYSTEM" == 'leo3' ]; then
+    module load intel/12.1 \
+        openmpi/1.4.4 \
+        fftw/2.1.5 \
+        gsl/1.15 \
+        hdf5/1.8.8 \
+        argtable/2.13 libconfig/1.4.8 \
+    &> /tmp/moduleload.log
+elif [ "$HPC_SYSTEM" == 'leo3e' ]; then
+    module load intel/15.0 openmpi/1.8.5 \
+        fftw/3.3.4 cgal/4.6 gsl/1.16 \
+        hdf5/1.8.15 boost/1.58.0 \
+        zlib/1.2.8 szip/2.1 libconfig/1.4.9 argtable/2.13 \
+        git/2.5.0 python/3.4.3 \
+    &> /tmp/moduleload.log
+elif [ "$HPC_SYSTEM" == 'astro-cluster' ]; then
+    export UIBK_FSPS_TABS=/home/jan/sources/fsps_tables
+    export UIBK_ARGTABLE_INC=/home/jan/usr/include
+    export UIBK_ARGTABLE_LIB=/home/jan/usr/lib
+    export SGE_DEFAULT_Q='all.q'
+    module purge &> /tmp/moduleload.log
+    module load \
+        openmpi/z_intel/gcc-4.8.2/1.8.2 \
+        gsl/intel/gcc-4.8.2/1.16 \
+        fftw/intel/gcc-4.8.2/2.1.5 \
+    &>> /tmp/moduleload.log
+fi
+
+alias GadgetView='echo "x->red, y->green, z->blue"; GadgetView'
+alias GadgetMovieX='echo "x->red, y->green, z->blue"; GadgetMovieX'
+alias findmissingsnapshot='for i in {1..100}; do i=$(printf "%03i\n" $i); if [ ! -e snapshot_$i ]; then echo snapshot_$i; fi; done'
+alias cstat="qstat | tail -n +3 | tr -s ' ' | tr -s '-' | cut -d ' ' -f 2,4,5- | column -t"
+alias qstatall='qstat -u "*"'
+alias qavail='qstat -g c'
+alias qqs='qconf -sql' #list available queues
+alias qpes='qconf -spl' #list available paralell envirnoments
+alias qres='qconf -sc' #requestable resources
+alias qfinger='for usr in $(qstat -u "*" | tr -s " " | cut -d" " -f 5 | sort -u); do finger "$usr"; echo ""; done'
+# Note: For leo3e use -l h_vmem=6G to set memory requirements
+# Note: command line arguments override stuff in sge job scripts
+function qqdel { qdel $@ >>/dev/null & }
+function qsubb {
+    mv -b gal.out old_output.out
+    jobnm=$(pwd)
+    \qsub -N "${jobnm##*/}" -q "$SGE_DEFAULT_Q" $@
+}
+
+fl=/home/jan/.config/yadmdotfiles/bash/bashit; test -r "$fl" && source "$fl"; unset fl
+

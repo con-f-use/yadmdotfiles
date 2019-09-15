@@ -1,0 +1,125 @@
+#!/usr/bin/python
+
+from __future__ import division, print_function, unicode_literals, with_statement
+
+import logging, os, sys
+from logging import info, debug, error, warning as warn
+
+logcfg = {
+    'level': logging.INFO,
+    'format': '[%(levelname)-3.3s](%(lineno)4s:%(filename)s): %(message)s',
+    'datefmt': '%y.%m.%d %H:%M',
+    'stream': sys.stderr,
+}
+
+try:
+    import coloredlogs
+    #coloredlogs.install(fmt=logcfg['format'])
+    logcfg['fmt'] = logcfg['format']
+    coloredlogs.install(**logcfg)
+except ImportError:
+    logging.basicConfig(**logcfg)
+    warn("Logs will not be colored (;_;)")
+
+# Standard Library
+import \
+    stat, subprocess, gzip, re, math, glob, logging, time, random, itertools,  \
+    requests, datetime, time, dateutil, tzlocal, string, importlib, json,      \
+    binascii, hashlib, platform, socket, collections, textwrap, base64 as b64
+from pprint import pprint, pformat
+import tarfile as tf, zipfile as zf
+from OpenSSL import crypto, SSL
+try:
+    from pathlib2 import Path as P  # Python 2
+    P().expanduser()
+except (ImportError, AttributeError):
+    from pathlib import Path as P   # Python 3
+
+
+# Try to import additional variables and packages
+pkgs = [
+    'numpy', 'seaborn', 'docopt-ng', 'arrow', 'pint', 'Gnuplot', 'tabulate',
+    'appdirs', 'click', 'attrs', 'pandas' ]
+
+if 'jcgbx' in platform.node():
+    locals().update({k:v for k,v in os.environ.items() if k.startswith('FBOS_')})
+    pkgs += ['pyapi', 'lib', 'libs']
+
+for pkg in pkgs:
+    try:
+        globals()[pkg] = importlib.import_module(pkg)
+    except (ImportError, SyntaxError):
+        warn( "Package not imported: %s", sys.exc_info()[1] )
+
+
+# Special settings for matplotlib
+try:
+    import matplotlib as mpl
+except (ImportError, SyntaxError):
+    warn( "Package not imported: %s", sys.exc_info()[1] )
+else:
+    if 'DISPLAY' not in os.environ: mpl.use('agg') # or 'Pdf' BEFORE importing pyplot
+    if 'ipykernel' not in sys.modules:
+        mpl.rcParams['text.usetex'] = True
+        mpl.rcParams['text.latex.unicode'] = True
+    import matplotlib.pyplot as plt
+    from matplotlib.colors import LogNorm
+
+
+def static_vars(**kwargs):
+    """Decorator to add something similar to a static variable in C."""
+    def decorate(func):
+        for k in kwargs:
+            setattr(func, k, kwargs[k])
+        return func
+    return decorate
+
+
+def isstr(s):
+    """Python 2/3 compatible way to check if `s` is a string."""
+    if (sys.version_info[0] == 3):
+        return isinstance(s, str)
+    return isinstance(s, basestring)
+
+
+def importupdate(*packs):
+    """Try to update/install packages if import fails."""
+    import importlib
+    try:
+        import pip
+    except:
+        import ensurepip
+        ensurepip.bootstrap(upgrade=True)
+        os.execve(sys.argv[0],sys.argv,os.environ)
+    for pack in packs:
+        try:
+            importlib.import_module(pack)
+        except ImportError:
+            pip.main(['install', '-U', pack])
+            error( 'Install/upgrade `'+ pack +'` manually' )
+        finally:
+            globals()[pack] = importlib.import_module(pack)
+
+# logging:
+# filename = args['--logfile'] if args['--logfile']  else None,   # Takes precendence over 'stream'
+# mode     = 'a'
+# logging.basicConfig(level=logging.INFO,format="[%(levelname)7s]  (%(filename)s:%(lineno)s) %(message)s", datefmt='%y.%m.%d %H:%M')
+# filename="logfile.log" / stream=sys.stderr / mode=append
+# %(asctime)s also: process(Name), thred(Name), module, funcName
+# [logging.root.removeHandler(handler) for handler in logging.root.handlers[:]] # to be able to call basicConfig again
+
+# Some variables to play around with
+r = re.compile(r'([-+]?\d*\.?\d+([eE][-+]?[0-9]+)?)')  # floating point number literals regex
+t = datetime.date.today()
+d = {1: 'one', '2': 'two', 'lst': [1,2,3]}
+l = ['aa', 'bb', 'cc'] + d['lst']
+s = "This is a test string"
+M = [ [11, 12, 13, 14],
+      [21, 22, 23, 24],
+      [31, 32, 33, 34], ]
+p = '~/.local/share/Trash/info/tasks.json.trashinfo'
+try:
+    p = P(p).expanduser()
+except:
+    pass
+info('vars:\n    d: dict  l: list  s: string  M: matrix  p: path  t:today  r:flrex')

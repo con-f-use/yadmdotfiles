@@ -1,0 +1,89 @@
+# Install with:
+# sudo pip3 install xonsh[ptk,linux,pygments,proctitle]
+# xonsh -c xpip install xonsh-direnv xontrib-z xontrib-histcpy
+
+
+import os, sys, re, time, datetime
+sys.path.append('.')
+
+#$XONSH_SHOW_TRACEBACK = True
+$XONSH_TRACEBACK_LOGFILE = '/tmp/xonsh-tracebacks.log'
+
+$XONSH_COLOR_STYLE='monokai'
+$LS_COLORS='rs=0:di=01;36:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:'
+
+$COMPLETIONS_CONFIRM = True
+
+$AUTO_PUSHD = '1'
+$XONSH_AUTOPAIR = True  # pair brackets and quotes
+$AUTO_SUGGEST = True
+$AUTO_SUGGEST_IN_COMPLETIONS = True
+#$UPDATE_COMPLETIONS_ON_KEYPRESS = True
+#$DOTGLOB = False  # * and ** matches dotfiles
+
+$_Z_DATA = $HOME+'/.config/yadmdotfiles/xonsh/z.txt'
+
+#$XONSH_HISTORY_BACKEND = 'sqlite'  # means no diff or replay and only "commands" for history size and does not seem to capture output
+$XONSH_HISTORY_SIZE = (16256, 'commands') # b=bytes, s=load timeout in second, files
+$HISTFILE=$HOME+'/.bash_history'  # basy only (or swap with e.g. ~/.zsh_history)
+$XONSH_STORE_STDOUT=True # store stdout for subprocess comands (buggy)
+$XONSH_HISTORY_MATCH_ANYWHERE = True
+
+#$XONSH_SHOW_TRACEBACK = True
+
+xontrib load z
+xontrib load direnv
+xontrib load whole_word_jumping
+xontrib load prompt_ret_code
+xontrib load bashisms
+xontrib load histcpy
+
+
+def get_shelldate():
+    return time.strftime('%d-%H:%M')
+
+$PROMPT_FIELDS['shelldate'] = get_shelldate
+
+$PROMPT=(
+    '{ret_code_color}┌─{NO_COLOR}{#555}{shelldate}{NO_COLOR} '
+    '{FAINT_BLUE}[{NO_COLOR}{env_name}{BOLD_GREEN}{user}@{hostname}{FAINT_ITALIC_BLUE} {cwd}{FAINT_BLUE}] '
+    '{BOLD_BLUE}{ret_code_color}{ret_code}\n'
+    '└{prompt_end}{NO_COLOR} '
+)
+$RIGHT_PROMPT='😱 {branch_color}{gitstatus: {}}{NO_COLOR} 😱'
+$BOTTOM_TOOLBAR=''
+$XONSH_GITSTATUS_STASHED = '⚑ '
+$XONSH_STDERR_PREFIX='{BOLD_RED}'
+$XONSH_STDERR_POSTFIX='{NO_COLOR}'
+
+def _zdata():
+    def format_z_data(fl):
+        with open(fl) as fh:
+            for ln in fh:
+                p, r, t = ln.strip().rsplit('|', 2)
+                yield p, float(r), float(t)
+
+    zdata = format_z_data(__xonsh__.env.get('_Z_DATA', []))
+    zdata = sorted( zdata, key=lambda x: x[1] if x else [])
+    for p, r, t in zdata:
+        print(f'{p:70.70}  {r:>5g}    {t}')
+
+aliases['fldrcd'] =  r'$fldir="~/Downloads/HT/antbar/"+$(date "+%Y%m%d").splitlines()[0]; mkdir -p $fldir; cd $fldir '
+aliases['yudl'] =    r'youtube-dl -f "bestvideo[ext=webm]+bestaudio/best" --sub-format best --sub-lang en,de --write-sub --embed-sub --xattrs' # --embed-thumbnail
+aliases['yudlmp3'] = r'youtube-dl --extract-audio --audio-format mp3 --ignore-errors --yes-playlist'
+aliases['yudlf'] =   r'yudl --ignore-errors -a'
+aliases['xpaste'] =  r'xclip -selection clipboard -o'
+aliases['fldr'] =    r'fldrcd; xpaste | sort -uR | yudlf -'
+
+aliases['autoprx'] = '$AUTOSSH_DEBUG="y"; autossh -f -N -D 0.0.0.0:1080 conserve'
+aliases['ls'] = 'ls -h --color=auto'
+aliases['ll'] = 'ls -alh --color=auto'
+aliases['ltr'] = 'll -rt'
+aliases['mocondat'] = 'sudo cryptsetup luksOpen /dev/sdb1 crydat1 --key-file=~/.cry-con/cry-con-dat; sudo mount -o defaults,users /dev/mapper/crydat1 /media/condat1/'
+aliases['sc'] = 'sudo systemctl'
+aliases['jc'] = 'sudo journalctl'
+aliases['envpy2']='echo "layout python2" > .envrc; direnv allow .'
+aliases['envpy3']='echo "layout python3" > .envrc; direnv allow .'
+
+
+tput smkx  # del key fix for some werid terminal emulators

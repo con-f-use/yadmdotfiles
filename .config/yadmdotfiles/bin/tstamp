@@ -1,0 +1,16 @@
+#!/bin/bash
+
+backupfn () {
+    tfmt="+"
+    for granul in %y %m %d -%H %m %s .%N; do
+        tfmt="$tfmt$granul"
+        fn="$1-$(date "$tfmt")"
+        if [ ! -e "$fn" ]; then
+            echo "$fn"
+            break
+        fi
+    done
+}
+
+date +%y%m%d-%H%M%S
+

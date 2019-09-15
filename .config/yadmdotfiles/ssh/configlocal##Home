@@ -1,0 +1,37 @@
+# This hopefully overwrites the stuff in ./confighome to use in LAN
+
+Host conserve
+    HostName conserve
+    User confus
+    Compression yes
+    ForwardX11 yes
+    ControlMaster auto
+    ControlPath /tmp/ssh-%l@%n.%r@%h.%p
+    ControlPersist 360000
+
+Host naserve
+    HostName conserve
+    User conserve
+    Compression yes
+    ForwardX11 yes
+    ControlMaster auto
+    ControlPath /tmp/ssh-%l@%n.%r@%h.%p
+    ControlPersist 360000
+
+Host convolve
+    HostName 192.168.0.100
+    User confus
+    Compression yes
+    ForwardX11 yes
+    ControlMaster auto
+    ControlPath /tmp/ssh-%l@%n.%r@%h.%p
+    ControlPersist 360000
+
+Host franz
+    HostName 192.168.178.22
+    User confuse
+    PreferredAuthentications publickey,password
+    Compression yes
+    ControlMaster auto
+    ControlPath /tmp/ssh-%l@%n.%r@%h.%p
+    ControlPersist 360000

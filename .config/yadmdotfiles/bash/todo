@@ -1,0 +1,92 @@
+#!/bin/bash
+# These alies are to be made insto scripts, so they can be used with multiple
+#+shells.
+# Note that some of these will have to take input from stdin and/or file.
+
+##########################
+# Multimedia
+##########################
+cutmp3 () { avconv -ss "$1" -i "$4" -t "$2" -acodec copy "$3"; }
+
+##########################
+# Textprocessing
+##########################
+all2lowercase() { find "$1" -maxdepth "${2:-1}" -exec rename 's/(.*)\/([^\/]*)/$1\/\L$2/' {} \; ; }
+add_to_file () {
+    fl="$1"
+    while read -r line; do
+        grep -qFx "$line" "$fl" && >&2 "Warning: Line already in '$fl'" || echo "$line" | tee -a "$fl"
+    done
+}
+add_to_sudoers () {
+    while read -r line; do
+        if sudo grep -qFx "$line" /etc/sudoers; then
+            echo "$line" | sudo EDITOR='tee -a' visudo # || break
+        fi
+    done
+}
+alias stripcolors='sed "s/\x1B\[\([0-9]\{1,2\}\(;[0-9]\{1,2\}\)\?\)\?[mGK]//g"'
+
+
+##########################
+# Administration
+##########################
+alias listinstalled='dpkg --get-selections | grep -v deinstall'
+alias cleanbash='env -i bash --norc --noprofile'
+alias lsnewlogs='tail -f /var/log/{messages,kernel,dmesg,syslog}' # view now logmessages
+alias udevrerule='sudo udevadm control --reload-rules'
+alias udevmoni='udevadm monitor --udev'
+alias dddisk='dd bs=65536 conv=noerror,sync status=progress' #noerror -> continue on errors, sync -> fill with zeroes on error
+alias ddmon='sudo kill -USR1 $(pgrep ^dd)'
+alias memuse="free -m | awk 'NR==2{printf \"Memory Usage: %s/%sMB (%.0f%%)\n\", \$3,\$2,\$3*100/\$2 }'"
+alias ssspiv2pub='ssh-keygen -y -f' # privat --> public ssh key
+alias gpge='GPG_TTY=$(tty) gpg -c --armor -o- --quiet --pinentry-mode loopback'
+alias gpgd='GPG_TTY=$(tty) gpg -d -o- --quiet --pinentry-mode loopback'
+
+
+##########################
+# Network
+##########################
+alias tunnelocto="ssh $CONSERVE -L 51000:192.168.0.100:5000 -N"
+alias inetip='dig +short myip.opendns.com @resolver1.opendns.com'
+alias t='netstat -tulpen | grep -v 127.0.0.1'
+
+
+##########################
+# Programming
+##########################
+wcc() {
+    callstr='gcc -W -Wall -Wextra -std=gnu99 -pedantic -O2 -march=native -o '
+    infile="$1"
+    if [[ ! "$infile" == *'.c' ]]; then
+        infile="$infile.c"
+        [ -r "$infile" ] || {
+             1>&2 echo 'Error: File does not exsist oder is unreadable!'
+            return 1
+        }
+    fi
+    shift
+    callstr="$callstr ${infile%.c} $infile -lm $@"
+    echo ${callstr}
+    eval "$callstr"
+}
+jc_retry(){
+    local cnt=0
+    local timeout=30
+    while true; do
+        (( cnt++ ))
+        "$@" &&
+            break
+        echo -en "\nRETRY $cnt in ${timeout}s"
+        for left in $(seq $timeout -1 1); do
+            if [ -t 1 ]; then
+                echo -ne "\rRETRY $cnt in ${left}s..."
+            fi
+            sleep 1
+        done
+        echo -e "\r\033[KRETRY $cnt:"
+    done
+}
+
+alias pdflatex='pdflatex -shell-escape -interaction=nonstopmode'
+alias cal='ncal -Mw'

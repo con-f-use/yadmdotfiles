@@ -1,0 +1,7 @@
+
+[user]
+    global = true
+    name = Jan Christoph Bischko
+    email = jbischko@barracuda.com
+    override = global
+

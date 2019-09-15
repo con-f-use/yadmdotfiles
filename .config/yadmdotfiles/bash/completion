@@ -1,0 +1,16 @@
+#[ -r /etc/bash_completion ] && source /etc/bash_completion
+
+if command -v docopt-wordlist &>/dev/null; then
+    DOCOPT_WORDLIST_BIN=$(which docopt-wordlist)
+    source "~/.config/yadmdotfiles/bash/docopt-wordlist.bash"
+    complete -F _docopt_wordlist ircntrl.py
+fi
+
+[ -r ~/.local/apps/yadm/completion/yadm.bash_completion ] \
+    && source ~/.local/apps/yadm/completion/yadm.bash_completion
+
+
+complete -C "/usr/bin/python '/home/jan/devel/cuda/autotest/autotest-core/bin/bashcomplete_manager.py'" manager
+
+complete -C "/usr/bin/python '/home/jan/devel/cuda/autotest/autotest-core/bin/bashcomplete_manager.py'" manager.py
+

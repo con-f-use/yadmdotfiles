@@ -1,0 +1,93 @@
+# Infrastructure
+
+Host qaportal
+    HostName 10.17.36.250
+    User qa
+    PreferredAuthentications publickey,password,keyboard-interactive
+    ControlMaster auto
+    ControlPath /tmp/ssh-%l@%n.%r@%h.%p
+    ControlPersist 360000
+
+Host vmhost
+    HostName 10.17.6.216
+    User root
+    Compression yes
+    ForwardX11 no
+    ControlMaster auto
+    PreferredAuthentications password,keyboard-interactive,publickey
+    ControlPath /tmp/ssh-%l@%n.%r@%h.%p
+    ControlPersist 360000
+
+Host qajenkins
+    HostName 10.17.36.245
+    PreferredAuthentications publickey,password,keyboard-interactive
+    User qa
+    ControlMaster auto
+    ControlPath /tmp/ssh-%l@%n.%r@%h.%p
+    ControlPersist 360000
+    #IdentityFile ~/.ssh/id_rsa##Cuda
+
+Host stjenkins
+    HostName 10.17.36.246
+    PreferredAuthentications publickey,password,keyboard-interactive
+    User qa
+    ControlMaster auto
+    ControlPath /tmp/ssh-%l@%n.%r@%h.%p
+    ControlPersist 360000
+
+Host friederike
+    HostName friederike.ngdev.eu.ad.cuda-inc.com
+    User jbischko
+
+Host devpi
+    HostName 10.17.65.203
+    User root
+    PreferredAuthentications publickey
+    ControlMaster auto
+    ControlPath /tmp/ssh-%l@%n.%r@%h.%p
+    ControlPersist 360000
+
+
+#### Jan
+
+Host li0
+    HostName 10.17.70.10
+    User jan
+    StrictHostKeyChecking no
+    PreferredAuthentications publickey,password
+    UserKnownHostsFile /dev/null
+
+Host cudaws
+    HostName 10.17.33.161
+    Port 3022
+    User jan
+
+Host zangdocker
+    HostName 10.17.36.103
+    User jan
+    PreferredAuthentications publickey,password,keyboard-interactive
+
+Host jcdocker
+    HostName 10.17.36.203
+    User jan
+    PreferredAuthentications publickey,password
+    ControlMaster auto
+    ControlPath /tmp/ssh-%l@%n.%r@%h.%p
+    ControlPersist 360000
+
+#### Zangerle
+
+Host rancher
+    HostName 10.17.70.244
+    User rancher
+    PreferredAuthentications publickey,password,keyboard-interactive
+    ControlMaster auto
+    ControlPath /tmp/ssh-%l@%n.%r@%h.%p
+    ControlPersist 360000
+
+Host zangdocker
+    HostName 10.17.65.100
+    User rancher
+    PreferredAuthentications publickey,password,keyboard-interactive
+
+    

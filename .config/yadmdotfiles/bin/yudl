@@ -1,0 +1,56 @@
+#!/bin/bash
+# encoding: UTF-8, break: linux, indent: 4 spaces, lang: bash 3+/eng
+description="./$0 -h | d <url>... | mp3 <playlist>... | f (<url-file>|-)...
+Wrapper for easier use of youtube-dl
+
+ToDo:
+ - Extract playlist if present in url
+
+date: Sun Sep 15 13:54:56 CEST 2019
+author: confus <con-f-use@gmx.net>"
+
+libfile="$HOME/.config/yadmdotfiles/bash/jcgb.bash"
+[ -r "$libfile" ] && source "$libfile" || { 2>echo "Requires '$libfile'!"; exit 1; }
+
+yudl_agg() {
+    case "${1:-d}" in
+        d)
+            youtube-dl \
+                --output "%(title)s.%(ext)s" \
+                --restrict-filenames \
+                --format best \
+                --add-metadata \
+                "$@" <&0
+        ;;
+        mp3)
+            youtube-dl \
+                --output "%(title)s.%(ext)s" \
+                --restrict-filenames \
+                --extract-audio \
+                --audio-format mp3 \
+                --ignore-errors \
+                --add-metadata \
+                --yes-playlist \
+                "$@" <&0
+        ;;
+        f)
+            yudl_agg d \
+                --ignore-errors \
+                --batch-file \
+                "$@"
+        ;;
+        *)
+            err "No command '$1'"
+        ;;
+    esac
+}
+
+if [ "$0" = "$BASH_SOURCE" ]; then
+    usage "$@"
+    yudl_agg "$@"
+fi
+
+
+# alias yudl='youtube-dl -o "%(title)s.%(ext)s" --restrict-filenames -fbest --add-metadata'
+# alias yudlmp3='youtube-dl -o "%(title)s.%(ext)s" --restrict-filenames --extract-audio --audio-format mp3 --ignore-errors --add-metadata --yes-playlist'
+# alias yudlf='youtube-dl -o "%(title)s.%(ext)s" --restrict-filenames -fbest --ignore-errors -a'

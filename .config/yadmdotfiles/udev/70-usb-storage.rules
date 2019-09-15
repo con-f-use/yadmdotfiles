@@ -1,0 +1,30 @@
+#######################
+# Old encrypted disk on PERSwitch
+#######################
+KERNEL=="sd?1", ATTR{size}=="625137282", ATTRS{serial}=="UA04FLGC", ACTION=="add", SYMLINK+="cusb1", RUN+="/home/confus/.cry-con/usb-encrypt.sh add %k"
+ENV{ID_FS_USAGE}=="crypto", ACTION=="remove", RUN+="/home/confus/.cry-con/usb-encrypt.sh remove %k"
+# SUBSYSTEM=="usb", SYSFS{idVendor}=="1781", SYSFS{idProduct}=="0c9f", GROUP="users", MODE="0666"
+
+#######################
+# Old encryted backup disk
+#######################
+KERNEL=="sd?", ATTRS{size}=="234441645", ACTION=="add", SYMLINK+="cbak1", RUN+="/home/confus/.cry-con/crybak.sh add %k"
+
+#######################
+# Data disk in rack
+#######################
+#KERNEL=="sd*", SUBSYSTEM=="block", PROGRAM="/sbin/blkid /dev/$name | /bin/grep -oP '(?<=UUID=\")[0-9a-zA-Z-]+(?=\")'", RESULT=="0be43090-3d28-4763-b904-2659d5316101", NAME="condat1", OWNER="confus", GROUP="root", MODE="0660"
+# Old 2TB condat
+#KERNEL=="sd*", SUBSYSTEM=="block", ENV{ID_FS_UUID}=="0be43090-3d28-4763-b904-2659d5316101", ACTION=="add", SYMLINK+="condat1", OWNER="confus", GROUP="root", MODE="0660", RUN+="/home/confus/.cry-con/crydat1.sh"
+# Copy of old now 8TB
+KERNEL=="sd*", SUBSYSTEM=="block", ENV{ID_FS_UUID}=="bcca372b-f99a-41f1-8a86-c9431a3cee78", ACTION=="add", SYMLINK+="condat1", OWNER="confus", GROUP="root", MODE="0660", RUN+="/home/confus/.cry-con/crydat1.sh"
+
+# No idea...
+#KERNEL=="sd*", SUBSYSTEM=="block", ATTR{size}=="3907026944", ATTRS{vendor}=="Jmicron ", NAME="condat1", OWNER="confus", GROUP="root", MODE="0660"
+
+#######################
+# Backup disk in rack
+#######################
+#KERNEL=="sd*", SUBSYSTEM=="block", ATTR{size}=="976766976", ATTRS{vendor}=="Jmicron ", SYMLINK="conbak1", OWNER="confus", GROUP="root", MODE="0660"
+KERNEL=="sd*", SUBSYSTEM=="block", ENV{ID_FS_UUID}=="b66dfdc6-e2c1-475c-9aa2-6d59b1f0b50b", ACTION=="add", NAME="conbak1", OWNER="confus", GROUP="root", MODE="0660", RUN+="/home/confus/.cry-con/crybak1.sh"
+

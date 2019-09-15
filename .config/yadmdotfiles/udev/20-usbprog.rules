@@ -1,0 +1,15 @@
+# USBasp programmer
+#ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="05dc", GROUP="dialout", MODE="0660"
+
+# IRTOY BY DANGEROUS PROTOTYPES
+#ATTRS{idVendor}=="04d8", ATTRS{idProduct}=="fd08", GROUP="plugdev", MODE="0660", SYMLINK+="irtoy"
+
+# FTDI USB -> Serial converter
+ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", GROUP="plugdev", MODE="0660"
+#SUBSYSTEM=="usb", SYSFS{idVendor}=="16c0", SYSFS{idProduct}=="05dc", GROUP="dialout", MODE="0660"
+
+# ANY OBDEV RELATED
+ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="*", GROUP="plugdev", MODE="0660"
+
+# ANY MICROCHIP (PIC) related
+#ATTRS{idVendor}=="04d8", ATTRS{idProduct}=="*", GROUP="plugdev", MODE="0660"

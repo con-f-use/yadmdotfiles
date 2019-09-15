@@ -1,0 +1,20 @@
+#!/bin/bash
+# encoding: UTF-8, break: linux, indent: 4 spaces, lang: bash 3+/eng
+description="./$0 -h | [2|3]
+Initialize folder for direnv.
+
+"
+
+libfile="$HOME/.config/yadmdotfiles/bash/jcgb.bash"
+[ -r "$libfile" ] && source "$libfile" || { 2>echo "Requires '$libfile'!"; exit 1; }
+
+main() {
+    vers=${1:-3}
+    echo layout python$vers > .envrc &&
+        direnv allow .
+}
+
+if [ "$0" = "$BASH_SOURCE" ]; then
+    usage "$@"
+    main "$@"
+fi

@@ -1,0 +1,48 @@
+Host agate
+    HostName astro-gateway.uibk.ac.at
+    User jan
+    Compression yes
+    ForwardAgent yes
+    ControlMaster auto
+    ControlPath /tmp/ssh-%l@%n.%r@%h.%p
+    ControlPersist 360000
+
+Host astaff
+    HostName astro-staff.uibk.ac.at
+    User jan
+    ProxyCommand ssh -o 'ForwardAgent yes' agate 'ssh-add && nc %h %p'
+
+Host work
+    HostName 138.232.146.60
+    User jan
+    ProxyCommand ssh -o 'ForwardAgent yes' agate 'ssh-add && nc %h %p'
+
+Host aclust
+    HostName astro-cluster1.uibk.ac.at
+    User jan
+    ProxyCommand ssh -o 'ForwardAgent yes' agate 'ssh-add && nc %h %p'
+
+Host leo3e
+    Hostname login.leo3e.uibk.ac.at
+    User c706149
+    ProxyCommand ssh -o 'ForwardAgent yes' agate 'ssh-add && nc %h %p'
+    #ForwardX11 yes
+    #ForwardAgent yes
+
+Host leo3
+    Hostname login.leo3.uibk.ac.at
+    User c706149
+    ProxyCommand ssh -o 'ForwardAgent yes' agate 'ssh-add && nc %h %p'
+#    ForwardX11 yes
+#    ForwardAgent yes
+
+# ZID
+Host c706
+    HostName zid-gpl.uibk.ac.at
+    User c706149
+
+Host csag
+    HostName zid-gpl.uibk.ac.at
+    User csag9887
+    Compression yes
+

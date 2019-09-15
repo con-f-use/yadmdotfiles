@@ -1,0 +1,36 @@
+# This hopefully overwrites the stuff in ./configuibk to use in LAN
+
+Host astaff
+    HostName astro-staff.uibk.ac.at
+    User jan
+    ControlMaster auto
+    ControlPath /tmp/ssh-%l@%n.%r@%h.%p
+    ControlPersist 360000
+
+Host work
+    HostName 138.232.146.60
+    User jan
+
+Host aclust
+    HostName astro-cluster1.uibk.ac.at
+    User jan
+    ControlMaster auto
+    ControlPath /tmp/ssh-%l@%n.%r@%h.%p
+    ControlPersist 360000
+    ForwardX11 yes
+
+Host abak
+    Hostname astro-backup
+    User jan
+
+Host leo3e
+    Hostname login.leo3e.uibk.ac.at
+    User c706149
+    ForwardX11 yes
+    ForwardAgent yes
+
+Host leo3
+    Hostname login.leo3.uibk.ac.at
+    User c706149
+    ForwardX11 yes
+    ForwardAgent yes

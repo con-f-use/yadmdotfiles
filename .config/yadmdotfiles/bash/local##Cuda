@@ -1,0 +1,16 @@
+export CUDAUSER=jbischko
+export USER_EMAIL=${USER_EMAIL:-$CUDAUSER@barracuda.com}
+
+fl=/home/jan/.config/yadmdotfiles/bash/bashit; test -r "$fl" && source "$fl"; unset fl
+
+alias prx='ssh -f -N -D 0.0.0.0:1080 conserve'
+
+alias cudavpn="sudo barracudavpn -s -l $CUDAUSER"
+alias scudavpn='sudo barracudavpn -p'
+hostname | grep -qoP "^confusion" &&
+    sudo barracudavpn -s -l $CUDAUSER &&
+    sleep 5 &&
+    javaws ~/.local/bin/webview.jnlp
+
+TWINE_CERT='/usr/share/ca-certificates/extra/inn-dev.crt'
+

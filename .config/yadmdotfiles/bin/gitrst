@@ -1,0 +1,39 @@
+#!/bin/bash
+# encoding: UTF-8, break: linux, indent: 4 spaces, lang: bash 3+/eng
+description="./$0 -h | local | remote | fixsubs | updatesubs
+Some git helpers, e.g. to revert commits (history rewrite-sytle).
+
+date: Sun Sep 15 13:54:56 CEST 2019
+author: confus <con-f-use@gmx.net>"
+
+libfile="$HOME/.config/yadmdotfiles/bash/jcgb.bash"
+[ -r "$libfile" ] && source "$libfile" || { 2>echo "Requires '$libfile'!"; exit 1; }
+
+main() {
+    case "$1" in
+        remote)
+            git push origin +HEAD^:$(git rev-parse --abbrev-ref HEAD) ||
+                echo "If this did not work, try 'gitrst local; git push -f origin <branch_name>'"
+        ;;
+        local)
+            git reset --hard 'HEAD~'
+        ;;
+        fixsubs)
+            git fetch
+            hsh=$(git describe --always)
+            git checkout master
+            git merge "$hsh"
+        ;;
+        updatesubs)
+            git submodule foreach git pull origin master
+        ;;
+        *)
+            err "No command '$1'"
+        ;;
+    esac
+}
+
+if [ "$0" = "$BASH_SOURCE" ]; then
+    usage "$@"
+    main "$@"
+fi

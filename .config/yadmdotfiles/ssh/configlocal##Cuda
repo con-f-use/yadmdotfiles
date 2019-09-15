@@ -1,0 +1,62 @@
+# This hopefully overwrites the stuff in ./configcuda to use in LAN
+
+
+
+Host li1
+    HostName 10.17.68.146
+    User jan
+    PreferredAuthentications publickey
+    Compression yes
+    ControlMaster auto
+    ControlPath /tmp/ssh-%l@%n.%r@%h.%p
+    ControlPersist 360000
+
+Host li1old
+    HostName 10.17.68.140
+    User jan
+    ControlMaster auto
+    ControlPath /tmp/ssh-%l@%n.%r@%h.%p
+    ControlPersist 360000
+
+Host l1
+    HostName 10.17.70.222
+    User jan
+    ForwardX11 yes
+    ControlMaster auto
+    ControlPath /tmp/ssh-%l@%n.%r@%h.%p
+    ControlPersist 360000
+
+Host 10.17.66.125 10.17.66.126 10.17.66.127 10.0.66.44 10.0.66.47 10.0.66.37
+    User root
+    HostKeyAlgorithms +ssh-dss
+    PubkeyAcceptedKeyTypes +ssh-dss
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+    PreferredAuthentications password 
+    #,keyboard-interactive
+
+Host 10.17.66.125 10.17.66.126 10.17.66.127
+    User root
+    HostKeyAlgorithms +ssh-dss
+    PubkeyAcceptedKeyTypes +ssh-dss
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+    PreferredAuthentications password,keyboard-interactive
+
+
+Host 10.17.70.10? 10.17.70.11? 10.17.68.14? !10.17.68.141 !10.17.68.140
+    User root
+    HostKeyAlgorithms=+ssh-dss
+    PubkeyAcceptedKeyTypes +ssh-dss
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+    PreferredAuthentications password,keyboard-interactive
+
+Host warehouse
+    HostName 10.17.65.202
+    User docker
+    PreferredAuthentications publickey,password
+    ControlMaster auto
+    ControlPath /tmp/ssh-%l@%n.%r@%h.%p
+    ControlPersist 360000
+

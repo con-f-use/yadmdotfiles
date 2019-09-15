@@ -1,0 +1,83 @@
+[user]
+    name = con-f-use
+    email = con-f-use@gmx.net
+    signingkey = 2C726AD9
+    
+[core]
+    excludesfile = ~/.config/yadmdotfiles/git/gitignore
+    editor = vim
+    pager = (command -v diff-so-fancy >/dev/null 2>&1 && diff-so-fancy || cat)|less
+    
+[push]
+    default = matching
+    
+[color]
+    ui = true
+    
+[credential]
+    helper = /usr/share/doc/git/contrib/credential/gnome-keyring/git-credential-gnome-keyring
+
+[alias]
+    ours = checkout --ours
+    theirs = checkout --theirs
+    subup = submodule foreach git pull origin master
+    g = log --all --color --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --grep
+    a = add
+    s = status
+    st = status
+    ci = commit
+    b = branch
+    co = checkout
+    re = remote
+    d = diff -w --ignore-all-space
+    lol = log --graph --decorate --pretty=oneline --abbrev-commit
+    lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+    ls = ls-files
+    lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    l =  log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --first-parent
+    # Pull Upstream
+    pu = !"git fetch origin -v; git fetch upstream -v; git merge upstream/master"
+    # Commit Amend Reuse Message HEAD
+    carmh = commit --amend --reuse-message=HEAD
+    fh = log --follow -p --
+    fza = "!git ls-files -m -o --exclude-standard | fzf --print0 -m | xargs -0 -t -o git add"
+    
+[github]
+  user = con-f-use
+
+[url "http://github.com/"]
+    insteadOf = "gh:"
+
+[url "git@github.com:"]
+    pushInsteadOf = "https://github.com/"
+    pushInsteadOf = "http://github.com/"
+    pushInsteadOf = "gh:"
+
+[url "git@gist.github.com:"]
+    insteadOf = "gst:"
+    pushInsteadOf = "gist:"
+    pushInsteadOf = "git://gist.github.com/"
+
+[url "git://gist.github.com/"]
+    insteadOf = "gist:"
+
+[include]
+    path = .config/yadmdotfiles/git/gitconfiglocal
+
+[diff-so-fancy]
+    first-run = false
+
+[color "diff-highlight"]
+    oldNormal = red bold
+    oldHighlight = red bold 52
+    newNormal = green bold
+    newHighlight = green bold 22
+
+[color "diff"]
+    meta = 227
+    frag = magenta bold
+    commit = 227 bold
+    old = red bold
+    new = green bold
+    whitespace = red reverse
+

@@ -1,0 +1,9 @@
+#!/bin/sh
+# Dangerously reckless ssh command (ignores all security).
+
+ssh -o UserKnownHostsFile=/dev/null \
+    -o StrictHostKeyChecking=no \
+    -o PubkeyAcceptedKeyTypes=+ssh-dss \
+    -o HostKeyAlgorithms=+ssh-dss \
+    -o PreferredAuthentications=password,keyboard-interactive \
+    -o LogLevel=ERROR "$@"

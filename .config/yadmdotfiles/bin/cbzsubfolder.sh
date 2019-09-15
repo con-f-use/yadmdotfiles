@@ -1,0 +1,31 @@
+#!/bin/bash
+# coding: UTF-8, break: linux, indent: 4 spaces, lang: bash/eng
+description=\
+"Loops over the given directory and compresses images in first level
+subfolders. Output format is a .cbz comic book file."
+
+[ -z "$1" ] && { 1>&2 echo "$description"; exit 1; }
+shopt -s nocaseglob   # Case insensitive globbing
+
+find "$1" -type d -links 2 -not -empty -print0 |
+    while IFS= read -r -d $'\0' dir; do
+        [ "$dir" == "." ] && continue
+
+        fiximgext.sh "$dir"
+
+        cbzname=$(basename "$dir")
+        bla=$(basename "$(dirname "$dir")")
+        grep -iq '^issue' <<< "$cbzname" && cbzname="$bla-$cbzname"
+
+        # Put images in archive
+        zip \
+            "$dir/../$cbzname.cbz" \
+            "$dir"/*.jpg "$dir"/*.jpeg "$dir"/*.png "$dir"/*.gif "$dir"/*.bmp "$dir"/*.tiff
+
+        # zipping successful -> remove leftovers
+        if [ "$?" == "0" ] && [[ ! "--nodelete" =~ "$@" ]]; then
+            trash-put "$dir"/*.jpg "$dir"/*.jpeg "$dir"/*.png "$dir"/*.gif "$dir"/*.bmp "$dir"/*.tiff
+            [ "$(ls -A "$dir")" ] || rmdir "$dir"
+        fi
+    done
+
