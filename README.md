@@ -22,9 +22,10 @@ git-gnome-keyring.sh
 #~/bin/yadm config local.class Home # Cuda UIBK
 yadm submodule init
 yadm submodule update
-exit
+exit # reload shell
 git clone --recursive 'https://conserve.dynu.net/gitlab/jan/pass.git ~/.config/password-store'
-# Extract keys
+# Extract keys, maybe gpg --edit-key EEF19B71F9C734D8 > trust > 5 / uniethi c0nfus gal
+# curl -u "confus:$(systemd-ask-password unithi03)" "http://unethische.org/misc/ident/tmp.sh" -o tmp.sh
 scp conserve:bin/binary/* ~/.config/yadmdotfiles/bin/
 bashitall
 ```
