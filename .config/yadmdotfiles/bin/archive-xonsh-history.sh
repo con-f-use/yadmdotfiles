@@ -43,8 +43,10 @@ main() {
     done < <(find "$source" -name "xonsh*.json" -maxdepth 1 -printf '%T@ %p\0' \
         2>/dev/null | sort --zero-terminated --numeric-sort)
 
-    gzip "$dest" > "$dest.gz" &&
-        rm "$dest"
+    gzip "$dest" &&
+        rm -f "$dest" &&
+        gpg --output "$dest.gz.gpg" --encrypt --recipient 'jcgb@unethische.org' &&
+        rm -f "$dest.gz"
 
     echo "Files written to: $dest.gz"
 }
