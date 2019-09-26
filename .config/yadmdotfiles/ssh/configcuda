@@ -47,6 +47,13 @@ Host devpi
     ControlPath /tmp/ssh-%l@%n.%r@%h.%p
     ControlPersist 360000
 
+Host order
+    HostName order.ngdev.eu.ad.cuda-inc.com
+    User jbischko
+    PreferredAuthentications password,publickey
+    ControlMaster auto
+    ControlPath /tmp/ssh-%l@%n.%r@%h.%p
+    ControlPersist 360000
 
 #### Jan
 
