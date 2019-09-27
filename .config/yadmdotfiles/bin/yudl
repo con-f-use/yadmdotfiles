@@ -13,6 +13,9 @@ libfile="$HOME/.config/yadmdotfiles/bash/jcgb.bash"
 [ -r "$libfile" ] && source "$libfile" || { 2>echo "Requires '$libfile'!"; exit 1; }
 
 yudl_agg() {
+    if ! command xattr -v &>/dev/null; then
+        sudo apt-get install xattr ffmpeg
+    fi
     case "${1:-d}" in
         d)
             youtube-dl \
