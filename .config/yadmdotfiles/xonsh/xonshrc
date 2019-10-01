@@ -6,6 +6,9 @@
 import os, sys, re, time, datetime
 sys.path.append('.')
 
+for x in {'bin', '.config/yadmdotfiles/bin', '.local/bin'}:
+    $PATH.append(os.path.join($HOME, x))
+
 #$XONSH_SHOW_TRACEBACK = True
 $XONSH_TRACEBACK_LOGFILE = '/tmp/xonsh-tracebacks.log'
 
