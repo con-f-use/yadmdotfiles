@@ -1,0 +1,11 @@
+#!/bin/bash
+
+viupath="$HOME/.config/yadmdotfiles/bin/viu-bin" 
+
+if [ ! -f "$viupath" ]; then
+    curl -L 'https://github.com/atanunq/viu/releases/download/v0.2.2/viu' -o "$viupath" &&
+        chmod +x "$viupath"
+fi
+
+viu-bin "$@" <&0
+
