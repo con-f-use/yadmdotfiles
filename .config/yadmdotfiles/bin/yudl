@@ -12,9 +12,22 @@ author: confus <con-f-use@gmx.net>"
 libfile="$HOME/.config/yadmdotfiles/bash/jcgb.bash"
 [ -r "$libfile" ] && source "$libfile" || { 2>echo "Requires '$libfile'!"; exit 1; }
 
+fldrcd() {
+    fldir="$HOME/Downloads/HT/antbar/$(date "+%Y%m%d")"
+    mkdir -p "$fldir"
+    cd "$fldir"
+}
+
 yudl_agg() {
-    case "${1:-d}" in
+    if ! command -v xattr &>/dev/null; then
+        sudo apt-get install xattr ffmpeg
+        pip install --user youtube-dl
+    fi
+    command="${1:-}"
+    shift || true
+    case "$command" in
         d)
+            dbg "$@"
             youtube-dl \
                 --output "%(title)s.%(ext)s" \
                 --restrict-filenames \
@@ -23,15 +36,12 @@ yudl_agg() {
                 "$@" <&0
         ;;
         mp3)
-            youtube-dl \
-                --output "%(title)s.%(ext)s" \
-                --restrict-filenames \
+            yudl_agg d \
                 --extract-audio \
                 --audio-format mp3 \
                 --ignore-errors \
-                --add-metadata \
                 --yes-playlist \
-                "$@" <&0
+                "$@"
         ;;
         f)
             yudl_agg d \
@@ -39,8 +49,12 @@ yudl_agg() {
                 --batch-file \
                 "$@"
         ;;
+        r)
+            fldrcd
+            xclip -selection clipboard -o | sort -uR | yudl_agg f -
+        ;;
         *)
-            err "No command '$1'"
+            err "No command '$command'"
         ;;
     esac
 }
@@ -49,8 +63,3 @@ if [ "$0" = "$BASH_SOURCE" ]; then
     usage "$@"
     yudl_agg "$@"
 fi
-
-
-# alias yudl='youtube-dl -o "%(title)s.%(ext)s" --restrict-filenames -fbest --add-metadata'
-# alias yudlmp3='youtube-dl -o "%(title)s.%(ext)s" --restrict-filenames --extract-audio --audio-format mp3 --ignore-errors --add-metadata --yes-playlist'
-# alias yudlf='youtube-dl -o "%(title)s.%(ext)s" --restrict-filenames -fbest --ignore-errors -a'
