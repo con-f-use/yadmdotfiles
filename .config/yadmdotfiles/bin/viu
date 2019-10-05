@@ -7,5 +7,5 @@ if [ ! -f "$viupath" ]; then
         chmod +x "$viupath"
 fi
 
-viu-bin "$@" <&0
+viu-bin -t --once "$@" <&0
 
