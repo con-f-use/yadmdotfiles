@@ -53,6 +53,9 @@ yudl_agg() {
             fldrcd
             xclip -selection clipboard -o | sort -uR | yudl_agg f -
         ;;
+        R)
+            xclip -selection clipboard -o | sort -uR | yudl_agg f -
+        ;;
         *)
             err "No command '$command'"
         ;;
