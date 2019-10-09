@@ -1,5 +1,13 @@
 # Infrastructure
 
+Host qashare
+    HostName 10.17.6.4
+    User root
+    PreferredAuthentications publickey,password,keyboard-interactive
+    ControlMaster auto
+    ControlPath /tmp/ssh-%l@%n.%r@%h.%p
+    ControlPersist 360000
+
 Host qaportal
     HostName 10.17.36.250
     User qa
