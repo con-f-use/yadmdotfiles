@@ -7,6 +7,7 @@ set nocompatible
 set mouse=a     "Use mouse
 set clipboard=unnamedplus
 set number  "Display linenumbers
+set relativenumber   "Linenumbers relative to cursor
 syntax on   "Turn Syntax highlighting on
 set smarttab    "Smart Tabulator
 set smartcase   "Smat casematching
