@@ -9,9 +9,11 @@ gsettings set org.gnome.desktop.screensaver lock-delay 0
 gsettings set org.gnome.settings-daemon.plugins.orientation active false
 #gsettings set org.gnome.desktop.session idle-delay 3600
 #gsettings set org.gnome.settings-daemon.plugins.orientation active false'
+gsettings set org.gnome.desktop.input-sources xkb-options "['grp_led:scroll', 'terminate:ctrl_alt_bksp', 'shift:both_capslock_cancel', 'caps:escape']"
 
 # Print shortcut
 if [ "$(gsettings get org.gnome.settings-daemon.plugins.media-keys screenshot)" == "'Print'" ] && [ "$(gsettings get org.gnome.settings-daemon.plugins.media-keys area-screenshot-clip)" == "'<Ctrl><Shift>Print'" ]; then
     gsettings set org.gnome.settings-daemon.plugins.media-keys area-screenshot-clip 'Print'
     gsettings set org.gnome.settings-daemon.plugins.media-keys screenshot '<Ctrl><Shift>Print'
 fi
+
