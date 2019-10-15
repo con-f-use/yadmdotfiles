@@ -123,6 +123,7 @@ command Crem :%s/\s*\/\*\(.\|\n\)\{-}\*\/\n//|:%s/\s*\/\/.*$//|:noh
 command Wsudo :%!sudo tee > /dev/null %
 "Executes current file as script
 map <C-k> <Esc>:w<CR>:!chmod u+x '%:p' && ./%:r.%:e<C-m>
+imap <C-k> <Esc>:w<CR>:!chmod u+x '%:p' && ./%:r.%:e<C-m>
 nnoremap <F9> :!%:p<Enter>
 "Copy to and paste from Clipboard
 map <C-a> "+y
@@ -131,9 +132,8 @@ map! <C-f> <Esc>"+pi
 map q <Nop>
 "nnoremap ; :
 
-"""HTML
-"	autocmd FileType html inoremap ,h <html><head><Enter><title><++></title> <Esc><<i<Enter></head><body> <Esc><<i<Enter><++><Enter></body></html><Enter><Esc>gg0
-	autocmd FileType html inoremap ,h <html><head><Enter><title><++></title> <Esc><<i<Enter></head><body> <Esc><<i<Enter><p><++></p><Enter></body></html><Enter><Esc>gg0
+"HTML
+	autocmd FileType html inoremap ,h <html><head><Enter><title><++></title> <Esc><<i<Enter></head><body> <Esc><<i<Enter><p><++></p><Enter><++><Enter></body></html><Enter><Esc>gg0
 	autocmd FileType html inoremap ,b <b></b><Space><++><Esc>FbT>i
 	autocmd FileType html inoremap ,it <em></em><Space><++><Esc>FeT>i
 	autocmd FileType html inoremap ,1 <h1></h1><Enter><Enter><++><Esc>2kf<i
@@ -153,10 +153,27 @@ map q <Nop>
 	autocmd FileType html inoremap ,gr <font color="green"></font><Esc>F>a
 	autocmd FileType html inoremap ,rd <font color="red"></font><Esc>F>a
 	autocmd FileType html inoremap ,yl <font color="yellow"></font><Esc>F>a
-	autocmd FileType html inoremap ,dt <dt></dt><Enter><dd><++></dd><Enter><++><esc>2kcit
-	autocmd FileType html inoremap ,dl <dl><Enter><Enter></dl><enter><enter><++><esc>3kcc
 	autocmd FileType html inoremap &<space> &amp;<space>
 
+"MARKDOWN
+	autocmd Filetype markdown,rmd map <leader>w yiWi[<esc>Ea](<esc>pa)
+	autocmd Filetype markdown,rmd inoremap ,n ---<Enter><Enter>
+	autocmd Filetype markdown,rmd inoremap ,b ****<++><Esc>F*hi
+	autocmd Filetype markdown,rmd inoremap ,s ~~~~<++><Esc>F~hi
+	autocmd Filetype markdown,rmd inoremap ,e **<++><Esc>F*i
+	autocmd Filetype markdown,rmd inoremap ,h ====<Space><++><Esc>F=hi
+	autocmd Filetype markdown,rmd inoremap ,i ![](<++>)<++><Esc>F[a
+	autocmd Filetype markdown,rmd inoremap ,a [](<++>)<++><Esc>F[a
+	autocmd Filetype markdown,rmd inoremap ,1 #<Space><Enter><++><Esc>kA
+	autocmd Filetype markdown,rmd inoremap ,2 ##<Space><Enter><++><Esc>kA
+	autocmd Filetype markdown,rmd inoremap ,3 ###<Space><Enter><++><Esc>kA
+	autocmd Filetype markdown,rmd inoremap ,l --------<Enter>
+	autocmd Filetype markdown,rmd inoremap ,r ```{r}<CR>```<CR><CR><esc>2kO
+	autocmd Filetype markdown,rmd inoremap ,p ```{python}<CR>```<CR><CR><esc>2kO
+	autocmd Filetype markdown,rmd inoremap ,c ```<cr>```<cr><cr><esc>2kO
+
+"Python
+        autocmd Filetype python inoremap ,d <CR>def <++>(*ar, **kw):<CR><++><CR><CR><esc>4k0
 """"""""""""""""""""""""""""
 "Startup commands
 """"""""""""""""""""""""""""

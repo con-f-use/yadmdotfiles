@@ -2,7 +2,6 @@
 # sudo pip3 install xonsh[ptk,linux,pygments,proctitle]
 # xonsh -c xpip install xonsh-direnv xontrib-z xontrib-histcpy
 
-
 import os, sys, re, time, datetime
 sys.path.append('.')
 
@@ -80,6 +79,7 @@ aliases['sc'] = 'sudo systemctl'
 aliases['jc'] = 'sudo journalctl'
 aliases['envpy2']='echo "layout python2" > .envrc; direnv allow .'
 aliases['envpy3']='echo "layout python3" > .envrc; direnv allow .'
+aliases['xpaste']='xclip -o -selection clipboard'
 
 
 tput smkx  # del key fix for some werid terminal emulators
