@@ -1,12 +1,40 @@
+" Install plugin manager
+
+if empty(glob('~/.vim/autoload/plug.vim'))
+  echo "Downloading junegunn/vim-plug to manage plugins..."
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin('~/.vim/plugged')
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-repeat'
+Plug 'christoomey/vim-system-copy'
+Plug 'christoomey/vim-sort-motion'
+Plug 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-indent'
+Plug 'kana/vim-textobj-entire'
+Plug 'kana/vim-textobj-line'
+call plug#end()
+
+
 """"""""""""""""""""""""""""
 "Settings
 """"""""""""""""""""""""""""
+let mapleader =","
+" Navigating with guides
+	inoremap <leader><leader> <Esc>/<++><Enter>"_c4l
+	vnoremap <leader><leader> <Esc>/<++><Enter>"_c4l
+	map <leader><leader> <Esc>/<++><Enter>"_c4l
 set nocompatible
 "set encoding=utf-8 nobomb
 "set ai          "Autoindet
 set mouse=a     "Use mouse
 set clipboard=unnamedplus
 set number  "Display linenumbers
+set relativenumber   "Linenumbers relative to cursor
 syntax on   "Turn Syntax highlighting on
 set smarttab    "Smart Tabulator
 set smartcase   "Smat casematching
@@ -95,6 +123,7 @@ command Crem :%s/\s*\/\*\(.\|\n\)\{-}\*\/\n//|:%s/\s*\/\/.*$//|:noh
 command Wsudo :%!sudo tee > /dev/null %
 "Executes current file as script
 map <C-k> <Esc>:w<CR>:!chmod u+x '%:p' && ./%:r.%:e<C-m>
+imap <C-k> <Esc>:w<CR>:!chmod u+x '%:p' && ./%:r.%:e<C-m>
 nnoremap <F9> :!%:p<Enter>
 "Copy to and paste from Clipboard
 map <C-a> "+y
@@ -103,10 +132,52 @@ map! <C-f> <Esc>"+pi
 map q <Nop>
 "nnoremap ; :
 
+"HTML
+	autocmd FileType html inoremap ,h <html><head><Enter><title><++></title> <Esc><<i<Enter></head><body> <Esc><<i<Enter><p><++></p><Enter><++><Enter></body></html><Enter><Esc>gg0
+	autocmd FileType html inoremap ,b <b></b><Space><++><Esc>FbT>i
+	autocmd FileType html inoremap ,it <em></em><Space><++><Esc>FeT>i
+	autocmd FileType html inoremap ,1 <h1></h1><Enter><Enter><++><Esc>2kf<i
+	autocmd FileType html inoremap ,2 <h2></h2><Enter><Enter><++><Esc>2kf<i
+	autocmd FileType html inoremap ,3 <h3></h3><Enter><Enter><++><Esc>2kf<i
+	autocmd FileType html inoremap ,p <p></p><Enter><Enter><++><Esc>02kf>a
+	autocmd FileType html inoremap ,a <a<Space>href=""><++></a><Space><++><Esc>14hi
+	autocmd FileType html inoremap ,e <a<Space>target="_blank"<Space>href=""><++></a><Space><++><Esc>14hi
+	autocmd FileType html inoremap ,ul <ul><Enter><li></li><Enter></ul><Enter><Enter><++><Esc>03kf<i
+	autocmd FileType html inoremap ,li <Esc>o<li></li><Esc>F>a
+	autocmd FileType html inoremap ,ol <ol><Enter><li></li><Enter></ol><Enter><Enter><++><Esc>03kf<i
+	autocmd FileType html inoremap ,im <img src="" alt="<++>"><++><esc>Fcf"a
+	autocmd FileType html inoremap ,td <td></td><++><Esc>Fdcit
+	autocmd FileType html inoremap ,tr <tr></tr><Enter><++><Esc>kf<i
+	autocmd FileType html inoremap ,th <th></th><++><Esc>Fhcit
+	autocmd FileType html inoremap ,tab <table><Enter></table><Esc>O
+	autocmd FileType html inoremap ,gr <font color="green"></font><Esc>F>a
+	autocmd FileType html inoremap ,rd <font color="red"></font><Esc>F>a
+	autocmd FileType html inoremap ,yl <font color="yellow"></font><Esc>F>a
+	autocmd FileType html inoremap &<space> &amp;<space>
+
+"MARKDOWN
+	autocmd Filetype markdown,rmd map <leader>w yiWi[<esc>Ea](<esc>pa)
+	autocmd Filetype markdown,rmd inoremap ,n ---<Enter><Enter>
+	autocmd Filetype markdown,rmd inoremap ,b ****<++><Esc>F*hi
+	autocmd Filetype markdown,rmd inoremap ,s ~~~~<++><Esc>F~hi
+	autocmd Filetype markdown,rmd inoremap ,e **<++><Esc>F*i
+	autocmd Filetype markdown,rmd inoremap ,h ====<Space><++><Esc>F=hi
+	autocmd Filetype markdown,rmd inoremap ,i ![](<++>)<++><Esc>F[a
+	autocmd Filetype markdown,rmd inoremap ,a [](<++>)<++><Esc>F[a
+	autocmd Filetype markdown,rmd inoremap ,1 #<Space><Enter><++><Esc>kA
+	autocmd Filetype markdown,rmd inoremap ,2 ##<Space><Enter><++><Esc>kA
+	autocmd Filetype markdown,rmd inoremap ,3 ###<Space><Enter><++><Esc>kA
+	autocmd Filetype markdown,rmd inoremap ,l --------<Enter>
+	autocmd Filetype markdown,rmd inoremap ,r ```{r}<CR>```<CR><CR><esc>2kO
+	autocmd Filetype markdown,rmd inoremap ,p ```{python}<CR>```<CR><CR><esc>2kO
+	autocmd Filetype markdown,rmd inoremap ,c ```<cr>```<cr><cr><esc>2kO
+
+"Python
+        autocmd Filetype python inoremap ,d <CR>def <++>(*ar, **kw):<CR><++><CR><CR><esc>4k0
 """"""""""""""""""""""""""""
 "Startup commands
 """"""""""""""""""""""""""""
-au! BufWritePost .vimrc source %    "Relod .vimrc automatically on change
+"au! BufWritePost .vimrc source %    "Relod .vimrc automatically on change
 "map q <Nop>
 nnoremap Q q
 nnoremap q <Nop>

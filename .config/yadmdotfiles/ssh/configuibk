@@ -33,8 +33,8 @@ Host leo3
     Hostname login.leo3.uibk.ac.at
     User c706149
     ProxyCommand ssh -o 'ForwardAgent yes' agate 'ssh-add && nc %h %p'
-#    ForwardX11 yes
-#    ForwardAgent yes
+    #ForwardX11 yes
+    #ForwardAgent yes
 
 # ZID
 Host c706
@@ -45,4 +45,3 @@ Host csag
     HostName zid-gpl.uibk.ac.at
     User csag9887
     Compression yes
-
