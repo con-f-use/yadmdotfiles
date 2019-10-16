@@ -35,12 +35,16 @@ yudl_agg() {
                 --add-metadata \
                 "$@" <&0
         ;;
-        mp3)
+        l)
             yudl_agg d \
+                --yes-playlist \
+                --ignore-errors \
+                "$@"
+        ;;
+        mp3)
+            yudl_agg l \
                 --extract-audio \
                 --audio-format mp3 \
-                --ignore-errors \
-                --yes-playlist \
                 "$@"
         ;;
         f)
