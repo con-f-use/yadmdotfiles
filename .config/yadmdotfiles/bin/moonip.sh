@@ -6,6 +6,8 @@ moonip=$(
         grep -Po -m1 '\d{1,3}(\.\d{1,3}){3,3}' )
 
 echo "$moonip"
-echo "$moonip" |
-    xsel --clipboard --input
+#echo "$moonip" |
+#    xsel --clipboard --input
+
+firefox "$moonip" &
 

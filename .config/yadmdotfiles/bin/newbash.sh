@@ -30,7 +30,7 @@ libfile="\$HOME/.config/yadmdotfiles/bash/jcgb.bash"
     { 2>echo "Requires '\$libfile'!"; exit 1; }
 
 main() {
-    find "\$@" -maxdepth 2 -iname "*practice*.md" -print0 |
+    find "\$@" -maxdepth 2 -iname "*practice*.md" -print0 2>/dev/null |
         while IFS= read -r -d \$'\0' itm; do
             echo "I found: '\$itm'"
         done

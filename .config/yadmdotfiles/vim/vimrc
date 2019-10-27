@@ -2,11 +2,9 @@
 
 if empty(glob('~/.vim/autoload/plug.vim'))
   echo "Downloading junegunn/vim-plug to manage plugins..."
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
-
 call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
@@ -18,6 +16,23 @@ Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-entire'
 Plug 'kana/vim-textobj-line'
 call plug#end()
+
+" if empty(glob('~/.config/nvim/autoload/plug.vim'))
+"   echo "Downloading junegunn/vim-plug to manage plugins..."
+"   silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+"   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+" endif
+" call plug#begin('~/.config/nvim/plugged')
+" Plug 'tpope/vim-surround'
+" Plug 'tpope/vim-commentary'
+" Plug 'tpope/vim-repeat'
+" Plug 'christoomey/vim-system-copy'
+" Plug 'christoomey/vim-sort-motion'
+" Plug 'kana/vim-textobj-user'
+" Plug 'kana/vim-textobj-indent'
+" Plug 'kana/vim-textobj-entire'
+" Plug 'kana/vim-textobj-line'
+" call plug#end()
 
 
 """"""""""""""""""""""""""""
@@ -69,7 +84,7 @@ set wrap
 set lbr
 set ruler
 set wildmenu " Enhance command-line completion
-set esckeys " Allow cursor keys in insert mode
+"set esckeys " Allow cursor keys in insert mode
 set backspace=indent,eol,start " Allow backspace in insert mode
 set ttyfast " Optimize for fast terminal connections
 set gdefault " Add the g flag to search/replace by default
@@ -121,6 +136,7 @@ command -nargs=* Cit :w|!gcc -Wall -Werror -O0 -o %:r '%:p' && ./%:r <args><C-m>
 command Crem :%s/\s*\/\*\(.\|\n\)\{-}\*\/\n//|:%s/\s*\/\/.*$//|:noh
 "Write to current file with sudo privileges
 command Wsudo :%!sudo tee > /dev/null %
+cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 "Executes current file as script
 map <C-k> <Esc>:w<CR>:!chmod u+x '%:p' && ./%:r.%:e<C-m>
 imap <C-k> <Esc>:w<CR>:!chmod u+x '%:p' && ./%:r.%:e<C-m>
