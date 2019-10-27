@@ -5,6 +5,8 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
+
+" Install plugins
 call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
@@ -16,23 +18,6 @@ Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-entire'
 Plug 'kana/vim-textobj-line'
 call plug#end()
-
-" if empty(glob('~/.config/nvim/autoload/plug.vim'))
-"   echo "Downloading junegunn/vim-plug to manage plugins..."
-"   silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-"   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-" endif
-" call plug#begin('~/.config/nvim/plugged')
-" Plug 'tpope/vim-surround'
-" Plug 'tpope/vim-commentary'
-" Plug 'tpope/vim-repeat'
-" Plug 'christoomey/vim-system-copy'
-" Plug 'christoomey/vim-sort-motion'
-" Plug 'kana/vim-textobj-user'
-" Plug 'kana/vim-textobj-indent'
-" Plug 'kana/vim-textobj-entire'
-" Plug 'kana/vim-textobj-line'
-" call plug#end()
 
 
 """"""""""""""""""""""""""""
@@ -47,28 +32,29 @@ set nocompatible
 "set encoding=utf-8 nobomb
 "set ai          "Autoindet
 set mouse=a     "Use mouse
-set clipboard=unnamedplus
+set clipboard=unnamedplus  "use system clipboard
 set number  "Display linenumbers
 set relativenumber   "Linenumbers relative to cursor
 syntax on   "Turn Syntax highlighting on
 set smarttab    "Smart Tabulator
 set smartcase   "Smat casematching
-set autochdir
+set dir=/tmp/   "Dir for swapfiles
+set autochdir   "Follow files into dir
 set softtabstop=4
 set shiftwidth=4
 filetype plugin on
 filetype indent on
 set wildignore=*.swp,*.bak,*.pyc,*.class
-set visualbell
-set noerrorbells
-set nostartofline
+set visualbell  "terminal bell flashes screen
+set noerrorbells "terminal bell makes no sound
+set nostartofline   "keeps cursor in the same colum after movements
 set ls=2    "Always show status with filename
-"set spell!  "Spellcheck?
 set nobackup
 set noswapfile
 set ofu=syntaxcomplete#Complete
 au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
 set completeopt=menuone,menu,longest,preview
+set wildmode=list:longest,full   "Command mode completions behaves as in shell
 set hidden      "Better buffer management
 set expandtab   "Make spaces out of tabs
 set shiftround  "Shift to next tab marker
@@ -77,32 +63,25 @@ set incsearch   "Higlight while typing
 set hlsearch    "Higlight all matches of a search
 set smartcase
 set cursorline  "Display line under cursor
-set history=10000    "Longer histry
+set history=10000    "Longer history
 set undolevels=1000
-set wildmenu
-set wrap
-set lbr
-set ruler
-set wildmenu " Enhance command-line completion
-"set esckeys " Allow cursor keys in insert mode
+set wrap   "wrap long lines
+set linebreak   "break at sensible chars
+set showbreak=-->
+set ruler   "display line and cloumn ruler
+set esckeys " Allow cursor keys in insert mode
 set backspace=indent,eol,start " Allow backspace in insert mode
 set ttyfast " Optimize for fast terminal connections
 set gdefault " Add the g flag to search/replace by default
 set exrc "  Enable per-directory .vimrc files
 set secure " and disable unsafe commands in them
-" if exists("&relativenumber")
-"    set relativenumber
-"    au BufReadPost * set relativenumber
-" endi
-set showbreak=-->
-set wildmode=list:longest,full   "Commandmode completions behaves as in shell
-set splitbelow splitright
-colorscheme delek       
+colorscheme delek
 set tags+=~/.vim/tags/cpp
 set tags+=~/.vim/systags
 "hi LineNr ctermbg=Blue
 " build tags of your own project with Ctrl-F12
 map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+
 " OmniCppComplete
 let OmniCpp_NamespaceSearch = 1
 let OmniCpp_GlobalScopeSearch = 1
@@ -113,15 +92,16 @@ let OmniCpp_MayCompleteArrow = 1 " autocomplete after ->
 let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
 let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
 
-if has('autocmd')
-    autocmd FileType python set omnifunc=pythoncomplete#Complete
-    autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-    autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-    autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-    autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
-    autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-    autocmd FileType c set omnifunc=ccomplete#Complete
-endif
+
+autocmd FileType python set omnifunc=pythoncomplete#Complete
+autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
+autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+autocmd FileType c set omnifunc=ccomplete#Complete
+autocmd Filetype html setlocal sw=2 expandtab
+
 let g:SuperTabDefaultCompletionType = "context"
 let g:SuperTabContextDefaultCompletionType = "<c-n>"
 set nocp
@@ -130,6 +110,25 @@ set pastetoggle=<F2>
 """"""""""""""""""""""""""""
 "Custom commands and maps
 """"""""""""""""""""""""""""
+let mapleader =","
+" Navigating with guides
+	inoremap <leader><leader> <Esc>/<++><Enter>"_c4l
+	vnoremap <leader><leader> <Esc>/<++><Enter>"_c4l
+	map <leader><leader> <Esc>/<++><Enter>"_c4l
+" Shortcutting split navigation, saving a keypress:
+	map <C-h> <C-w>h
+	map <C-j> <C-w>j
+	map <C-k> <C-w>k
+	map <C-l> <C-w>l
+" Tabbing
+	set splitbelow splitright
+	nnoremap <leader>e :Ex<CR>
+	nnoremap <leader>t :tabnew<CR>:Ex<CR>
+	nnoremap <leader>v :vsplit<CR>:w<CR>:Ex<CR>
+	nnoremap <leader>s :split<CR>:w<CR>:Ex<CR>
+inoremap <leader>ww <Esc>:w<Enter>
+inoremap <leader>wq <Esc>:wq<Enter>
+
 "Compiles current file as C/C++-Source and execute the result
 command -nargs=* Cit :w|!gcc -Wall -Werror -O0 -o %:r '%:p' && ./%:r <args><C-m>
 "Removes als C-style comments from current fiel
@@ -144,8 +143,9 @@ nnoremap <F9> :!%:p<Enter>
 "Copy to and paste from Clipboard
 map <C-a> "+y
 map! <C-f> <Esc>"+pi
-"Turon recording key off"
-map q <Nop>
+"Turn recording key off"
+nnoremap Q q
+nnoremap q <Nop>
 "nnoremap ; :
 
 "HTML
@@ -194,7 +194,4 @@ map q <Nop>
 "Startup commands
 """"""""""""""""""""""""""""
 "au! BufWritePost .vimrc source %    "Relod .vimrc automatically on change
-"map q <Nop>
-nnoremap Q q
-nnoremap q <Nop>
 noh

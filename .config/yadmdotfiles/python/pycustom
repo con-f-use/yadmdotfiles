@@ -22,7 +22,7 @@ except ImportError:
 
 # Standard Library
 import stat, subprocess, gzip, re, math, glob, logging, time, random, itertools
-import functools, requests, datetime, time, dateutil, tzlocal, string, tempfile
+import functools, requests, datetime, time, string, tempfile
 import importlib, json, binascii, hashlib, platform, socket, collections
 import textwrap, base64 as b64, inspect, dis
 from pprint import pprint, pformat
@@ -39,6 +39,8 @@ except (ImportError, AttributeError):
 
 # Try to import additional variables and packages
 pkgs = [
+    'tzlocal',
+    'dateutil',
     'numpy',
     'seaborn',
     'docopt-ng',
