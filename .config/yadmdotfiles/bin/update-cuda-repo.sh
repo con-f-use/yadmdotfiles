@@ -7,8 +7,8 @@ Update or clone the most used cuda-repos.
 
 install_requires() {
     command -v parallel &>/dev/null ||
-        sudo apt-get install parallel
-    echo will cite | paralell --citation
+        sudo apt-get install parallel &&
+        echo will cite | parallel --citation
 }
 
 

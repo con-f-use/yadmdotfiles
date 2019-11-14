@@ -84,3 +84,6 @@ export MAKEFLAGS="-j $(nproc)"
 _FASD_MAX=5000
 _FASD_BACKENDS="native recently-used current"
 
+# For VMWare Remote Console (vmrc) to fix Segfaulting "Fail to load executable. Exiting.
+export VMWARE_USE_SHIPPED_LIBS=force
+
