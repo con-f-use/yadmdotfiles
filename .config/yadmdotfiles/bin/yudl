@@ -26,6 +26,9 @@ yudl_agg() {
     command="${1:-}"
     shift || true
     case "$command" in
+        c)
+            fldrcd
+        ;;
         d)
             dbg "$@"
             youtube-dl \

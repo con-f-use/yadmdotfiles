@@ -10,7 +10,7 @@ for x in {'bin', '.config/yadmdotfiles/bin', '.local/bin'}:
 $PATH = list(dict.fromkeys(${'PATH'}))
 
 
-$UPDATE_OS_ENVIRON = True
+#$UPDATE_OS_ENVIRON = True
 #$XONSH_SHOW_TRACEBACK = True
 $XONSH_TRACEBACK_LOGFILE = '/tmp/xonsh-tracebacks.log'
 
@@ -72,6 +72,21 @@ def _zdata():
     zdata = sorted( zdata, key=lambda x: x[1] if x else [])
     for p, r, t in zdata:
         print(f'{p:70.70}  {r:>5g}    {t}')
+
+def _stdfilter(args, stdin, stdout):
+    command_string = "lambda line,index:"
+    for arg in args:
+        command_string += arg + " "
+    command_string = command_string.strip()
+    fn = eval(command_string)
+    index = 0
+    for line in stdin.readlines():
+        index += 1
+        res = fn(line.rstrip(), index)
+        print(res, file=stdout, flush=True)
+ 
+aliases['stdfilter'] = _stdfilter
+
 
 aliases['autoprx'] = '$AUTOSSH_DEBUG="y"; autossh -f -N -D 0.0.0.0:1080 conserve'
 #aliases['ls'] = 'ls -h --color=auto'

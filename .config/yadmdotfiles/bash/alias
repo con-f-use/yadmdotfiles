@@ -60,7 +60,6 @@ alias luksClose='sudo cryptsetup luksClose'
 ##########################
 # Programming
 ##########################
-alias ax='chmod a+x'
 alias dwn='disown -h %1'
 alias indent='indent -pmt -kr -bad -br -blf -brs -cdw -ss -nlp -nlps -l80'
 alias splint='splint +unixlib'
