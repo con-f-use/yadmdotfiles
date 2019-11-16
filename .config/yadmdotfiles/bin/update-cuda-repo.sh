@@ -32,7 +32,7 @@ main() {
             echo "git pull || 1>&2 echo 'Pull failed for $repo'"
         else
             echo -n "echo '$repo does not exist, cloning...'; "
-            echo -n "git clone --recursive "
+            echo -n "cd $basedir && git clone --recursive "
             echo "'ssh://git@stash.cudaops.com:7999/$repo.git' '$repodir' || 1>&2 echo 'Cone failed for $repo'"
         fi
     done | parallel --jobs 4
