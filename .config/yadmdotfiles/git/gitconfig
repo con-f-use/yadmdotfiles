@@ -61,6 +61,15 @@
 [url "git://gist.github.com/"]
     insteadOf = "gist:"
 
+[url "ssh://git@conserve.dynu.net:29222/jan/"]
+    insteadOf = "jan:"
+
+[url "ssh://git@stash.cudaops.com:7999/bnnga/"]
+    insteadOf = "bnnga:"
+
+[url "ssh://git@stash.cudaops.com:7999/"]
+    insteadOf = "st:"
+
 [include]
     path = .config/yadmdotfiles/git/gitconfiglocal
 
