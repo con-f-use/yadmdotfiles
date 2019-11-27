@@ -73,6 +73,21 @@ def _zdata():
     for p, r, t in zdata:
         print(f'{p:70.70}  {r:>5g}    {t}')
 
+def _stdfilter(args, stdin, stdout):
+    command_string = "lambda line,index:"
+    for arg in args:
+        command_string += arg + " "
+    command_string = command_string.strip()
+    fn = eval(command_string)
+    index = 0
+    for line in stdin.readlines():
+        index += 1
+        res = fn(line.rstrip(), index)
+        print(res, file=stdout, flush=True)
+ 
+aliases['stdfilter'] = _stdfilter
+
+
 aliases['autoprx'] = '$AUTOSSH_DEBUG="y"; autossh -f -N -D 0.0.0.0:1080 conserve'
 #aliases['ls'] = 'ls -h --color=auto'
 aliases['ll'] = 'ls -alh --color=auto'

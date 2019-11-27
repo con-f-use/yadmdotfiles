@@ -41,11 +41,13 @@ syntax on   "Turn Syntax highlighting on
 set smarttab    "Smart Tabulator
 set smartcase   "Smat casematching
 set dir=/tmp/   "Dir for swapfiles
+set path+=**
 set autochdir   "Follow files into dir
 set softtabstop=4
 set shiftwidth=4
 filetype plugin on
 filetype indent on
+set wildmenu
 set wildignore=*.swp,*.bak,*.pyc,*.class
 set visualbell  "terminal bell flashes screen
 set noerrorbells "terminal bell makes no sound
@@ -151,7 +153,14 @@ nnoremap Q q
 nnoremap q <Nop>
 "nnoremap ; :
 
+"Filebrowser
+let g:netrw_banner=0   " No header at the top
+let g:netrw_liststyle=3 " tree view
+"let g:netrw_list_hide=netrw_gitignore#Hide()
+"let g:netrw_list_hide.=',\(^\|\s\s\)\zs\.\S\+'
+
 "HTML
+        autocmd FileType html inoremap ,html <Esc>:-1read $HOME/.vim/template.html<CR> "Load html template
 	autocmd FileType html inoremap ,h <html><head><Enter><title><++></title> <Esc><<i<Enter></head><body> <Esc><<i<Enter><p><++></p><Enter><++><Enter></body></html><Enter><Esc>gg0
 	autocmd FileType html inoremap ,b <b></b><Space><++><Esc>FbT>i
 	autocmd FileType html inoremap ,it <em></em><Space><++><Esc>FeT>i

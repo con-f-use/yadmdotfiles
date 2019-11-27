@@ -2,7 +2,11 @@
 # coding: UTF-8, break: linux, indent: 4 spaces, lang: bash/eng
 description=\
 "Loops over the given directory and compresses images in first level
-subfolders. Output format is a .cbz comic book file."
+subfolders. Output format is a .cbz comic book file.
+
+Usage: 
+    $0 <dir> [--nodelete]
+"
 
 [ -z "$1" ] && { 1>&2 echo "$description"; exit 1; }
 shopt -s nocaseglob   # Case insensitive globbing

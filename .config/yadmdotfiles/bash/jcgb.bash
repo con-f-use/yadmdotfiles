@@ -15,7 +15,7 @@ usage() {
         shopt -s shift_verbose
     fi
     if [ -z ${NO_STRICT+x} ]; then
-        set -o errexit -o nounset -o pipefail
+        set -o errexit -o nounset -o pipefail -o noclobber
     fi
 
     for itm in "$@"; do
