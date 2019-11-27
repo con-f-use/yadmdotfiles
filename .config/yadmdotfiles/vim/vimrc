@@ -17,6 +17,8 @@ Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-entire'
 Plug 'kana/vim-textobj-line'
+Plug 'Yggdroot/indentLine'
+Plug 'google/vim-searchindex'
 call plug#end()
 
 
@@ -61,6 +63,7 @@ set shiftround  "Shift to next tab marker
 set shiftwidth=4        "Width of a tab marker
 set incsearch   "Higlight while typing
 set hlsearch    "Higlight all matches of a search
+"set shortmess-=S  "Indexed search
 set smartcase
 set cursorline  "Display line under cursor
 set history=10000    "Longer history
@@ -193,5 +196,5 @@ nnoremap q <Nop>
 """"""""""""""""""""""""""""
 "Startup commands
 """"""""""""""""""""""""""""
-"au! BufWritePost .vimrc source %    "Relod .vimrc automatically on change
+au! BufWritePost .vimrc source %    "Reload .vimrc automatically on change
 noh

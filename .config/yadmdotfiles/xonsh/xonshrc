@@ -10,7 +10,7 @@ for x in {'bin', '.config/yadmdotfiles/bin', '.local/bin'}:
 $PATH = list(dict.fromkeys(${'PATH'}))
 
 
-$UPDATE_OS_ENVIRON = True
+#$UPDATE_OS_ENVIRON = True
 #$XONSH_SHOW_TRACEBACK = True
 $XONSH_TRACEBACK_LOGFILE = '/tmp/xonsh-tracebacks.log'
 
