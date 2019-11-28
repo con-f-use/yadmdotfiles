@@ -50,13 +50,15 @@ def get_shelldate():
 $PROMPT_FIELDS['shelldate'] = get_shelldate
 
 $PROMPT=(
-    '{ret_code_color}┌─{NO_COLOR}{#555}{shelldate}{NO_COLOR} '
+    '\n{ret_code_color}┌─{NO_COLOR}{#555}{shelldate}{NO_COLOR} '
     '{FAINT_BLUE}[{NO_COLOR}{env_name}{BOLD_GREEN}{user}@{hostname}{FAINT_ITALIC_BLUE} {cwd}{FAINT_BLUE}] '
     '{BOLD_BLUE}{ret_code_color}{ret_code}\n'
     '└{prompt_end}{NO_COLOR} '
 )
 $RIGHT_PROMPT='😱 {branch_color}{gitstatus: {}}{NO_COLOR} 😱'
+#$MULTILINE_PROMPT='' # for long input with linebreaks
 $BOTTOM_TOOLBAR=''
+#$PROMPT_REFRESH_INTERVAL=5 # redraw prompt [default: 0] means no redraw, needs UPDATE_COMPLETIONS_ON_KEYPRESS
 $XONSH_GITSTATUS_STASHED = '⚑ '
 $XONSH_STDERR_PREFIX='{BOLD_RED}'
 $XONSH_STDERR_POSTFIX='{NO_COLOR}'
