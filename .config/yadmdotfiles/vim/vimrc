@@ -65,6 +65,7 @@ set shiftround  "Shift to next tab marker
 set shiftwidth=4        "Width of a tab marker
 set incsearch   "Higlight while typing
 set hlsearch    "Higlight all matches of a search
+"set shortmess-=S  "Indexed search
 set smartcase
 set cursorline  "Display line under cursor
 set history=10000    "Longer history
@@ -124,6 +125,7 @@ let mapleader =","
 	map <C-j> <C-w>j
 	map <C-k> <C-w>k
 	map <C-l> <C-w>l
+        cnoreabbrev <expr> vsf getcmdtype() == ":" && getcmdline() == 'vsf' ? 'vert sf' : 'vsf'
 " Tabbing
 	set splitbelow splitright
 	nnoremap <leader>e :Ex<CR>
@@ -141,8 +143,8 @@ command Crem :%s/\s*\/\*\(.\|\n\)\{-}\*\/\n//|:%s/\s*\/\/.*$//|:noh
 command Wsudo :%!sudo tee > /dev/null %
 cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 "Executes current file as script
-map <C-k> <Esc>:w<CR>:!chmod u+x '%:p' && ./%:r.%:e<C-m>
-imap <C-k> <Esc>:w<CR>:!chmod u+x '%:p' && ./%:r.%:e<C-m>
+"map <C-k> <Esc>:w<CR>:!chmod u+x '%:p' && ./%:r.%:e<C-m>
+"imap <C-k> <Esc>:w<CR>:!chmod u+x '%:p' && ./%:r.%:e<C-m>
 nnoremap <F9> :!%:p<Enter>
 "Copy to and paste from Clipboard
 map <C-a> "+y
@@ -204,5 +206,5 @@ let g:netrw_liststyle=3 " tree view
 """"""""""""""""""""""""""""
 "Startup commands
 """"""""""""""""""""""""""""
-"au! BufWritePost .vimrc source %    "Relod .vimrc automatically on change
+au! BufWritePost .vimrc source %    "Reload .vimrc automatically on change
 noh
