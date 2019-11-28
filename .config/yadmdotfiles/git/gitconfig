@@ -43,7 +43,7 @@
     fza = "!git ls-files -m -o --exclude-standard | fzf --print0 -m | xargs -0 -t -o git add"
     
 [github]
-  user = con-f-use
+    user = con-f-use
 
 [url "http://github.com/"]
     insteadOf = "gh:"
@@ -60,6 +60,9 @@
 
 [url "git://gist.github.com/"]
     insteadOf = "gist:"
+
+[url "ssh://git@conserve.dynu.net:29222/jan/"]
+    insteadOf = "jan:"
 
 [include]
     path = .config/yadmdotfiles/git/gitconfiglocal
