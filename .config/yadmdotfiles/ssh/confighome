@@ -6,6 +6,12 @@ Host naserve
     User conserve
     ForwardX11 yes
 
+Host lanserve
+    HostName 192.168.0.10
+    User confus
+    Compression yes
+    ForwardX11 yes
+
 Host *serve
     #HostName conserve.no-ip.org
     HostName conserve.dynu.net
