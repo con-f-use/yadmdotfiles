@@ -5,3 +5,8 @@
     email = jbischko@barracuda.com
     override = global
 
+[url "ssh://git@stash.cudaops.com:7999/bnnga/"]
+    insteadOf = "stash:"
+
+[url "ssh://git@stash.cudaops.com:7999/~"]
+    insteadOf = "user:"
