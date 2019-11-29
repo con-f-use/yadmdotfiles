@@ -6,7 +6,11 @@
     override = global
 
 [url "ssh://git@stash.cudaops.com:7999/bnnga/"]
-    insteadOf = "stash:"
+    insteadOf = "at:"
+
+[url "ssh://git@stash.cudaops.com:7999/"]
+    insteadOf = "st:"
 
 [url "ssh://git@stash.cudaops.com:7999/~"]
     insteadOf = "user:"
+
