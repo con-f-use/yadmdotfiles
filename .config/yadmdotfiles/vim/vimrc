@@ -29,8 +29,8 @@ Plug 'Yggdroot/indentLine'
 Plug 'google/vim-searchindex'
 Plug 'davidhalter/jedi-vim'
 Plug 'con-f-use/vim-pythonindent'
+Plug 'joshdick/onedark.vim'
 if has('nvim')
-    Plug 'joshdick/onedark.vim'
 "    Plug 'rakr/vim-one'  
     Plug 'kassio/neoterm'
 endif
