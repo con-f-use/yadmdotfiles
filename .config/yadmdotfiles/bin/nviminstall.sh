@@ -30,7 +30,7 @@ main() {
     # git co stable
     # CMAKE_BUILD_TYPE=RelWithDebInfo
     make -j \
-        CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX=/home/jan/.local/"  \
+        CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX=$HOME/.local/"  \
         DCMAKE_BUILD_TYPE=Release
     make install
     cd "$oldpwd"
