@@ -33,6 +33,8 @@ main() {
         CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX=$HOME/.local/"  \
         DCMAKE_BUILD_TYPE=Release
     make install
+    python2 -m pip install --user --upgrade pynvim
+    python3 -m pip install --user --upgrade pynvim neovim-remote
     cd "$oldpwd"
 }
 
