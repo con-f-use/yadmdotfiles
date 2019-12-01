@@ -159,12 +159,10 @@ set cursorline  "Display line under cursor
 let g:one_allow_italics = 1
 if (empty($TMUX))
   if (has("nvim"))
-  "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+  "For Neovim 0.1.3 and 0.1.4
   let $NVIM_TUI_ENABLE_TRUE_COLOR=1
   endif
-  "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
-  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
-  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+  "For Neovim > 0.1.5 and Vim > patch 7.4.1799
   if (has("termguicolors"))
     set termguicolors
   endif
@@ -177,6 +175,10 @@ if (has("autocmd") && !has("gui_running"))
   augroup END
 endif
 colorscheme onedark
+let s:black = { "gui": "#282C34", "cterm": "235", "cterm16": "0" }
+let s:white = { "gui": "#ABB2BF", "cterm": "145", "cterm16" : "7" }
+"call onedark#set_highlight("Normal", { "fg": s:white }) " `bg` will not be styled since there is no `bg` setting
+"call onedark#set_highlight("Normal", { "fg": s:white, "bg": s:black }) " normal text
 
 "Filebrowser
 let g:netrw_banner=0   " No header at the top
@@ -313,3 +315,4 @@ endif
 """"""""""""""""""""""""""""
 au! BufWritePost .vimrc source %    "Reload .vimrc automatically on change
 noh
+
