@@ -65,6 +65,8 @@ endif
 if !isdirectory(&undodir)
     call mkdir(&undodir, "p")
 endif
+set list                            " show invisible characters
+set listchars=tab:»·,trail:·,nbsp:· " Display extra whitespace
 set path+=**
 set autochdir   "Follow files into dir
 set softtabstop=4
