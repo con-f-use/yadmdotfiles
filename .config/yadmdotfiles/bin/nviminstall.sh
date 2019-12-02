@@ -11,7 +11,7 @@ libfile="$HOME/.config/yadmdotfiles/bash/jcgb.bash"
     { 2>echo "Requires '$libfile'!"; exit 1; }
 
 ubuntu_install_prereqs() {
-    if command -v apt-get &>dev/null; then
+    if command -v apt-get &>/dev/null; then
         sudo apt-get install \
             ninja-build gettext \
             libtool libtool-bin \
