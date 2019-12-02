@@ -72,6 +72,7 @@ set autochdir   "Follow files into dir
 set softtabstop=4
 set shiftwidth=4
 set tw=79
+set formatoptions-=t
 filetype plugin on
 filetype indent on
 set wildmenu
