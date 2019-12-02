@@ -5,6 +5,8 @@ Host conserve
     User confus
     Compression yes
     ForwardX11 yes
+    RemoteForward ~/.local/nvim_sockets/me ~/.local/nvim_sockets/me2
+    StreamLocalBindUnlink yes
     ControlMaster auto
     ControlPath /tmp/ssh-%l@%n.%r@%h.%p
     ControlPersist 360000

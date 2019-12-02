@@ -100,6 +100,8 @@ aliases['jc'] = 'sudo journalctl'
 aliases['envpy2']='echo "layout python2" > .envrc; direnv allow .'
 aliases['envpy3']='echo "layout python3" > .envrc; direnv allow .'
 aliases['xpaste']='xclip -o -selection clipboard'
+aliases['vim']='nvim'
+aliases['vi']='nvim'
 
 
 tput smkx  # del key fix for some werid terminal emulators
