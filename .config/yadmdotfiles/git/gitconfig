@@ -45,6 +45,9 @@
 [github]
     user = con-f-use
 
+[conserve.dynu.net]
+    user = jan
+
 [url "http://github.com/"]
     insteadOf = "gh:"
 
