@@ -52,6 +52,7 @@ let mapleader ="\\"
 set nocompatible
 set encoding=utf-8 nobomb
 "set ai          "Autoindet
+set autoread
 set mouse=a     "Use mouse
 set clipboard=unnamedplus  "use system clipboard
 set smarttab    "Smart Tabulator
@@ -218,7 +219,7 @@ let g:netrw_liststyle=3 " tree view
     map <C-h> <C-w>h
     map <C-j> <C-w>j
     map <C-k> <C-w>k
-    map <C-l> <C-w>l
+    map <C-l> <C-w>lA
 
 " Nvim Terminal stuff
 set shell=xonsh
