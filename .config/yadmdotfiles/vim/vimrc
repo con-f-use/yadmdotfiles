@@ -19,15 +19,19 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-obsession'
+"Plug 'tpope/vim-unimpaired'
 Plug 'christoomey/vim-system-copy'
 Plug 'christoomey/vim-sort-motion'
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-entire'
 Plug 'kana/vim-textobj-line'
+Plug 'jceb/vim-textobj-uri'
 Plug 'Yggdroot/indentLine'
 Plug 'google/vim-searchindex'
 Plug 'davidhalter/jedi-vim'
+Plug 'psf/black'
+Plug 'cohama/lexima.vim'
 Plug 'con-f-use/vim-pythonindent'
 Plug 'joshdick/onedark.vim'
 if has('nvim')
@@ -44,10 +48,6 @@ call plug#end()
 "{{{
 let mapleader ="\\"
 
-" Navigating with guides
-    inoremap <leader><leader> <Esc>/<++><Enter>"_c4l
-    vnoremap <leader><leader> <Esc>/<++><Enter>"_c4l
-    map <leader><leader> <Esc>/<++><Enter>"_c4l
 
 set nocompatible
 set encoding=utf-8 nobomb
@@ -122,7 +122,7 @@ let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
 let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
 
 
-autocmd FileType python set omnifunc=pythoncomplete#Complete
+" autocmd FileType python set omnifunc=pythoncomplete#Complete " we use jedi now for python
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
@@ -130,6 +130,7 @@ autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 autocmd FileType c set omnifunc=ccomplete#Complete
 autocmd Filetype html setlocal sw=2 expandtab
+autocmd BufWritePre *.py execute ':Black'
 
 let g:SuperTabDefaultCompletionType = "context"
 let g:SuperTabContextDefaultCompletionType = "<c-n>"
@@ -181,7 +182,7 @@ endif
 colorscheme onedark
 let s:black = { "gui": "#282C34", "cterm": "235", "cterm16": "0" }
 let s:white = { "gui": "#ABB2BF", "cterm": "145", "cterm16" : "7" }
-"call onedark#set_highlight("Normal", { "fg": s:white }) " `bg` will not be styled since there is no `bg` setting
+" call onedark#set_highlight("Normal", { "fg": s:white }) " `bg` will not be styled since there is no `bg` setting
 "call onedark#set_highlight("Normal", { "fg": s:white, "bg": s:black }) " normal text
 
 "Filebrowser
@@ -195,6 +196,8 @@ let g:netrw_liststyle=3 " tree view
 "Custom commands and maps 
 """"""""""""""""""""""""""""""
 "{{{
+
+map ; :
 
 " Saving
     inoremap <leader>ww <Esc>:w<Enter>
