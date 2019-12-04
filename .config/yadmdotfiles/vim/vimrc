@@ -227,7 +227,12 @@ map ; :
 " Nvim Terminal stuff
 set shell=xonsh
 if has('nvim')
-    let g:neoterm_size='60v'
+    let g:neoterm_size='70v'
+    let g:neoterm_autoinsert=1
+    " Use gx{text-object} in normal mode
+    nmap gx <Plug>(neoterm-repl-send)
+    " Send selected contents in visual mode.
+    xmap gx <Plug>(neoterm-repl-send)
     tnoremap <C-h> <C-\><C-n><C-w>h
     tnoremap <C-j> <C-\><C-n><C-w>j
     tnoremap <C-k> <C-\><C-n><C-w>k
@@ -250,8 +255,8 @@ endif
 "Removes als C-style comments from current fiel
     command Crem :%s/\s*\/\*\(.\|\n\)\{-}\*\/\n//|:%s/\s*\/\/.*$//|:noh
 "Executes current file as script
-    inoremap <F9> <Esc>:w<CR>:!chmod u+x '%:p' && ./%:r.%:e<C-m>
-    nnoremap <F9> <Esc>:w<CR>:!chmod u+x '%:p' && ./%:r.%:e<C-m>
+    inoremap <F9> <Esc>:w<CR>:silent !chmod u+x '%:p'<CR>:Texec ./%:r.%:e<C-m>
+    nnoremap <F9> <Esc>:w<CR>:silent !chmod u+x '%:p'<CR>:Texec ./%:r.%:e<C-m>
     
 "Copy to and paste from Clipboard
     map <C-a> "+y
