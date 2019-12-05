@@ -11,6 +11,14 @@ libfile="$HOME/.config/yadmdotfiles/bash/jcgb.bash"
     source "$libfile" ||
     { 2>echo "Requires '$libfile'!"; exit 1; }
 
+vim_me() {
+    ../yadmdotifiles/bin/nviminstall.sh || true
+    if command -v nvim >/dev/null 2>&1; then
+        echo "Bootstraping Vim"
+        vim '+PlugUpdate' '+PlugClean!' '+PlugUpdate' '+qall'
+    fi
+}
+
 main() {
     echo -e "Bootstrap $(date)\n========="
 }
