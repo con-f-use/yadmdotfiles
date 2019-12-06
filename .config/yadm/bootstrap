@@ -11,7 +11,7 @@ libfile="$HOME/.config/yadmdotfiles/bash/jcgb.bash"
     source "$libfile" ||
     { 2>echo "Requires '$libfile'!"; exit 1; }
 sudo=$(command -v sudo 2>/dev/null || echo -n "")
-
+yadm="$HOME/.local/bin/yadm"
 
 main() {
     echo -e "Bootstrap $(date)\n========="
@@ -19,7 +19,7 @@ main() {
     yadm_submods
     install_debs
     if command -v gnome-keyring &>/dev/null; then
-        git-gnome-keyring.sh
+        $HOME/.config/yadmdotfiles/bin/git-gnome-keyring.sh
     fi
     if [ ! -z "TMPSH" ]; then
         get_tmpsh
@@ -57,7 +57,7 @@ get_tmpsh() {
 
 
 neovim_me() {
-    ../yadmdotifiles/bin/nviminstall.sh || true
+    $HOME/.config/yadmdotifiles/bin/nviminstall.sh || true
     if command -v nvim >/dev/null 2>&1; then
         echo "Bootstraping Vim"
         nvim '+PlugUpdate' '+PlugClean!' '+PlugUpdate' '+qall'
@@ -68,9 +68,9 @@ neovim_me() {
 yadm_submods() {
     oldpwd="$(pwd)"
     cd "$HOME"
-    yadm submodule update --recursive --init
+    $yadm submodule update --recursive --init
     # yadm remote set-url origin "git@github.com:con-f-use/yadmdotfiles.git"
-    yadm remote set-url gitlab "git@conserve.dynu.net:29222/jan/yadmdotfiles.git"
+    $yadm remote set-url gitlab "git@conserve.dynu.net:29222/jan/yadmdotfiles.git"
     echo "don't forget to bashitall"
     cd "$oldpwd"
 }
