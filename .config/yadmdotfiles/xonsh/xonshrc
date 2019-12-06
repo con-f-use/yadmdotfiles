@@ -60,7 +60,7 @@ $RIGHT_PROMPT='😱 {branch_color}{gitstatus: {}}{NO_COLOR} 😱'
 $BOTTOM_TOOLBAR=''
 #$PROMPT_REFRESH_INTERVAL=5 # redraw prompt [default: 0] means no redraw, needs UPDATE_COMPLETIONS_ON_KEYPRESS
 $XONSH_GITSTATUS_STASHED = '⚑ '
-$XONSH_STDERR_PREFIX='{BOLD_RED}'
+$XONSH_STDERR_PREFIX='{BOLD_#ff0000}'
 $XONSH_STDERR_POSTFIX='{NO_COLOR}'
 
 def _zdata():
