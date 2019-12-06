@@ -70,8 +70,10 @@ set list                            " show invisible characters
 set listchars=tab:»·,trail:·,nbsp:· " Display extra whitespace
 set path+=**
 set autochdir   "Follow files into dir
-set softtabstop=4
-set shiftwidth=4
+set tabstop=4   " width of a TAB character
+set softtabstop=4  " Number of columns for a tab
+set shiftwidth=4  " Indents have a witdh of 4 spaces
+set expandtab  " expandtab to spaces
 set tw=79
 set formatoptions-=t
 filetype plugin on
@@ -130,6 +132,7 @@ autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 autocmd FileType c set omnifunc=ccomplete#Complete
 autocmd Filetype html setlocal sw=2 expandtab
+autocmd Filetype make setlocal noexpandtab
 
 let g:SuperTabDefaultCompletionType = "context"
 let g:SuperTabContextDefaultCompletionType = "<c-n>"
