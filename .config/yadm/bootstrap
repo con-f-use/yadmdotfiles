@@ -11,17 +11,48 @@ libfile="$HOME/.config/yadmdotfiles/bash/jcgb.bash"
     source "$libfile" ||
     { 2>echo "Requires '$libfile'!"; exit 1; }
 
-vim_me() {
-    ../yadmdotifiles/bin/nviminstall.sh || true
-    if command -v nvim >/dev/null 2>&1; then
-        echo "Bootstraping Vim"
-        vim '+PlugUpdate' '+PlugClean!' '+PlugUpdate' '+qall'
-    fi
-}
 
 main() {
     echo -e "Bootstrap $(date)\n========="
+    install_debs
+    git clone --recursive \
+      'https://conserve.dynu.net/gitlab/jan/pass.git \ 
+      ~/.config/password-store' ||
+        true
 }
+
+#-------------
+
+install_debs(){
+    if command -v &>/dev/null; then
+        sudo=$(command -v sudo)
+        $sudo apt-get update
+        $sudo apt-get install \
+            pass curl htop dpkg screen net-tools \
+            tar unzip p7zip-full p7zip-rar
+    fi
+}
+
+
+neovim_me() {
+    ../yadmdotifiles/bin/nviminstall.sh || true
+    if command -v nvim >/dev/null 2>&1; then
+        echo "Bootstraping Vim"
+        nvim '+PlugUpdate' '+PlugClean!' '+PlugUpdate' '+qall'
+    fi
+}
+
+
+yadm_submods() {
+    oldpwd="$(pwd)"
+    cd "$HOME"
+    yadm submodule update --recursive --init
+    # yadm remote set-url origin "git@github.com:con-f-use/yadmdotfiles.git"
+    yadm remote set-url gitlab "git@conserve.dynu.net:29222/jan/yadmdotfiles.git"
+    echo "don't forget to bashitall"
+    cd "$oldpwd"
+}
+
 
 if [ "$0" = "$BASH_SOURCE" ]; then
     usage "$@"
