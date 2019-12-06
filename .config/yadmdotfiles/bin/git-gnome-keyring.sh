@@ -4,11 +4,12 @@
 
 oldpwd=$(pwd)
 gcgk=/usr/share/doc/git/contrib/credential/gnome-keyring
+sudo=$(command -v sudo 2>/dev/null || echo -n "")
 
-sudo apt-get install 'libglib[0-9.]{0,}-dev' libgnome-keyring-dev git || exit 1
+$sudo apt-get install 'libglib[0-9.]{0,}-dev' libgnome-keyring-dev git || exit 1
 
 cd "$gcgk" 
-sudo make
+$sudo make
 echo "Use it with:
     git config --global credential.helper $gcgk/git-credential-gnome-keyring"
 cd "$oldpwd"

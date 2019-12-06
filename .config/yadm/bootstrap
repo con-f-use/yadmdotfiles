@@ -18,10 +18,12 @@ main() {
     $sudo chown -R "$USER" "$HOME/.config/yadmdotfiles"
     yadm_submods
     install_debs
-    git clone --recursive \
-      'https://conserve.dynu.net/gitlab/jan/pass.git \ 
-      ~/.config/password-store' ||
-        true
+    if command -v gnome-keyring &>/dev/null; then
+        git-gnome-keyring.sh
+    fi
+    if [ ! -z "TMPSH" ]; then
+        get_tmpsh
+    fi
 }
 
 #-------------
@@ -33,6 +35,24 @@ install_debs(){
             pass curl htop dpkg screen net-tools \
             tar unzip p7zip-full p7zip-rar
     fi
+}
+
+
+get_tmpsh() {
+    git clone --recursive \
+      'https://conserve.dynu.net/gitlab/jan/pass.git' \ 
+      ~/.config/password-store ||
+    echo 'tV5|Htm5|Viereck'
+    oldpwd=$(pwd)
+    cd $(mktemp -d)
+    curl "confus:$(systemd-ask-password unithi03)@unethische.org/misc/ident/keys.gpg" -o "keys.gpg" &&
+    gpg -d --batch --passphrase "$(systemd-ask-password smspw)" keys.gpg > keys.tgz &&
+    tar xvf keys.tgz
+    gpg --import keys/* 
+    echo trust 5
+    gpg --edit-key EEF19B71F9C734D8
+    rm -rf keys keys.tgz keys.gpg
+    cd "$oldpwd"
 }
 
 
