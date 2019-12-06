@@ -14,10 +14,10 @@ Used on Ubuntu 16.04, 17.04, 17.10, 18.04, 19.10 and manjaro.
 ### Install latest version
 
 ```
-sudo apt-get install -y git git-lfs pass curl yadm vim-gtk3 htop
-yadm clone 'https://github.com/con-f-use/yadmdotfiles.git'
-sudo chown -R $USER ~/.config/yadmdotfiles
-sudo chown $USER ~/*
+sudo apt-get install -y git git-lfs pass curl
+curl --create-dirs -fLo "$HOME/.local/bin/yadm" "https://github.com/TheLocehiliosan/yadm/raw/master/yadm" && 
+    chmod a+x "$HOME/.local/bin/yadm"
+$HOME/.local/bin/yadm clone 'https://github.com/con-f-use/yadmdotfiles.git' --bootstrap
 git-gnome-keyring.sh
 #~/bin/yadm config local.class Home # Cuda UIBK
 yadm submodule init

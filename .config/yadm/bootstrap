@@ -10,10 +10,13 @@ libfile="$HOME/.config/yadmdotfiles/bash/jcgb.bash"
 [ -r "$libfile" ] &&
     source "$libfile" ||
     { 2>echo "Requires '$libfile'!"; exit 1; }
+sudo=$(command -v sudo 2>/dev/null || echo -n "")
 
 
 main() {
     echo -e "Bootstrap $(date)\n========="
+    $sudo chown -R "$USER" "$HOME/.config/yadmdotfiles"
+    yadm_submods
     install_debs
     git clone --recursive \
       'https://conserve.dynu.net/gitlab/jan/pass.git \ 
@@ -25,7 +28,6 @@ main() {
 
 install_debs(){
     if command -v &>/dev/null; then
-        sudo=$(command -v sudo)
         $sudo apt-get update
         $sudo apt-get install \
             pass curl htop dpkg screen net-tools \
