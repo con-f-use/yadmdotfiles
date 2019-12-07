@@ -21,9 +21,14 @@ main() {
     if command -v gnome-keyring &>/dev/null; then
         $HOME/.config/yadmdotfiles/bin/git-gnome-keyring.sh
     fi
-    if [ ! -z "TMPSH" ]; then
+    if [ ! -z "$TMPSH" ]; then
         get_tmpsh
     fi
+    if [ ! -z "$NVIM" ]; then
+        neovim_me &> /tmp/nvime.log &
+    fi
+    source $HOME/.bashrc
+    "$HOME/.config/yadmdotfiles/bash/bashit"
 }
 
 #-------------
@@ -33,20 +38,20 @@ install_debs(){
         $sudo apt-get update
         $sudo apt-get install \
             pass curl htop dpkg screen net-tools \
-            tar unzip p7zip-full p7zip-rar
+            tar unzip p7zip-full
     fi
 }
 
 
 get_tmpsh() {
     git clone --recursive \
-      'https://conserve.dynu.net/gitlab/jan/pass.git' \ 
-      ~/.config/password-store ||
-    echo 'tV5|Htm5|Viereck'
+      'https://conserve.dynu.net/gitlab/jan/pass.git' \
+      ~/.config/password-store
+    echo 'tV5|Htm|eck'
     oldpwd=$(pwd)
     cd $(mktemp -d)
-    curl "confus:$(systemd-ask-password unithi03)@unethische.org/misc/ident/keys.gpg" -o "keys.gpg" &&
-    gpg -d --batch --passphrase "$(systemd-ask-password smspw)" keys.gpg > keys.tgz &&
+    curl "confus:$(systemd-ask-password unithi03)@unethische.org/misc/ident/keys.gpg" -o "keys.gpg"
+    gpg -d --batch --passphrase "$(systemd-ask-password smspw)" keys.gpg > keys.tgz
     tar xvf keys.tgz
     gpg --import keys/* 
     echo trust 5

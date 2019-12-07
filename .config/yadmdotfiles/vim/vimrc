@@ -194,8 +194,6 @@ let g:netrw_liststyle=3 " tree view
 """"""""""""""""""""""""""""""
 "{{{
 
-map ; :
-
 " Saving
     inoremap <leader>ww <Esc>:w<Enter>
     inoremap <leader>wq <Esc>:wq<Enter>
