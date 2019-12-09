@@ -15,7 +15,7 @@ libfile="$HOME/.config/yadmdotfiles/bash/jcgb.bash"
 
 
 ubuntu_install_prereqs() {
-    SUDO=$(commadn -v sudo)
+    SUDO=$(command -v sudo 2>/dev/null || echo -n "")
     if command -v apt-get &>/dev/null; then
         $SUDO apt-get install \
             build-essential ninja-build gettext \
