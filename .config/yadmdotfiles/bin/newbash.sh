@@ -51,7 +51,7 @@ fi
 EndHereDoc
 if [ -f "$filename" ]; then
     chmod +x "$filename"
-    xdg-open  "$filename" || true
+    xdg-open  "$filename" & 
 fi
 }
 

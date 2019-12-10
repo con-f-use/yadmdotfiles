@@ -119,15 +119,18 @@ let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
 let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
 
 
-autocmd FileType python set omnifunc=pythoncomplete#Complete
+" autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 autocmd FileType c set omnifunc=ccomplete#Complete
-autocmd Filetype html setlocal sw=2 expandtab
-autocmd Filetype make setlocal noexpandtab
+autocmd FileType html setlocal sw=2 expandtab
+autocmd FileType make setlocal noexpandtab
+autocmd FileType sh setlocal commentstring=#\ %s
+autocmd FileType python setlocal commentstring=#\ %s
+autocmd FileType vim setlocal commentstring=\"\ %s
 
 let g:SuperTabDefaultCompletionType = "context"
 let g:SuperTabContextDefaultCompletionType = "<c-n>"
