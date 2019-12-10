@@ -201,9 +201,9 @@ let g:netrw_liststyle=3 " tree view
     cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 
 " Navigating with guides
-    inoremap <leader><leader> <Esc>/<++><Enter>"_c4l
-    vnoremap <leader><leader> <Esc>/<++><Enter>"_c4l
-    map <leader><leader> <Esc>/<++><Enter>"_c4l
+    inoremap <leader><leader> <Esc>/<++<Enter>"_cf>
+    vnoremap <leader><leader> <Esc>/<++<Enter>"_cf>
+    map <leader><leader> <Esc>/<++<Enter>"_cf>
 
 " Tabbing
     set splitbelow splitright
