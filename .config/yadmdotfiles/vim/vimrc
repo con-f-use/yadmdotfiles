@@ -51,6 +51,8 @@ set autoread
 set mouse=a     "Use mouse
 set clipboard=unnamedplus  "use system clipboard
 set smarttab    "Smart Tabulator
+set nobackup
+set noswapfile
 set smartcase   "Smat casematching
 set dir=/tmp/   "Dir for swapfiles
 set undofile    " persistent undos - undo after you re-open the file
@@ -68,26 +70,21 @@ set autochdir   "Follow files into dir
 set tabstop=4   " width of a TAB character
 set softtabstop=4  " Number of columns for a tab
 set shiftwidth=4  " Indents have a witdh of 4 spaces
-set expandtab  " expandtab to spaces
+set expandtab   "Make spaces out of tabs
+set shiftround  "Shift to next tab marker
 set tw=79
 set formatoptions-=t
 filetype plugin on
 filetype indent on
 set wildmenu
 set wildignore=*.swp,*.bak,*.pyc,*.class
+set wildmode=list:longest,full   "Command mode completions behaves as in shell
 set nostartofline   "keeps cursor in the same colum after movements
-set nobackup
-set noswapfile
 set ofu=syntaxcomplete#Complete
 au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
 set completeopt=menuone,menu,longest,preview
-set wildmode=list:longest,full   "Command mode completions behaves as in shell
 set hidden      "Better buffer management
-set expandtab   "Make spaces out of tabs
-set shiftround  "Shift to next tab marker
-set shiftwidth=4        "Width of a tab marker
 "set shortmess-=S  "Indexed search
-set smartcase
 set history=10000    "Longer history
 set undolevels=1000
 "set esckeys " Allow cursor keys in insert mode
