@@ -21,13 +21,17 @@ except ImportError:
     warn("Logs will not be colored (;_;)")
 
 # Standard Library
-import stat, subprocess, gzip, re, math, glob, logging, time, random, itertools
-import functools, requests, datetime, time, string, tempfile
+import stat, subprocess, gzip, re, math, glob, logging, time, random, tempfile
+import functools, operator, itertools, requests, datetime, time, string
 import importlib, json, binascii, hashlib, platform, socket, collections
 import textwrap, base64 as b64, inspect, dis
 from pprint import pprint, pformat
 import tarfile as tf, zipfile as zf
 from OpenSSL import crypto, SSL
+
+from operator import methodcaller as meth, attrgetter as attr, itemgetter as item
+from itertools import starmap, permutations, repeat, groupby, product
+from functools import partial, wraps, reduce
 
 try:
     from pathlib2 import Path as P  # Python 2
@@ -142,4 +146,5 @@ try:
     p = P(p).expanduser()
 except:
     pass
-info('vars:\n    d: dict  l: list  s: string  M: matrix  p: path  t:today  r:flrex')
+info('vars:\nd: dict  l: list  s: string  M: matrix  p: path  t:today  r:flrex')
+info('funcs:\nmeth attr item starmap permutations repeat groupby product partial wraps reduce')
