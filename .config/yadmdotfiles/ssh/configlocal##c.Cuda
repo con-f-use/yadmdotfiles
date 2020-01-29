@@ -25,3 +25,4 @@ Host 10.17.70.10? 10.17.70.11? 10.17.68.14? !10.17.68.141 !10.17.68.140
     StrictHostKeyChecking no
     UserKnownHostsFile=/dev/null
     PreferredAuthentications password,keyboard-interactive
+

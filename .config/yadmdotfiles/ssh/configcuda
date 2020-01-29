@@ -16,16 +16,33 @@ Host qaportal
     ControlPath /tmp/ssh-%l@%n.%r@%h.%p
     ControlPersist 360000
 
-Host vmhsot
+Host vmspanni
+    HostName 10.17.37.200
+    User root
+    PreferredAuthentications publickey,password,keyboard-interactive
+    IdentityFile ~/.ssh/id_rsa
+    ControlMaster auto
+    ControlPath /tmp/ssh-%l@%n.%r@%h.%p
+    ControlPersist 360000
+
+Host vmhost
     HostName 10.17.70.254
     User root
     Compression yes
+    PreferredAuthentications publickey,password,keyboard-interactive
     ForwardX11 no
     ControlMaster auto
     PreferredAuthentications password,keyboard-interactive,publickey
     ControlPath /tmp/ssh-%l@%n.%r@%h.%p
     ControlPersist 360000
 
+Host frskvm 
+    HostName 10.17.6.217
+    User root
+    PreferredAuthentications publickey,password,keyboard-interactive
+    ControlMaster auto
+    ControlPath /tmp/ssh-%l@%n.%r@%h.%p
+    ControlPersist 360000
 
 Host vmoldie
     HostName 10.17.6.216
@@ -100,6 +117,17 @@ Host zangdocker
     HostName 10.17.36.103
     User jan
     PreferredAuthentications publickey,password,keyboard-interactive
+
+Host frs
+    HostName 10.17.70.192
+    User root
+    PreferredAuthentications publickey,password,keyboard-interactive
+
+Host frscz
+    HostName 10.17.79.130
+    User root
+    PreferredAuthentications publickey,password,keyboard-interactive
+
 
 # Probably gone
 # Host jcdocker

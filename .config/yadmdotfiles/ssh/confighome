@@ -1,6 +1,32 @@
 Host conserve
     User confus
     Compression yes
+    #RemoteForward ~/.local/nvim_sockets/me ~/.local/nvim_sockets/
+    #LocalForward ~/.local/nvim_sockets/me ~/.local/nvim_sockets
+    StreamLocalBindUnlink yes
+
+Host contest
+    User confus
+    Compression yes
+    HostName conserve.dynu.net
+    UserKnownHostsFile /dev/null
+    StrictHostKeyChecking no
+    Compression yes
+
+    StreamLocalBindUnlink yes
+
+    #RemoteForward /home/jan/.local/nvim_sockets/me /home/confus/.local/nvim_sockets/me2
+
+    #RemoteForward ~/.local/nvim_sockets/me ~/.local/nvim_sockets/me2
+    # debug1: Remote connections from ~/.local/nvim_sockets/me:-2 forwarded to local address ~/.local/nvim_sockets/me2:-2
+    # Warning: remote port forwarding failed for listen path ~/.local/nvim_sockets/me
+
+    #LocalForward ~/.local/nvim_sockets/me ~/.local/nvim_sockets
+    # 1: Local connections to ~/.local/nvim_sockets/me:-2 forwarded to remote address ~/.local/nvim_sockets:-2
+    # bind: No such file or directory
+    # unix_listener: cannot bind to path: ~/.local/nvim_sockets/me
+    # Could not request local forwarding.
+
 
 Host naserve
     User conserve

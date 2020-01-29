@@ -20,7 +20,11 @@ for option in autocd globstar dirspell direxpand direxpand; do
     fi
 done
 export PATH="$HOME/bin:$HOME/.local/bin:$(readlink -f "$BASHYDM/../bin"):$PATH"
-export EDITOR=/usr/bin/vim   # Standard editor
+export EDITOR="$HOME/.local/bin/nvim"   # Standard editor
+export NVIM_LISTEN_ADDRESS="$HOME/nvim_sockets/me"
+if [ ! -x "$EDITOR" ]; then
+    export EDITOR=/usr/bin/vim
+fi
 export VISUAL="$EDITOR"
 export FULLNAME='Jan Christoph Bischko'
 export FULL_NAME="$FULLNAME"
