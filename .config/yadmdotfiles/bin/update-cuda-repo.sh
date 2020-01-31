@@ -21,10 +21,10 @@ main() {
     install_requires
     oldpwd="$(pwd)"
 
-    for repo in bnnga/{autotest,ansible,autotest-infrastructure,webservices,jenkins-files,autotest-dockerfiles,dockerfiles-general,docker-registry,random_scripts} \
+    for repo in bnnga/{autotest,ansible,autotest-infrastructure,webservices,jenkins-files,autotest-dockerfiles,dockerfiles-general,docker-registry,resource-analyzer,random_scripts,jenkins-files,jenkins-libraries,weasel,} \
         '~jbischko/'{cudadevpi,touchmysc,cudasetuptools,ztcrypt,atdiff} \
         '~gchappell/ztdclient' \
-        '~czangerle/'{cookiecutter,qa_mongoengine,qa_host_controller};
+        '~czangerle/'{cookiecutter,qa_mongoengine,qa_host_controller,qctrl};
     do
         repodir="$basedir/$(basename "$repo")"
         if [ -d "$repodir/.git" ]; then
