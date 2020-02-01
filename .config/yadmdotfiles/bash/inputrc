@@ -31,6 +31,11 @@ set menu-complete-display-prefix on
 
 # Flip through autocompletion matches with Shift-Tab.
 "\e[Z": menu-complete
+"\e\e[C": forward-word
+"\e\e[D": backward-word
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+
 #set completion-ignore-case On
 $if Bash
     Space: magic-space
