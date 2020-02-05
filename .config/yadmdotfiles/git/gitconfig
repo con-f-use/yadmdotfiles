@@ -28,6 +28,7 @@
     ci = commit
     b = branch
     co = checkout
+    cl = clone
     re = remote
     d = diff -w --ignore-all-space
     sl = stash list --pretty=format:\"%C(red)%h%C(reset) - %C(dim yellow)(%C(bold magenta)%gd%C(dim yellow))%C(reset) %<(70,trunc)%s %C(green)(%cd) %C(bold blue)<%an>%C(reset)\"
