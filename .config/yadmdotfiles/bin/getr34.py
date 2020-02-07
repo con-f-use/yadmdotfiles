@@ -114,7 +114,8 @@ def save_image(img):
 
 def get_pages(domain, galsoup):
     """Get gallery pages from parsed first page."""
-    lst = galsoup.findAll('a', text='Last')[0].get('href')
+    lst = galsoup.findAll('a', text='Last') or galsoup.findAll('a', text='Random')
+    lst = lst[0].get('href')
     lst, nParts = re.match(r'(.*)/(\d+?)$', lst).group(1, 2)
     makeabs = lambda x: domain + lst + '/' + str(x + 1)
     return map(makeabs, range(int(nParts)))
