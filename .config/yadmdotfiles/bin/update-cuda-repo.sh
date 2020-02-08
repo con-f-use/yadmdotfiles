@@ -11,6 +11,9 @@ install_requires() {
         echo will cite | parallel --citation
 }
 
+# https://folsom.ngdev.eu.ad.cuda-inc.com/projects/ENV/repos/git-ng/
+# https://folsom.ngdev.eu.ad.cuda-inc.com/projects/ENV/repos/ngbuild/
+# https:///folsom.ngdev.eu.ad.cuda-inc.com/scm/env/ngbuild.git
 
 main() {
     basedir=${1:-~/devel/cuda}
@@ -24,16 +27,22 @@ main() {
     for repo in bnnga/{autotest,ansible,autotest-infrastructure,webservices,jenkins-files,autotest-dockerfiles,dockerfiles-general,docker-registry,resource-analyzer,random_scripts,jenkins-files,jenkins-libraries,weasel,} \
         '~jbischko/'{cudadevpi,touchmysc,cudasetuptools,ztcrypt,atdiff} \
         '~gchappell/ztdclient' \
-        '~czangerle/'{cookiecutter,qa_mongoengine,qa_host_controller,qctrl};
+        '~czangerle/'{cookiecutter,qa_mongoengine,qa_host_controller,qctrl} \
+        'https:///folsom.ngdev.eu.ad.cuda-inc.com/scm/env/'{git-ng,ngbuild};
     do
         repodir="$basedir/$(basename "$repo")"
         if [ -d "$repodir/.git" ]; then
-            echo -n "cd '$repodir' && git fetch --recurse-submodules && "
+            echo -n "cd '$repodir' && git fetch --recurse-submodules --all && "
             echo "git pull || 1>&2 echo 'Pull failed for $repo'"
         else
             echo -n "echo '$repo does not exist, cloning...'; "
             echo -n "cd $basedir && git clone --recursive "
-            echo "'ssh://git@stash.cudaops.com:7999/$repo.git' '$repodir' || 1>&2 echo 'Cone failed for $repo'"
+            if [[ $repo = ssh://* ]] || [[ $repo = https://* ]]; then
+                fullrepo="$repo"
+            else
+                fullrepo="ssh://git@stash.cudaops.com:7999/$repo"
+            fi
+            echo "'$fullrepo.git' '$repodir' || 1>&2 echo 'Cone failed for $repo'"
         fi
     done | parallel --jobs 4
 }

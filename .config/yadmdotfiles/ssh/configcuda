@@ -44,16 +44,6 @@ Host frskvm
     ControlPath /tmp/ssh-%l@%n.%r@%h.%p
     ControlPersist 360000
 
-Host vmoldie
-    HostName 10.17.6.216
-    User root
-    Compression yes
-    ForwardX11 no
-    ControlMaster auto
-    PreferredAuthentications password,keyboard-interactive,publickey
-    ControlPath /tmp/ssh-%l@%n.%r@%h.%p
-    ControlPersist 360000
-
 Host qajenkins
     HostName 10.17.36.245
     PreferredAuthentications publickey,password,keyboard-interactive
@@ -94,6 +84,10 @@ Host friederike
 
 Host folsom
     HostName folsom.ngdev.eu.ad.cuda-inc.com
+    User jbischko
+
+Host stash
+    HostName stash.cudaops.com:7999
     User jbischko
 
 #### Jan
