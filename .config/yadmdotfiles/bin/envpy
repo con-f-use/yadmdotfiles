@@ -11,14 +11,15 @@ libfile="$HOME/.config/yadmdotfiles/bash/jcgb.bash"
 main() {
     vers=${1:-3}
     > .envrc echo -e \
-        "layout python$vers" \
+        "layout python${vers}\n" \
         "#has <prog>            # checks if command available\n" \
         "#expand_path <rel_path> [<root>]\n" \
         "#dotenv <path>         #load .env file\n" \
         "#source_env <path>     #load .env without security check\n" \
         "#source_up <filename>  #load .env searched from parent dir up to /\n" \
         "#PATH_add <path>       #prepends epanded path\n" \
-        "#watch_file <path>,..  #add path to security watch"
+        "#watch_file <path>,..  #add path to security watch\n" \
+        "#export VAR_NAME=VALUE #exports a varialbe to the environment\n"
     direnv allow .
 }
 
