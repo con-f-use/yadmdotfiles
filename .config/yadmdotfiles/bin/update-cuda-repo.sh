@@ -11,10 +11,6 @@ install_requires() {
         echo will cite | parallel --citation
 }
 
-# https://folsom.ngdev.eu.ad.cuda-inc.com/projects/ENV/repos/git-ng/
-# https://folsom.ngdev.eu.ad.cuda-inc.com/projects/ENV/repos/ngbuild/
-# https:///folsom.ngdev.eu.ad.cuda-inc.com/scm/env/ngbuild.git
-
 main() {
     basedir=${1:-~/devel/cuda}
     basedir=$(readlink -f "$basedir")
@@ -38,11 +34,11 @@ main() {
             echo -n "echo '$repo does not exist, cloning...'; "
             echo -n "cd $basedir && git clone --recursive "
             if [[ $repo = ssh://* ]] || [[ $repo = https://* ]]; then
-                fullrepo="$repo"
+                fullrepo="$repo.git"
             else
-                fullrepo="ssh://git@stash.cudaops.com:7999/$repo"
+                fullrepo="ssh://git@stash.cudaops.com:7999/$repo.git"
             fi
-            echo "'$fullrepo.git' '$repodir' || 1>&2 echo 'Cone failed for $repo'"
+            echo "'$fullrepo' '$repodir' || 1>&2 echo 'Cone failed for $repo'"
         fi
     done | parallel --jobs 4
 }
