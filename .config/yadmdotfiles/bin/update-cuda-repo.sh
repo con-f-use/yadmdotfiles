@@ -7,8 +7,8 @@ Update or clone the most used cuda-repos.
 
 install_requires() {
     command -v parallel &>/dev/null ||
-        sudo apt-get install parallel &&
-        echo will cite | parallel --citation
+        { sudo apt-get install parallel && 
+            echo will cite | parallel --citation; }
 }
 
 main() {
@@ -20,7 +20,10 @@ main() {
     install_requires
     oldpwd="$(pwd)"
 
-    for repo in bnnga/{autotest,ansible,autotest-infrastructure,webservices,jenkins-files,autotest-dockerfiles,dockerfiles-general,docker-registry,resource-analyzer,random_scripts,jenkins-files,jenkins-libraries,weasel,} \
+    for repo in \
+        bnnga/{autotest,ansible,autotest-infrastructure,webservices,jenkins-files} \
+        bnnga/{autotest-dockerfiles,dockerfiles-general,docker-registry} \
+        bnnga/{resource-analyzer,random_scripts,jenkins-files,jenkins-libraries,weasel} \
         '~jbischko/'{cudadevpi,touchmysc,cudasetuptools,ztcrypt,atdiff} \
         '~gchappell/ztdclient' \
         '~czangerle/'{cookiecutter,qa_mongoengine,qa_host_controller,qctrl} \
@@ -48,9 +51,7 @@ if [ "$0" = "$BASH_SOURCE" ]; then
         set -o xtrace
         shopt -s shift_verbose
     fi
-    set -o errexit
-    set -o nounset
-    set -o pipefail
+    set -o errexit -o nounset -o pipefail
 
     for itm in "$@"; do  # handle help message
     if [[ $itm =~ ^(-h|--help|-help|-\?)$ ]]; then

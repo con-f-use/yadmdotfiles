@@ -72,6 +72,9 @@
 [url "ssh://git@stash.cudaops.com:7999/"]
     insteadOf = "stash:"
 
+[url "ssh://git@stash.cudaops.com:7999/~jbischko/"]
+    insteadOf = "jcb:"
+
 [url "ssh://git@stash.cudaops.com:7999/bnnga/"]
     insteadOf = "nga:"
 
