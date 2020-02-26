@@ -45,7 +45,12 @@ xontrib load histcpy
 
 
 def get_shelldate():
+    get_shelldate.fulldate %= 10 
+    get_shelldate.fulldate += 1
+    if get_shelldate.fulldate == 1:
+        return time.strftime('%d%m%Y')
     return time.strftime('%d-%H:%M')
+get_shelldate.fulldate = 0
 
 $PROMPT_FIELDS['shelldate'] = get_shelldate
 
