@@ -10,6 +10,7 @@ logcfg = {
     'stream': sys.stderr,
 }
 
+
 try:
     import coloredlogs
 
@@ -19,6 +20,17 @@ try:
 except ImportError:
     logging.basicConfig(**logcfg)
     warn("Logs will not be colored (;_;)")
+
+
+# Aliases for copy&pasting json
+try:
+    import __builtin__
+except:
+    import builtins as __builtin__
+__builtin__.true = True
+__builtin__.false = False
+__builtin__.null = None
+
 
 # Standard Library
 import stat, subprocess, gzip, re, math, glob, logging, time, random, tempfile

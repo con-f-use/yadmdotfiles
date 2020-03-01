@@ -2,6 +2,16 @@
 # sudo pip3 install xonsh[ptk,linux,pygments,proctitle]
 # xonsh -c xpip install xonsh-direnv xontrib-z xontrib-histcpy
 
+# Aliases for copy&pasting json
+try:
+    import __builtin__
+except:
+    import builtins as __builtin__
+__builtin__.true = True
+__builtin__.false = False
+__builtin__.null = None
+
+
 import os, sys, re, time, datetime
 sys.path.append('.')
 
