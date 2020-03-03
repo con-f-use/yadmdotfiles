@@ -322,5 +322,7 @@ endif
 "Startup commands
 """"""""""""""""""""""""""""
 au! BufWritePost .vimrc source %    "Reload .vimrc automatically on change
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+endif
 noh
-
