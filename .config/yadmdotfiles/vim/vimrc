@@ -52,6 +52,7 @@ set autoread
 set mouse=a     "Use mouse
 set clipboard=unnamedplus  "use system clipboard
 set smarttab    "Smart Tabulator
+set tabpagemax=50
 set nobackup
 set noswapfile
 set smartcase   "Smat casematching
@@ -77,6 +78,8 @@ set tw=79
 set formatoptions-=t
 filetype plugin on
 filetype indent on
+set nrformats-=octal
+set laststatus=2
 set wildmenu
 set wildignore=*.swp,*.bak,*.pyc,*.class
 set wildmode=list:longest,full   "Command mode completions behaves as in shell
@@ -88,13 +91,24 @@ set hidden      "Better buffer management
 "set shortmess-=S  "Indexed search
 set history=10000    "Longer history
 set undolevels=1000
+if !&scrolloff
+  set scrolloff=3
+endif
+if !&sidescrolloff
+  set sidescrolloff=8
+endif
+set display+=lastline
+if v:version > 703 || v:version == 703 && has("patch541")
+  set formatoptions+=j " Delete comment character when joining commented lines
+endif
 "set esckeys " Allow cursor keys in insert mode
 set backspace=indent,eol,start " Allow backspace in insert mode
 set ttyfast " Optimize for fast terminal connections
 set gdefault " Add the g flag to search/replace by default
 set exrc "  Enable per-directory .vimrc files
 set secure " and disable unsafe commands in them
-
+set sessionoptions-=options
+set viewoptions-=options
 set tags+=~/.vim/tags/cpp
 set tags+=~/.vim/systags
 "}}}
