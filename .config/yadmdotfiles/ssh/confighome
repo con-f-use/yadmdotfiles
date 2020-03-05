@@ -72,3 +72,12 @@ Host convolve
     ControlPath /tmp/ssh-%l@%n.%r@%h.%p
     ControlPersist 360000
 
+Host gh
+    HostName github.com
+    User con-f-use
+
+Host jan
+    HostName conserve.dynu.net
+    Port 29222
+    User jan
+
