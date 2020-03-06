@@ -19,8 +19,10 @@ main() {
         "#source_up <filename>  #load .env searched from parent dir up to /\n" \
         "#PATH_add <path>       #prepends epanded path\n" \
         "#watch_file <path>,..  #add path to security watch\n" \
-        "#export VAR_NAME=VALUE #exports a varialbe to the environment\n"
-    direnv allow .
+        "#export VAR_NAME=VALUE #exports a varialbe to the environment\n" \
+        "#dotenv <path>         #load a .env file e.g. used in node & ruby\n" \
+        "#use <tool>            # e.g. nix for version pinning"
+    direnv allow ./
 }
 
 if [ "$0" = "$BASH_SOURCE" ]; then
