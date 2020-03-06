@@ -79,5 +79,5 @@ Host gh
 Host jan
     HostName conserve.dynu.net
     Port 29222
-    User jan
+    User git
 
