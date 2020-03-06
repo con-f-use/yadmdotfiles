@@ -78,7 +78,7 @@ Host order
     ControlPath /tmp/ssh-%l@%n.%r@%h.%p
     ControlPersist 360000
 
-Host friederike
+Host rike
     HostName friederike.ngdev.eu.ad.cuda-inc.com
     User jbischko
 
@@ -87,7 +87,8 @@ Host folsom
     User jbischko
 
 Host stash
-    HostName stash.cudaops.com:7999
+    HostName stash.cudaops.com
+    Port 7999
     User jbischko
 
 #### Jan

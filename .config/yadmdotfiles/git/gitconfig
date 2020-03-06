@@ -51,12 +51,12 @@
     user = jan
 
 [url "http://github.com/"]
-    insteadOf = "gh:"
+    insteadOf = "gith:"
 
 [url "git@github.com:"]
     pushInsteadOf = "https://github.com/"
     pushInsteadOf = "http://github.com/"
-    pushInsteadOf = "gh:"
+    pushInsteadOf = "gith:"
 
 [url "git@gist.github.com:"]
     insteadOf = "gst:"
@@ -65,12 +65,6 @@
 
 [url "git://gist.github.com/"]
     insteadOf = "gist:"
-
-[url "ssh://git@conserve.dynu.net:29222/jan/"]
-    insteadOf = "jan:"
-
-[url "ssh://git@stash.cudaops.com:7999/"]
-    insteadOf = "stash:"
 
 [url "ssh://git@stash.cudaops.com:7999/~jbischko/"]
     insteadOf = "jcb:"
