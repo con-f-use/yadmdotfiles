@@ -16,26 +16,36 @@ endif
 " Install plugins
 call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-surround'
-Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-obsession'
-Plug 'christoomey/vim-system-copy'
 Plug 'christoomey/vim-sort-motion'
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-entire'
 Plug 'kana/vim-textobj-line'
-Plug 'Yggdroot/indentLine'
 Plug 'godlygeek/tabular'
-Plug 'google/vim-searchindex'
-"Plug 'davidhalter/jedi-vim'
 Plug 'con-f-use/vim-pythonindent'
-Plug 'joshdick/onedark.vim'
+if !exists('g:vscode')
+    Plug 'christoomey/vim-system-copy'
+    Plug 'Yggdroot/indentLine'
+    Plug 'tpope/vim-commentary'
+    Plug 'tpope/vim-obsession'
+    Plug 'google/vim-searchindex'
+    Plug 'davidhalter/jedi-vim'
+    Plug 'joshdick/onedark.vim'
+endif
 if has('nvim')
 "    Plug 'rakr/vim-one'  
     Plug 'kassio/neoterm'
 endif
 call plug#end()
+
+if exists('g:vscode')
+"Emulate commentary in vscode
+    xmap gc  <Plug>VSCodeCommentary
+    nmap gc  <Plug>VSCodeCommentary
+    omap gc  <Plug>VSCodeCommentary
+    nmap gcc <Plug>VSCodeCommentaryLine
+endif
 
 "}}}
 
