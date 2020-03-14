@@ -74,7 +74,9 @@ Host convolve
 
 Host gh
     HostName github.com
-    User con-f-use
+    # User con-f-use
+    User git
+    IdentityFile ~/.ssh/id_rsa_confusion
 
 Host jan
     HostName conserve.dynu.net
