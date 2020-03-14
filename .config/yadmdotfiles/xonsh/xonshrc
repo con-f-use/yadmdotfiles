@@ -50,7 +50,7 @@ xontrib load z
 xontrib load direnv
 xontrib load whole_word_jumping
 xontrib load prompt_ret_code
-xontrib load bashisms
+#xontrib load bashisms
 xontrib load histcpy
 
 
@@ -103,6 +103,37 @@ def _stdfilter(args, stdin, stdout):
         print(res, file=stdout, flush=True)
  
 aliases['stdfilter'] = _stdfilter
+
+$NIX_USER_PROFILE_DIR="/nix/var/nix/profiles/per-user/$USER"
+$NIX_PROFILES="/nix/var/nix/profiles/default $HOME/.nix-profile"
+$NIX_SSL_CERT_FILE="/etc/ssl/certs/ca-certificates.crt"
+$NIX_PATH="nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixpkgs:/nix/var/nix/profiles/per-user/root/channels"
+$PATH += [f"{$HOME}/.nix-profile/bin", "/nix/var/nix/profiles/default/bin"]
+
+
+import shlex
+def alias(args, stdin=None):
+    ret = 0
+
+    if args:
+        for arg in args:
+            if "=" in arg:
+                # shlex.split to remove quotes, e.g. "foo='echo hey'" into
+                # "foo=echo hey"
+                name, cmd = shlex.split(arg)[0].split("=", 1)
+                aliases[name] = shlex.split(cmd)
+            elif arg in aliases:
+                print("{}={}".format(arg, aliases[arg]))
+            else:
+                print("alias: {}: not found".format(arg), file=sys.stderr)
+                ret = 1
+    else:
+        for alias, cmd in aliases.items():
+            print("{}={}".format(alias, cmd))
+
+    return ret
+
+aliases["alias"] = alias
 
 
 aliases['autoprx'] = '$AUTOSSH_DEBUG="y"; autossh -f -N -D 0.0.0.0:1080 conserve'

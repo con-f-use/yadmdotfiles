@@ -25,6 +25,7 @@ Plug 'kana/vim-textobj-line'
 Plug 'godlygeek/tabular'
 Plug 'con-f-use/vim-pythonindent'
 if !exists('g:vscode')
+    Plug 'psf/black'
     Plug 'christoomey/vim-system-copy'
     Plug 'Yggdroot/indentLine'
     Plug 'tpope/vim-commentary'
@@ -294,7 +295,7 @@ endif
 
 "HTML {{{
     autocmd FileType html inoremap <leader>html <Esc>:-1read $HOME/.vim/template.html<CR> "Load html template
-    autocmd FileType html inoremap <leader>h <html><head><Enter><title><++></title> <Esc><<i<Enter></head><body> <Esc><<i<Enter><p><++></p><Enter><++><Enter></body></html><Enter><Esc>gg0
+    autocmd FileType html inoremap <leader>h <html><head><Enter><title><++></title><meta charset="UTF-8"> <Esc><<i<Enter></head><body> <Esc><<i<Enter><p><++></p><Enter><++><Enter></body></html><Enter><Esc>gg0
     autocmd FileType html inoremap <leader>b <b></b><Space><++><Esc>FbT>i
     autocmd FileType html inoremap <leader>it <em></em><Space><++><Esc>FeT>i
     autocmd FileType html inoremap <leader>1 <h1></h1><Enter><Enter><++><Esc>2kf<i

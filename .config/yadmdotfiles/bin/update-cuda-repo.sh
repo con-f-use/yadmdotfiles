@@ -24,7 +24,7 @@ main() {
         bnnga/{autotest,ansible,autotest-infrastructure,webservices,jenkins-files} \
         bnnga/{autotest-dockerfiles,dockerfiles-general,docker-registry} \
         bnnga/{resource-analyzer,random_scripts,jenkins-files,jenkins-libraries,weasel} \
-        '~jbischko/'{cudadevpi,touchmysc,cudasetuptools,ztcrypt,atdiff} \
+        '~jbischko/'{cudadevpi,touchmysc,cudasetuptools,ztcrypt,atdiff,deploytester} \
         '~gchappell/ztdclient' \
         '~czangerle/'{cookiecutter,qa_mongoengine,qa_host_controller,qctrl} \
         'https:///folsom.ngdev.eu.ad.cuda-inc.com/scm/env/'{git-ng,ngbuild};
