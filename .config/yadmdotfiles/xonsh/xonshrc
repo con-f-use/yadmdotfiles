@@ -146,6 +146,7 @@ aliases['jc'] = 'sudo journalctl'
 aliases['envpy2']='echo "layout python2" > .envrc; direnv allow .'
 aliases['envpy3']='echo "layout python3" > .envrc; direnv allow .'
 aliases['xpaste']='xclip -o -selection clipboard'
+aliases['xcopy']='xclip -i -selection clipboard'
 
 if os.path.exists($HOME + '/.local/bin/nvim'):
     os.environ['EDITOR'] = $HOME + '/.local/bin/nvim'

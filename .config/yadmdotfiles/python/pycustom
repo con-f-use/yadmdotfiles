@@ -21,6 +21,7 @@ except ImportError:
     logging.basicConfig(**logcfg)
     warn("Logs will not be colored (;_;)")
 
+warn("Using startup file: '%s'", __file__)
 
 # Aliases for copy&pasting json
 try:
@@ -33,13 +34,16 @@ __builtin__.null = None
 
 
 # Standard Library
-import stat, subprocess, gzip, re, math, glob, logging, time, random, tempfile
+import stat, subprocess, gzip, re, math, glob, time, random, tempfile
 import functools, operator, itertools, requests, datetime, time, string
 import importlib, json, binascii, hashlib, platform, socket, collections
 import textwrap, base64 as b64, inspect, dis
 from pprint import pprint, pformat
 import tarfile as tf, zipfile as zf
-from OpenSSL import crypto, SSL
+try:
+    from OpenSSL import crypto, SSL
+except ImportError:
+    pass
 
 from operator import methodcaller as meth, attrgetter as attr, itemgetter as item
 from itertools import starmap, permutations, repeat, groupby, product
@@ -54,7 +58,7 @@ except (ImportError, AttributeError):
 
 
 # Try to import additional variables and packages
-pkgs = [
+pkgs = {
     'tzlocal',
     'dateutil',
     'numpy',
@@ -68,19 +72,21 @@ pkgs = [
     'click',
     'attrs',
     'pandas',
-]
+}
 
 if 'jcgbx' in platform.node():
     locals().update({k: v for k, v in os.environ.items() if k.startswith('FBOS_')})
     if sys.version_info.major < 3:
         pkgs += ['pyapi', 'lib', 'libs']
 
+nopes = set()
 for pkg in pkgs:
     try:
         globals()[pkg] = importlib.import_module(pkg)
     except (ImportError, SyntaxError):
-        warn("Package not imported: %s", sys.exc_info()[1])
-
+        nopes.add(str(sys.exc_info()[1]).replace('No module named ',''))
+if nopes:
+    warn("Packages not imported: %s", ", ".join(nopes))
 
 # Special settings for matplotlib
 try:
@@ -134,6 +140,18 @@ def importupdate(*packs):
             error('Install/upgrade `' + pack + '` manually')
         finally:
             globals()[pack] = importlib.import_module(pack)
+
+
+class UTC(datetime.tzinfo):
+    """Python2/3 compatible utc timezone class.
+
+    Python3 has `datetime.timezone.utc`.
+    """
+    _ZERO = datetime.timedelta(0)
+    def utcoffset(self, dt): return self._ZERO
+    def tzname(self, dt): return "UTC"
+    def dst(self, dt): return self._ZERO
+timezone_utc = UTC()
 
 
 # logging:
