@@ -31,6 +31,7 @@ export FULL_NAME="$FULLNAME"
 shopt -u mailwarn       # Don't tell me when my mail is read
 unset MAILCHECK
 export PASSWORD_STORE_DIR="$HOME/.config/password-store/"
+export XDG_CACHE_HOME="$HOME/.cache"
 
 
 #############
@@ -52,6 +53,7 @@ export PROMPT_COMMAND=$(sed 's/;\(\s\|;\)\+/;/g' <<< $PROMPT_COMMAND | sed 's/;*
 #############
 # Manpages
 #############
+export LESSHISTFILE="$XDG_CACHE_HOME/less/history"
 export MANPAGER='less -X'; # Don’t clear the screen after quitting a manual page.
 # Show colored man-pages
 export LESS_TERMCAP_mb=$'\E[01;31m'
