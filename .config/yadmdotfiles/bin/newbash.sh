@@ -8,13 +8,13 @@ author: confus <con-f-use@gmx.net>"
 
 default_filename=/dev/stdout
 
-libfile="$HOME/.config/yadmdotfiles/bash/jcgb.bash"
-[ -r "$libfile" ] || { 2>echo "Requires '$libfile'!"; exit 1; }
-source "$libfile" 
+libfile="$HOME/.local/lib/jcgb/jcgb.bash"
+[ -e "$libfile" ] || curl --create-dirs --output "$libfile" 'https://gist.githubusercontent.com/con-f-use/7914e4896f615b926eef63b4739e993f/raw/66215fcfa18195d0261a3fdfe5a204da48a1ca8c/jcgb.sh' || { 2>echo "Requires '$libfile'!"; exit 1; }
+source "$libfile"
 
 main() {
 filename=${1:-$default_filename}
-cat - > "$filename" <<- EndHereDoc
+cat - >> "$filename" <<- EndHereDoc
 #!/bin/bash
 # encoding: UTF-8, break: linux, indent: 4 spaces, lang: bash 3+/eng
 description="./\$0 -h | [args...]
@@ -23,8 +23,8 @@ description="./\$0 -h | [args...]
 date: $(LANG=en_US date)
 author: ${FULL_NAME:-${USER:-}} <${USER_EMAIL:-a.b@c.de}>"
 
-libfile="\$HOME/.config/yadmdotfiles/bash/jcgb.bash"
-[ -r "\$libfile" ] || { 2>echo "Requires '\$libfile'!"; exit 1; }
+libfile="\$HOME/.local/lib/jcgb/jcgb.bash"
+[ -e "\$libfile" ] || curl --insecure --create-dirs --output "\$libfile" 'https://gist.githubusercontent.com/con-f-use/7914e4896f615b926eef63b4739e993f/raw/66215fcfa18195d0261a3fdfe5a204da48a1ca8c/jcgb.sh' || { 2>echo "Requires '\$libfile'!"; exit 1; }
 source "\$libfile"
 
 main() {
