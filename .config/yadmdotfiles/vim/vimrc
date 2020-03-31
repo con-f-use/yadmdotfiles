@@ -24,6 +24,7 @@ Plug 'kana/vim-textobj-entire'
 Plug 'kana/vim-textobj-line'
 Plug 'godlygeek/tabular'
 Plug 'con-f-use/vim-pythonindent'
+Plug 'yhat/vim-docstring'
 if !exists('g:vscode')
     Plug 'psf/black'
     Plug 'christoomey/vim-system-copy'
