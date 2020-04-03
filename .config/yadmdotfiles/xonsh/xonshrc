@@ -13,6 +13,7 @@ __builtin__.null = None
 
 
 import os, sys, re, time, datetime
+from pprint import pprint
 sys.path.append('.')
 
 for x in {'bin', '.config/yadmdotfiles/bin', '.local/bin'}:
