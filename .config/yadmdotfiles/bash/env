@@ -69,7 +69,6 @@ export PYTHONIOENCODING='UTF-8';
 [ -r "$HOME/.pycustom" ] &&
     export PYTHONSTARTUP="$HOME/.pycustom" ||
     export PYTHONSTARTUP="$HOME/.config/yadmdotfiles/python/pycustom"
-export PYTHONPATH="$HOME/devel/cuda/autotest/pyapi:${PYTHONPATH}"
 
 #############
 # Network
