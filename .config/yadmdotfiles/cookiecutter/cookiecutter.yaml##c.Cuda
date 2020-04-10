@@ -1,0 +1,11 @@
+default_context:
+    full_name: "Jan Christoph Bischko"
+    email: "jbischko@barracuda.com"
+    github_username: "jbischko"
+cookiecutters_dir: "~/.local/share/cookiecutter/cutters"
+replay_dir: "~/.local/share/cookiecutter/replay"
+abbreviations:
+    gh: ssh://git@github.com:cookiecutter/cookiecutter.git
+    bb: ssh://git@bitbucket.org:{0}.git
+    st: ssh://git@stash.cudaops.com:7999/{0}.git
+    fl: https://folsom.ngdev.eu.ad.cuda-inc.com/{0}.git
