@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 # dconf write /org/gnome/settings-daemon/plugins/sound/volume-step 2
 # shift + louder has finer steps in volume

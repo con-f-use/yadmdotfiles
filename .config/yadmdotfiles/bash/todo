@@ -1,5 +1,5 @@
 #!/bin/bash
-# These alies are to be made insto scripts, so they can be used with multiple
+# These aliases are to be made insto scripts, so they can be used with multiple
 #+shells.
 # Note that some of these will have to take input from stdin and/or file.
 
@@ -34,12 +34,7 @@ alias stripcolors='sed "s/\x1B\[\([0-9]\{1,2\}\(;[0-9]\{1,2\}\)\?\)\?[mGK]//g"'
 alias listinstalled='dpkg --get-selections | grep -v deinstall'
 alias cleanbash='env -i bash --norc --noprofile'
 alias lsnewlogs='tail -f /var/log/{messages,kernel,dmesg,syslog}' # view now logmessages
-alias udevrerule='sudo udevadm control --reload-rules'
-alias udevmoni='udevadm monitor --udev'
-alias dddisk='dd bs=65536 conv=noerror,sync status=progress' #noerror -> continue on errors, sync -> fill with zeroes on error
-alias ddmon='sudo kill -USR1 $(pgrep ^dd)'
-alias memuse="free -m | awk 'NR==2{printf \"Memory Usage: %s/%sMB (%.0f%%)\n\", \$3,\$2,\$3*100/\$2 }'"
-alias ssspiv2pub='ssh-keygen -y -f' # privat --> public ssh key
+alias ssspriv2pub='ssh-keygen -y -f' # privat --> public ssh key
 alias gpge='GPG_TTY=$(tty) gpg -c --armor -o- --quiet --pinentry-mode loopback'
 alias gpgd='GPG_TTY=$(tty) gpg -d -o- --quiet --pinentry-mode loopback'
 
@@ -48,7 +43,6 @@ alias gpgd='GPG_TTY=$(tty) gpg -d -o- --quiet --pinentry-mode loopback'
 # Network
 ##########################
 alias tunnelocto="ssh $CONSERVE -L 51000:192.168.0.100:5000 -N"
-alias inetip='dig +short myip.opendns.com @resolver1.opendns.com'
 alias t='netstat -tulpen | grep -v 127.0.0.1'
 
 

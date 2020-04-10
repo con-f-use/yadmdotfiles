@@ -1,0 +1,4 @@
+#!/bin/sh
+
+dd bs=65536 conv=noerror,sync status=progress "$@" #noerror -> continue on errors, sync -> fill with zeroes on error
+
