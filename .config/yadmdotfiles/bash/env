@@ -2,18 +2,18 @@
 # General
 #############
 
-export EDITOR="~/.local/bin/nvim"   # Standard editor
-export VISUAL="~/.local/bin/nvim"
-export NVIM_LISTEN_ADDRESS="~/nvim_sockets/me"
-export PASSWORD_STORE_DIR="~/.config/password-store/"
-export XDG_CACHE_HOME="~/.cache"
+export EDITOR="$HOME/.local/bin/nvim"   # Standard editor
+export VISUAL="$EDITOR"
+export NVIM_LISTEN_ADDRESS="$HOME/nvim_sockets/me"
+export PASSWORD_STORE_DIR="$HOME/.config/password-store/"
+export XDG_CACHE_HOME="$HOME/.cache"
 
 
 #############
 # Manpages
 #############
 
-export LESSHISTFILE="~/.cache/less/history"
+export LESSHISTFILE="$HOME/.cache/less/history"
 # Don’t clear the screen after quitting a manual page.
 export MANPAGER='less -X'
 # Show colored man-pages
@@ -30,8 +30,8 @@ export LESS_TERMCAP_us=$'\E[01;32m'
 # Python
 ##############
 export PYTHONIOENCODING="UTF-8"
-export PYTHONSTARTUP="~/.config/yadmdotfiles/python/pycustom"
-export COOKIECUTTER_CONFIG="~/.config/yadmdotfiles/cookiecutter/cookiecutter.yaml"
+export PYTHONSTARTUP="$HOME/.config/yadmdotfiles/python/pycustom"
+export COOKIECUTTER_CONFIG="$HOME/.config/yadmdotfiles/cookiecutter/cookiecutter.yaml"
 
 
 #############
