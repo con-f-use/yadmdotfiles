@@ -17,16 +17,21 @@ libfile="$HOME/.config/yadmdotfiles/bash/jcgb.bash"
     source "$libfile" ||
     { 2>echo "Requires '$libfile'!"; exit 1; }
 
-main() {
-    fl=$(xonsh -c 'history file')
-    fl=$(dirname "$(readlink --canonicalize "$fl")")
-
-    dest="${2:-"$fl/old"}"
+create_dest() {
+    dest="$1"
     if [ ! -d "$dest" ]; then
         info "Creating '$dest'"
         mkdir --parents "$dest" ||
             err "Cannot create '$dest'!"
     fi
+}
+
+main() {
+    fl=$(xonsh -c 'history file')
+    fl=$(dirname "$(readlink --canonicalize "$fl")")
+
+    dest="${2:-"$fl/old"}"
+    create_dest "$dest"
     dest="$dest/xonsh-$(date +%y%m%d-%H%M%S).tar"
 
     source="${3:-"$fl"}"

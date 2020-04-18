@@ -24,10 +24,11 @@ main() {
         bnnga/{autotest,ansible,autotest-infrastructure,webservices,jenkins-files} \
         bnnga/{autotest-dockerfiles,dockerfiles-general,docker-registry} \
         bnnga/{resource-analyzer,random_scripts,jenkins-files,jenkins-libraries,weasel} \
+        bnnga/{sphinx-doc-ng} \
         '~jbischko/'{cudadevpi,touchmysc,cudasetuptools,ztcrypt,atdiff,deploytester,fwhelpers} \
         '~gchappell/ztdclient' \
         '~czangerle/'{cookiecutter,qa_mongoengine,qa_host_controller,qctrl} \
-        'https:///folsom.ngdev.eu.ad.cuda-inc.com/scm/env/'{git-ng,ngbuild};
+        'https:///folsom.ngdev.eu.ad.cuda-inc.com/scm/env/'{git-ng,ngbuild,doc-overall};
     do
         repodir="$basedir/$(basename "$repo")"
         if [ -d "$repodir/.git" ]; then
