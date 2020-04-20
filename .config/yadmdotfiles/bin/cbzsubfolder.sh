@@ -33,7 +33,14 @@ main() {
 }
 
 if [ "$0" = "$BASH_SOURCE" ]; then
-    [ -z "$1" ] && { 1>&2 echo "$description"; exit 1; }
+    if [ -z "$1" ]; then
+        1>&2 echo "$description"
+        exit 1
+    fi
+    if [ "$(readlink -f "$HOME")" = "$(pwd)" ]; then
+        1>&2 echo "Not in $HOME"
+        exit 1
+    fi
     shopt -s nocaseglob   # Case insensitive globbing
     main "$@"
 fi

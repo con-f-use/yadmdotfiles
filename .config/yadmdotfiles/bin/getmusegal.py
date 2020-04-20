@@ -281,4 +281,7 @@ if __name__ == '__main__':
         datefmt = '%y%m%d %H:%M'   #, stream=, mode=, filename=
     )
     if args['--clipboard']: args['ARGS'].extend( clp.paste().splitlines() )
+    if os.getcwd() == os.path.expanduser('~'):
+        print("Not in home directory!")
+        sys.exit(1)
     queue_download(args)
