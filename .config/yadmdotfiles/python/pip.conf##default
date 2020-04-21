@@ -1,0 +1,10 @@
+[global]
+#index-url = http://localhost:6970/root/qa/+simple/
+extra-index-url = http://10.17.65.203/root/devel/+simple/
+trusted-host = localhost
+    10.17.65.203
+
+[search]
+index =  http://10.17.65.203/root/devel/+simple/
+#http://localhost:6970/root/qa/
+
