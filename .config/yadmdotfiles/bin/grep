@@ -1,0 +1,14 @@
+#!/bin/sh
+# More sensible defaults for grep.
+
+export PATH=/bin:/usr/bin:/usr/local/bin
+exec grep \
+  --color=auto \
+  --devices=skip \
+  --binary-files=without-match \
+  --exclude-dir .direnv \
+  --exclude-dir venv \
+  --exclude-dir .tox \
+  --exclude-dir .git \
+  "$@"
+
