@@ -6,9 +6,7 @@ exec grep \
   --color=auto \
   --devices=skip \
   --binary-files=without-match \
-  --exclude-dir .direnv \
-  --exclude-dir venv \
-  --exclude-dir .tox \
-  --exclude-dir .git \
+  --exclude-dir venv --exclude-dir .tox --exclude-dir .pytest_cache \
+  --exclude-dir .git --exclude-dir .direnv \
   "$@"
 
