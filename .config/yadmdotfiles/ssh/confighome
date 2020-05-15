@@ -1,5 +1,5 @@
 Host conserve
-    User confus
+    User jan
     Compression yes
     #RemoteForward ~/.local/nvim_sockets/me ~/.local/nvim_sockets/
     #LocalForward ~/.local/nvim_sockets/me ~/.local/nvim_sockets

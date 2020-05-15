@@ -246,6 +246,26 @@ let g:netrw_liststyle=3 " tree view
     map <C-k> <C-w>k
     map <C-l> <C-w>lA
 
+" US-intl key dead key remappings
+nmap à `a|nmap á 'a
+nmap ć 'c
+nmap è `e|nmap é 'e
+nmap ǵ 'g
+nmap ì `i|nmap í 'i
+nmap ḱ 'k
+nmap ĺ 'l
+nmap ḿ 'm
+nmap ǹ `n|nmap ń 'n
+nmap ò `o|nmap ó 'o
+nmap ṕ 'p
+nmap ŕ 'r
+nmap ś 's
+nmap ù `u|nmap ú 'u
+nmap ǜ `v|nmap ǘ 'v
+nmap ẁ `w|nmap ẃ 'w
+nmap ỳ `y|nmap ý 'y
+nmap ź 'z
+
 " Nvim Terminal stuff
 set shell=xonsh
 if has('nvim')
