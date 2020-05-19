@@ -9,8 +9,10 @@ appropriate file extention. Extentions are choosen according to Linux'
 
 find "$1" -type f -print0 | \
     while IFS= read -r -d $'\0' fl; do
-        ext=$(file -bi "$fl" | grep -Po "(?<=image/)[a-zA-Z0-9]+(?=;)")
-        [ -z "$ext" ] && continue
+        ext=$(file -bi "$fl" | grep -Po "(?<=image/|video/)[a-zA-Z0-9]+(?=;)")
+        if [ -z "$ext" ] || [[ "$fl" =~ \."$ext"$ ]] ; then 
+            continue
+        fi
         mv "$fl" "$fl.$ext"
         echo "$fl -> $fl.$ext"
     done
