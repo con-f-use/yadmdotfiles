@@ -267,8 +267,10 @@ nmap ẁ `w|nmap ẃ 'w
 nmap ỳ `y|nmap ý 'y
 nmap ź 'z
 
+nnoremap S :s%//gg<Left><Left>
+
 " Nvim Terminal stuff
-set shell=xonsh
+set shell=bash
 if has('nvim')
     let g:neoterm_size='70v'
     let g:neoterm_autoinsert=1

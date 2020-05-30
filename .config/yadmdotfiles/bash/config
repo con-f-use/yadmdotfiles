@@ -57,3 +57,4 @@ export MAKEFLAGS="-j $(nproc)"
 
 # For VMWare Remote Console (vmrc) to fix Segfaulting "Fail to load executable. Exiting.
 export VMWARE_USE_SHIPPED_LIBS=force
+xset r rate 300 50
