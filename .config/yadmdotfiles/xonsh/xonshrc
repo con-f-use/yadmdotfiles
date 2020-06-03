@@ -105,11 +105,13 @@ def _stdfilter(args, stdin, stdout):
  
 aliases['stdfilter'] = _stdfilter
 
-$NIX_USER_PROFILE_DIR="/nix/var/nix/profiles/per-user/$USER"
-$NIX_PROFILES="/nix/var/nix/profiles/default $HOME/.nix-profile"
-$NIX_SSL_CERT_FILE="/etc/ssl/certs/ca-certificates.crt"
-$NIX_PATH="nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixpkgs:/nix/var/nix/profiles/per-user/root/channels"
-$PATH += [f"{$HOME}/.nix-profile/bin", "/nix/var/nix/profiles/default/bin"]
+if os.path.exists(f"{$HOME}/.nix-profile"):
+    $NIX_REMOTE="daemon"
+    $NIX_USER_PROFILE_DIR="/nix/var/nix/profiles/per-user/" + $USER
+    $NIX_PROFILES="/nix/var/nix/profiles/default " + $HOME + "/.nix-profile"
+    $NIX_SSL_CERT_FILE="/etc/ssl/certs/ca-certificates.crt"
+    $NIX_PATH="nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixpkgs:/nix/var/nix/profiles/per-user/root/channels"
+    $PATH += [f"{$HOME}/.nix-profile/bin", "/nix/var/nix/profiles/default/bin"]
 
 
 import shlex
@@ -154,5 +156,5 @@ if os.path.exists($HOME + '/.local/bin/nvim'):
 aliases['vim']='nvim'
 aliases['vi']='nvim'
 
-
+xset r rate 300 50
 tput smkx  # del key fix for some werid terminal emulators
