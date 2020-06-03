@@ -267,7 +267,7 @@ nmap ẁ `w|nmap ẃ 'w
 nmap ỳ `y|nmap ý 'y
 nmap ź 'z
 
-nnoremap S :s%//gg<Left><Left>
+nnoremap S :%s///gg<Left><Left><Left><Left>
 
 " Nvim Terminal stuff
 set shell=bash
