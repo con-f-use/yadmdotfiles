@@ -39,10 +39,12 @@ yudl_agg() {
                 "$@" <&0
         ;;
         l)
+            # | sed -E 's/([?&])v=[^&]+&/\1/' # sed out v=... parameter
+            shopt -s extglob
             yudl_agg d \
                 --yes-playlist \
                 --ignore-errors \
-                "$@"
+                "${@/v=+([a-z]|[A-Z]|[0-9]|-)&/}"  # ToDo: only filter in URLs
         ;;
         mp3)
             yudl_agg l \
