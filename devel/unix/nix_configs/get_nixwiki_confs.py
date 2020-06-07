@@ -72,5 +72,8 @@ git clone 'git@github.com:trishume/nixfiles.git' 'trishume_nixfiles'
 git clone 'git@github.com:utdemir/dotfiles.git' 'utdemir_dotfiles'
 git clone 'git@github.com:openlab-aux/vuizvui.git' 'openlab-aux_vuizvui'
 git clone 'git@github.com:davidtwco/veritas.git' 'davidtwco_veritas'
+
+git clone 'git@github.com:burke/b.git' 'burke_libbey-b'
+git clone 'git@git@github.com:adisbladis/nixconfig.git' 'adam_hose-adisbladis'
 """
 
