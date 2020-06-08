@@ -1,0 +1,5 @@
+git@github.com:LukeSmithxyz/dmenu.git
+git@github.com:LukeSmithxyz/dwm.git
+git@github.com:LukeSmithxyz/st.git
+git@github.com:LukeSmithxyz/surf.git
+git@github.com:LukeSmithxyz/dwmblocks.git
