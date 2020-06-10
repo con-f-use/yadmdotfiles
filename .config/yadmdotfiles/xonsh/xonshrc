@@ -27,7 +27,9 @@ sys.path.append('.')
 
 # dirty nix hack for xontribs, requires: 
 # python -m ensurepip --user
-# python -m pip install --user -U pip
+# $PYTHONPATH = "$USER/.local/lib/python3.7/site-packages"
+# xonsh
+# python -m pip install --user -U pip xontrib-z xonsh-direnv 
 for p in map(lambda s: str(s.resolve()), p"~/.local/lib/".glob("python*/site-packages")):
     if p not in sys.path:
         sys.path.append(p)
@@ -53,7 +55,9 @@ $AUTO_SUGGEST_IN_COMPLETIONS = True
 #$UPDATE_COMPLETIONS_ON_KEYPRESS = True
 #$DOTGLOB = False  # * and ** matches dotfiles
 
-$_Z_DATA = $HOME+'/.config/yadmdotfiles/xonsh/z.txt'
+zdata = $HOME+'/.config/yadmdotfiles/xonsh/z.txt'
+if os.path.exists(zdata):
+    $_Z_DATA = zdata
 
 #$XONSH_HISTORY_BACKEND = 'sqlite'  # means no diff or replay and only "commands" for history size and does not seem to capture output
 $XONSH_HISTORY_SIZE = (16256, 'commands') # b=bytes, s=load timeout in second, files
@@ -172,5 +176,6 @@ if os.path.exists($HOME + '/.local/bin/nvim'):
 aliases['vim']='nvim'
 aliases['vi']='nvim'
 
-xset r rate 300 50
+if $(which xset):
+    xset r rate 300 50
 tput smkx  # del key fix for some werid terminal emulators

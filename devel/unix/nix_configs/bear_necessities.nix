@@ -1,8 +1,8 @@
 { config, pkgs, ... }:
 let
-  main_user = "jan";
+  main_user = "user";
   # Generate passhash with: mkpasswd -m sha-512
-  passhash = "$6$57NHYj5mJMl8141$2cxtLDCTWNwv1s7nA1TLPolfUXQsJ9Dp6vvHfsNfXyfPGaqFsLUQIGp8YxBqAKy2kPecj3D5xMRvayTm8QQMT1";
+  passhash = "$6$57NHYj5mJMl8141$2cxtLDCTWNwv1s7nA1TLPolfUXQsJ9Dp6vvHfsNfXyfPGaqFsLUQIGp8YxBqAKy2kPecj3D5xMRvayTm8QQMT1"; 
   ip = "10.17.70.7";
   gateway = "10.17.7.1";
   dns = "1.1.1.1";
@@ -51,7 +51,7 @@ in
 
   users.users."${main_user}" = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "audio" "networkmanager" "wireshark" "dialout" "disk" "video" "conserve" "docker" ];
+    extraGroups = [ "wheel" "audio" "networkmanager" "wireshark" "dialout" "disk" "video" "docker" ];
     openssh.authorizedKeys.keys = ssh_pkeys;
     hashedPassword = passhash;
   };
@@ -59,7 +59,15 @@ in
   environment.variables = { EDITOR = "nvim"; };
   environment.shellAliases = { ll="ls -al --color=auto"; };
   environment.homeBinInPath = true;
+  environment.etc."inputrc".text = ''
+    "\e[Z": menu-complete
+    "\e\e[C": forward-word
+    "\e\e[D": backward-word
+    "\e[A": history-search-backward
+    "\e[B": history-search-forward
+  '';
   environment.systemPackages = with pkgs; [
+    open-vm-tools-headless
     wget curl inetutils dnsutils nmap openssl mkpasswd
     htop gnupg screen tree rename
     fasd fzf yadm pass ripgrep
