@@ -75,5 +75,6 @@ git clone 'git@github.com:davidtwco/veritas.git' 'davidtwco_veritas'
 
 git clone 'git@github.com:burke/b.git' 'burke_libbey-b'
 git clone 'git@git@github.com:adisbladis/nixconfig.git' 'adam_hose-adisbladis'
+git clone 'ssh://git@stash.cudaops.com:7999/~tmeusburger/infrastructure.git' 'tobi_tmeusburger-infrastructure'
 """
 
