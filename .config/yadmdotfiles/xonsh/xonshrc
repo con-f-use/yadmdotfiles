@@ -5,11 +5,21 @@
 # Aliases for copy&pasting json
 try:
     import __builtin__
-except:
+except ImportError:
     import builtins as __builtin__
 __builtin__.true = True
 __builtin__.false = False
 __builtin__.null = None
+def first(x, criterion="x is not None", default=None):
+    def filter_func(x):
+        return bool(eval(criterion))
+    
+    try:
+        return next(iter(filter(filter_func, x)))
+    except StopIteration:
+        return default
+    
+__builtin__.first = first
 
 
 import os, sys, re, time, datetime
