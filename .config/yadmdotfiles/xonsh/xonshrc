@@ -18,13 +18,19 @@ def first(x, criterion="x is not None", default=None):
         return next(iter(filter(filter_func, x)))
     except StopIteration:
         return default
-    
 __builtin__.first = first
 
 
 import os, sys, re, time, datetime
 from pprint import pprint
 sys.path.append('.')
+
+# dirty nix hack for xontribs, requires: 
+# python -m ensurepip --user
+# python -m pip install --user -U pip
+for p in map(lambda s: str(s.resolve()), p"~/.local/lib/".glob("python*/site-packages")):
+    if p not in sys.path:
+        sys.path.append(p)
 
 for x in {'bin', '.config/yadmdotfiles/bin', '.local/bin'}:
     $PATH.append(os.path.join($HOME, x))
