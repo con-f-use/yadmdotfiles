@@ -1,5 +1,11 @@
 { config, pkgs, ... }:
 let
+  main_user = "jan";
+  # Generate passhash with: mkpasswd -m sha-512
+  passhash = "$6$57NHYj5mJMl8141$2cxtLDCTWNwv1s7nA1TLPolfUXQsJ9Dp6vvHfsNfXyfPGaqFsLUQIGp8YxBqAKy2kPecj3D5xMRvayTm8QQMT1";
+  ip = "10.17.70.7";
+  gateway = "10.17.7.1";
+  dns = "1.1.1.1";
   ssh_pkeys = [
     "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC6lLuZxKu3u3/yTpcSlfa+NZZGDywrvqwX2IhSn36BNFMMShQF/MX1Kuy5txEHDfhOgj8omBWV9X03N8vlmy3Hh9T0uZe6earw3VOU37hcHEhh0YdV+boWdD4lCllRZ1o0HtsoFqVBg4gHAIsMjBN0/eC2qfN6T1/8/Hlvqspjx/ZgQF34PkEA7r7nFvUOAh3E72AYNiScsd1SXTq5hMhUsEs9g4EMO5MYWft7ybsysoBcnJcE+oEnsKtbsIdVUBXGWGqBz+Q7FbhPLsJECJ4nhuxh6SPfemvDZ2r94s3/mykl1X7OTj1bKCgtigCY/UFBk9KHDZ1XCKTaE4xXHg5oEo8glx2g+cj4OwqdpNt1A8QTiITi44KOeojFQAYK6r1RN0hArHHXAT1H7j/ha5x4C05B4Jb7JaMHGk5kEqqm3QxKh3K4nrshBa3BBhBI8Gozw3oe+bzX5EXUXVzJyOKO6xMqF+MATOd5lPVzDRgxbsERPVz4JXFgo89S/QPhTRfSGeN77h42ZK7mj3eUC8z/F/2d60jJHRR75m6aoFC39oX2WHgvlvAhRVLWYh17ZxEjVxTIRkcUKO+uPUnY3l6Qp1B3bRQ38w695JLt7c9k2xSOVCkJW8R+WGqnFzO/vcGNbU8k9HkBSv0exk0+aPHkkp820iu5+DVzRvh6jtmoww== confus@confusion-2016-07-30"
 
@@ -11,16 +17,16 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   
-  networking.hostName = "jan-li10"; 
+  networking.hostName = "${main_user}-li"; 
   time.timeZone = "Europe/Vienna";
   networking.useDHCP = false;  # depricated, should be set to false
   networking.interfaces.ens192.useDHCP = true;
   networking.interfaces.ens192.ipv4.addresses = [ {
-    address = "10.17.70.7";
+    address = ip;
     prefixLength = 24;
   } ];
-  networking.defaultGateway = "10.17.7.1";
-  networking.nameservers = [ "1.1.1.1" ];
+  networking.defaultGateway = gateway;
+  networking.nameservers = [ dns ];
 
   services.openssh = {
     enable = true;
@@ -38,18 +44,16 @@ in
     extraConfig = ''
       Defaults    insults
       Cmnd_Alias BOOTCMDS = /sbin/shutdown,/usr/sbin/pm-suspend,/sbin/reboot
-      jan ALL=(root)NOPASSWD:BOOTCMDS
-      conserve ALL=(root)NOPASSWD:BOOTCMDS
+      ${main_user} ALL=(root)NOPASSWD:BOOTCMDS
+      wheel ALL=(root)NOPASSWD:BOOTCMDS
     '';
   };
 
-  users.users.jan = {
+  users.users."${main_user}" = {
     isNormalUser = true;
     extraGroups = [ "wheel" "audio" "networkmanager" "wireshark" "dialout" "disk" "video" "conserve" "docker" ];
-    shell = pkgs.xonsh;
     openssh.authorizedKeys.keys = ssh_pkeys;
-    # output of: mkpasswd -m sha-512
-    hashedPassword = "$6$57NHYj5mJMl8141$2cxtLDCTWNwv1s7nA1TLPolfUXQsJ9Dp6vvHfsNfXyfPGaqFsLUQIGp8YxBqAKy2kPecj3D5xMRvayTm8QQMT1";
+    hashedPassword = passhash;
   };
 
   environment.variables = { EDITOR = "nvim"; };
@@ -58,27 +62,18 @@ in
   environment.systemPackages = with pkgs; [
     wget curl inetutils dnsutils nmap openssl mkpasswd
     htop gnupg screen tree rename
-    fasd fzf xonsh yadm pass ripgrep
+    fasd fzf yadm pass ripgrep
     pipenv direnv
     gitAndTools.git gitAndTools.pre-commit
     nix-prefetch-scripts
     (neovim.override { viAlias = true; vimAlias = true; })
   ];
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  #   pinentryFlavor = "gnome3";
-  # };
-
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
+  #networking.firewall.allowedTCPPorts = [ ... ];
+  #networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  #networking.firewall.enable = false;
 
   nix.autoOptimiseStore = true;
   nix.gc = {
@@ -87,3 +82,4 @@ in
   };
   system.stateVersion = "20.03"; # https://nixos.org/nixos/options.html
 }
+
