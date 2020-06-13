@@ -214,25 +214,27 @@ def walk_urls(url, maxdepth=10, nodl=False, lvl=0):
     if not urls:
         return 0
 
-    for u in urls:
-        if is_img(u):
-            # Look for images and schedule download.
-            debug("image: %s", u)
-            imgs = get_imgs(gs, domain)
-            fldr = get_fldr(gs)
-            if not os.path.exists(fldr) and not nodl:
-                os.makedirs(fldr)
-            for img in imgs:
-                if nodl:
-                    print("\t" * lvl, img)
-                else:
-                    q.put((img, imgcnt, fldr))
-                imgcnt += 1
-        else:
-            # Look deeper and for split galaries
-            for g in [u] + get_splits(gs, domain):
-                debug("galery: g", g)
-                imgcnt += walk_urls(g, maxdepth, nodl, lvl + 1)
+    img_urls = set(filter(is_img, urls))
+    other_urls = set(urls) - img_urls
+
+    if img_urls:
+        # Look for images and schedule download.
+        debug("at least one image found")
+        imgs = get_imgs(gs, domain)
+        print(imgs)
+        fldr = get_fldr(gs)
+        if not os.path.exists(fldr) and not nodl:
+            os.makedirs(fldr)
+        for img in imgs:
+            if nodl:
+                print("\t" * lvl, img)
+            else:
+                q.put((img, imgcnt, fldr))
+            imgcnt += 1
+
+    for g in get_splits(gs, domain) + list(other_urls):
+        debug("gallery: %s", g)
+        imgcnt += walk_urls(g, maxdepth, nodl, lvl + 1)
 
     return imgcnt
 
