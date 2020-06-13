@@ -55,9 +55,8 @@ $AUTO_SUGGEST_IN_COMPLETIONS = True
 #$UPDATE_COMPLETIONS_ON_KEYPRESS = True
 #$DOTGLOB = False  # * and ** matches dotfiles
 
-zdata = $HOME+'/.config/yadmdotfiles/xonsh/z.txt'
-if os.path.exists(zdata):
-    $_Z_DATA = zdata
+zdata = $HOME + "/.config/yadmdotfiles/xonsh/" 
+$_Z_DATA = (zdata if os.path.exists(zdata) else $HOME+"/.config/") + "z.txt"
 
 #$XONSH_HISTORY_BACKEND = 'sqlite'  # means no diff or replay and only "commands" for history size and does not seem to capture output
 $XONSH_HISTORY_SIZE = (16256, 'commands') # b=bytes, s=load timeout in second, files
@@ -132,7 +131,10 @@ if os.path.exists(f"{$HOME}/.nix-profile"):
     $NIX_SSL_CERT_FILE="/etc/ssl/certs/ca-certificates.crt"
     $NIX_PATH="nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixpkgs:/nix/var/nix/profiles/per-user/root/channels"
     $PATH += [f"{$HOME}/.nix-profile/bin", "/nix/var/nix/profiles/default/bin"]
+aliases["ss"] = "sudo nixos-rebuild switch"
+aliases["ff"] = "sudo vi /etc/nixos/configuration.nix"
 
+aliases["jj"] = "vi $HOME/.config/xonsh/rc.xsh"
 
 import shlex
 def alias(args, stdin=None):
@@ -173,8 +175,9 @@ aliases['xcopy']='xclip -i -selection clipboard'
 
 if os.path.exists($HOME + '/.local/bin/nvim'):
     os.environ['EDITOR'] = $HOME + '/.local/bin/nvim'
-aliases['vim']='nvim'
-aliases['vi']='nvim'
+    aliases['vim']='nvim'
+    aliases['vi']='nvim'
+
 
 if $(which xset):
     xset r rate 300 50
