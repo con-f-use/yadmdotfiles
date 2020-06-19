@@ -73,6 +73,7 @@ git clone 'git@github.com:utdemir/dotfiles.git' 'utdemir_dotfiles'
 git clone 'git@github.com:openlab-aux/vuizvui.git' 'openlab-aux_vuizvui'
 git clone 'git@github.com:davidtwco/veritas.git' 'davidtwco_veritas'
 
+git clone 'git@github.com:Xe/nixos-configs.git' 'xe_nixos-configs'
 git clone 'git@github.com:burke/b.git' 'burke_libbey-b'
 git clone 'git@git@github.com:adisbladis/nixconfig.git' 'adam_hose-adisbladis'
 git clone 'ssh://git@stash.cudaops.com:7999/~tmeusburger/infrastructure.git' 'tobi_tmeusburger-infrastructure'
