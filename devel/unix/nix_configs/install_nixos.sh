@@ -83,6 +83,17 @@ generate_config() {
      #frequent = 8; # keep the latest eight 15-minute snapshots (instead of four)
      #monthly = 1;  # keep only one monthly snapshot (instead of twelve)
    };
+   #boot.cleanTmpDir = true;
+   boot.tmpOnTmpfs = true; # waiting for https://github.com/NixOS/nixpkgs/pull/27189 to do: "40%"; 
+   fileSystems."/var/tmp" = {
+     fsType = "tmpfs";   
+     device = "tmpfs";
+     options = [ "defaults" "size=5%" ];
+   };
+   environment.homeBinInPath = true;
+   environment.shellInit = ''
+     export EDITOR=nvim
+   '';
 }
 " >> "${zfg_cfg}"
     echo -e "Edit config and then run:\n    nixos-install"
