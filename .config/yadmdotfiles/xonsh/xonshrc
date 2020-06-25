@@ -27,7 +27,7 @@ sys.path.append('.')
 
 # dirty nix hack for xontribs, requires: 
 # python -m ensurepip --user
-# $PYTHONPATH = "$USER/.local/lib/python3.7/site-packages"
+# $PYTHONPATH = "$HOME/.local/lib/python3.7/site-packages"
 # xonsh
 # python -m pip install --user -U pip xontrib-z xonsh-direnv 
 for p in map(lambda s: str(s.resolve()), p"~/.local/lib/".glob("python*/site-packages")):
@@ -37,7 +37,6 @@ for p in map(lambda s: str(s.resolve()), p"~/.local/lib/".glob("python*/site-pac
 for x in {'bin', '.config/yadmdotfiles/bin', '.local/bin'}:
     $PATH.append(os.path.join($HOME, x))
 $PATH = list(dict.fromkeys(${'PATH'}))
-
 
 #$UPDATE_OS_ENVIRON = True
 #$XONSH_SHOW_TRACEBACK = True
@@ -65,14 +64,12 @@ $XONSH_STORE_STDOUT=True # store stdout for subprocess comands (buggy)
 $XONSH_HISTORY_MATCH_ANYWHERE = True
 
 #$XONSH_SHOW_TRACEBACK = True
-
 xontrib load z
 xontrib load direnv
 xontrib load whole_word_jumping
 xontrib load prompt_ret_code
 #xontrib load bashisms
-xontrib load histcpy
-
+#xontrib load histcpy
 
 def get_shelldate():
     get_shelldate.fulldate %= 10 
@@ -81,6 +78,7 @@ def get_shelldate():
         return time.strftime('%d%m%Y')
     return time.strftime('%d-%H:%M')
 get_shelldate.fulldate = 0
+
 
 $PROMPT_FIELDS['shelldate'] = get_shelldate
 
@@ -110,19 +108,6 @@ def _zdata():
     for p, r, t in zdata:
         print(f'{p:70.70}  {r:>5g}    {t}')
 
-def _stdfilter(args, stdin, stdout):
-    command_string = "lambda line,index:"
-    for arg in args:
-        command_string += arg + " "
-    command_string = command_string.strip()
-    fn = eval(command_string)
-    index = 0
-    for line in stdin.readlines():
-        index += 1
-        res = fn(line.rstrip(), index)
-        print(res, file=stdout, flush=True)
- 
-aliases['stdfilter'] = _stdfilter
 
 if os.path.exists(f"{$HOME}/.nix-profile"):
     $NIX_REMOTE="daemon"
@@ -157,8 +142,6 @@ def alias(args, stdin=None):
             print("{}={}".format(alias, cmd))
 
     return ret
-
-aliases["alias"] = alias
 
 
 aliases['autoprx'] = '$AUTOSSH_DEBUG="y"; autossh -f -N -D 0.0.0.0:1080 conserve'
