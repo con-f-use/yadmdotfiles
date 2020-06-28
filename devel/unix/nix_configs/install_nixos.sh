@@ -15,7 +15,7 @@ partition() {
     parted --script "${DISK}" -- \
         mklabel gpt \
         mkpart esp fat32 1MiB 1GiB \
-        mkpart primary 512MiB 100% \
+        mkpart primary 1GiB 100% \
         set 1 boot on
 
     # CREATE AN ENCRYPTED ZFS POOL
