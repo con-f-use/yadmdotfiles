@@ -22,7 +22,15 @@ in
   imports = [ ./hardware-configuration.nix ];
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  
+  #boot.cleanTmpDir = true;
+  boot.tmpOnTmpfs = true; # waiting for https://github.com/NixOS/nixpkgs/pull/27189 to do: "40%"; 
+  fileSystems."/var/tmp" = {
+    fsType = "tmpfs";   
+    device = "tmpfs";
+    options = [ "defaults" "size=5%" ];
+  };
+  environment.homeBinInPath = true;
+
   networking.hostName = "${main_user}-li"; 
   time.timeZone = "Europe/Vienna";
   networking.useDHCP = false;  # depricated, should be set to false
