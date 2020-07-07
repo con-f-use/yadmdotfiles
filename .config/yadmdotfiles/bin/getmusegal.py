@@ -221,7 +221,7 @@ def walk_urls(url, maxdepth=10, nodl=False, lvl=0):
         # Look for images and schedule download.
         debug("at least one image found")
         imgs = get_imgs(gs, domain)
-        print(imgs)
+        debug(imgs)
         fldr = get_fldr(gs)
         if not os.path.exists(fldr) and not nodl:
             os.makedirs(fldr)
