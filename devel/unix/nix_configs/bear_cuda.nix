@@ -76,7 +76,7 @@ in
     htop gnupg screen tree rename
     fasd fzf yadm pass ripgrep
     pipenv direnv
-    gitAndTools.git gitAndTools.pre-commit
+    gitAndTools.git gitAndTools.pre-commit git-lfs
     nix-prefetch-scripts
     (neovim.override {
       viAlias = true; vimAlias = true;
