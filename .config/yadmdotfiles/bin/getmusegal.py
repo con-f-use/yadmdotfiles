@@ -163,32 +163,27 @@ def get_imgs(gs, dom):
     return imgs
 
 
-def get_splits(gs, domain):
+def get_splits(gs, domain, url=None):
     """Find split galaries."""
     ret = []
-    fpgs = gs.find_all("div", class_="pagination")
-    if fpgs:
-        fpgs = fpgs[0]
-        curr = fpgs.find_next("span", class_="current")
-        curr = int(curr.text) if curr else -1
-        debug("curr: " + str(curr))
-        if curr == 1:
-            try:
-                hreflst = fpgs.find_next("span", class_="last").a.get("href")
-            except AttributeError:
-                warn("No `a` tag found")
-                return ret
-            lst = re.search("(?<=page=)\d+$", hreflst)
-            if lst:
-                lst = int(lst.group(0))
-            for nbr in range(2, lst + 1):
-                newurl = re.sub("(?<=page=)\d+$", str(nbr), hreflst)
-                newurl = (
-                    domain + newurl[1:] if newurl.startswith("/") else gomain + newurl
-                )
-                debug("newurl: " + newurl)
-                ret.append(newurl)
-    return ret
+    fpgs = gs.find_all("nav", class_="pagination")
+
+    if not fpgs:
+        return ret
+
+    fpgs = fpgs[0]
+    curr = fpgs.find_next("span", class_="page current")
+    curr = int(curr.text) if curr else -1
+    debug("curr: " + str(curr))
+
+    if not (curr == 1 or curr%5==0):
+        return ret
+
+    pages = fpgs.find_all("span", class_="page")
+    pages = [url.rstrip("/") + "/" + x.text for x in pages if x.text.isnumeric() and int(x.text)>curr]
+    debug("pages: %s", pages)
+
+    return pages
 
 
 def walk_urls(url, maxdepth=10, nodl=False, lvl=0):
@@ -232,7 +227,7 @@ def walk_urls(url, maxdepth=10, nodl=False, lvl=0):
                 q.put((img, imgcnt, fldr))
             imgcnt += 1
 
-    for g in get_splits(gs, domain) + list(other_urls):
+    for g in get_splits(gs, domain, url=url) + list(other_urls):
         debug("gallery: %s", g)
         imgcnt += walk_urls(g, maxdepth, nodl, lvl + 1)
 
