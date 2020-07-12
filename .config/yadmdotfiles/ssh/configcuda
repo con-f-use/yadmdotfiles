@@ -16,6 +16,15 @@ Host qaportal
     ControlPath /tmp/ssh-%l@%n.%r@%h.%p
     ControlPersist 360000
 
+Host czdev
+    HostName 10.17.36.102
+    User czangerle
+    PreferredAuthentications publickey,password,keyboard-interactive
+    ControlMaster auto
+    ControlPath /tmp/ssh-%l@%n.%r@%h.%p
+    ControlPersist 360000
+    # HP pw
+
 Host vmspanni
     HostName 10.17.37.200
     User root
