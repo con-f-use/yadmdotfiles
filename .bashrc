@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# Early exit in non-interactive or Mix shells
+if [[ -z $PS1 ]]; then return; fi
+if [[ -n $IN_NIX_SHELL ]]; then return; fi
+
 export BASHYDM="$HOME/.config/yadmdotfiles/bash"
 
 for fl in /etc/{bash.bashrc,bashrc,skel/.bashrc,profile.d/nix.sh} \
