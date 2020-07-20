@@ -37,6 +37,7 @@ for p in map(lambda s: str(s.resolve()), p"~/.local/lib/".glob("python*/site-pac
 for x in {'bin', '.config/yadmdotfiles/bin', '.local/bin'}:
     $PATH.append(os.path.join($HOME, x))
 $PATH = list(dict.fromkeys(${'PATH'}))
+$PASSWORD_STORE_DIR=f"{$HOME}/.config/password-store/"
 
 #$UPDATE_OS_ENVIRON = True
 #$XONSH_SHOW_TRACEBACK = True
@@ -128,6 +129,7 @@ aliases["ss"] = "sudo nixos-rebuild switch"
 aliases["ff"] = "sudo vi /etc/nixos/configuration.nix"
 
 aliases["jj"] = "vi $HOME/.config/xonsh/rc.xsh"
+aliases["kk"] = "vi $HOME/.config/kitty/kitty.conf"
 
 import shlex
 def alias(args, stdin=None):
