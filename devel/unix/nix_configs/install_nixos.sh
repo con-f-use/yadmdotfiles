@@ -6,63 +6,72 @@
 
 export EDITOR=$(which vim)
 export DISK=/dev/disk/by-id/ata-MSATA_256GB_SSD_2020031900269
+export SUDO="sudo"
+
+log() { echo "$@" 1>&2; }
 
 partition() {
     echo 'Always use the by-id aliases, otherwise ZFS can choke on imports:'
     echo '/dev/disk/by-id/...'
-    $DISK=${1:?Please give a disk name to partition DANGER!}
+    DISK=${1:?Please give name of disk to partition - DANGER!}
+    middle=''
+    if grep -q /by-id/ <<< "$DISK"; then
+        middle='-part'
+    fi
 
-    parted --script "${DISK}" -- \
+    log "# PARTITIONING ${DISL}"
+    "$SUDO" parted --script "${DISK}" -- \
         mklabel gpt \
         mkpart esp fat32 1MiB 1GiB \
         mkpart primary 1GiB 100% \
         set 1 boot on
 
-    # CREATE AN ENCRYPTED ZFS POOL
-    zpool create -f \
+    log "# CREATE AN ENCRYPTED ZFS POOL"
+    "$SUDO" zpool create -f \
         -o ashift=12 \
-        -O encryption=on \
         -O compression=on \
-        -O keyformat=passphrase \
         -O mountpoint=none \
         rpool \
-        "${DISK}-part2"
+        "${DISK}${middle}2"
 
-    # RESERVE DISKSPACE SO COPY-ON-WRITE CAN WORK WHEN THE DISK IS (almost) FULL
-    zfs create -o refreservation=1G -o mountpoint=none rpool/reserved
+    log "# RESERVE DISKSPACE SO COPY-ON-WRITE CAN WORK WHEN THE DISK IS (almost) FULL"
+    "$SUDO" zfs create -o refreservation=1G -o mountpoint=none rpool/reserved
 
-    # CREATE A ROOT PARTITION
-    zfs create \
+    log "# CREATE A ROOT PARTITION"
+    "$SUDO" zfs create \
         -o mountpoint=legacy \
         -o xattr=sa \
         -o acltype=posixacl \
         rpool/root
-    zfs snapshot rpool/root@blank
-    mkdir -p /mnt
-    mount -t zfs rpool/root /mnt
+    "$SUDO" zfs snapshot rpool/root@blank
 
-    # CREATE A NIX PARTITION
-    zfs create \
+    log "# CREATE A NIX PARTITION"
+    "$SUDO" zfs create \
         -o mountpoint=legacy \
         -o atime=off \
         rpool/nix
-    mkdir /mnt/nix
-    mount -t zfs rpool/nix /mnt/nix
 
-    # CREATE A HOME PARTITION
-    zfs create \
+    log "# CREATE A HOME PARTITION"
+    "$SUDO" zfs create \
         -o mountpoint=legacy \
         -o compression=on \
         rpool/home
-    mkdir -p /mnt/home
-    mount -t zfs rpool/home /mnt/home
 
-    # CREATE A BOOT PARTITON
-    mkfs.fat -F 32 -n BOOT "${DISK}-part1"
-    mkdir -p /mnt/boot
-    mount -t vfat "${DISK}-part1" /mnt/boot
+    log "# CREATE A BOOT PARTITON"
+    "$SUDO" mkfs.fat -F 32 -n BOOT "${DISK}${middle}1"
 }
 
+mount_system() {
+    log "# MOUNTING NEW FILE SYSTEM"
+    "$SUDO" mkdir -p /mnt
+    "$SUDO" mount -t zfs rpool/root /mnt
+    "$SUDO" mkdir /mnt/nix
+    "$SUDO" mount -t zfs rpool/nix /mnt/nix
+    "$SUDO" mkdir -p /mnt/home
+    "$SUDO" mount -t zfs rpool/home /mnt/home
+    "$SUDO" mkdir -p /mnt/boot
+    "$SUDO" mount -t vfat "${DISK}${middle}1" /mnt/boot
+}
 
 generate_config() {
     zfs_cfg=${1:-/mnt/etc/nixos/zfs-configuration.nix}
@@ -75,7 +84,7 @@ generate_config() {
    boot.supportedFilesystems = [ \"zfs\" ];
    boot.zfs.enableUnstable = true;
    services.zfs.autoScrub.enable = true;
-   services.zfs.trim.enable = true
+   services.zfs.trim.enable = true;
    networking.hostId = \"$(head -c 8 /etc/machine-id)\";
 
    services.zfs.autoSnapshot = {
@@ -85,17 +94,17 @@ generate_config() {
    };
    #boot.cleanTmpDir = true;
    boot.tmpOnTmpfs = true; # waiting for https://github.com/NixOS/nixpkgs/pull/27189 to do: "40%"; 
-   fileSystems."/var/tmp" = {
-     fsType = "tmpfs";   
-     device = "tmpfs";
-     options = [ "defaults" "size=5%" ];
+   fileSystems.\"/var/tmp\" = {
+     fsType = \"tmpfs\";
+     device = \"tmpfs\";
+     options = [ \"defaults\" \"size=5%\" ];
    };
    environment.homeBinInPath = true;
    environment.shellInit = ''
      export EDITOR=nvim
    '';
 }
-" >> "${zfg_cfg}"
+" >> "${zfs_cfg}"
     echo -e "Edit config and then run:\n    nixos-install"
 }
 
@@ -126,4 +135,3 @@ if [ "$0" = "$BASH_SOURCE" ]; then
     set -o errexit -o nounset -o pipefail
     $DISK=${1:?Please give a disk name to partition (DANGER!)}
 fi
-
