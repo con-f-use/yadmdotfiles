@@ -11,7 +11,7 @@ let
     # branch: master
     owner = "con-f-use";
     repo = "yadmdotfiles";
-    rev = "b6e5a57896fd8e9442c4d5ec84ba894c726bda78";
+    rev = "1ccdfab846dc134bf1684222b981ea1ec106ed34";
     sha256 = "0bsg28qk9rinn06wypc14lsxh641d3x9m65l5d4ki4b9xrbzbi4z";
     fetchSubmodules = false;
   };

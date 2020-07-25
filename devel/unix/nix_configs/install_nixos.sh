@@ -67,6 +67,7 @@ partition() {
 echo mount_system
 mount_system() {
     log "# MOUNTING NEW FILE SYSTEM"
+    "$SUDO" zpool import -a
     "$SUDO" mkdir -p /mnt
     "$SUDO" mount -t zfs rpool/root /mnt
     "$SUDO" mkdir /mnt/nix
@@ -89,6 +90,7 @@ generate_config() {
    boot.supportedFilesystems = [ \"zfs\" ];
    boot.zfs.enableUnstable = true;
    services.zfs.autoScrub.enable = true;
+   boot.zfs.devNodes = \"/dev/disk/by-partuuid\";  # https://discourse.nixos.org/t/cannot-import-zfs-pool-at-boot/4805/14
    #services.zfs.trim.enable = true;
    networking.hostId = \"$(head -c 8 /etc/machine-id)\";
 
@@ -121,7 +123,7 @@ cleanup() {
     "$SUDO" umount /mnt/{home,boot}
     "$SUDO" umount /mnt
     "$SUDO" swapoff -a
-    "$SUDO" zfs export -a
+    "$SUDO" zpool export rpool # -a
 }
 
 if [ "$0" = "$BASH_SOURCE" ]; then
