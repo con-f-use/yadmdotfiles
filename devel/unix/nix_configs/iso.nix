@@ -5,20 +5,31 @@
 #   nix-build '<nixpkgs/nixos>' -A config.system.build.isoImage -I nixos-config=iso.nix
 
 {config, pkgs, ...}:
+
 let
   jan = pkgs.fetchFromGitHub {
     # branch: master
     owner = "con-f-use";
     repo = "yadmdotfiles";
-    rev = "master";
-    sha256 = "1jq2vdzrk2nxj8cwfgzm9bn07579c6d5vr8vc0w0j8m3v86myzdf";
+    rev = "b6e5a57896fd8e9442c4d5ec84ba894c726bda78";
+    sha256 = "0bsg28qk9rinn06wypc14lsxh641d3x9m65l5d4ki4b9xrbzbi4z";
     fetchSubmodules = false;
   };
   janify = pkgs.writeScriptBin "jan" ''
     #!${pkgs.stdenv.shell}
-    if [ -e /home/nixos/devel ]; then exit 0; fi
-    cp -r "${jan}"/* /home/nixos/
-    ln -s devel/unix/nix_configs /home/nixos/cfgs
+    target=/home/nixos/dots
+    if cd "$target"; then
+        git pull origin master
+        exit 0
+    fi
+    if git clone "https://github.com/con-f-use/yadmdotfiles.git" "$target"; then
+        ln -s "$target/devel/unix/nix_configs" /home/nixos/cfgs
+        exit 0
+    fi
+    if [ "$1" = "iso" ]; then
+      mkdir -p "$target"
+      cp -r "${jan}"/* "$target"
+    fi
   '';
   cfg_file = "/mnt/etc/nixos/configuration.nix"; 
   pkeys = [
@@ -26,6 +37,7 @@ let
 
     "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAgEAibH0zQORgQN2S5ZiUQgpABJl1huhMEwp+OHF07JQquXIZI+1JhDAzzzoYGFvFet6e4rNzqWZUXTjFacb58Rk9GPVwM7foQmiY5lH/kHeI/p85QzKFiVOOgGThdrpoJusX7EAlydBDxvPG/Wlo1DsJF65VHxxa6Ogd4ACYQNKj7TkSxS2mZa5cu8kVhonnd6D2VxhcvxK+X/i6c6Td2IGGhMxjMPJQyX9VzkD/8FXiaGpU+Vsu+NLEwzbR+4JUps/6G3aMhOEZ3iZUZVb8XB1W7DIxluQlS70JDkIdzjJiEN+mVxcMmDJtFGBjiXf2GB3aDQr7w6yeHvqkpy27txvFYCKc5LTBQxouX3CdII0rlyASXOe8UcvAZBc8ddMvcKJfcQwPORf4WDvA2pYEvcxHy0Pu0tW2MZPrCAvqDZRhby/pc4tFYsPLtcUPQJGIBsvPQlySmC2bjiU5US7k2MYRLh3YlBAwuOAayqflAN8ART5fajgZQtHYdykHEuBqDsLXYEP1Qbi/WUQlKdxDqkV1OjJEDkGZQNJMEqE4uUSoz7rJHBpZC2VDEJHJU5vnMXNuH9cRyzqgDyk9Coy2wdfm6y9p89LdRm+7cWfbBssvwqi5Xd5gPYoOQJ0aSX8T00hq37v6kbeB7ElQu7aiSdy9ZsGYh9RfTRaEvnHC7l+6Rs= cuda"
   ];
+
 in
 {
   imports = [
@@ -39,6 +51,13 @@ in
   users.users.root.openssh.authorizedKeys.keys = pkeys;
   users.users.nixos.openssh.authorizedKeys.keys = pkeys;
 
+  services.cron = {
+    enable = true;
+    systemCronJobs = [ 
+        "@reboot nixos ${janify}/bin/jan"
+        "*/20 * * * * nixos ${janify}/bin/jan"
+    ];
+  };
   environment.etc."gitconfig".text = ''
     [alias]
     ci = commit

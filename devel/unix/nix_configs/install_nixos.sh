@@ -6,17 +6,20 @@
 
 export EDITOR=$(which vim)
 export DISK=/dev/disk/by-id/ata-MSATA_256GB_SSD_2020031900269
+export middle=''
 export SUDO="sudo"
 
 log() { echo "$@" 1>&2; }
 
+echo "Functions defined in ${BASH_SOURCE}:"
+
+echo partition
 partition() {
     echo 'Always use the by-id aliases, otherwise ZFS can choke on imports:'
     echo '/dev/disk/by-id/...'
-    DISK=${1:?Please give name of disk to partition - DANGER!}
-    middle=''
+    export DISK=${1:?Please give name of disk to partition - DANGER!}
     if grep -q /by-id/ <<< "$DISK"; then
-        middle='-part'
+        export middle='-part'
     fi
 
     log "# PARTITIONING ${DISL}"
@@ -61,6 +64,7 @@ partition() {
     "$SUDO" mkfs.fat -F 32 -n BOOT "${DISK}${middle}1"
 }
 
+echo mount_system
 mount_system() {
     log "# MOUNTING NEW FILE SYSTEM"
     "$SUDO" mkdir -p /mnt
@@ -73,18 +77,19 @@ mount_system() {
     "$SUDO" mount -t vfat "${DISK}${middle}1" /mnt/boot
 }
 
+echo generate_config
 generate_config() {
     zfs_cfg=${1:-/mnt/etc/nixos/zfs-configuration.nix}
-    nixos-generate-config --root /mnt
+    "$SUDO" nixos-generate-config --root /mnt
 
-    echo "Writing '${zfg_cfg}'..."
+    echo "Writing '${zfs_cfg}'..."
     echo "
 {
    boot.initrd.supportedFilesystems = [ \"zfs\" ];
    boot.supportedFilesystems = [ \"zfs\" ];
    boot.zfs.enableUnstable = true;
    services.zfs.autoScrub.enable = true;
-   services.zfs.trim.enable = true;
+   #services.zfs.trim.enable = true;
    networking.hostId = \"$(head -c 8 /etc/machine-id)\";
 
    services.zfs.autoSnapshot = {
@@ -92,22 +97,14 @@ generate_config() {
      #frequent = 8; # keep the latest eight 15-minute snapshots (instead of four)
      #monthly = 1;  # keep only one monthly snapshot (instead of twelve)
    };
-   #boot.cleanTmpDir = true;
-   boot.tmpOnTmpfs = true; # waiting for https://github.com/NixOS/nixpkgs/pull/27189 to do: "40%"; 
-   fileSystems.\"/var/tmp\" = {
-     fsType = \"tmpfs\";
-     device = \"tmpfs\";
-     options = [ \"defaults\" \"size=5%\" ];
-   };
-   environment.homeBinInPath = true;
-   environment.shellInit = ''
-     export EDITOR=nvim
-   '';
 }
-" >> "${zfs_cfg}"
-    echo -e "Edit config and then run:\n    nixos-install"
+" | "$SUDO" tee "${zfs_cfg}"
+    echo "# {$zfs_cfg}" | "$SUDO" tee -a /mnt/etc/nixos/configuration.nix
+    echo "DO NOT FORGET TO ENABLE EFI BOOT!"
+    echo -e "EDIT CONFIG, then run:\n    nixos-install"
 }
 
+echo wifi
 wifi() {
     # Use this for temorary wifi connection, if needed.
     interface=${1:?First argument must be interface name}
@@ -117,13 +114,14 @@ wifi() {
     wpa_supplicant -i "$interface" -B -c<(wpa_passphrase "$ssid" "$wifipw")
 }
 
-
+echo cleanup
 cleanup() {
     # NOW CLEANUP & REBOOT
-    umount /mnt/{home,boot}
-    umount /mnt
-    swapoff -a
-    zfs export -a
+    cd /
+    "$SUDO" umount /mnt/{home,boot}
+    "$SUDO" umount /mnt
+    "$SUDO" swapoff -a
+    "$SUDO" zfs export -a
 }
 
 if [ "$0" = "$BASH_SOURCE" ]; then
