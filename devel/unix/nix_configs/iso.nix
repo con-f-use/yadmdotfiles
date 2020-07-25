@@ -7,9 +7,10 @@
 {config, pkgs, ...}:
 let
   jan = pkgs.fetchFromGitHub {
+    # branch: master
     owner = "con-f-use";
     repo = "yadmdotfiles";
-    rev = "54886e2617e912640d624b1592ef06f53607c2a3";
+    rev = "master";
     sha256 = "1jq2vdzrk2nxj8cwfgzm9bn07579c6d5vr8vc0w0j8m3v86myzdf";
     fetchSubmodules = false;
   };
