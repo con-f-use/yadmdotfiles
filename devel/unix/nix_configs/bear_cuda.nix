@@ -79,7 +79,7 @@ in
     gitAndTools.git gitAndTools.pre-commit git-lfs
     nix-prefetch-scripts
     (neovim.override {
-      viAlias = true; vimAlias = true;
+      viAlias = true; vimAlias = true; #})
       configure = {
         customRC = ''
           set history=10000 | set undolevels=1000 | set laststatus=2 | set complete-=i | set list | set listchars=tab:»·,trail:·,nbsp:· | set autoindent | set backspace=indent,eol,start
@@ -90,6 +90,7 @@ in
           if has("autocmd")
             au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
           endif
+          source $HOME/.config/nvim/init.vim
         '';
         vam.knownPlugins = pkgs.vimPlugins;
         vam.pluginDictionaries = [ {
