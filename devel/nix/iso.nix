@@ -23,7 +23,7 @@ let
         exit 0
     fi
     if git clone "https://github.com/con-f-use/yadmdotfiles.git" "$target"; then
-        ln -s "$target/devel/unix/nix_configs" /home/nixos/cfgs
+        ln -s "$target/devel/nix" /home/nixos/cfgs
         exit 0
     fi
     if [ "$1" = "iso" ]; then
@@ -55,7 +55,7 @@ in
     enable = true;
     systemCronJobs = [ 
         "@reboot nixos ${janify}/bin/jan"
-        "*/20 * * * * nixos ${janify}/bin/jan"
+        "*/20 * * * * nixos ${janify}/bin/jan iso"
     ];
   };
   environment.etc."gitconfig".text = ''

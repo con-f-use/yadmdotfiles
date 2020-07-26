@@ -133,5 +133,9 @@ if [ "$0" = "$BASH_SOURCE" ]; then
         shopt -s shift_verbose
     fi
     set -o errexit -o nounset -o pipefail
-    $DISK=${1:?Please give a disk name to partition (DANGER!)}
+    partition "$1"
+    mount_system
+    generate_config
+    cleanup
 fi
+
