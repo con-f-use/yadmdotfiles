@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+if ! command -v barracudavpn; then
+  echo "Please install barracudavpn!" 1>&2
+  exit 1
+fi
+
+barracudavpn -p || true
+barracudavpn -s -l jbischko -r $(pass Cuda/cudaws || gopass Cuda/cudaws)
+
