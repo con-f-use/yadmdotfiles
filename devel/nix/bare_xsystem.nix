@@ -111,7 +111,9 @@ in
           if has("autocmd")
             au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
           endif
-          source $HOME/.config/nvim/init.vim
+          if filereadable(glob("~/.config/nvim/init.vim"))
+            source $HOME/.config/nvim/init.vim
+          endif
         '';
         #vam.knownPlugins = pkgs.vimPlugins;
         #vam.pluginDictionaries = [ {
