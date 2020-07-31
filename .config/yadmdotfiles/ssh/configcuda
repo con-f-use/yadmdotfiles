@@ -1,5 +1,13 @@
 # Infrastructure
 
+Host 10.0.67.*
+    # DHCP range
+    UserKnownHostsFile /dev/null
+    StrictHostKeyChecking=no
+    ControlMaster auto
+    ControlPath /tmp/ssh-%l@%n.%r@%h.%p
+    ControlPersist 360000
+
 Host qashare
     HostName 10.17.6.4
     User root
@@ -69,6 +77,11 @@ Host stjenkins
     ControlMaster auto
     ControlPath /tmp/ssh-%l@%n.%r@%h.%p
     ControlPersist 360000
+
+Host zangvault
+    HostName 10.17.79.11
+    User qa
+    PreferredAuthentications publickey
 
 Host devpi
 # Cudadevpi Master, Zeroblobber, apt-cacher-ng

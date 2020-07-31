@@ -38,7 +38,8 @@ for x in {'bin', '.config/yadmdotfiles/bin', '.local/bin'}:
     $PATH.append(os.path.join($HOME, x))
 $PATH = list(dict.fromkeys(${'PATH'}))
 $PASSWORD_STORE_DIR=f"{$HOME}/.config/password-store/"
-
+#from xonsh.commands_cache import predict_false
+#__xonsh__.commands_cache.threadable_predictors["more"] = predict_false
 #$UPDATE_OS_ENVIRON = True
 #$XONSH_SHOW_TRACEBACK = True
 $XONSH_TRACEBACK_LOGFILE = '/tmp/xonsh-tracebacks.log'
