@@ -302,7 +302,10 @@ endif
 "Executes current file as script
     inoremap <F9> <Esc>:w<CR>:silent !chmod u+x '%:p'<CR>:Texec ./%:r.%:e<C-m>
     nnoremap <F9> <Esc>:w<CR>:silent !chmod u+x '%:p'<CR>:Texec ./%:r.%:e<C-m>
-    
+
+"Avoid the escape key
+noremap <special> kj <ESC> | inoremap <special> jk <ESC>:
+
 "Copy to and paste from Clipboard
     map <C-a> "+y
     map! <C-f> <Esc>"+pi
