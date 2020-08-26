@@ -104,6 +104,7 @@ generate_config() {
     echo "# {$zfs_cfg}" | "$SUDO" tee -a /mnt/etc/nixos/configuration.nix
     echo "DO NOT FORGET TO ENABLE EFI BOOT!"
     echo -e "EDIT CONFIG, then run:\n    nixos-install"
+    echo "Reminder: sudo nix-channel --add https://github.com/NixOS/nixos-hardware/archive/master.tar.gz nixos-hardware"
 }
 
 echo wifi
