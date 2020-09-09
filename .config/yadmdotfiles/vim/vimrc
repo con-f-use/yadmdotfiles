@@ -310,6 +310,9 @@ endif
 "Turn recording key off"
     nnoremap Q q
     nnoremap q <Nop>
+
+"Make escaping easier
+    inoremap <special> kj <ESC> | inoremap <special> jk <ESC>:
 "}}}
 
 """"""""""""""""""""""""""""""
