@@ -17,7 +17,7 @@ main() {
 
             cbzname=$(basename "$dir")
             bla=$(basename "$(dirname "$dir")")
-            grep -iEq '^issue|part|story|episode' <<< "$cbzname" && 
+            grep -iEq '^issue|part|story|episode|extras' <<< "$cbzname" && 
                 cbzname="$bla-$cbzname"
 
             # Put images in archive
