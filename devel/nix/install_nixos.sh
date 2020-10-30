@@ -35,7 +35,7 @@ partition() {
     log "# CREATE AN ENCRYPTED ZFS POOL"
     "$SUDO" zpool create -f \
         -o ashift=12 \
-        -O entryption=on \
+        -O encryption=on \
         -O keyformat=passphrase \
         -O compression=on \
         -O mountpoint=none \
