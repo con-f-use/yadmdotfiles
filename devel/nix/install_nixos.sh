@@ -28,10 +28,15 @@ partition() {
         mkpart esp fat32 1MiB 1GiB \
         mkpart primary 1GiB 100% \
         set 1 boot on
+        
+    log "Giving the system a little time to settle..."
+    sleep 7
 
     log "# CREATE AN ENCRYPTED ZFS POOL"
     "$SUDO" zpool create -f \
         -o ashift=12 \
+        -O entryption=on \
+        -O keyformat=passphrase \
         -O compression=on \
         -O mountpoint=none \
         rpool \
