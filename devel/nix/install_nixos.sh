@@ -5,7 +5,7 @@
 # Date: 24.06.2020
 
 export EDITOR=$(which vim)
-export DISK=/dev/disk/by-id/ata-MSATA_256GB_SSD_2020031900269
+export DISK=/dev/disk/by-id/ata-VMware_Virtual_SATA_Hard_Drive_00000000000000000001
 export middle=''
 export SUDO="sudo"
 
@@ -28,8 +28,7 @@ partition() {
         mkpart esp fat32 1MiB 1GiB \
         mkpart primary 1GiB 100% \
         set 1 boot on
-        
-    log "Giving the system a little time to settle..."
+    log "Giving the system a little time to acclimate..."
     sleep 7
 
     log "# CREATE AN ENCRYPTED ZFS POOL"
@@ -66,7 +65,7 @@ partition() {
         rpool/home
 
     log "# CREATE A BOOT PARTITON"
-    "$SUDO" mkfs.fat -F 32 -n BOOT "${DISK}${middle}1"
+    echo "$SUDO" mkfs.fat -F 32 -n BOOT "${DISK}${middle}1"
 }
 
 echo mount_system

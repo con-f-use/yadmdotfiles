@@ -1,7 +1,7 @@
 let
   main_user = "jan";
   # Generate passhash with: mkpasswd -m sha-512
-  passhash = "$6$57NHYj5mJMl8......................5xMRvayTm8QQMT1";  
+  passhash = "$6$57NHYj5mJMl8......................5xMRvayTm8QQMT1";
   ssh_pkeys = [
     "ssh-rsa <your key goes here>"
     "<second key....>"
@@ -20,7 +20,8 @@ in
   boot.loader.efi.canTouchEfiVariables = true;
   boot.tmpOnTmpfs = true;
   hardware.opengl.driSupport32Bit = true;
-  
+  # virtualisation.vmware.guest.enable = true;
+
   networking.hostName = "conix";
   networking.wireless.enable = true;
 
@@ -86,9 +87,9 @@ in
     theme = "Monokai Extended"
   '';
   environment.systemPackages = with pkgs; [
-    #open-vm-tools-headless
+    #open-vm-tools-headless  # e.g. for sharing dirs between guest and host
     htop gnupg screen tree rename file
-    fasd fzf yadm pass ripgrep
+    fasd fzf yadm gopass ripgrep
     wget curl w3m inetutils dnsutils nmap openssl mkpasswd
     pipenv direnv 
     # steam xorg.libxcb
@@ -130,5 +131,5 @@ in
     options = "--delete-older-than 14d";
   };
 
-  system.stateVersion = "20.03";
+  system.stateVersion = "20.09";
 }

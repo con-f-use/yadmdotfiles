@@ -34,7 +34,7 @@ main() {
 #-------------
 
 install_debs(){
-    if command -v &>/dev/null; then
+    if command -v apt-get &>/dev/null; then
         $sudo apt-get update
         $sudo apt-get install \
             pass curl htop dpkg screen net-tools \
@@ -44,13 +44,13 @@ install_debs(){
 
 
 get_tmpsh() {
-    git clone --recursive \
-      'https://conserve.dynu.net/gitlab/jan/pass.git' \
-      ~/.config/password-store
-    echo 'tV5|Htm|eck'
+    #git clone --recursive \
+    #  'https://conserve.dynu.net/gitlab/jan/pass.git' \
+    #  ~/.config/password-store
+    echo 'tV5|Htm|ek'
     oldpwd=$(pwd)
     cd $(mktemp -d)
-    curl "confus:$(systemd-ask-password unithi03)@unethische.org/misc/ident/keys.gpg" -o "keys.gpg"
+    curl -L "confus:$(systemd-ask-password unithi0)@unethische.org/misc/ident/keys.gpg" -o "keys.gpg"
     gpg -d --batch --passphrase "$(systemd-ask-password smspw)" keys.gpg > keys.tgz
     tar xvf keys.tgz
     gpg --import keys/* 

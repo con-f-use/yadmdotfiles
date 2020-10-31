@@ -1,7 +1,7 @@
 #!/bin/sh
 # More sensible defaults for grep.
 
-export PATH=/bin:/usr/bin:/usr/local/bin:run/current-system/sw/bin
+export PATH=/bin:/usr/bin:/usr/local/bin:/nix/var/nix/profiles/defaul/bin:/run/current-system/sw/bin
 exec grep \
   --color=auto \
   --devices=skip \
