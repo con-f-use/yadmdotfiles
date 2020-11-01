@@ -6,7 +6,7 @@
 
 export EDITOR=$(which vim)
 export DISK=/dev/disk/by-id/ata-VMware_Virtual_SATA_Hard_Drive_00000000000000000001
-export middle=''
+export middle='-part'
 export SUDO="sudo"
 
 log() { echo "$@" 1>&2; }
@@ -71,7 +71,7 @@ partition() {
 echo mount_system
 mount_system() {
     log "# MOUNTING NEW FILE SYSTEM"
-    "$SUDO" zpool import -a
+    "$SUDO" zpool import -a -f -l
     "$SUDO" mkdir -p /mnt
     "$SUDO" mount -t zfs rpool/root /mnt
     "$SUDO" mkdir /mnt/nix
