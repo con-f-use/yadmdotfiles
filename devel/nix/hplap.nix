@@ -129,7 +129,7 @@ in
     python3 poetry pipenv direnv
     st kitty xonsh
     firefox mpv youtube-dl
-    tdesktop discord slack
+    tdesktop discord slack signal-desktop
     # steam xorg.libxcb
     # gcc gnumake xorg.libX11 xorg.libXinerama xorg.libXft pkgconfig # for building dwm
     picom nitrogen xorg.xrandr xorg.xinit xorg.xsetroot
@@ -172,11 +172,11 @@ in
     liberation_ttf
     fira-code
     fira-code-symbols
-    fira-code-mono
     #mplus-outline-fonts
     dina-font
     proggyfonts
     joypixels
+    (nerdfonts.override { fonts = [ "FiraCode" "FiraMono" ]; })
   ];
 
   nixpkgs.config.allowUnfree = true;
