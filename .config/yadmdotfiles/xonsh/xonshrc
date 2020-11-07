@@ -27,7 +27,7 @@ sys.path.append('.')
 
 # dirty nix hack for xontribs, requires: 
 # python -m ensurepip --user
-# $PYTHONPATH = "$HOME/.local/lib/python3.7/site-packages"
+# $PYTHONPATH = "$HOME/.local/lib/python3.8/site-packages"
 # xonsh
 # python -m pip install --user -U pip xontrib-z xonsh-direnv 
 for p in map(lambda s: str(s.resolve()), p"~/.local/lib/".glob("python*/site-packages")):
