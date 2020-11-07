@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # encoding: UTF-8, break: linux, indent: 4 spaces, lang: bash 3+/eng
 description="./$0 -h | d <url>... | mp3 <playlist>... | f (<url-file>|-)...
 Wrapper for easier use of youtube-dl
@@ -19,7 +19,7 @@ fldrcd() {
 }
 
 yudl_agg() {
-    if ! command -v xattr &>/dev/null; then
+    if command -v apt-get && ! command -v xattr &>/dev/null; then
         sudo apt-get install xattr ffmpeg
         pip install --user youtube-dl
     fi
