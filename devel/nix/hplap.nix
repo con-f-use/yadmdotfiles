@@ -6,24 +6,31 @@ let
 in
 
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-      ./zfs-configuration.nix
-    ];
+  imports = [
+    ./hardware-folio9470.nix
+    ./zfs-configuration.nix
+  ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.tmpOnTmpfs = true;
+  fileSystems."/var/tmp" = {
+    fsType = "tmpfs";
+    device = "tmpfs";
+    options = [ "defaults" "size=5%" ];
+  };
+  #swapDevices = [{device = "/swapfile"; size = 10000;}];  # doesn't seem to work
   hardware.opengl.driSupport32Bit = true;
-  # virtualisation.vmware.guest.enable = true;
+  #virtualisation.vmware.guest.enable = true;
 
   networking.hostName = "conix";
-  networking.wireless.enable = true;
+  #networking.wireless.enable = true;
 
   networking.useDHCP = false;
   networking.interfaces.enp0s25.useDHCP = true;
   networking.interfaces.wlo1.useDHCP = true;
+  networking.networkmanager.enable = true;
+  programs.nm-applet.enable = true;
 
   programs.ssh.extraConfig = ''
     Host gh
@@ -40,6 +47,7 @@ in
   hardware.pulseaudio.enable = true;
 
   # Enable the X11 windowing system.
+  services.clipmenu.enable = true;
   programs.slock.enable = true;  # screen lock needs privileges
   services.xserver = {
     enable = true;
@@ -115,7 +123,7 @@ in
   '';
   environment.systemPackages = with pkgs; [
     #open-vm-tools-headless  # e.g. for sharing dirs between guest and host
-    htop gnupg screen tree rename file
+    htop gnupg screen tree rename file binutils-unwrapped
     fasd fzf yadm gopass ripgrep
     wget curl w3m inetutils dnsutils nmap openssl mkpasswd
     python3 poetry pipenv direnv
@@ -128,6 +136,9 @@ in
     gitAndTools.git
     gitAndTools.pre-commit gitAndTools.git-open gitAndTools.delta git-lfs
     nix-prefetch-scripts
+    pandoc typora xournalpp meld
+    flameshot
+    mpv ncmpcpp
     # ungoogled-chromium # in unstable!
     (neovim.override {
       viAlias = true; vimAlias = true;
@@ -154,12 +165,14 @@ in
 
   ];
   fonts.fonts = with pkgs; [
-    #noto-fonts
-    #noto-fonts-cjk
-    #noto-fonts-emoji
+    cantarell-fonts
+    noto-fonts
+    noto-fonts-cjk
+    noto-fonts-emoji
     liberation_ttf
     fira-code
     fira-code-symbols
+    fira-code-mono
     #mplus-outline-fonts
     dina-font
     proggyfonts
