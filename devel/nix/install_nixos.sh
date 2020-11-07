@@ -21,6 +21,9 @@ partition() {
     if grep -q /by-id/ <<< "$DISK"; then
         export middle='-part'
     fi
+    if [ ! -z "${noencryption:-}" ]; then
+        encryptionflags=" -O encryption=on -O keyformat=passphrase"
+    fi
 
     log "# PARTITIONING ${DISL}"
     "$SUDO" parted --script "${DISK}" -- \
@@ -34,8 +37,7 @@ partition() {
     log "# CREATE AN ENCRYPTED ZFS POOL"
     "$SUDO" zpool create -f \
         -o ashift=12 \
-        -O encryption=on \
-        -O keyformat=passphrase \
+        $encryptionflags \
         -O compression=on \
         -O mountpoint=none \
         rpool \
@@ -63,6 +65,22 @@ partition() {
         -o mountpoint=legacy \
         -o compression=on \
         rpool/home
+
+    if [ ! -z "swap" ]; then
+    log "# CREATE A SWAP PARTITION"
+        "$SUDO" zfs create \
+            -V "$swap" \
+            -b $(getconf PAGESIZE) \
+            -o compression=zle \
+            -o logbias=throughput \
+            -o sync=always \
+            -o primarycache=metadata \
+            -o secondarycache=none \
+            -o com.sun:auto-snapshot=false \
+            rpool/swap
+        "$SUDO" mkswap -f /dev/zvol/rpool/swap
+        "$SUDO" swapon /dev/zvol/rpool/swap
+    fi
 
     log "# CREATE A BOOT PARTITON"
     echo "$SUDO" mkfs.fat -F 32 -n BOOT "${DISK}${middle}1"
