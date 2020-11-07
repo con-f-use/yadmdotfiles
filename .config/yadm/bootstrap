@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # encoding: UTF-8, break: linux, indent: 4 spaces, lang: bash 3+/eng
 description="./$0 -h | [args...]
 Bootstrap configuration managed by yadm
@@ -11,7 +11,8 @@ libfile="$HOME/.config/yadmdotfiles/bash/jcgb.bash"
     source "$libfile" ||
     { 2>echo "Requires '$libfile'!"; exit 1; }
 sudo=$(command -v sudo 2>/dev/null || echo -n "")
-yadm="$HOME/.local/bin/yadm"
+#yadm="$HOME/.local/bin/yadm"
+yadm="yadm"
 
 main() {
     echo -e "Bootstrap $(date)\n========="
@@ -21,10 +22,10 @@ main() {
     if command -v gnome-keyring &>/dev/null; then
         $HOME/.config/yadmdotfiles/bin/git-gnome-keyring.sh
     fi
-    if [ ! -z "$TMPSH" ]; then
+    if [ ! -z "${TMPSH:-}" ]; then
         get_tmpsh
     fi
-    if [ ! -z "$NVIM" ]; then
+    if [ ! -z "${NVIM:-}" ]; then
         neovim_me &> /tmp/nvime.log &
     fi
     source $HOME/.bashrc
@@ -44,13 +45,14 @@ install_debs(){
 
 
 get_tmpsh() {
-    #git clone --recursive \
-    #  'https://conserve.dynu.net/gitlab/jan/pass.git' \
-    #  ~/.config/password-store
+    git clone --recursive \
+      'https://conserve.dynu.net/gitlab/jan/pass.git' \
+      ~/.config/password-store || true
     echo 'tV5|Htm|ek'
     oldpwd=$(pwd)
     cd $(mktemp -d)
-    curl -L "confus:$(systemd-ask-password unithi0)@unethische.org/misc/ident/keys.gpg" -o "keys.gpg"
+    curl -L "https://confus:$(systemd-ask-password unithi0)@unethische.org/misc/ident/keys.gpg" -o "keys.gpg"
+    file keys.gpg | grep -q "encrypted data"
     gpg -d --batch --passphrase "$(systemd-ask-password smspw)" keys.gpg > keys.tgz
     tar xvf keys.tgz
     gpg --import keys/* 
@@ -75,7 +77,8 @@ yadm_submods() {
     cd "$HOME"
     $yadm submodule update --recursive --init
     # yadm remote set-url origin "git@github.com:con-f-use/yadmdotfiles.git"
-    $yadm remote set-url gitlab "git@conserve.dynu.net:29222/jan/yadmdotfiles.git"
+    #$yadm remote set-url gitlab "git@conserve.dynu.net:29222/jan/yadmdotfiles.git"
+    $yadm remote add gitlab "git@conserve.dynu.net:29222/jan/yadmdotfiles.git" || true
     echo "don't forget to bashitall"
     cd "$oldpwd"
 }
