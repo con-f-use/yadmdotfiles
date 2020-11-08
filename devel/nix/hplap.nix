@@ -3,11 +3,15 @@
 let
   main_user = "jan";
   passhash = "$6$Xe3WNdmP$JqMUSRF3j6ytfCz7ceT1pI4Gw05FLy3n5UxkjSpQ7cilxcH/WoN8g2lOoVskJKoIDsadH9OiwHEaAUYZQXze7.";
+
+  perswitch = import ( pkgs.fetchFromGitHub { owner = "con-f-use"; repo = "perswitch"; rev = "80cc25dc29c7921d890185fef66ca89eabee6850"; sha256 = "14fxyh728mm3xsvrqaq4pchla7crbzni366hnyb0k8zxk9gsp31c"; }) { };
+
 in
 
 {
   imports = [
-    ./hardware-folio9470.nix
+    #./hardware-folio9470.nix
+    ./hardware-workstationplayer.nix
     ./zfs-configuration.nix
   ];
 
@@ -27,8 +31,6 @@ in
   #networking.wireless.enable = true;
 
   networking.useDHCP = false;
-  networking.interfaces.enp0s25.useDHCP = true;
-  networking.interfaces.wlo1.useDHCP = true;
   networking.networkmanager.enable = true;
   programs.nm-applet.enable = true;
 
@@ -90,6 +92,8 @@ in
 
   services.udev.extraRules = ''
     ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", MODE="0666", RUN+="${pkgs.coreutils}/bin/chmod a+w /sys/class/backlight/%k/brightness"
+    # USBasp programmer
+    ACTION=="add", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="05dc", GROUP="dialout", MODE="0660"
   '';
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -124,15 +128,15 @@ in
   environment.systemPackages = with pkgs; [
     #open-vm-tools-headless  # e.g. for sharing dirs between guest and host
     htop gnupg screen tree rename file binutils-unwrapped
-    fasd fzf yadm gopass ripgrep
+    fasd fzf yadm gopass ripgrep perswitch.perscom
     wget curl w3m inetutils dnsutils nmap openssl mkpasswd
     python3 poetry pipenv direnv
     st kitty xonsh
     firefox mpv youtube-dl
-    tdesktop discord slack signal-desktop
+    tdesktop discord slack signal-desktop zoom-us
     # steam xorg.libxcb
     # gcc gnumake xorg.libX11 xorg.libXinerama xorg.libXft pkgconfig # for building dwm
-    picom nitrogen xorg.xrandr xorg.xinit xorg.xsetroot
+    picom nitrogen xorg.xrandr xorg.xinit xorg.xsetroot xclip fribidi
     gitAndTools.git
     gitAndTools.pre-commit gitAndTools.git-open gitAndTools.delta git-lfs
     nix-prefetch-scripts
