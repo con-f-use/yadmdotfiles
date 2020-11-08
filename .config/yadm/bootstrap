@@ -19,6 +19,8 @@ main() {
     $sudo chown -R "$USER" "$HOME/.config/yadmdotfiles"
     yadm_submods
     install_debs
+    mkdir -p ~/.cache/vlc
+    chmod g+rw ~/.cache/vlc
     if command -v gnome-keyring &>/dev/null; then
         $HOME/.config/yadmdotfiles/bin/git-gnome-keyring.sh
     fi

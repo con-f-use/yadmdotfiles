@@ -6,5 +6,11 @@ if ! command -v barracudavpn; then
 fi
 
 barracudavpn -p || true
-barracudavpn -s -l jbischko -r $(pass Cuda/cudaws || gopass Cuda/cudaws)
+user="${CUDAUSER:-jbischko}" 
+pw="$(pass Cuda/cudaws || gopass show Cuda/cudaws)"
+sudo barracudavpn -s \
+    -c "$HOME/.config/yadmdotfiles/cuda/barracudavpn/" \
+    -l "$user" \
+    -r "${pw:-$(systemd-ask-password "password for $user")}"
+unset pw
 
