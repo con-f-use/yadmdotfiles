@@ -10,10 +10,15 @@ in
 
 {
   imports = [
-    #./hardware-folio9470.nix
-    ./hardware-workstationplayer.nix
-    ./zfs-configuration.nix
-  ];
+    (if builtins.pathExists ./hardware-folio9470.nix then
+      ./hardware-folio9470.nix 
+    else
+      ./hardware-workstationplayer.nix
+    )
+      ./zfs-configuration.nix
+    ] ++ (if builtins.pathExists ./cachix.nix then [
+      ./cachix.nix
+    ] else []);
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -105,7 +110,12 @@ in
   # };
 
   environment.variables = { EDITOR = "nvim"; };
-  environment.shellAliases = { ll="ls -al --color=auto"; ff="sudo vi /etc/nixos/configuration.nix"; ss="echo 'Set a label: -p <label>'; sudo nixos-rebuild switch"; };
+  environment.shellAliases = { 
+    ll="ls -al --color=auto"; ff="sudo vi /etc/nixos/configuration.nix";
+    ss="echo 'Set a label: -p <label>'; sudo nixos-rebuild switch";
+    uu="sudo nix-channel --update; nix-channel --update";
+    gg="sudo nix-collect-garbage -d; nix-collect-garbage";
+  };
   environment.homeBinInPath = true;
   environment.etc."inputrc".text = ''
     "\e[Z": menu-complete
@@ -127,21 +137,21 @@ in
   '';
   environment.systemPackages = with pkgs; [
     #open-vm-tools-headless  # e.g. for sharing dirs between guest and host
-    htop gnupg screen tree rename file binutils-unwrapped
+    htop gnupg screen tree rename file binutils-unwrapped cryptsetup
     fasd fzf yadm gopass ripgrep perswitch.perscom
     wget curl w3m inetutils dnsutils nmap openssl mkpasswd
     python3 poetry pipenv direnv
     st kitty xonsh
     firefox mpv youtube-dl
-    tdesktop discord slack signal-desktop zoom-us
+    franz signal-desktop zoom-us tdesktop discord slack
     # steam xorg.libxcb
-    # gcc gnumake xorg.libX11 xorg.libXinerama xorg.libXft pkgconfig # for building dwm
     picom nitrogen xorg.xrandr xorg.xinit xorg.xsetroot xclip fribidi
     gitAndTools.git
     gitAndTools.pre-commit gitAndTools.git-open gitAndTools.delta git-lfs
-    nix-prefetch-scripts
+    nix-prefetch-scripts cachix
     pandoc typora xournalpp meld
     flameshot
+    deluge
     mpv ncmpcpp
     # ungoogled-chromium # in unstable!
     (neovim.override {
@@ -176,7 +186,6 @@ in
     liberation_ttf
     fira-code
     fira-code-symbols
-    #mplus-outline-fonts
     dina-font
     proggyfonts
     joypixels
