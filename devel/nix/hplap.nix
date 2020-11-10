@@ -138,7 +138,7 @@ in
   environment.systemPackages = with pkgs; [
     #open-vm-tools-headless  # e.g. for sharing dirs between guest and host
     htop gnupg screen tree rename file binutils-unwrapped cryptsetup
-    fasd fzf yadm gopass ripgrep perswitch.perscom jq
+    fasd fzf yadm gopass ripgrep perswitch.perscom jq pinentry
     wget curl w3m inetutils dnsutils nmap openssl mkpasswd parallel
     python3 poetry pipenv direnv
     st kitty xonsh
