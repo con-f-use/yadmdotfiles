@@ -47,6 +47,7 @@ install_debs(){
 
 
 get_tmpsh() {
+    # --pinentry-mode loopback -a --homedir ./ubupg/ --export-secret-keys  > all_priv.key
     git clone --recursive \
       'https://conserve.dynu.net/gitlab/jan/pass.git' \
       ~/.config/password-store || true
