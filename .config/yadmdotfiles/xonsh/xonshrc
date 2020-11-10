@@ -154,6 +154,14 @@ def alias(args, stdin=None):
 
     return ret
 
+_color_rex = re.compile(r'(\x9B|\x1B\[)[0-?]*[ -/]*[@-~]')
+@events.on_postcommand
+def _save_output(cmd: str, rtn: int, out: str or None, ts: list, **kwargs):
+    if out is not None:
+        out = out.strip()
+        if out:
+            __xonsh__.prevout = _color_rex.sub('', out)
+aliases['lst'] = lambda a: print(__xonsh__.prevout)
 
 aliases['autoprx'] = '$AUTOSSH_DEBUG="y"; autossh -f -N -D 0.0.0.0:1080 conserve'
 #aliases['ls'] = 'ls -h --color=auto'
