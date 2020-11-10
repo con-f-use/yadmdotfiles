@@ -11,6 +11,8 @@ pw="$(pass Cuda/cudaws || gopass show Cuda/cudaws)"
 sudo barracudavpn -s \
     -c "$HOME/.config/yadmdotfiles/cuda/barracudavpn/" \
     -l "$user" \
-    -r "${pw:-$(systemd-ask-password "password for $user")}" "$@"
+    -r "${pw:-$(systemd-ask-password "password for $user")}" -v "$@" |
+        tee "/dev/stdout" |
+            sed -n 's/executing:/sudo ip/p'
 unset pw
 

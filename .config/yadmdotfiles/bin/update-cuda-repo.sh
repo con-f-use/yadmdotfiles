@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # encoding: UTF-8, break: linux, indent: 4 spaces, lang: bash 3+/eng
 description="$0 [args...]
 Update or clone the most used cuda-repos.
@@ -24,7 +24,7 @@ main() {
         bnnga/{autotest,ansible,autotest-infrastructure,webservices,jenkins-files} \
         bnnga/{autotest-dockerfiles,dockerfiles-general,docker-registry} \
         bnnga/{resource-analyzer,random_scripts,jenkins-files,jenkins-libraries,weasel} \
-        bnnga/{sphinx-doc-ng} \
+        bnnga/{sphinx-doc-ng,qda_rest} \
         '~jbischko/'{cudadevpi,touchmysc,cudasetuptools,ztcrypt,atdiff,deploytester,fwhelpers} \
         '~gchappell/ztdclient' \
         '~czangerle/'{cookiecutter,qa_mongoengine,qa_host_controller,qctrl} \
