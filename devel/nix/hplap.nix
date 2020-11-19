@@ -56,6 +56,7 @@ in
   # Enable the X11 windowing system.
   services.clipmenu.enable = true;
   programs.slock.enable = true;  # screen lock needs privileges
+  services.xserver.exportConfiguration = true;
   services.xserver = {
     enable = true;
     layout = "us";
@@ -149,7 +150,7 @@ in
     picom nitrogen xorg.xrandr xorg.xinit xorg.xsetroot xclip fribidi
     gitAndTools.git
     gitAndTools.pre-commit gitAndTools.git-open gitAndTools.delta git-lfs
-    nix-prefetch-scripts cachix
+    nix-prefetch-scripts nix-update nixpkgs-review cachix
     pandoc typora xournalpp meld
     flameshot
     deluge
@@ -177,7 +178,9 @@ in
         } ];
       };
     })
-
+    papirus-icon-theme
+    arc-theme
+    gnome3.nautilus
   ];
   fonts.fonts = with pkgs; [
     cantarell-fonts
