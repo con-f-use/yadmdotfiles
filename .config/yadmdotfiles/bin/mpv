@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+pipe="/tmp/mpv_pipe_$USER"
+
+if pgrep mpv; then
+    for fn in "$@"; do
+        echo "loadfile \"$(readlink -f "${fn}")\" append-play" >> "$pipe"
+    done
+else
+    [[ -f "$pipe" ]] || 
+        mkfifo "$pipe"
+    mpv --force-window=yes --input-file="$pipe" "$@" &
+fi
+
