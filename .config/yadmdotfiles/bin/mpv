@@ -7,8 +7,9 @@ if pgrep mpv; then
         echo "loadfile \"$(readlink -f "${fn}")\" append-play" >> "$pipe"
     done
 else
-    [[ -f "$pipe" ]] || 
-        mkfifo "$pipe"
+    [[ -f "$pipe" ]] ||
+        mkfifo "$pipe" ||
+            true
     mpv --force-window=yes --input-file="$pipe" "$@" &
 fi
 
