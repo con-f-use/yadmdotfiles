@@ -80,6 +80,7 @@ partition() {
             rpool/swap
         "$SUDO" mkswap -f /dev/zvol/rpool/swap
         "$SUDO" swapon /dev/zvol/rpool/swap
+        log "note: swap on zfs might to freezes (see: https://github.com/openzfs/zfs/issues/7734)"
     fi
 
     log "# CREATE A BOOT PARTITON"
