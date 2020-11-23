@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # coding: UTF-8, break: linux, indent: 4 spaces, lang: bash/eng
 description=\
 "Recursively give all graphical image files in the given directory their
