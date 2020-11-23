@@ -50,13 +50,17 @@ in
   time.timeZone = "Europe/Vienna";
 
   services.printing.enable = true;
+  #services.printing.drivers = [ pkgs.hplipWithPlugin ];  #pkgs.hplip
+  #programs.system-config-printer.enable = true;
   sound.enable = true;
   hardware.pulseaudio.enable = true;
+  services.gvfs.enable = true;
 
   # Enable the X11 windowing system.
   services.clipmenu.enable = true;
   programs.slock.enable = true;  # screen lock needs privileges
   services.xserver.exportConfiguration = true;
+  #programs.xonsh.enable = true;
   services.xserver = {
     enable = true;
     layout = "us";
@@ -72,6 +76,17 @@ in
     };
     desktopManager = {
       gnome3.enable = false;
+      gnome3.extraGSettingsOverrides = ''
+        [org/gnome/nautilus/list-view]
+        default-visible-columns=['name', 'size', 'date_modified_with_time']
+        default-zoom-level='small'
+        use-tree-view=false
+
+        [org/gnome/nautilus/preferences]
+        default-folder-viewer='list-view'
+        executable-text-activation='ask'
+        default-sort-order='mtime;'
+      '';
       plasma5.enable = false;
       xterm.enable = false;
     };
@@ -140,21 +155,23 @@ in
     #open-vm-tools-headless  # e.g. for sharing dirs between guest and host
     htop gnupg screen tree rename file binutils-unwrapped cryptsetup
     fasd fzf yadm gopass ripgrep perswitch.perscom jq pinentry
-    wget curl w3m inetutils dnsutils nmap openssl mkpasswd parallel
+    wget curl w3m inetutils dnsutils nmap openssl
+    mkpasswd parallel zip trash-cli
     python3 poetry pipenv direnv
     st kitty xonsh
     firefox mpv youtube-dl
     franz signal-desktop zoom-us tdesktop discord slack
-    thunderbird
+    thunderbird libreoffice
     # steam xorg.libxcb
     picom nitrogen xorg.xrandr xorg.xinit xorg.xsetroot xclip fribidi
     gitAndTools.git
     gitAndTools.pre-commit gitAndTools.git-open gitAndTools.delta git-lfs
     nix-prefetch-scripts nix-update nixpkgs-review cachix
     pandoc typora xournalpp meld
-    flameshot
+    flameshot kazam
     deluge
     mpv ncmpcpp
+    glib
     # ungoogled-chromium # in unstable!
     (neovim.override {
       viAlias = true; vimAlias = true;
@@ -180,7 +197,7 @@ in
     })
     papirus-icon-theme
     arc-theme
-    gnome3.nautilus
+    gnome3.nautilus gsettings-desktop-schemas
   ];
   fonts.fonts = with pkgs; [
     cantarell-fonts
