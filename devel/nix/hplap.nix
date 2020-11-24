@@ -61,6 +61,7 @@ in
   programs.slock.enable = true;  # screen lock needs privileges
   services.xserver.exportConfiguration = true;
   #programs.xonsh.enable = true;
+  programs.dconf.enable = true;
   services.xserver = {
     enable = true;
     layout = "us";
@@ -197,7 +198,7 @@ in
     })
     papirus-icon-theme
     arc-theme
-    gnome3.nautilus gsettings-desktop-schemas
+    gnome3.nautilus gsettings-desktop-schemas gnome3.dconf-editor
   ];
   fonts.fonts = with pkgs; [
     cantarell-fonts
