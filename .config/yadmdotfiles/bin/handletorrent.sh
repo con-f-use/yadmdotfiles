@@ -11,9 +11,11 @@ libfile="$HOME/.config/yadmdotfiles/bash/jcgb.bash"
     { 2>echo "Requires '$libfile'!"; exit 1; }
 
 main() {
+    date; echo "$@"; echo ========================; echo
     loguri="$HOME/handletorrent.log"
     #deluge=/nix/store/*deluge-*/bin/deluge-console 
-    deluge=deluge-console 
+    deluge=deluge-console
+    export PASSWORD_STORE_DIR=$HOME/.config/password-store/
     if ! command -v deluge-console &>/dev/null; then
         if command -v apt-get &>/dev/null; then
             sudo apt-get install deluge-console
@@ -32,13 +34,13 @@ main() {
     # deluge-console "connect 192.168.0.10 localclient 41f48e42c5b614369455582626cf2477f5eabd4b; config -s max_upload_speed 30.0"
     # deluge-console "connect 192.168.0.10 localclient 41f48e42c5b614369455582626cf2477f5eabd4b; config -s max_download_speed 6000.0"
 
-
     ssh conserve deluge-console "'connect 192.168.0.10 localclient $(gopass show conserve/deluge-local); add $1'" ||
     $deluge "connect 192.168.0.10 localclient $(gopass show conserve/deluge-local); add $1" ||
     $deluge "connect conserve.dynu.net/deluge conserve $(systemd-ask-password conserve deluge); add $1"
+    echo
 }
 
 if [ "$0" = "$BASH_SOURCE" ]; then
     usage "$@"
-    main "$@"
+    main "$@" 2>&1 >>/tmp/handletorrent.log
 fi

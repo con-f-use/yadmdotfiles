@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr//bin/env bash
 # encoding: UTF-8, break: linux, indent: 4 spaces, lang: bash 3+/eng
 description="./$0 -h | local | remote | fixsubs | updatesubs
 Some git helpers, e.g. to revert commits (history rewrite-sytle).
