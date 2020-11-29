@@ -18,7 +18,7 @@ main() {
         "#source_env <path>     #load .env without security check\n" \
         "#source_up <filename>  #load .env searched from parent dir up to /\n" \
         "#PATH_add <path>       #prepends epanded path\n" \
-        "#watch_file <path>,..  #add path to security watch\n" \
+        "#watch_file <path>,..  #reload env if <path> changes\n" \
         "#export VAR_NAME=VALUE #exports a varialbe to the environment\n" \
         "#dotenv <path>         #load a .env file e.g. used in node & ruby\n" \
         "#use <tool>            # e.g. nix for version pinning"
