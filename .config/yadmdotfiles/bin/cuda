@@ -5,14 +5,23 @@ if ! command -v barracudavpn; then
   exit 1
 fi
 
-barracudavpn -p || true
+cmds=$(mktemp)
+trap 'rm -f "$cmds"' EXIT ERR
+
+barracudavpn -p || truehttps://github.com/instantOS/instantASSIST/blob/master/assists/a.sh
 user="${CUDAUSER:-jbischko}" 
 pw="$(pass Cuda/cudaws || gopass show Cuda/cudaws)"
-sudo barracudavpn -s \
-    -c "$HOME/.config/yadmdotfiles/cuda/barracudavpn/" \
-    -l "$user" \
-    -r "${pw:-$(systemd-ask-password "password for $user")}" -v "$@" 2>&1 |
-        tee "/dev/stdout" |
-            sed -n 's/executing:/sudo ip/p'
+pw=${pw:-$(systemd-ask-password "password for $user")}
+(
+    sudo barracudavpn -s \
+        -c "$HOME/.config/yadmdotfiles/cuda/barracudavpn/" \
+        -l "$user" \
+        -r "$pw" -v "$@" 2>&1 |
+            tee "/dev/stdout" |
+            sed -n 's/executing:/sudo ip/p' > "$cmds"
+)
 unset pw
+
+sleep 5
+cat "$cmds"
 
