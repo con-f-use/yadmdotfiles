@@ -1,10 +1,24 @@
 { config, pkgs, ...}:
 
 let
+
   main_user = "jan";
+
   passhash = "$6$Xe3WNdmP$JqMUSRF3j6ytfCz7ceT1pI4Gw05FLy3n5UxkjSpQ7cilxcH/WoN8g2lOoVskJKoIDsadH9OiwHEaAUYZQXze7.";
 
-  perswitch = import ( pkgs.fetchFromGitHub { owner = "con-f-use"; repo = "perswitch"; rev = "80cc25dc29c7921d890185fef66ca89eabee6850"; sha256 = "14fxyh728mm3xsvrqaq4pchla7crbzni366hnyb0k8zxk9gsp31c"; }) { };
+  perswitch = import (fetchTarball { url = "https://github.com/con-f-use/PERSwitch/archive/80cc25dc29c7921d890185fef66ca89eabee6850.tar.gz"; sha256 = "14fxyh728mm3xsvrqaq4pchla7crbzni366hnyb0k8zxk9gsp31c"; }) {};
+
+  cudapkgs = with pkgs; [
+    devpi-client postgresql
+    (python2.withPackages(ps: [
+      ps.requests
+      ps.setuptools
+      ps.six
+      ps.virtualenv
+      ps.libvirt
+      ps.pycrypto
+    ]))
+  ];
 
 in
 
@@ -49,12 +63,34 @@ in
   #security.wrappers = { slock.source = "${pkgs.slock.out}/bin/slock"; };
   time.timeZone = "Europe/Vienna";
 
+  #hardware.opengl.driSupport32Bit = true;
+  #hardware.opengl.extraPackages = [ pkgs.intel-ocl ];
+  #hardware.bluetooth.enable = true;
+  #services.blueman.enable = true;
   services.printing.enable = true;
-  #services.printing.drivers = [ pkgs.hplipWithPlugin ];  #pkgs.hplip
-  #programs.system-config-printer.enable = true;
+  services.printing.drivers = [ pkgs.hplipWithPlugin ];  #pkgs.hplip
+  programs.system-config-printer.enable = true;
   sound.enable = true;
-  hardware.pulseaudio.enable = true;
+  hardware.pulseaudio = { enable = true; package = pkgs.pulseaudioFull; };
   services.gvfs.enable = true;
+  services.locate = { enable = true; interval = "hourly"; };
+  #services.tor = { enable = true; client.enable = true; };
+  #services.lorri.enable = true;
+  services.earlyoom = { enable = true; freeMemThreshold = 5; };
+
+  documentation.nixos.enable = false;
+  virtualisation.docker = {
+    enable = true;
+    liveRestore = false;
+    autoPrune.enable = true;
+  };
+
+  services.logind.lidSwitch = "ignore";
+
+  services.locate = {
+    enable = true;
+    interval = "hourly";
+  };
 
   # Enable the X11 windowing system.
   services.clipmenu.enable = true;
@@ -74,6 +110,7 @@ in
       #startx.enable = true;
       gdm.enable = false;
       sddm.enable = false;
+      lightdm.greeters.gtk.theme.name = "Arc-Dark";
     };
     desktopManager = {
       gnome3.enable = false;
@@ -107,7 +144,7 @@ in
   users.users.root.hashedPassword = "*";
   users.users."${main_user}" = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "audio" "networkmanager" "wireshark" "dialout" "disk" "video" "docker" ];
+    extraGroups = [ "wheel" "audio" "networkmanager" "wireshark" "dialout" "plugdev" "adm" "disk" "video" "docker" ];
     #openssh.authorizedKeys.keys = ssh_pkeys;
     hashedPassword = passhash;
   };
@@ -155,8 +192,8 @@ in
   environment.systemPackages = with pkgs; [
     #open-vm-tools-headless  # e.g. for sharing dirs between guest and host
     htop gnupg screen tree rename file binutils-unwrapped cryptsetup
-    fasd fzf yadm gopass ripgrep perswitch.perscom jq pinentry
-    wget curl w3m inetutils dnsutils nmap openssl
+    fasd fzf yadm gopass ripgrep perswitch.perscom jq pinentry ncdu entr dos2unix
+    wget curl w3m inetutils dnsutils nmap openssl sshpass mtr nload
     mkpasswd parallel zip trash-cli
     python3 poetry pipenv direnv
     st kitty xonsh
@@ -167,8 +204,8 @@ in
     picom nitrogen xorg.xrandr xorg.xinit xorg.xsetroot xclip fribidi
     gitAndTools.git
     gitAndTools.pre-commit gitAndTools.git-open gitAndTools.delta git-lfs
-    nix-prefetch-scripts nix-update nixpkgs-review cachix
-    pandoc typora xournalpp meld
+    nix-prefetch-scripts nix-update nix-index nixpkgs-review nix-tree nix-top nixpkgs-fmt cachix
+    pandoc typora xournalpp meld sxiv
     flameshot kazam
     deluge
     mpv ncmpcpp
@@ -199,7 +236,7 @@ in
     papirus-icon-theme
     arc-theme
     gnome3.nautilus gsettings-desktop-schemas gnome3.dconf-editor
-  ];
+  ] ++ cudapkgs;
   fonts.fonts = with pkgs; [
     cantarell-fonts
     noto-fonts
@@ -214,15 +251,24 @@ in
     (nerdfonts.override { fonts = [ "FiraCode" "FiraMono" ]; })
   ];
 
-  nixpkgs.config.allowUnfree = true;
-  nix.package = pkgs.nixFlakes;
-  nix.extraOptions = ''
-    experimental-features = nix-command flakes
-  '';
-  nix.autoOptimiseStore = true;
-  nix.gc = {
-    automatic = true;
-    options = "--delete-older-than 14d";
+  nixpkgs.config.allowUnfree = true;  # allowUnfreePredicate for individual packages
+  nix = {
+    package = pkgs.nixFlakes;
+    extraOptions = ''
+      # builders-use-substitutes = true;
+      experimental-features = nix-command flakes
+    '';
+    autoOptimiseStore = true;
+    optimise.automatic = true;
+    daemonNiceLevel = 19;
+    gc = {
+      automatic = true;
+      options = "--delete-older-than 14d";
+    };
+    #binaryCaches = [];
+    #binaryCachePublicKeys = [];
+    #distributedBuilds = true;
+    #buildMachines = [ { hostname=; system="x86_64-linux"; maxJobs=100; supportedFeatures=["benchmark" "big-parallel"] } ];
   };
 
   system.stateVersion = "20.09";
