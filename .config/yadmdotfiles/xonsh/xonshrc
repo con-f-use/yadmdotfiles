@@ -167,7 +167,7 @@ aliases['autoprx'] = '$AUTOSSH_DEBUG="y"; autossh -f -N -D 0.0.0.0:1080 conserve
 #aliases['ls'] = 'ls -h --color=auto'
 aliases['ll'] = 'ls -alh --color=auto'
 aliases['ltr'] = 'll -rt'
-aliases['mocondat'] = 'sudo cryptsetup luksOpen /dev/sdb1 crydat1 --key-file=~/.cry-con/cry-con-dat; sudo mount -o defaults,users /dev/mapper/crydat1 /media/condat1/'
+aliases['mocondat'] = 'sudo cryptsetup luksOpen /dev/disk/by-uuid/bcca372b-f99a-41f1-8a86-c9431a3cee78 crydat1 --key-file=~/.cry-con/cry-con-dat; sudo mount -o defaults,users /dev/mapper/crydat1 /media/condat1/'
 aliases['sc'] = 'sudo systemctl'
 aliases['jc'] = 'sudo journalctl'
 aliases['envpy2']='echo "layout python2" > .envrc; direnv allow .'

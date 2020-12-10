@@ -1,0 +1,5 @@
+#!/bin/sh
+# More sensible defaults for cal
+
+export PATH=/bin:/usr/bin:/usr/local/bin:/nix/var/nix/profiles/defaul/bin:/run/current-system/sw/bin
+exec cal -m -w "$@"
