@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+echo
+echo {a..i} " " {j..s} " " {t..z}
+echo "                 " " " "1                  " " " "2            "
+echo {1..9} " " {0..9} " " {0..6}
+echo -e "\nascii: 048x30 A65x41 a97x61"
+
