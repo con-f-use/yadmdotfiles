@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Check out a Pull request from github
+
+pr() {
+  id=${1:?Need Pull request number as argument}
+  git fetch origin pull/${id}/head:pr_${id}
+  git checkout pr_${id}
+}
+
+if [ "$0" = "$BASH_SOURCE" ]; then
+    pr "$@"
+fi
+

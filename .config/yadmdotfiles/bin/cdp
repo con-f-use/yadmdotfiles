@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Go to top of a git repo
+
+tmp=$(pwd)
+while ! [ -d .git ] && ! [ "$(pwd)" = / ]; do
+  cd ..
+done
+newpwd=$(pwd)
+
+# Make `cd -` still work
+cd "$tmp"
+cd "$newpwd"
