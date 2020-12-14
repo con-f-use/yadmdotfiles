@@ -7,21 +7,24 @@ fi
 
 cmds=$(mktemp)
 trap 'rm -f "$cmds"' EXIT ERR
+echo "#$(date)" > "$cmds"
+echo $cmds
 
-barracudavpn -p || truehttps://github.com/instantOS/instantASSIST/blob/master/assists/a.sh
+barracudavpn -p || true
 user="${CUDAUSER:-jbischko}" 
 pw="$(pass Cuda/cudaws || gopass show Cuda/cudaws)"
 pw=${pw:-$(systemd-ask-password "password for $user")}
 (
-    sudo barracudavpn -s \
-        -c "$HOME/.config/yadmdotfiles/cuda/barracudavpn/" \
-        -l "$user" \
-        -r "$pw" -v "$@" 2>&1 |
-            tee "/dev/stdout" |
-            sed -n 's/executing:/sudo ip/p' > "$cmds"
-)
+stdbuf -i0 -o0 -e0 sudo stdbuf -i0 -o0 -e0 barracudavpn -s \
+    -c "$HOME/.config/yadmdotfiles/cuda/barracudavpn/" \
+    -l "$user" \
+    -r "$pw" -v "$@" 2>&1 |
+        stdbuf -i0 -o0 -e0 tee "/dev/stdout" |
+        stdbuf -i0 -o0 -e0 sed -n 's/executing:/sudo ip/p' > "$cmds"
+) &
 unset pw
 
-sleep 5
+sleep 20
+echo "#!/bin/sh"
 cat "$cmds"
 
