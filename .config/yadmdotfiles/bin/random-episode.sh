@@ -25,7 +25,8 @@ find "$@" -type f -iregex '.*\(avi\|mp4\|mkv\|m4v\|mpg\|mpeg\|mpeg2\|mpeg4\|ogm\
     while IFS= read -r -d $'\0' file; do
         file=$(readlink -f "$file")
         echo "$i: $file"
-        /nix/store/xgr6m2f4rpgjnb8lymxrlvqvcwmmq6rv-vlc-3.0.11.1/bin/vlc --one-instance --playlist-enqueu "$file" &
+        #/nix/store/xgr6m2f4rpgjnb8lymxrlvqvcwmmq6rv-vlc-3.0.11.1/bin/vlc --one-instance --playlist-enqueu "$file" &
+        umpv "$file" &
         if (( i==0 )) || (( i==-2 )); then sleep 2; (( i++ )); fi
         if (( i>0 )); then (( i++ )); fi
         if (( i>last )); then break; fi
