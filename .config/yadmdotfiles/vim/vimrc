@@ -33,6 +33,9 @@ Plug 'kana/vim-textobj-line'
 Plug 'godlygeek/tabular'
 Plug 'con-f-use/vim-pythonindent'
 Plug 'yhat/vim-docstring'
+"Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"Plug 'codota/tabnine-vim'
+Plug 'zxqfl/tabnine-vim'
 if !exists('g:vscode')
     "Plug 'psf/black'
     Plug 'christoomey/vim-system-copy'
@@ -40,7 +43,7 @@ if !exists('g:vscode')
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-obsession'
     Plug 'google/vim-searchindex'
-    Plug 'davidhalter/jedi-vim'
+    "Plug 'davidhalter/jedi-vim'
     Plug 'joshdick/onedark.vim'
     Plug 'LnL7/vim-nix'
 endif
@@ -69,11 +72,11 @@ let mapleader ="\\"
 set nocompatible
 set encoding=utf-8 nobomb
 "set ai          "Autoindet
-set autoread
+set autoread    "Re-read file when changed outside vim
 set mouse=a     "Use mouse
 set clipboard=unnamedplus  "use system clipboard
 set smarttab    "Smart Tabulator
-set tabpagemax=50
+set tabpagemax=50  "Max number of tabs
 set nobackup
 set noswapfile
 set smartcase   "Smat casematching
@@ -95,14 +98,14 @@ set softtabstop=4  " Number of columns for a tab
 set shiftwidth=4  " Indents have a witdh of 4 spaces
 set expandtab   "Make spaces out of tabs
 set shiftround  "Shift to next tab marker
-set tw=79
-set formatoptions-=t
+set tw=79       "Max width of tect being inserted
+set formatoptions-=t  "Autowrap using textwidth
 filetype plugin on
 filetype indent on
 set nrformats-=octal
-set laststatus=2
+set laststatus=2  "always have a status line
 set wildmenu
-set wildignore=*.swp,*.bak,*.pyc,*.class
+set wildignore=*.swp,*.bak,*.pyc,*.class  "ignore these in menus (e.g. tab)
 set wildmode=list:longest,full   "Command mode completions behaves as in shell
 set nostartofline   "keeps cursor in the same colum after movements
 set ofu=syntaxcomplete#Complete
@@ -130,45 +133,6 @@ set exrc "  Enable per-directory .vimrc files
 set secure " and disable unsafe commands in them
 set sessionoptions-=options
 set viewoptions-=options
-set tags+=~/.vim/tags/cpp
-set tags+=~/.vim/systags
-"}}}
-
-"""""""""""""""""""""""""""""
-" Ctags/Completion 
-"""""""""""""""""""""""""""""
-"{{{
-" build tags of your own project with Ctrl-F12
-map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
-
-" OmniCppComplete
-let OmniCpp_NamespaceSearch = 1
-let OmniCpp_GlobalScopeSearch = 1
-let OmniCpp_ShowAccess = 1
-let OmniCpp_ShowPrototypeInAbbr = 1 " show function parameters
-let OmniCpp_MayCompleteDot = 1 " autocomplete after .
-let OmniCpp_MayCompleteArrow = 1 " autocomplete after ->
-let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
-let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
-
-
-" autocmd FileType python set omnifunc=pythoncomplete#Complete
-autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
-autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-autocmd FileType c set omnifunc=ccomplete#Complete
-autocmd FileType html setlocal sw=2 expandtab
-autocmd FileType make setlocal noexpandtab
-autocmd FileType sh setlocal commentstring=#\ %s
-autocmd FileType python setlocal commentstring=#\ %s
-autocmd FileType vim setlocal commentstring=\"\ %s
-
-let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabContextDefaultCompletionType = "<c-n>"
-set pastetoggle=<F2>
-
 "}}}
 
 """"""""""""""""""""""""""""""
@@ -374,6 +338,56 @@ noremap <special> kj <ESC> | inoremap <special> jk <ESC>:
 "Python {{{
     " set nofoldenable
     autocmd Filetype python inoremap <leader>d <CR>def <++>(*ar, **kw):<CR><++><CR><CR><esc>4k0
+"}}}
+
+"CoC {{{
+
+function! _enable_CoC ()
+
+" TextEdit might fail if hidden is not set.
+set hidden
+
+" Give more space for displaying messages.
+" set cmdheight=2
+
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
+
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
+
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter, <cr> could be remapped by other vim plugin
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+endfunction
+
 "}}}
 
 "}}}
