@@ -1,7 +1,7 @@
 " vim: foldmethod=marker
 
 """"""""""""""""""""""""""""
-" Plugins 
+" Plugins
 """"""""""""""""""""""""""""
 "{{{
 
@@ -23,42 +23,44 @@ endif
 
 " Install plugins
 call plug#begin('~/.vim/plugged')
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-repeat'
-Plug 'christoomey/vim-sort-motion'
-Plug 'kana/vim-textobj-user'
-Plug 'kana/vim-textobj-indent'
-Plug 'kana/vim-textobj-entire'
-Plug 'kana/vim-textobj-line'
-Plug 'godlygeek/tabular'
-Plug 'con-f-use/vim-pythonindent'
+Plug 'tpope/vim-surround'  " Surround text objects with e.g. quotation
+Plug 'tpope/vim-repeat'    " Enable repat action for plugins
+Plug 'tpope/vim-sleuth'    " Autodetect indentation style
+"Plug 'christoomey/vim-sort-motion'
+"Plug 'kana/vim-textobj-user'
+"Plug 'kana/vim-textobj-indent'
+"Plug 'kana/vim-textobj-entire'
+"Plug 'kana/vim-textobj-line'
+"Plug 'godlygeek/tabular'
+Plug 'con-f-use/vim-pythonindent'  " Fold python automatically
 Plug 'yhat/vim-docstring'
-"Plug 'neoclide/coc.nvim', {'branch': 'release'}
-"Plug 'codota/tabnine-vim'
-Plug 'zxqfl/tabnine-vim'
 if !exists('g:vscode')
-    "Plug 'psf/black'
-    Plug 'christoomey/vim-system-copy'
-    Plug 'Yggdroot/indentLine'
-    Plug 'tpope/vim-commentary'
-    Plug 'tpope/vim-obsession'
-    Plug 'google/vim-searchindex'
-    "Plug 'davidhalter/jedi-vim'
-    Plug 'joshdick/onedark.vim'
-    Plug 'LnL7/vim-nix'
+  "Plug 'psf/black'
+  Plug 'christoomey/vim-system-copy'
+  Plug 'Yggdroot/indentLine'
+  Plug 'tpope/vim-commentary'   " Easy comment action
+  Plug 'tpope/vim-obsession'    " Easier automatic session management
+  Plug 'google/vim-searchindex' " Number of search hits in status bar
+  "Plug 'davidhalter/jedi-vim'
+  Plug 'joshdick/onedark.vim'   " Onedark theme
+  Plug 'LnL7/vim-nix'           " Nix syntax
+  "Plug 'neoclide/coc.nvim', {'branch': 'release'}  " Auto completion and Language Server clients
+  Plug 'j5shi/CommandlineComplete.vim'  " Use tab completion in search :command line
+  Plug 'zxqfl/tabnine-vim'      " AI auto completion
+  "Plug 'codota/tabnine-vim'    " redirect of above
 endif
 if has('nvim')
-"    Plug 'rakr/vim-one'  
-    Plug 'kassio/neoterm'
+  "Plug 'rakr/vim-one'
+  "Plug 'kassio/neoterm'
 endif
 call plug#end()
 
 if exists('g:vscode')
-"Emulate commentary in vscode
-    xmap gc  <Plug>VSCodeCommentary
-    nmap gc  <Plug>VSCodeCommentary
-    omap gc  <Plug>VSCodeCommentary
-    nmap gcc <Plug>VSCodeCommentaryLine
+  "Emulate commentary in vscode
+  xmap gc  <Plug>VSCodeCommentary
+  nmap gc  <Plug>VSCodeCommentary
+  omap gc  <Plug>VSCodeCommentary
+  nmap gcc <Plug>VSCodeCommentaryLine
 endif
 
 "}}}
@@ -84,10 +86,10 @@ set dir=/tmp/   "Dir for swapfiles
 set undofile    " persistent undos - undo after you re-open the file
 set undodir=~/.vim/dirs/undos
 if !isdirectory(&directory)
-    call mkdir(&directory, "p")
+  call mkdir(&directory, "p")
 endif
 if !isdirectory(&undodir)
-    call mkdir(&undodir, "p")
+  call mkdir(&undodir, "p")
 endif
 set list                            " show invisible characters
 set listchars=tab:»·,trail:·,nbsp:· " Display extra whitespace
@@ -133,16 +135,23 @@ set exrc "  Enable per-directory .vimrc files
 set secure " and disable unsafe commands in them
 set sessionoptions-=options
 set viewoptions-=options
+
+" Completion options
+let g:ycm_auto_trigger = 1
+"let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', '<Enter>']
+let g:ycm_key_list_stop_completion = ['<C-y>', '<CR>', 'Enter']
+
 "}}}
 
-""""""""""""""""""""""""""""""
-" Styling 
+"""""""""""""""""""""""""""""
+" Styling
 """"""""""""""""""""""""""""""
 "{{{
 "colorscheme delek
 syntax on   "Turn Syntax highlighting on
 set number  "Display linenumbers
 set relativenumber   "Linenumbers relative to cursor
+set title
 "hi LineNr ctermbg=Blue
 set wrap   "wrap long lines
 set linebreak   "break at sensible chars
@@ -161,8 +170,8 @@ set cursorline  "Display line under cursor
 let g:one_allow_italics = 1
 if (empty($TMUX))
   if (has("nvim"))
-  "For Neovim 0.1.3 and 0.1.4
-  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+    "For Neovim 0.1.3 and 0.1.4
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
   endif
   "For Neovim > 0.1.5 and Vim > patch 7.4.1799
   if (has("termguicolors"))
@@ -190,34 +199,34 @@ let g:netrw_liststyle=3 " tree view
 "}}}
 
 """"""""""""""""""""""""""""""
-"Custom commands and maps 
+"Custom commands and maps
 """"""""""""""""""""""""""""""
 "{{{
 
 " Saving
-    inoremap <leader>ww <Esc>:w<Enter>
-    inoremap <leader>wq <Esc>:wq<Enter>
-    command Wsudo :%!sudo tee > /dev/null %
-    cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
+inoremap <leader>ww <Esc>:w<Enter>
+inoremap <leader>wq <Esc>:wq<Enter>
+command Wsudo :%!sudo tee > /dev/null %
+cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 
 " Navigating with guides
-    inoremap <leader><leader> <Esc>/<++<Enter>"_cf>
-    vnoremap <leader><leader> <Esc>/<++<Enter>"_cf>
-    map <leader><leader> <Esc>/<++<Enter>"_cf>
+inoremap <leader><leader> <Esc>/<++<Enter>"_cf>
+vnoremap <leader><leader> <Esc>/<++<Enter>"_cf>
+map <leader><leader> <Esc>/<++<Enter>"_cf>
 
 " Tabbing
-    set splitbelow splitright
-    nnoremap <leader>e :Ex<CR>
-    nnoremap <leader>t :tabnew<CR>:Ex<CR>
-    nnoremap <leader>v :vsplit<CR>:w<CR>:Ex<CR>
-    nnoremap <leader>s :split<CR>:w<CR>:Ex<CR>
-    cnoreabbrev <expr> vsf getcmdtype() == ":" && getcmdline() == 'vsf' ? 'vert sf' : 'vsf'
+set splitbelow splitright
+nnoremap <leader>e :Ex<CR>
+nnoremap <leader>t :tabnew<CR>:Ex<CR>
+nnoremap <leader>v :vsplit<CR>:w<CR>:Ex<CR>
+nnoremap <leader>s :split<CR>:w<CR>:Ex<CR>
+cnoreabbrev <expr> vsf getcmdtype() == ":" && getcmdline() == 'vsf' ? 'vert sf' : 'vsf'
 
 " Shortcutting split navigation, saving a keypress:
-    map <C-h> <C-w>h
-    map <C-j> <C-w>j
-    map <C-k> <C-w>k
-    map <C-l> <C-w>lA
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>lA
 
 " US-intl key dead key remappings
 nmap à `a|nmap á 'a
@@ -244,147 +253,147 @@ nnoremap S :%s///gg<Left><Left><Left><Left>
 " Nvim Terminal stuff
 set shell=bash
 if has('nvim')
-    let g:neoterm_size='70v'
-    let g:neoterm_autoinsert=1
-    " Use gx{text-object} in normal mode
-    nmap gx <Plug>(neoterm-repl-send)
-    " Send selected contents in visual mode.
-    xmap gx <Plug>(neoterm-repl-send)
-    tnoremap <C-h> <C-\><C-n><C-w>h
-    tnoremap <C-j> <C-\><C-n><C-w>j
-    tnoremap <C-k> <C-\><C-n><C-w>k
-    tnoremap <C-l> <C-\><C-n><C-w>l
-    tnoremap <leader><esc> <C-\><C-n><esc><cr>
-    nnoremap <silent> <leader><space> :vertical botright Ttoggle<cr><C-w>l
+  let g:neoterm_size='70v'
+  let g:neoterm_autoinsert=1
+  " Use gx{text-object} in normal mode
+  nmap gx <Plug>(neoterm-repl-send)
+  " Send selected contents in visual mode.
+  xmap gx <Plug>(neoterm-repl-send)
+  tnoremap <C-h> <C-\><C-n><C-w>h
+  tnoremap <C-j> <C-\><C-n><C-w>j
+  tnoremap <C-k> <C-\><C-n><C-w>k
+  tnoremap <C-l> <C-\><C-n><C-w>l
+  tnoremap <leader><esc> <C-\><C-n><esc><cr>
+  nnoremap <silent> <leader><space> :vertical botright Ttoggle<cr><C-w>l
 
-    set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
+  set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
         \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
         \,sm:block-blinkwait175-blinkoff150-blinkon175
 endif
 
 
 " easier moving of code blocks
-    vnoremap < <gv  " better indentation
-    vnoremap > >gv  " better indentation
+vnoremap < <gv  " better indentation
+vnoremap > >gv  " better indentation
 
 "Compiles current file as C/C++-Source and execute the result
-    command -nargs=* Cit :w|!gcc -Wall -Werror -O0 -o %:r '%:p' && ./%:r <args><C-m>
+command -nargs=* Cit :w|!gcc -Wall -Werror -O0 -o %:r '%:p' && ./%:r <args><C-m>
 "Removes als C-style comments from current fiel
-    command Crem :%s/\s*\/\*\(.\|\n\)\{-}\*\/\n//|:%s/\s*\/\/.*$//|:noh
+command Crem :%s/\s*\/\*\(.\|\n\)\{-}\*\/\n//|:%s/\s*\/\/.*$//|:noh
 "Executes current file as script
-    inoremap <F9> <Esc>:w<CR>:silent !chmod u+x '%:p'<CR>:Texec ./%:r.%:e<C-m>
-    nnoremap <F9> <Esc>:w<CR>:silent !chmod u+x '%:p'<CR>:Texec ./%:r.%:e<C-m>
+inoremap <F9> <Esc>:w<CR>:silent !chmod u+x '%:p'<CR>:Texec ./%:r.%:e<C-m>
+nnoremap <F9> <Esc>:w<CR>:silent !chmod u+x '%:p'<CR>:Texec ./%:r.%:e<C-m>
 
 "Avoid the escape key
 noremap <special> kj <ESC> | inoremap <special> jk <ESC>:
 
 "Copy to and paste from Clipboard
-    map <C-a> "+y
-    map! <C-f> <Esc>"+pi
+"map <C-a> "+y  "Used by incrementing
+"map! <C-f> <Esc>"+pi
 
 "Turn recording key off"
-    nnoremap Q q
-    nnoremap q <Nop>
+nnoremap Q q
+nnoremap q <Nop>
 "}}}
 
 """"""""""""""""""""""""""""""
-" Snippets 
+" Snippets
 """"""""""""""""""""""""""""""
 "{{{ 
 
 "HTML {{{
-    autocmd FileType html inoremap <leader>html <Esc>:-1read $HOME/.vim/template.html<CR> "Load html template
-    autocmd FileType html inoremap <leader>h <html><head><Enter><title><++></title><meta charset="UTF-8"> <Esc><<i<Enter></head><body> <Esc><<i<Enter><p><++></p><Enter><++><Enter></body></html><Enter><Esc>gg0
-    autocmd FileType html inoremap <leader>b <b></b><Space><++><Esc>FbT>i
-    autocmd FileType html inoremap <leader>it <em></em><Space><++><Esc>FeT>i
-    autocmd FileType html inoremap <leader>1 <h1></h1><Enter><Enter><++><Esc>2kf<i
-    autocmd FileType html inoremap <leader>2 <h2></h2><Enter><Enter><++><Esc>2kf<i
-    autocmd FileType html inoremap <leader>3 <h3></h3><Enter><Enter><++><Esc>2kf<i
-    autocmd FileType html inoremap <leader>p <p></p><Enter><Enter><++><Esc>02kf>a
-    autocmd FileType html inoremap <leader>a <a<Space>href=""><++></a><Space><++><Esc>14hi
-    autocmd FileType html inoremap <leader>e <a<Space>target="_blank"<Space>href=""><++></a><Space><++><Esc>14hi
-    autocmd FileType html inoremap <leader>ul <ul><Enter><li></li><Enter></ul><Enter><Enter><++><Esc>03kf<i
-    autocmd FileType html inoremap <leader>li <Esc>o<li></li><Esc>F>a
-    autocmd FileType html inoremap <leader>ol <ol><Enter><li></li><Enter></ol><Enter><Enter><++><Esc>03kf<i
-    autocmd FileType html inoremap <leader>im <img src="" alt="<++>"><++><esc>Fcf"a
-    autocmd FileType html inoremap <leader>td <td></td><++><Esc>Fdcit
-    autocmd FileType html inoremap <leader>tr <tr></tr><Enter><++><Esc>kf<i
-    autocmd FileType html inoremap <leader>th <th></th><++><Esc>Fhcit
-    autocmd FileType html inoremap <leader>tab <table><Enter></table><Esc>O
-    autocmd FileType html inoremap <leader>gr <font color="green"></font><Esc>F>a
-    autocmd FileType html inoremap <leader>rd <font color="red"></font><Esc>F>a
-    autocmd FileType html inoremap <leader>yl <font color="yellow"></font><Esc>F>a
-    autocmd FileType html inoremap &<space> &amp;<space>
+autocmd FileType html inoremap <leader>html <Esc>:-1read $HOME/.vim/template.html<CR> "Load html template
+autocmd FileType html inoremap <leader>h <html><head><Enter><title><++></title><meta charset="UTF-8"> <Esc><<i<Enter></head><body> <Esc><<i<Enter><p><++></p><Enter><++><Enter></body></html><Enter><Esc>gg0
+autocmd FileType html inoremap <leader>b <b></b><Space><++><Esc>FbT>i
+autocmd FileType html inoremap <leader>it <em></em><Space><++><Esc>FeT>i
+autocmd FileType html inoremap <leader>1 <h1></h1><Enter><Enter><++><Esc>2kf<i
+autocmd FileType html inoremap <leader>2 <h2></h2><Enter><Enter><++><Esc>2kf<i
+autocmd FileType html inoremap <leader>3 <h3></h3><Enter><Enter><++><Esc>2kf<i
+autocmd FileType html inoremap <leader>p <p></p><Enter><Enter><++><Esc>02kf>a
+autocmd FileType html inoremap <leader>a <a<Space>href=""><++></a><Space><++><Esc>14hi
+autocmd FileType html inoremap <leader>e <a<Space>target="_blank"<Space>href=""><++></a><Space><++><Esc>14hi
+autocmd FileType html inoremap <leader>ul <ul><Enter><li></li><Enter></ul><Enter><Enter><++><Esc>03kf<i
+autocmd FileType html inoremap <leader>li <Esc>o<li></li><Esc>F>a
+autocmd FileType html inoremap <leader>ol <ol><Enter><li></li><Enter></ol><Enter><Enter><++><Esc>03kf<i
+autocmd FileType html inoremap <leader>im <img src="" alt="<++>"><++><esc>Fcf"a
+autocmd FileType html inoremap <leader>td <td></td><++><Esc>Fdcit
+autocmd FileType html inoremap <leader>tr <tr></tr><Enter><++><Esc>kf<i
+autocmd FileType html inoremap <leader>th <th></th><++><Esc>Fhcit
+autocmd FileType html inoremap <leader>tab <table><Enter></table><Esc>O
+autocmd FileType html inoremap <leader>gr <font color="green"></font><Esc>F>a
+autocmd FileType html inoremap <leader>rd <font color="red"></font><Esc>F>a
+autocmd FileType html inoremap <leader>yl <font color="yellow"></font><Esc>F>a
+autocmd FileType html inoremap &<space> &amp;<space>
 "}}}
 
 "MARKDOWN {{{
-    autocmd Filetype markdown,rmd map <leader>w yiWi[<esc>Ea](<esc>pa)
-    autocmd Filetype markdown,rmd inoremap <leader>n ---<Enter><Enter>
-    autocmd Filetype markdown,rmd inoremap <leader>b ****<++><Esc>F*hi
-    autocmd Filetype markdown,rmd inoremap <leader>s ~~~~<++><Esc>F~hi
-    autocmd Filetype markdown,rmd inoremap <leader>e **<++><Esc>F*i
-    autocmd Filetype markdown,rmd inoremap <leader>h ====<Space><++><Esc>F=hi
-    autocmd Filetype markdown,rmd inoremap <leader>i ![](<++>)<++><Esc>F[a
-    autocmd Filetype markdown,rmd inoremap <leader>a [](<++>)<++><Esc>F[a
-    autocmd Filetype markdown,rmd inoremap <leader>1 #<Space><Enter><++><Esc>kA
-    autocmd Filetype markdown,rmd inoremap <leader>2 ##<Space><Enter><++><Esc>kA
-    autocmd Filetype markdown,rmd inoremap <leader>3 ###<Space><Enter><++><Esc>kA
-    autocmd Filetype markdown,rmd inoremap <leader>l --------<Enter>
-    autocmd Filetype markdown,rmd inoremap <leader>r ```{r}<CR>```<CR><CR><esc>2kO
-    autocmd Filetype markdown,rmd inoremap <leader>p ```{python}<CR>```<CR><CR><esc>2kO
-    autocmd Filetype markdown,rmd inoremap <leader>c ```<cr>```<cr><cr><esc>2kO
+autocmd Filetype markdown,rmd map <leader>w yiWi[<esc>Ea](<esc>pa)
+autocmd Filetype markdown,rmd inoremap <leader>n ---<Enter><Enter>
+autocmd Filetype markdown,rmd inoremap <leader>b ****<++><Esc>F*hi
+autocmd Filetype markdown,rmd inoremap <leader>s ~~~~<++><Esc>F~hi
+autocmd Filetype markdown,rmd inoremap <leader>e **<++><Esc>F*i
+autocmd Filetype markdown,rmd inoremap <leader>h ====<Space><++><Esc>F=hi
+autocmd Filetype markdown,rmd inoremap <leader>i ![](<++>)<++><Esc>F[a
+autocmd Filetype markdown,rmd inoremap <leader>a [](<++>)<++><Esc>F[a
+autocmd Filetype markdown,rmd inoremap <leader>1 #<Space><Enter><++><Esc>kA
+autocmd Filetype markdown,rmd inoremap <leader>2 ##<Space><Enter><++><Esc>kA
+autocmd Filetype markdown,rmd inoremap <leader>3 ###<Space><Enter><++><Esc>kA
+autocmd Filetype markdown,rmd inoremap <leader>l --------<Enter>
+autocmd Filetype markdown,rmd inoremap <leader>r ```{r}<CR>```<CR><CR><esc>2kO
+autocmd Filetype markdown,rmd inoremap <leader>p ```{python}<CR>```<CR><CR><esc>2kO
+autocmd Filetype markdown,rmd inoremap <leader>c ```<cr>```<cr><cr><esc>2kO
 "}}}
 
 "Python {{{
-    " set nofoldenable
-    autocmd Filetype python inoremap <leader>d <CR>def <++>(*ar, **kw):<CR><++><CR><CR><esc>4k0
+" set nofoldenable
+autocmd Filetype python inoremap <leader>d <CR>def <++>(*ar, **kw):<CR><++><CR><CR><esc>4k0
 "}}}
 
 "CoC {{{
 
 function! _enable_CoC ()
 
-" TextEdit might fail if hidden is not set.
-set hidden
+  " TextEdit might fail if hidden is not set.
+  set hidden
 
-" Give more space for displaying messages.
-" set cmdheight=2
+  " Give more space for displaying messages.
+  " set cmdheight=2
 
-" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
-" delays and poor user experience.
-set updatetime=300
+  " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+  " delays and poor user experience.
+  set updatetime=300
 
-" Don't pass messages to |ins-completion-menu|.
-set shortmess+=c
+  " Don't pass messages to |ins-completion-menu|.
+  set shortmess+=c
 
-" Use tab for trigger completion with characters ahead and navigate.
-" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+  " Use tab for trigger completion with characters ahead and navigate.
+  " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+  " other plugin before putting this into your config.
+  inoremap <silent><expr> <TAB>
+        \ pumvisible() ? "\<C-n>" :
+        \ <SID>check_back_space() ? "\<TAB>" :
+        \ coc#refresh()
+  inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
+  function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
+  endfunction
 
-" Use <c-space> to trigger completion.
-if has('nvim')
-  inoremap <silent><expr> <c-space> coc#refresh()
-else
-  inoremap <silent><expr> <c-@> coc#refresh()
-endif
+  " Use <c-space> to trigger completion.
+  if has('nvim')
+    inoremap <silent><expr> <c-space> coc#refresh()
+  else
+    inoremap <silent><expr> <c-@> coc#refresh()
+  endif
 
-" Make <CR> auto-select the first completion item and notify coc.nvim to
-" format on enter, <cr> could be remapped by other vim plugin
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+  " Make <CR> auto-select the first completion item and notify coc.nvim to
+  " format on enter, <cr> could be remapped by other vim plugin
+  inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+        \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-" Highlight the symbol and its references when holding the cursor.
-autocmd CursorHold * silent call CocActionAsync('highlight')
+  " Highlight the symbol and its references when holding the cursor.
+  autocmd CursorHold * silent call CocActionAsync('highlight')
 
 endfunction
 
