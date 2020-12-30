@@ -6,7 +6,7 @@ if ! command -v barracudavpn; then
 fi
 
 cmds=$(mktemp)
-trap 'rm -f "$cmds"' EXIT ERR
+#trap 'rm -f "$cmds"' EXIT ERR
 echo "#$(date)" > "$cmds"
 echo $cmds
 
@@ -20,11 +20,14 @@ stdbuf -i0 -o0 -e0 sudo stdbuf -i0 -o0 -e0 barracudavpn -s \
     -l "$user" \
     -r "$pw" -v "$@" 2>&1 |
         stdbuf -i0 -o0 -e0 tee "/dev/stdout" |
-        stdbuf -i0 -o0 -e0 sed -n 's/executing:/sudo ip/p' > "$cmds"
+        stdbuf -i0 -o0 -e0 sed -n 's/executing:/sudo ip/p' |
+        stdbuf -i0 -o0 -e0 sed 's/executing.*$//' > "$cmds"
 ) &
 unset pw
 
 sleep 20
-echo "#!/bin/sh"
+echo "#!/bin/sh" > "$cmds"
 cat "$cmds"
+chmod +x "$cmds"
+echo "$cmds"
 
