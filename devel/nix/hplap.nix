@@ -36,6 +36,7 @@ in
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.supportedFilesystems = [ "ntfs" ];
   boot.tmpOnTmpfs = true;
   fileSystems."/var/tmp" = {
     fsType = "tmpfs";
@@ -60,7 +61,6 @@ in
   '';
 
   security.sudo.enable = true;
-  #security.wrappers = { slock.source = "${pkgs.slock.out}/bin/slock"; };
   time.timeZone = "Europe/Vienna";
 
   #hardware.opengl.driSupport32Bit = true;
@@ -86,11 +86,6 @@ in
   };
 
   services.logind.lidSwitch = "ignore";
-
-  services.locate = {
-    enable = true;
-    interval = "hourly";
-  };
 
   # Enable the X11 windowing system.
   services.clipmenu.enable = true;
@@ -209,7 +204,7 @@ in
     flameshot kazam
     deluge
     mpv ncmpcpp
-    glib
+    python-language-server
     # ungoogled-chromium # in unstable!
     (neovim.override {
       viAlias = true; vimAlias = true;
