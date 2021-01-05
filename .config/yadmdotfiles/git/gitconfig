@@ -2,20 +2,20 @@
     name = con-f-use
     email = con-f-use@gmx.net
     signingkey = 2C726AD9
-    
+
 [core]
     excludesfile = ~/.config/yadmdotfiles/git/gitignore
     editor = vim
     pager = (command -v diff-so-fancy >/dev/null 2>&1 && diff-so-fancy || cat)|less
-    
+
 [push]
     default = matching
-    
+
 [color]
     ui = true
-    
-[credential]
-    helper = /usr/share/doc/git/contrib/credential/gnome-keyring/git-credential-gnome-keyring
+
+#[credential]
+#    helper = /usr/share/doc/git/contrib/credential/gnome-keyring/git-credential-gnome-keyring
 
 [alias]
     ours = checkout --ours
