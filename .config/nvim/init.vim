@@ -166,6 +166,8 @@ nnoremap <leader>, :bp<CR>
 
 nmap <leader><tab> <plug>(fzf-maps-n)
 
+autocmd FileType sh inoremap <leader>B if [ "$0" = "$BASH_SOURCE" ]; then<cr>fi<Esc>O
+
 " US-intl key dead key remappings
 nmap à `a|nmap á 'a
 nmap ć 'c

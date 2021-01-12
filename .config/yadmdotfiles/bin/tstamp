@@ -1,8 +1,13 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+if [ "$0" = "$BASH_SOURCE" ]; then
+    date +%y%m%d-%H%M%S
+    exit 0
+fi
 
 backupfn () {
-    tfmt="+"
-    for granul in %y %m %d -%H %m %s .%N; do
+    local tfmt="+"
+    for granul in %y %m %d -%H %M %S .%N; do
         tfmt="$tfmt$granul"
         fn="$1-$(date "$tfmt")"
         if [ ! -e "$fn" ]; then
@@ -11,6 +16,4 @@ backupfn () {
         fi
     done
 }
-
-date +%y%m%d-%H%M%S
 
