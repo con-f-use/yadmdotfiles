@@ -1,5 +1,13 @@
 #!/bin/sh
+#/usr/bin/env bash
 # More sensible defaults for cal
 
 export PATH=/bin:/usr/bin:/usr/local/bin:/nix/var/nix/profiles/defaul/bin:/run/current-system/sw/bin
-exec cal -m -w "$@"
+if [[ " $@ " =~ " -3 " ]]; then
+    args=()
+    for x in "$@"; do if [[ $x != "-3" ]]; then args+=("$x"); fi; done
+else
+    args=("$@" "-3")
+fi
+exec cal -m -w "${args[@]}"
+
