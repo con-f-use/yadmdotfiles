@@ -12,6 +12,7 @@ let
     devpi-client postgresql
     (python2.withPackages(ps: [
       ps.requests
+      ps.pynvim
       ps.setuptools
       ps.six
       ps.virtualenv
@@ -36,8 +37,8 @@ in
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.supportedFilesystems = [ "ntfs" ];
   boot.tmpOnTmpfs = true;
+  boot.supportedFilesystems = [ "ntfs" ];
   fileSystems."/var/tmp" = {
     fsType = "tmpfs";
     device = "tmpfs";
@@ -79,13 +80,22 @@ in
   services.earlyoom = { enable = true; freeMemThreshold = 5; };
 
   documentation.nixos.enable = false;
+
   virtualisation.docker = {
     enable = true;
     liveRestore = false;
     autoPrune.enable = true;
   };
-
-  services.logind.lidSwitch = "ignore";
+  environment.etc."docker/daemon.json" = {
+    enable = true;
+    user = "docker";
+    group = "docker";
+    text = ''
+      {
+        "insecure-registries" : ["10.17.65.201:5000", "autotest-docker-registry.qa.ngdev.eu.ad.cuda-inc.com:5000"]
+      }
+    '';
+  };
 
   # Enable the X11 windowing system.
   services.clipmenu.enable = true;
@@ -188,24 +198,39 @@ in
     #open-vm-tools-headless  # e.g. for sharing dirs between guest and host
     htop gnupg screen tree rename file binutils-unwrapped cryptsetup
     fasd fzf yadm gopass ripgrep perswitch.perscom jq pinentry ncdu entr dos2unix
-    wget curl w3m inetutils dnsutils nmap openssl sshpass mtr nload
+    wget curl w3m inetutils dnsutils nmap openssl sshpass mtr nload execline
     mkpasswd parallel zip trash-cli
-    python3 poetry pipenv direnv
+    poetry pipenv direnv
+
     st kitty xonsh
-    firefox mpv youtube-dl
+    firefox youtube-dl
     franz signal-desktop zoom-us tdesktop discord slack
     thunderbird libreoffice
+    gimp
     # steam xorg.libxcb
-    picom nitrogen xorg.xrandr xorg.xinit xorg.xsetroot xclip fribidi
+    xorg.xrandr xorg.xinit xorg.xsetroot xclip fribidi
     gitAndTools.git
     gitAndTools.pre-commit gitAndTools.git-open gitAndTools.delta git-lfs
-    nix-prefetch-scripts nix-update nix-index nixpkgs-review nix-tree nix-top nixpkgs-fmt cachix
+    nix-prefetch-scripts nix-update nix-index nixpkgs-review nix-tree nix-top nixpkgs-fmt cachix morph
     pandoc typora xournalpp meld sxiv
     flameshot kazam
     deluge
-    mpv ncmpcpp
-    python-language-server
+    mpv ncmpcpp ffmpeg-full
+    gnome3.file-roller font-manager  
+    oathToolkit qrencode
     # ungoogled-chromium # in unstable!
+    (python3.withPackages(ps: [
+      ps.requests
+      ps.beautifulsoup4
+      ps.setuptools
+      ps.virtualenv
+      ps.pygls
+      ps.python-language-server
+      ps.pynvim
+      ps.jedi
+      ps.python-language-server
+    ]))
+    nodejs python-language-server
     (neovim.override {
       viAlias = true; vimAlias = true;
       configure = {
