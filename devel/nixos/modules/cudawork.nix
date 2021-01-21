@@ -92,7 +92,9 @@ options.roles.cudawork = with lib; {
   novpn = mkOption { description = "Do not install barracudavpn"; type = types.bool; default = false; };
   interception = mkOption { description = "Are we beind SSL-Interception? If true add Cert."; type = types.bool; default = false; };
 };
-config = lib.mkIf config.roles.cudawork.enable {
+config = lib.mkIf (config.roles.cudawork.enable) (lib.mkMerge [
+
+{
 
   virtualisation.docker = { enable = true; enableOnBoot = true; };
 
@@ -123,5 +125,20 @@ config = lib.mkIf config.roles.cudawork.enable {
     ]))
  ] ++ lib.optional ( config.roles.cudawork.novpn == false ) barracudavpn;
 
-}; }
+} 
+
+(lib.mkIf config.services.xserver.enable {
+  environment.systemPackages = with pkgs; [
+    zoom-us slack
+  ];
+
+  #nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg)
+  #  [ "slack" "zoom-us" ]
+  #;
+  myunfrees = [ "slack" "zoom-us" ];
+})
+
+]);
+
+}
 

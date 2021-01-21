@@ -73,6 +73,9 @@ config = lib.mkIf config.roles.janDev.enable {
 
   environment.variables = { EDITOR = "nvim"; };
 
+  #services.tor = { enable = true; client.enable = true; };
+  #services.lorri.enable = true;
+
   environment.systemPackages = with pkgs; [
     # Essential
     htop gnupg screen tree file binutils-unwrapped execline

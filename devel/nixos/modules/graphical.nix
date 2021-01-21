@@ -86,7 +86,7 @@ config = lib.mkIf config.roles.janX.enable {
     arc-theme
     gnome3.nautilus gsettings-desktop-schemas gnome3.dconf-editor
     firefox youtube-dl
-    franz signal-desktop zoom-us tdesktop discord slack thunderbird
+    franz signal-desktop tdesktop discord thunderbird
 
     # Multimedia
     mpv sxiv flameshot kazam

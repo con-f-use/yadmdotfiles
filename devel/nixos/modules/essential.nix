@@ -2,9 +2,12 @@
 let
   x="x";
 in {
-options.roles.janEssential = with lib; {
-  enable = lib.mkEnableOption "Things I can't linux without";  # Linux is a verb now!
-  main_user = mkOption { description = "User name of the main user"; type = types.str; default = false; };
+options = with lib; {
+  myunfrees = mkOption { description = "List of unfree packages allowed"; type = types.listOf types.str; default = []; };
+  roles.janEssential = {
+    enable = mkEnableOption "Things I can't linux without";  # Linux is a verb now!
+    main_user = mkOption { description = "User name of the main user"; type = types.str; default = false; };
+  };
 };
 config = lib.mkIf config.roles.janEssential.enable {
 
@@ -36,6 +39,8 @@ config = lib.mkIf config.roles.janEssential.enable {
     pager = delta
     theme = "Monokai Extended"
   '';
+
+  documentation.nixos.enable = false;  # When multiple output, don't install docs
 
   security.sudo = {
     enable = true;
