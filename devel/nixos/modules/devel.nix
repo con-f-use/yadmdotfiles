@@ -25,10 +25,10 @@ let
     });
 
 in {
-options.roles.janDev = {
+options.roles.dev = {
   enable = lib.mkEnableOption "Development tools I use often";
 };
-config = lib.mkIf config.roles.janDev.enable {
+config = lib.mkIf config.roles.dev.enable {
 
   boot.tmpOnTmpfs = true;
 

@@ -2,10 +2,10 @@
 let
   kitty-xterm-link = pkgs.writeScriptBin "xterm" "${pkgs.kitty}/bin/kitty \"$@\"";
 in {
-options.roles.janWorkstation = {
+options.roles.workstation = {
   enable = lib.mkEnableOption "Common config for my workstations";
 };
-config = lib.mkIf config.roles.janWorkstation.enable {
+config = lib.mkIf config.roles.workstation.enable {
 
   # programs.mtr.enable = true;
 

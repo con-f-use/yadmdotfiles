@@ -135,7 +135,7 @@ config = lib.mkIf (config.roles.cudawork.enable) (lib.mkMerge [
   #nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg)
   #  [ "slack" "zoom-us" ]
   #;
-  myunfrees = [ "slack" "zoom-us" ];
+  unfrees = [ "slack" "zoom-us" ];
 })
 
 ]);

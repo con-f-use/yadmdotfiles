@@ -6,7 +6,7 @@
     ./devel.nix
     ./workstation.nix
     ./cudawork.nix
-    ./graphical.nix
+    ./windowed.nix
     ./gaming.nix
 
     # Modules

@@ -3,13 +3,13 @@ let
   x="x";
 in {
 options = with lib; {
-  myunfrees = mkOption { description = "List of unfree packages allowed"; type = types.listOf types.str; default = []; };
-  roles.janEssential = {
+  unfrees = mkOption { description = "List of unfree packages allowed"; type = types.listOf types.str; default = []; };
+  roles.essentials = {
     enable = mkEnableOption "Things I can't linux without";  # Linux is a verb now!
     main_user = mkOption { description = "User name of the main user"; type = types.str; default = false; };
   };
 };
-config = lib.mkIf config.roles.janEssential.enable {
+config = lib.mkIf config.roles.essentials.enable {
 
   environment.homeBinInPath = true;
 
@@ -47,7 +47,7 @@ config = lib.mkIf config.roles.janEssential.enable {
     extraConfig = ''
       Defaults    insults
       Cmnd_Alias BOOTCMDS = /sbin/shutdown,/usr/sbin/pm-suspend,/sbin/reboot
-      ${config.roles.janEssential.main_user} ALL=(root)NOPASSWD:BOOTCMDS
+      ${config.roles.essentials.main_user} ALL=(root)NOPASSWD:BOOTCMDS
       wheel ALL=(root)NOPASSWD:BOOTCMDS
     '';
   };

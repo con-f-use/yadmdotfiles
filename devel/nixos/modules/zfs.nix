@@ -1,10 +1,10 @@
 
 { config, lib, pkgs, ... }:
 
-{ options.roles.janZfs = {
+{ options.roles.zfs = {
   enable = lib.mkEnableOption "Some sensible zfs deaults";
 };
-config = lib.mkIf config.roles.janZfs.enable {
+config = lib.mkIf config.roles.zfs.enable {
 
    boot.initrd.supportedFilesystems = [ "zfs" ];
    boot.supportedFilesystems = [ "zfs" ];
