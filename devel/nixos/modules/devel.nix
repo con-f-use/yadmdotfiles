@@ -2,7 +2,7 @@
 let
 
   base-neovim = (pkgs.neovim.override {
-      viAlias = true; vimAlias = true;
+      viAlias = true; vimAlias = true; withNodeJs = true;
       configure = {
         customRC = ''
           set history=10000 | set undolevels=1000 | set laststatus=2 | set complete-=i | set list | set listchars=tab:»·,trail:·,nbsp:· | set autoindent | set backspace=indent,eol,start
@@ -19,7 +19,7 @@ let
         '';
         vam.knownPlugins = pkgs.vimPlugins;
         vam.pluginDictionaries = [ {
-          names= [ "surround" "vim-nix" "tabular" "vim-commentary" "vim-obsession" ];
+          names= [ "vim-nix" "vim-commentary" ];
         } ];
       };
     });
@@ -60,6 +60,7 @@ config = lib.mkIf config.roles.janDev.enable {
     '';
     autoOptimiseStore = true;
     optimise.automatic = true;
+    useSandbox = true;  # sandboxing for builds
     daemonNiceLevel = 19;
     gc = {
       automatic = true;

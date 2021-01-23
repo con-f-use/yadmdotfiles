@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 let
-  x="x";
+  kitty-xterm-link = pkgs.writeScriptBin "xterm" "${pkgs.kitty}/bin/kitty \"$@\"";
 in {
 options.roles.janWorkstation = {
   enable = lib.mkEnableOption "Common config for my workstations";
@@ -19,7 +19,7 @@ config = lib.mkIf config.roles.janWorkstation.enable {
     # Workstation
     yadm gopass pinentry
     mkpasswd zip trash-cli
-    st kitty xonsh
+    st kitty kitty-xterm-link xonsh
     oathToolkit qrencode
     # network
     inetutils dnsutils nmap mtr openssl sshpass nload
