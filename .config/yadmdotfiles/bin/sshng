@@ -10,14 +10,23 @@ libfile="$HOME/.config/yadmdotfiles/bash/jcgb.bash"
 
 sshng () {
     # ToDo: expand e.g. "101" to "10.17.70.101"
+    host=${1?Expected host as first parameter}
+    shift
+    host=$(python <<< "
+comps = '$host'.split('.')
+if any(int(c)>255 or int(c)<1 or not c for c in comps): exit(1)
+print('.'.join( '10.17.70.10'.split('.')[:4-len(comps)] + comps))
+    " 2>/dev/null || echo "$host")
+    echo "host: '$host'"
+    exit
     ssh_cmd=$(command -v sshrc &>/dev/null && echo 'sshrc' || echo 'ssh')
     ssh_cmd="$ssh_cmd -t -l root -o HostKeyAlgorithms=+ssh-dss -o PubkeyAcceptedKeyTypes=+ssh-dss -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ServerAliveInterval=60 -o PreferredAuthentications=password"
     RC=5
     for pw in a ngf1r3wall kr1schnatz qa a12345 '$a12345!' f1r3wall 'A12345!' Passw0rd SIPsucks.1; do
-        [ "$RC" == "5" ] && sshpass -p "$pw" $ssh_cmd -o ConnectTimeout=1 "$@"
+        [ "$RC" == "5" ] && sshpass -p "$pw" $ssh_cmd -o ConnectTimeout=1 "$host" "$@"
         RC="$?"
     done
-    [ "$?" == "5" ] && $ssh_cmd "$@"
+    [ "$?" == "5" ] && $ssh_cmd "$host" "$@"
 }
 
 if [ "$0" = "$BASH_SOURCE" ]; then
