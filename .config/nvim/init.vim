@@ -250,6 +250,7 @@ inoremap <special> kj <ESC>
 inoremap <special> jk <ESC>:
 tnoremap <special> jk <C-\><C-n>
 map <leader><leader> <Esc>/<++<Enter>"_cf>
+noremap <leader>c <Esc>:silent execute "!xdg_open https://conserve.dynu.net/gitlab/jan/cheatsheets/-/blob/master/"
 
 " Shortcutting split navigation, saving a keypress:
 map <C-h> <C-w>h
