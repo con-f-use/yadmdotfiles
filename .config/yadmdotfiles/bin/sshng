@@ -18,7 +18,6 @@ if any(int(c)>255 or int(c)<1 or not c for c in comps): exit(1)
 print('.'.join( '10.17.70.10'.split('.')[:4-len(comps)] + comps))
     " 2>/dev/null || echo "$host")
     echo "host: '$host'"
-    exit
     ssh_cmd=$(command -v sshrc &>/dev/null && echo 'sshrc' || echo 'ssh')
     ssh_cmd="$ssh_cmd -t -l root -o HostKeyAlgorithms=+ssh-dss -o PubkeyAcceptedKeyTypes=+ssh-dss -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ServerAliveInterval=60 -o PreferredAuthentications=password"
     RC=5
