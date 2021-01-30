@@ -1,34 +1,54 @@
 #!/usr/bin/env bash
+# Wrapper around barracudavpn to make it usable on NixOS and add routes to
+# commonly used service hosts.
 
-if ! command -v barracudavpn; then
-  echo "Please install barracudavpn!" 1>&2
-  exit 1
+ensure_vpn() {
+  if ! command -v barracudavpn; then
+    echo "Please install barracudavpn!" 1>&2
+    exit 1
+  fi
+}
+
+add_routes () {
+  routes_file="~/add_cuda_routes.sh" 
+  if [ -r "$routes_file" ]; then
+    source "$routes_file"
+    add_cuda_routes
+  else
+    echo "Note: No routes script in '$routes_file'" 1>&2
+  fi
+}
+
+main() {
+  cmds=$(mktemp)
+  #trap 'rm -f "$cmds"' EXIT ERR
+  echo "#!/usr/bin/env bash" > "$cmds"
+  echo "#$(date)" >> "$cmds"
+  chmod +x "$cmds"
+  echo $cmds
+
+  barracudavpn -p || true
+  user="${CUDAUSER:-jbischko}" 
+  pw="$(pass Cuda/cudaws || gopass show Cuda/cudaws)"
+  pw=${pw:-$(systemd-ask-password "password for $user")}
+  (
+  stdbuf -i0 -o0 -e0 sudo stdbuf -i0 -o0 -e0 barracudavpn -s \
+      -c "$HOME/.config/yadmdotfiles/cuda/barracudavpn/" \
+      -l "$user" \
+      -r "$pw" -v "$@" 2>&1 |
+          stdbuf -i0 -o0 -e0 tee "/dev/stdout" |
+          stdbuf -i0 -o0 -e0 sed -n 's/executing:/sudo ip/p' |
+          stdbuf -i0 -o0 -e0 sed 's/executing.*$//' >> "$cmds"
+  ) &
+  unset pw
+
+  sleep 20
+  cat "$cmds"
+  bash "$cmds"
+}
+
+if [ "$0" = "$BASH_SOURCE" ]; then
+  ensure_vpn
+  main "$@"
+  add_cuda_routes
 fi
-
-cmds=$(mktemp)
-#trap 'rm -f "$cmds"' EXIT ERR
-echo "#!/usr/bin/env bash" > "$cmds"
-echo "#$(date)" >> "$cmds"
-echo $cmds
-
-barracudavpn -p || true
-user="${CUDAUSER:-jbischko}" 
-pw="$(pass Cuda/cudaws || gopass show Cuda/cudaws)"
-pw=${pw:-$(systemd-ask-password "password for $user")}
-(
-stdbuf -i0 -o0 -e0 sudo stdbuf -i0 -o0 -e0 barracudavpn -s \
-    -c "$HOME/.config/yadmdotfiles/cuda/barracudavpn/" \
-    -l "$user" \
-    -r "$pw" -v "$@" 2>&1 |
-        stdbuf -i0 -o0 -e0 tee "/dev/stdout" |
-        stdbuf -i0 -o0 -e0 sed -n 's/executing:/sudo ip/p' |
-        stdbuf -i0 -o0 -e0 sed 's/executing.*$//' >> "$cmds"
-) &
-unset pw
-
-sleep 20
-cat "$cmds"
-chmod +x "$cmds"
-bash "$cmds"
-echo "$cmds"
-
