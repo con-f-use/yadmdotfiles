@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# Follow command through linkages and nix store wrapping and open its source
+
+
+err() { echo "$@" 1>&2; }
+
+follow() {
+    final=''
+    new="$(realpath "$(which "$1")")"
+    err "inital: $new"
+    while [ ! -z "$new" ] && [ -r "$new" ]; do
+        final="$new"
+        new=$(sed -n -E 's|^\s*exec\s+-a\s+"\$0"\s+["]?(/nix/store/[A-Za-z0-9_/.-]+)["]?.*$|\1|p' "$new")
+        err "$final --> $new"
+        # we want the store path in this line even through multiple layes of wrapping:
+        #    exec -a "$0" "/nix/store/vcmfh1ad9567swf86s8viinapvi6awmq-instantUtils-unstable/bin/.instantstartmenu-wrapped"  "$@"
+    done
+    err "final: '$final'"
+    echo "$final"
+}
+
+if [ "$0" = "$BASH_SOURCE" ]; then
+    # ToDo: Do not hard-code eidtor
+    vi "$(follow "$1")"
+fi
+
