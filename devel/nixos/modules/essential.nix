@@ -54,7 +54,7 @@ config = lib.mkIf config.roles.essentials.enable {
 
   environment.systemPackages = with pkgs; [
     # Essential
-    htop gnupg screen tree file binutils-unwrapped execline
+    htop gnupg age screen tree file binutils-unwrapped execline
     wget curl w3m
   ];
 
