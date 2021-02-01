@@ -139,32 +139,32 @@ set inccommand=split
 
 command! -bang ProjectFiles call fzf#vim#files('~/devel', <bang>0)
 
+nnoremap <leader>o :ProjectFiles<CR>
 nnoremap <leader><SPACE> :Files<CR>
-nnoremap <leader>a :Startify<CR>
 nnoremap <leader>b :Buffers<CR>
-nnoremap <leader>c :call CocAction('pickColor')<CR>
+nnoremap <leader>L :Lines<CR>
+nnoremap <leader>r :Tags<CR>
+nnoremap <leader>N :Neoformat<CR>
+nnoremap <leader>m :Marks<CR>
+nnoremap <leader>z :Goyo<CR>
+nmap <leader><tab> <plug>(fzf-maps-n)
+
+nnoremap <leader>a :Startify<CR>
+nnoremap <leader>C :call CocAction('pickColor')<CR>
 nnoremap <leader>d :cd %:p:h<CR>
 nnoremap <leader>e :CocCommand explorer<CR>
 nnoremap <leader>F :CocSearch -S 
 nnoremap <leader>g :Gcd<CR>
 nnoremap <leader>h :GitGutterPreviewHunk<CR>
-nnoremap <leader>o :ProjectFiles<CR>
 nnoremap <leader>l :Telescope live_grep<CR>
-nnoremap <leader>L :Lines<CR>
-nnoremap <leader>r :Tags<CR>
 nnoremap <leader>s :G<CR>
 nnoremap <leader>q :q<CR>
 nnoremap <leader>p :vsplit<CR> \| :terminal git push<CR>i
 nnoremap <leader>n :tabnew<CR>
-nnoremap <leader>N :Neoformat<CR>
-nnoremap <leader>m :Marks<CR>
 nnoremap <leader>k :call <SID>show_documentation()<CR>
-nnoremap <leader>z :Goyo<CR>
 
 nnoremap <leader>. :bn<CR>
 nnoremap <leader>, :bp<CR>
-
-nmap <leader><tab> <plug>(fzf-maps-n)
 
 autocmd FileType sh inoremap <leader>B if [ "$0" = "$BASH_SOURCE" ]; then<cr>fi<Esc>O
 
@@ -278,7 +278,7 @@ set exrc
 set secure
 set title
 set ruler
-set colorcolumn=80
+set colorcolumn=72
 highlight ColorColumn ctermbg=233
 
 

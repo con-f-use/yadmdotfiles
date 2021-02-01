@@ -78,6 +78,8 @@ config = lib.mkIf config.roles.windowed.enable {
     (nerdfonts.override { fonts = [ "FiraCode" "FiraMono" ]; })
   ];
 
+  nixpkgs.config.joypixels.acceptLicense = true;
+
   environment.systemPackages = with pkgs; [
     # X
     xorg.xrandr xorg.xinit xorg.xsetroot xclip fribidi
