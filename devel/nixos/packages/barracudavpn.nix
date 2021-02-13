@@ -1,9 +1,10 @@
-{ stdenv, callPackage, buildFHSUserEnv, requireFile, iproute, binutils-unwrapped, autoPatchelfHook }:
+{ stdenv, lib, callPackage, buildFHSUserEnv, requireFile, iproute, binutils-unwrapped, autoPatchelfHook }:
 
 let
 
   barracudavpn = stdenv.mkDerivation rec {
     version = "5.1.5rc1";
+    # version = "5.1.4";
     pname = "barracudavpn";
     vpnfile = requireFile {
       name = "VPNClient_${version}_Linux.tar.gz";
@@ -20,27 +21,26 @@ let
       '';
     };
     src = null;
-    #src = vpnfile;
     nativeBuildInputs = [ binutils-unwrapped autoPatchelfHook ];
-    unpackPhase = ''true'';
-    #unpackPhase = ''
-    #  tar xf "$src"
-    #  ar -x *.deb
-    #  tar xf data.tar.xz
-    #'';
+    unpackPhase = ''
+      tar xf "${vpnfile}" &&
+        ar -x *.deb &&
+        tar xf data.tar.xz ||
+        echo "'${vpnfile}' is not an archive type, using as executable..." 1>&2
+    '';
     installPhase = ''
       mkdir -p "$out/bin"
       mkdir -p $out/etc/barracudavpn/
       touch $out/etc/barracudavpn/barracudavpn.conf
-      cp ${vpnfile} "$out/bin/barracudavpn"
-      #cp usr/local/bin/barracudavpn "$out/bin"
+      cp usr/local/bin/barracudavpn "$out/bin/barracudavpn" ||
+        cp ${vpnfile} "$out/bin/barracudavpn"
     '';
     meta = {
       description = "Barracuda VPN Client for Linux";
       homepage = "https://dlportal.barracudanetworks.com";
-      license = stdenv.lib.licenses.unfree;
-      platforms = stdenv.lib.platforms.linux;
-      maintainers = [ stdenv.lib.maintainers.confus ];
+      license = lib.licenses.unfree;
+      platforms = lib.platforms.linux;
+      maintainers = [ lib.maintainers.confus ];
     };
   };
 
