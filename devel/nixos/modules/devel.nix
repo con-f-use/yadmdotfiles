@@ -79,8 +79,8 @@ config = lib.mkIf config.roles.dev.enable {
 
   environment.systemPackages = with pkgs; [
     # Essential
-    htop gnupg screen tree file binutils-unwrapped execline
-    wget curl w3m
+    htop gnupg screen tree file binutils-unwrapped age execline
+    wget curl w3m magic-wormhole
 
     # Base
     rename cryptsetup ncdu entr dos2unix

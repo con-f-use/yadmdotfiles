@@ -10,6 +10,7 @@ except ImportError:
 __builtin__.true = True
 __builtin__.false = False
 __builtin__.null = None
+__builtin__.write = print
 def first(x, criterion="x is not None", default=None):
     def filter_func(x):
         return bool(eval(criterion))
@@ -43,6 +44,7 @@ $PASSWORD_STORE_DIR=f"{$HOME}/.config/password-store/"
 #$UPDATE_OS_ENVIRON = True
 #$XONSH_SHOW_TRACEBACK = True
 $XONSH_TRACEBACK_LOGFILE = '/tmp/xonsh-tracebacks.log'
+$c = f"{$HOME}/.config/yadmdotfiles"
 
 $XONSH_COLOR_STYLE='monokai'
 $LS_COLORS='rs=0:di=01;36:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:'
