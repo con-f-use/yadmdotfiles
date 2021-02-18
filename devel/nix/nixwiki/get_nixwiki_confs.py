@@ -77,6 +77,7 @@ git clone 'git@github.com:delroth/infra.delroth.net.git' 'delroth_infra'
 git clone 'git@github.com:Xe/nixos-configs.git' 'xe_nixos-configs'
 git clone 'git@github.com:burke/b.git' 'burke_libbey-b'
 git clone 'git@git@github.com:adisbladis/nixconfig.git' 'adam_hose-adisbladis'
+git clone 'git@github.com:delroth/infra.delroth.net.git' 'del_roth-infra.delroth.net'
 git clone 'ssh://git@stash.cudaops.com:7999/~tmeusburger/infrastructure.git' 'tobi_tmeusburger-infrastructure'
 """
 
