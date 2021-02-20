@@ -86,19 +86,22 @@ get_shelldate.fulldate = 0
 
 $PROMPT_FIELDS['shelldate'] = get_shelldate
 
+from xonsh import __version__
+from distutils.version import LooseVersion
+reset_color = '{NO_COLOR}' if LooseVersion(__version__) < LooseVersion('0.9.24') else '{RESET}'
 $PROMPT=(
-    '\n{ret_code_color}┌─{RESET}{#555}{shelldate}{RESET} '
-    '{FAINT_BLUE}[{RESET}{env_name}{BOLD_GREEN}{user}@{hostname}{FAINT_ITALIC_BLUE} {cwd}{FAINT_BLUE}] '
-    '{BOLD_BLUE}{ret_code_color}{ret_code}\n'
-    '└{prompt_end}{RESET} '
+    '\n{ret_code_color}┌─' + reset_color + '{#555}{shelldate}' + reset_color + ' ' + 
+    '{FAINT_BLUE}[' + reset_color + '{env_name}{BOLD_GREEN}{user}@{hostname}{FAINT_ITALIC_BLUE} {cwd}{FAINT_BLUE}] ' +
+    '{BOLD_BLUE}{ret_code_color}{ret_code}\n' +
+    '└{prompt_end}' + reset_color + ' '
 )
-$RIGHT_PROMPT='😱 {branch_color}{gitstatus: {}}{RESET} 😱'
+$RIGHT_PROMPT='😱 {branch_color}{gitstatus: {}}' + reset_color + ' 😱'
 #$MULTILINE_PROMPT='' # for long input with linebreaks
 $BOTTOM_TOOLBAR=''
 #$PROMPT_REFRESH_INTERVAL=5 # redraw prompt [default: 0] means no redraw, needs UPDATE_COMPLETIONS_ON_KEYPRESS
 $XONSH_GITSTATUS_STASHED = '⚑ '
 $XONSH_STDERR_PREFIX='{BOLD_#ff0000}'
-$XONSH_STDERR_POSTFIX='{BOLDOFF_RED}{RESET}'
+$XONSH_STDERR_POSTFIX='{BOLDOFF_RED}' + reset_color
 
 def _zdata():
     def format_z_data(fl):
