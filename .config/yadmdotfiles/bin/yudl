@@ -58,11 +58,18 @@ yudl_agg() {
                 --batch-file \
                 "$@"
         ;;
+        rf)
+            fl="$(realpath "$1")"
+            fldrcd
+            echo "$fl"
+            cat "$fl" | sort -uR | yudl_agg f -
+        ;;
         r)
             fldrcd
             xclip -selection clipboard -o | sort -uR | yudl_agg f -
         ;;
         R)
+            # no fldrcd!
             xclip -selection clipboard -o | sort -uR | yudl_agg f -
         ;;
         *)
