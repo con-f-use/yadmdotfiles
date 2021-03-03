@@ -11,8 +11,8 @@ let
     # branch: master
     owner = "con-f-use";
     repo = "yadmdotfiles";
-    rev = "1ccdfab846dc134bf1684222b981ea1ec106ed34";
-    sha256 = "0bsg28qk9rinn06wypc14lsxh641d3x9m65l5d4ki4b9xrbzbi4z";
+    rev = "2754943ba21003ce5eaca9b46a484ab07b440e39";
+    sha256 = "sha256-b4bISFtyJe0UxzDkZcFfIwRXwi8FV53CWp6esOsWlgA=";
     fetchSubmodules = false;
   };
   janify = pkgs.writeScriptBin "jan" ''
@@ -24,6 +24,7 @@ let
     fi
     if git clone "https://github.com/con-f-use/yadmdotfiles.git" "$target"; then
         ln -s "$target/devel/nix" /home/nixos/cfgs
+        ln -s "$target/devel/nixos/utils/install_nixos.sh" /home/nixos/
         exit 0
     fi
     if [ "$1" = "iso" ]; then
@@ -79,7 +80,7 @@ in
     ss="nix-instantiate --parse-only ${cfg_file} && echo You may be ready for: nixos-install";
   };
   environment.systemPackages = with pkgs; [
-    wget curl inetutils dnsutils nmap openssl mkpasswd w3m
+    wget curl inetutils dnsutils nmap openssl mkpasswd w3m magic-wormhole
     htop gnupg screen tree rename
     gitAndTools.git git-lfs
     nix-prefetch-scripts janify
