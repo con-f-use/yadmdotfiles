@@ -6,8 +6,7 @@
 
 export EDITOR=$(which vim)
 export DISK=/dev/disk/by-id/
-# !lsblk
-# :read !ls /dev/disk/by-id/
+ls /dev/disk/by-id/ # !!bash to view list of suggestions in vim
 export middle='-part'
 export SUDO="sudo"
 
@@ -19,7 +18,7 @@ echo partition
 partition() {
     echo 'Always use the by-id aliases, otherwise ZFS can choke on imports:'
     echo '  /dev/disk/by-id/...'
-    export DISK=${1:?Please give name of disk to partition - DANGER!}
+    export DISK=${1:?Please give name of disk to partition $DISK - DANGER!}
     if grep -q /by-id/ <<< "$DISK"; then
         export middle='-part'
     fi
@@ -27,7 +26,7 @@ partition() {
         encryptionflags=" -O encryption=on -O keyformat=passphrase"
     fi
 
-    log "# PARTITIONING ${DISL}"
+    log "# PARTITIONING ${DISK}"
     "$SUDO" parted --script "${DISK}" -- \
         mklabel gpt \
         mkpart esp fat32 1MiB 1GiB \
@@ -129,7 +128,7 @@ generate_config() {
     echo "# {$zfs_cfg}" | "$SUDO" tee -a /mnt/etc/nixos/configuration.nix
     echo "DO NOT FORGET TO ENABLE EFI BOOT!"
     echo -e "EDIT CONFIG, then run:\n    nixos-install"
-    echo "Reminder: sudo nix-channel --add https://github.com/NixOS/nixos-hardware/archive/master.tar.gz nixos-hardware"
+    $SUDO nix-channel --add https://github.com/NixOS/nixos-hardware/archive/master.tar.gz nixos-hardware
 }
 
 echo wifi
