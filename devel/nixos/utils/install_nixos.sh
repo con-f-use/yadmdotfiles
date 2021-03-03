@@ -1,11 +1,13 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Install script helper for NixOs distribution.
 #
 # Author: con-f-use (at gmx net)
 # Date: 24.06.2020
 
 export EDITOR=$(which vim)
-export DISK=/dev/disk/by-id/ata-VMware_Virtual_SATA_Hard_Drive_00000000000000000001
+export DISK=/dev/disk/by-id/
+# !lsblk
+# :read !ls /dev/disk/by-id/
 export middle='-part'
 export SUDO="sudo"
 
@@ -16,12 +18,12 @@ echo "Functions defined in ${BASH_SOURCE}:"
 echo partition
 partition() {
     echo 'Always use the by-id aliases, otherwise ZFS can choke on imports:'
-    echo '/dev/disk/by-id/...'
+    echo '  /dev/disk/by-id/...'
     export DISK=${1:?Please give name of disk to partition - DANGER!}
     if grep -q /by-id/ <<< "$DISK"; then
         export middle='-part'
     fi
-    if [ ! -z "${noencryption:-}" ]; then
+    if ! [ -z "${noencryption:-}" ]; then
         encryptionflags=" -O encryption=on -O keyformat=passphrase"
     fi
 
@@ -37,7 +39,7 @@ partition() {
     log "# CREATE AN ENCRYPTED ZFS POOL"
     "$SUDO" zpool create -f \
         -o ashift=12 \
-        $encryptionflags \
+        ${encryptionflags:-} \
         -O compression=on \
         -O mountpoint=none \
         rpool \
@@ -66,7 +68,7 @@ partition() {
         -o compression=on \
         rpool/home
 
-    if [ ! -z "swap" ]; then
+    if ! [ -z "${swap:-}" ]; then
     log "# CREATE A SWAP PARTITION"
         "$SUDO" zfs create \
             -V "$swap" \
