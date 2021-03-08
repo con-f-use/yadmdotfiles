@@ -167,6 +167,8 @@ nnoremap <leader>. :bn<CR>
 nnoremap <leader>, :bp<CR>
 
 autocmd FileType sh inoremap <leader>B if [ "$0" = "$BASH_SOURCE" ]; then<cr>fi<Esc>O
+autocmd FileType python inoremap <leader>M if __name__ == "__main__":<cr>    <Esc>O
+
 
 " US-intl key dead key remappings
 nmap à `a|nmap á 'a

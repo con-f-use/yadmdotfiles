@@ -104,6 +104,7 @@ config = lib.mkIf config.roles.dev.enable {
       ps.pynvim
       ps.jedi
       ps.python-language-server
+      ps.matplotlib
     ]))
 
     # Vim
