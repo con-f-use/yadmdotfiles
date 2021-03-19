@@ -5,7 +5,7 @@
 export EDITOR="$HOME/.local/bin/nvim"   # Standard editor
 export VISUAL="$EDITOR"
 export NVIM_LISTEN_ADDRESS="$HOME/nvim_sockets/me"
-export PASSWORD_STORE_DIR="$HOME/.config/password-store/"
+export PASSWORD_STORE_DIR="$HOME/.config/password-store"
 export XDG_CACHE_HOME="$HOME/.cache"
 
 

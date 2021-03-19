@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # coding: UTF-8, break: linux, indent: 4 spaces, lang: bash/eng
 description=\
 "Loops over the given directory and compresses images in first level
@@ -17,7 +17,7 @@ main() {
 
             cbzname=$(basename "$dir")
             bla=$(basename "$(dirname "$dir")")
-            grep -iqP '^(issue|episode|extra)' <<< "$cbzname" && cbzname="$bla-$cbzname"
+            grep -iq '^issue' <<< "$cbzname" && cbzname="$bla-$cbzname"
 
             # Put images in archive
             zip \
