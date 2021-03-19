@@ -123,9 +123,12 @@ config = lib.mkIf (config.roles.cudawork.enable) (lib.mkMerge [
       ps.libvirt
       ps.pycrypto
     ]))
- ] ++ lib.optional ( config.roles.cudawork.novpn == false ) barracudavpn;
+  ] ++ lib.optional ( config.roles.cudawork.novpn == false ) barracudavpn;
 
-} 
+  nixpkgs.config.permittedInsecurePackages = [
+    "libvirt-5.9.0"
+  ];
+}
 
 (lib.mkIf config.services.xserver.enable {
   environment.systemPackages = with pkgs; [
@@ -135,7 +138,7 @@ config = lib.mkIf (config.roles.cudawork.enable) (lib.mkMerge [
   #nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg)
   #  [ "slack" "zoom-us" ]
   #;
-  unfrees = [ "slack" "zoom-us" ];
+  unfrees = [ "slack" "zoom-us" "zoom" ];
 })
 
 ]);

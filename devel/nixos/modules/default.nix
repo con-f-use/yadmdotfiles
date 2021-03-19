@@ -2,6 +2,7 @@
   imports = [
     # Roles
     ./zfs.nix
+    ./electronics.nix
     ./essential.nix
     ./devel.nix
     ./workstation.nix

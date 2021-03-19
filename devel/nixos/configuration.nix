@@ -10,6 +10,7 @@
   roles = {
     essentials = { enable = true; main_user = config.users.users.jan.name; };
     dev.enable = true;
+    electronics.enable = true;
     windowed.enable = true;
     workstation.enable = true;
     cudawork.enable = true;
@@ -20,6 +21,7 @@
   # ToDo: This is a dirty hack so I can merge this with unfrees from other modles
   # no idea how to do it properly.
   unfrees = [ "discord" "typora" "hplip" "joypixels" "barracudavpn" "faac" ];  # ToDo: Move these to the modules that install them
+  #nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) config.unfrees;
 
   system.stateVersion = "20.09";

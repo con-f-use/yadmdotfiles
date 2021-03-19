@@ -17,7 +17,7 @@ rec {
     isNormalUser = true;
     uid = 1001;
     #gid = 1000;
-    extraGroups = [ "wheel" "audio" "networkmanager" "wireshark" "dialout" "plugdev" "adm" "disk" "video" "docker" ];
+    extraGroups = [ "wheel" "audio" "networkmanager" "wireshark" "dialout" "plugdev" "adm" "disk" "video" "docker" config.services.ipfs.group ];
     hashedPassword = users.users.jan.hashedPassword;
     openssh.authorizedKeys.keys = users.users.jan.openssh.authorizedKeys.keys;
   };

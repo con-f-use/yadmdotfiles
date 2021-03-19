@@ -51,6 +51,12 @@ config = lib.mkIf config.roles.dev.enable {
     ACTION=="add", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="05dc", GROUP="dialout", MODE="0660"
   '';
 
+  services.ipfs = {
+    enable = true;
+    autoMount = true;
+    extraConfig.Datastore.StorageMax = "100GB";
+  };
+
   # Nix Package Manager
   nix = {
     package = pkgs.nixFlakes;
