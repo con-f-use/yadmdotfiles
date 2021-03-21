@@ -1,4 +1,6 @@
-#!/usr/bin/python2
+#!/usr/bin/env nix-shell
+#!nix-shell -i python -p python27Packages.beautifulsoup4 python27Packages.docopt python27Packages.pyperclip python27Packages.html5-parser python27Packages.urllib3
+
 # coding: UTF-8, break: linux, indent: 4 spaces, lang: python/eng
 """
 Download images from given URL files ('-' for standard input) or URLs.
