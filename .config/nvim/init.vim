@@ -4,6 +4,14 @@
 "  \___\___/|_| |_|     |_|        \__,_|___/\___|
 "
 
+if (has("nvim"))
+  if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
+    echo "Downloading junegunn/vim-plug for neovim to manage plugins..."
+    silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+  endif
+endif
+
 set number
 set mouse=a
 set clipboard=unnamedplus  " use system clipboard
