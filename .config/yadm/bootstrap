@@ -48,6 +48,8 @@ install_debs(){
 
 get_tmpsh() {
     # --pinentry-mode loopback -a --homedir ./ubupg/ --export-secret-keys  > all_priv.key
+    # -K --keyid-format LONG    --edit-key 1892548CB9500B06   expire
+    # gopass recipient add
     git clone --recursive \
       'https://conserve.dynu.net/gitlab/jan/pass.git' \
       ~/.config/password-store || true
@@ -58,10 +60,13 @@ get_tmpsh() {
     file keys.gpg | grep -q "encrypted data"
     gpg -d --batch --passphrase "$(systemd-ask-password smspw)" keys.gpg > keys.tgz
     tar xvf keys.tgz
-    gpg --import keys/* 
+    echo 'pinentry-program /run/current-system/sw/bin/pinentry' >> ~/.gnupg/gpg-agent.conf
+    gpg --pinentry-mode loopback --import keys/* 
     echo trust 5
     gpg --edit-key EEF19B71F9C734D8
     rm -rf keys keys.tgz keys.gpg
+    gpgconf --kill gpg-agent
+    echo "gopass remote/cuda > ~/...; gopass remote/confusion > ~/..."
     cd "$oldpwd"
 }
 

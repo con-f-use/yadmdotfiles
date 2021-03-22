@@ -1,1 +1,1 @@
-.config/yadmdotfiles/vim/vimrc
+.config/nvim/init.vim
