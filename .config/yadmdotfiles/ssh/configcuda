@@ -8,21 +8,37 @@ Host 10.0.67.*
     ControlPath /tmp/ssh-%l@%n.%r@%h.%p
     ControlPersist 360000
 
-Host qashare
-    HostName 10.17.6.4
-    User root
-    PreferredAuthentications publickey,password,keyboard-interactive
+Host qa*
+    User qa
+    IdentityFile ~/.ssh/id_rsa_cuda
+    IdentitiesOnly = yes
+    PreferredAuthentications publickey
+    #:,password,keyboard-interactive
     ControlMaster auto
     ControlPath /tmp/ssh-%l@%n.%r@%h.%p
     ControlPersist 360000
 
+Host qashare
+    HostName 10.17.6.4
+    User root
+
 Host qaportal
     HostName 10.17.36.250
-    User qa
-    PreferredAuthentications publickey,password,keyboard-interactive
-    ControlMaster auto
-    ControlPath /tmp/ssh-%l@%n.%r@%h.%p
-    ControlPersist 360000
+
+Host qajenkins
+    HostName 10.17.36.245
+
+Host qastjen
+    HostName 10.17.36.246
+
+Host qamain
+    HostName 10.17.36.241
+
+Host qadns
+    HostName 10.17.6.120
+
+Host qavault
+    HostName 10.17.79.11
 
 Host czdev
     HostName 10.17.36.102
@@ -57,23 +73,6 @@ Host frskvm
     HostName 10.17.6.217
     User root
     PreferredAuthentications publickey,password,keyboard-interactive
-    ControlMaster auto
-    ControlPath /tmp/ssh-%l@%n.%r@%h.%p
-    ControlPersist 360000
-
-Host qajenkins
-    HostName 10.17.36.245
-    PreferredAuthentications publickey,password,keyboard-interactive
-    User qa
-    ControlMaster auto
-    ControlPath /tmp/ssh-%l@%n.%r@%h.%p
-    ControlPersist 360000
-    #IdentityFile ~/.ssh/id_rsa##Cuda
-
-Host stjenkins
-    HostName 10.17.36.246
-    PreferredAuthentications publickey,password,keyboard-interactive
-    User qa
     ControlMaster auto
     ControlPath /tmp/ssh-%l@%n.%r@%h.%p
     ControlPersist 360000
