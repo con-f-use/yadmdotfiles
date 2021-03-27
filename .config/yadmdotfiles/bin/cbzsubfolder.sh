@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # coding: UTF-8, break: linux, indent: 4 spaces, lang: bash/eng
 description=\
 "Loops over the given directory and compresses images in first level
