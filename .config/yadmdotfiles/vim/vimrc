@@ -292,16 +292,11 @@ noremap <special> kj <ESC> | inoremap <special> jk <ESC>:
 "map! <C-f> <Esc>"+pi
 
 "Turn recording key off"
-<<<<<<< HEAD
 nnoremap Q q
 nnoremap q <Nop>
-=======
-    nnoremap Q q
-    nnoremap q <Nop>
 
 "Make escaping easier
     inoremap <special> kj <ESC> | inoremap <special> jk <ESC>:
->>>>>>> b90260506e9c00d185d98dee61c1b2495cf12423
 "}}}
 
 """"""""""""""""""""""""""""""
