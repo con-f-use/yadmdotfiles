@@ -13,7 +13,7 @@ config = lib.mkIf config.roles.electronics.enable {
 
   environment.systemPackages = with pkgs; [
     #kicad-unstable
-    kicad
+    #kicad
     openscad
   ];
 }; 
