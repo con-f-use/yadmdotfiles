@@ -132,7 +132,7 @@ config = lib.mkIf (config.roles.cudawork.enable) (lib.mkMerge [
 
 (lib.mkIf config.services.xserver.enable {
   environment.systemPackages = with pkgs; [
-    zoom-us slack
+    zoom-us slack robot3t
   ];
 
   #nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg)
