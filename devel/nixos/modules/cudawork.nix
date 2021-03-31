@@ -85,6 +85,7 @@ let
   '';
   systemCert = { security.pki.certificates = [ interceptionCert qacaCert ]; };
   barracudavpn = (import ../packages { pkgs=pkgs; }).barracudavpn;
+  qamongo = (import ../packages { pkgs=pkgs; }).qamongo;
 
 in {
 options.roles.cudawork = with lib; {
@@ -132,7 +133,7 @@ config = lib.mkIf (config.roles.cudawork.enable) (lib.mkMerge [
 
 (lib.mkIf config.services.xserver.enable {
   environment.systemPackages = with pkgs; [
-    zoom-us slack robot3t
+    zoom-us slack qamongo
   ];
 
   #nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg)
