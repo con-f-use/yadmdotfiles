@@ -85,7 +85,7 @@ config = lib.mkIf config.roles.dev.enable {
 
   environment.systemPackages = with pkgs; [
     # Essential
-    htop gnupg screen tree file binutils-unwrapped age execline
+    htop gnupg screen tree file binutils-unwrapped age execline expect
     wget curl w3m magic-wormhole
 
     # Base
@@ -95,6 +95,8 @@ config = lib.mkIf config.roles.dev.enable {
     gitAndTools.git
     gitAndTools.pre-commit gitAndTools.git-open gitAndTools.delta git-lfs
     fasd fzf ripgrep direnv parallel pandoc figlet
+    #texlive.combined.scheme-medium
+    (texlive.combine { inherit (texlive) scheme-medium xargs bigfoot moderncv lipsum footmisc multibib soul; })
     # ungoogled-chromium # in unstable!
 
     # Nix
