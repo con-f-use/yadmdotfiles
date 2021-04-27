@@ -1,3 +1,14 @@
+# Xonsh Config File
+# Pronounced like conch, tutorial: https://youtu.be/ujo9sbqHFqw
+#
+# Things to remember:
+# for x in g`*.jpg`:   # no 'g' --> regex globbing
+#     echo @(x)   # @ syntax "imports" python symbol
+#
+# @events.<eventname>  # explore with .__doc__
+#
+# echo ! form   here     on out I want this to ba a string
+
 # Install with:
 # sudo pip3 install xonsh[ptk,linux,pygments,proctitle]
 # xonsh -c xpip install xonsh-direnv xontrib-z xontrib-histcpy
