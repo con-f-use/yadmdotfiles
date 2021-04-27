@@ -88,7 +88,7 @@ config = lib.mkIf config.roles.windowed.enable {
     arc-theme
     gnome3.nautilus gsettings-desktop-schemas gnome3.dconf-editor
     firefox youtube-dl
-    franz signal-desktop tdesktop discord thunderbird
+    signal-desktop tdesktop discord thunderbird
 
     # Multimedia
     mpv sxiv flameshot kazam zathura

@@ -17,7 +17,11 @@
     electronics.enable = true;
     windowed.enable = true;
     workstation.enable = true;
-    cudawork.enable = true;
+    cudawork = {
+      enable = true;
+      novpn = true;
+      interception = false;
+    };
   };
   users.users.root.openssh.authorizedKeys.keys = config.users.users.jan.openssh.authorizedKeys.keys;
   #environment.systemPackages = with pkgs; [ ];
