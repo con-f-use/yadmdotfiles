@@ -98,6 +98,9 @@ config = lib.mkIf (config.roles.cudawork.enable) (lib.mkMerge [
 {
 
   virtualisation.docker = { enable = true; enableOnBoot = true; };
+  networking.hosts= {
+    "10.17.79.11" = [ "qda-vault.qa.ngdev.eu.ad.cuda-inc.com" "vault.qa" ];
+  };
 
   environment.etc."docker/cert.d/10.17.65.201:5000/certificate.crt" = {
     enable = true;
