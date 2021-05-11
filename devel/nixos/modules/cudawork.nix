@@ -101,6 +101,7 @@ config = lib.mkIf (config.roles.cudawork.enable) (lib.mkMerge [
   networking.hosts= {
     "10.17.79.11" = [ "qda-vault.qa.ngdev.eu.ad.cuda-inc.com" "vault.qa" ];
     "10.17.65.203" = [ "pypi.qa.ngdev.eu.ad.cuda-inc.com" "pypi.qa" ];
+    "10.17.36.246" = [ "jenkins-cgf.qa.ngdev.eu.ad.cuda-inc.com" "jenkins2.qa" ];
   };
 
   environment.etc."docker/cert.d/10.17.65.201:5000/certificate.crt" = {
