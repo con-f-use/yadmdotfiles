@@ -12,7 +12,10 @@
     electronics.enable = true;
     windowed.enable = true;
     workstation.enable = true;
-    cudawork.enable = true;
+    cudawork = {
+      enable = true;
+      #use_builders = true;
+    };
   };
   users.users.root.openssh.authorizedKeys.keys = config.users.users.jan.openssh.authorizedKeys.keys;
   #environment.systemPackages = with pkgs; [ ];

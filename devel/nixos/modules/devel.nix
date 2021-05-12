@@ -113,7 +113,7 @@ config = lib.mkIf config.roles.dev.enable {
       ps.jedi
       ps.python-language-server
       ps.matplotlib
-      ps.pygrep
+      #ps.pygrep
     ]))
 
     # Vim
