@@ -29,6 +29,9 @@ yudl_agg() {
         c)
             fldrcd
         ;;
+        C)
+            fldrcd && xdg-open ./
+        ;;
         d)
             dbg "$@"
             youtube-dl \
