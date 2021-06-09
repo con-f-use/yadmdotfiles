@@ -39,8 +39,8 @@ config = lib.mkIf config.roles.windowed.enable {
       lightdm.greeters.gtk.theme.name = "Arc-Dark";
     };
     desktopManager = {
-      gnome3.enable = false;
-      gnome3.extraGSettingsOverrides = ''
+      gnome.enable = false;
+      gnome.extraGSettingsOverrides = ''
         [org/gnome/nautilus/list-view]
         default-visible-columns=['name', 'size', 'date_modified_with_time']
         default-zoom-level='small'
