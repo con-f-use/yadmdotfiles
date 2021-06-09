@@ -12,7 +12,10 @@
     electronics.enable = true;
     windowed.enable = true;
     workstation.enable = true;
-    cudawork.enable = true;
+    cudawork = {
+      enable = true;
+      #use_builders = true;
+    };
   };
   users.users.root.openssh.authorizedKeys.keys = config.users.users.jan.openssh.authorizedKeys.keys;
   #environment.systemPackages = with pkgs; [ ];
@@ -30,6 +33,7 @@
   boot.extraModulePackages = [ ];
   networking.interfaces.ens33.useDHCP = true;
   networking.hostId = "1c47b078";
+  # networking.hosts= { "192.168.0.10" = [ "confus.me" "conserve" "conserve.dynu.net" ]; };
   #console.font = "latarcyrheb-sun32";  # larger bootmode fonts
   #boot.loader.systemd-boot.consoleMode = lib.mkDefault "max";
   #hardware.video.hidpi.enable = true;
