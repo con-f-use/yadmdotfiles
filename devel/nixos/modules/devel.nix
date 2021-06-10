@@ -109,7 +109,7 @@ config = lib.mkIf config.roles.dev.enable {
       ps.requests
       ps.beautifulsoup4
       ps.pygls
-      ps.pynvim
+      #ps.pynvim
       ps.jedi
       ps.python-language-server
       ps.matplotlib
