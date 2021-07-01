@@ -134,7 +134,7 @@ config = lib.mkIf (config.roles.cudawork.enable) (lib.mkMerge [
     poetry pipenv jq devpi-client docker-compose postgresql
     (python2.withPackages(ps: [
       ps.requests
-      ps.pynvim
+      # ps.pynvim
       ps.setuptools
       ps.six
       ps.virtualenv
