@@ -31,7 +31,7 @@ call plug#begin('~/.vim/plugged')
     if has('lua')
         Plug 'nvim-lua/popup.nvim'
         Plug 'nvim-lua/plenary.nvim'
-        Plug 'nvim-telescope/telescope.nvim', { 'on': 'Telescope' }
+        "Plug 'nvim-telescope/telescope.nvim', { 'on': 'Telescope' }
         Plug 'nvim-treesitter/nvim-treesitter'
     endif
     "Plug 'airblade/vim-gitgutter'
@@ -164,7 +164,7 @@ nnoremap <leader>e :CocCommand explorer<CR>
 nnoremap <leader>F :CocSearch -S 
 nnoremap <leader>g :Gcd<CR>
 nnoremap <leader>h :GitGutterPreviewHunk<CR>
-nnoremap <leader>l :Telescope live_grep<CR>
+nnoremap <leader>l :Rg<CR>
 nnoremap <leader>s :G<CR>
 nnoremap <leader>q :q<CR>
 nnoremap <leader>p :vsplit<CR> \| :terminal git push<CR>i
