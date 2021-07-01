@@ -106,6 +106,7 @@ config = lib.mkIf config.roles.dev.enable {
     (python3.withPackages(ps: [
       ps.setuptools
       ps.virtualenv
+      ps.virtualenv-tools3
       ps.requests
       ps.beautifulsoup4
       ps.pygls
@@ -113,6 +114,8 @@ config = lib.mkIf config.roles.dev.enable {
       ps.jedi
       ps.python-language-server
       ps.matplotlib
+      ps.coloredlogs
+      ps.numpy
       #ps.pygrep
     ]))
 

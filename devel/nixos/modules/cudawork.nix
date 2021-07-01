@@ -116,12 +116,18 @@ config = lib.mkIf (config.roles.cudawork.enable) (lib.mkMerge [
     group = "docker";
     text = if config.roles.cudawork.interception then interceptionCert else dockregCert;
   };
+  environment.etc."docker/cert.d/10.17.65.200:5000/certificate.crt" = {
+    enable = true;
+    user = "docker";
+    group = "docker";
+    text = if config.roles.cudawork.interception then interceptionCert else dockregCert;
+  };
 
   environment.etc."docker/daemon.json" = {
     enable = true;
     user = "docker";
     group = "docker";
-    text = ''{ "insecure-registries" : ["10.17.65.201:5000", "autotest-docker-registry.qa.ngdev.eu.ad.cuda-inc.com:5000"] }'';
+    text = ''{ "insecure-registries" : ["10.17.65.200:5000", "10.17.65.201:5000", "autotest-docker-registry.qa.ngdev.eu.ad.cuda-inc.com:5000"] }'';
   };
 
   environment.systemPackages = with pkgs; [

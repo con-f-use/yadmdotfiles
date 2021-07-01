@@ -85,7 +85,7 @@
     }
   ];
 
-  system.stateVersion = "20.09";
+  system.stateVersion = "21.05";
 }
 
 # sudo cp -r ~/devel/nixos/ /etc/ && sudo chown -R root:root /etc/nixos/
