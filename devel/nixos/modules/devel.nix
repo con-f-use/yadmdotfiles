@@ -106,7 +106,7 @@ config = lib.mkIf config.roles.dev.enable {
     (python3.withPackages(ps: [
       ps.setuptools
       ps.virtualenv
-      ps.virtualenv-tools3
+      #ps.virtualenv-tools3
       ps.requests
       ps.beautifulsoup4
       ps.pygls
