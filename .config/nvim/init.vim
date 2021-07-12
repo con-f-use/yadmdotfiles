@@ -40,6 +40,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-repeat'
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-sleuth'    " Autodetect indentation style
+    Plug 'kana/vim-textobj-user'
+    Plug 'kana/vim-textobj-function'
     Plug 'Yggdroot/indentLine'  " Show vertical line for indent levels
     Plug 'honza/vim-snippets'
     " experimental stuff

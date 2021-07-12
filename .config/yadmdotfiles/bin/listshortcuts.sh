@@ -10,6 +10,7 @@ libfile="\$HOME/.local/lib/jcgb/jcgb.bash"
 [ -e "$libfile" ] || curl --insecure --create-dirs --output "$libfile" 'https://gist.githubusercontent.com/con-f-use/7914e4896f615b926eef63b4739e993f/raw/8c343944e760c0d26cce55a2f1eaf06ddcf257cb/jcgb.sh' || { 2>echo "Requires '$libfile'!"; exit 1; }
 source "$libfile"
 
+cmd:s() { cmd:shortcuts "$@"; }
 cmd:shortcuts() {
 echo 'In statistical order; most used to least used:
     Ctrl + r             reverse history search
@@ -36,6 +37,7 @@ echo 'In statistical order; most used to least used:
     ^foo^bar             Replace foo by bar in last command'
 }
 
+cmd:e() { cmd:expansions "$@"; }
 cmd:expansions() {
 echo '${p<operator>w} substittutes/assigns:
     operator    p set & not null    set & null    unset
@@ -49,6 +51,7 @@ echo '${p<operator>w} substittutes/assigns:
     +                 w             w             null'
 }
 
+cmd:m() { cmd:manipulations "$@"; }
 cmd:manipulations(){
 echo '
     ${foo-default}            # value of foo or the string "default" if no foo
@@ -65,6 +68,7 @@ echo '
     echo bl{a,b,c{d,e}}{x,y}  # expands to: blax blay blbx blby blcdx blcdy blcex blcey'
 }
 
+cmd:a() { cmd:arrays "$@"; }
 cmd:arrays() {
 echo '
     declare -a arr=("element1" element2 'element3' ...)   # Declare & init array, init-part "=(element..." optional
@@ -84,8 +88,11 @@ echo '
     for v in "${arr[@]}"; do echo "$v"; done # Loop over elements'
 }
 
+cmd:d() { cmd:dictionaries "$@"; }
 cmd:dictionaries() {
-echo 'Mostly similar to regular arrays...
+cmd:arrays
+echo '
+Mostly similar to regular arrays (above)...
     declare -A arr=( ["foo"]=bar ['bla']="laber" [herp]=derp )   # Declare & init array, init-part "=(element..." optional
     ${arr[*]}         # All of the items in the array
     ${!arr[*]}        # All of the indexes in the array
