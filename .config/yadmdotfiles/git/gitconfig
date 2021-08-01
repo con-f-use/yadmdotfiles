@@ -53,7 +53,7 @@
 [conserve.dynu.net]
     user = jan
 
-[url "http://github.com/"]
+[url "https://github.com/"]
     insteadOf = "gith:"
 
 [url "git@github.com:"]

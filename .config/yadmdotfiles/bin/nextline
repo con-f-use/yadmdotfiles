@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+# coding: UTF-8, break: linux, indent: 4 spaces, lang: bash/eng
+description=\
+"
+Takes a line in a <file> from stdin and prints the next <num> non-
+trivial lines (default 1).
+
+Usage: 
+    $0 <file> <num=1>
+"
+
+main() {
+    local needle=$(</dev/stdin)
+    local fl="$1"
+    local num="${2:-1}"
+
+    local show=loop
+    while IFS= read -r line; do
+        if [ "$line" = "$needle" ]; then
+            show="$num"
+        fi
+        [ "$show" = "loop" ] && continue
+        printf '%s\n' "$line"
+        [ ${#line} -gt 5 ] && 
+            [[ $line =~ ^[A-Za-z0-9_*\.].* ]] && 
+                (( show-- ))
+        (( show < 0 )) &&
+            break
+    done < "$fl"
+}
+
+if [ "$0" = "$BASH_SOURCE" ]; then
+    if [ -z "$1" ] || [ ! -r "$1" ]; then
+        1>&2 echo "$description"
+        exit 1
+    fi
+    main "$@"
+fi

@@ -56,7 +56,6 @@ local.properties
 # TeXlipse plugin
 .texlipse
 ########################################################### EMACS
-# -*- mode: gitignore; -*-
 *~
 \#*\#
 /.emacs.desktop
@@ -164,6 +163,7 @@ tmtags
 Session.vim
 .netrwhist
 *~
+*.orig
 ########################################################### Windows
 # Windows image file caches
 Thumbs.db
