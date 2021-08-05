@@ -6,7 +6,7 @@ Some git helpers, e.g. to revert commits (history rewrite-sytle).
 date: Tue 06 Jul 15 13:54:56 CEST 2021
 author: confus <con-f-use@gmx.net>"
 
-libfile="\$HOME/.local/lib/jcgb/jcgb.bash"
+libfile="$HOME/.local/lib/jcgb/jcgb.bash"
 [ -e "$libfile" ] || curl --insecure --create-dirs --output "$libfile" 'https://gist.githubusercontent.com/con-f-use/7914e4896f615b926eef63b4739e993f/raw/8c343944e760c0d26cce55a2f1eaf06ddcf257cb/jcgb.sh' || { 2>echo "Requires '$libfile'!"; exit 1; }
 source "$libfile"
 
