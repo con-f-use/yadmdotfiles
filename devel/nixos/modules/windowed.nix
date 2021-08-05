@@ -27,6 +27,9 @@ config = lib.mkIf config.roles.windowed.enable {
 
   programs.dconf.enable = true;
 
+  # fix java windows
+  environment.variables._JAVA_AWT_WM_NONREPARENTING = "1";
+
   services.xserver = {
     enable = true;
     layout = "us";
