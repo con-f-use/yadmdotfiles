@@ -197,6 +197,7 @@ if os.path.exists($HOME + '/.local/bin/nvim'):
     aliases['vim']='nvim'
     aliases['vi']='nvim'
 
+$CUDA_QADOMAIN='qa.ngdev.eu.ad.cuda-inc.com'
 
 if $(which xset):
     xset r rate 300 50

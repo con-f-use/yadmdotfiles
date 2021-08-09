@@ -107,6 +107,7 @@ config = lib.mkIf (config.roles.cudawork.enable) (lib.mkMerge [
     "10.17.6.61" = [ "nixbld01.qa.ngdev.eu.ad.cuda-inc.com" "nixbld01.qa" ];
     "10.17.6.62" = [ "nixbld02.qa.ngdev.eu.ad.cuda-inc.com" "nixbld02.qa" ];
     "10.17.6.63" = [ "nixbld03.qa.ngdev.eu.ad.cuda-inc.com" "nixbld03.qa" ];
+    "10.17.65.201" = [ "autotest-docker-registry.qa.ngdev.eu.ad.cuda-inc.com" ];
     "10.17.6.120" = [ "dns.qa" ];
   };
 
@@ -127,20 +128,23 @@ config = lib.mkIf (config.roles.cudawork.enable) (lib.mkMerge [
     enable = true;
     user = "docker";
     group = "docker";
-    text = ''{ "insecure-registries" : ["10.17.65.200:5000", "10.17.65.201:5000", "autotest-docker-registry.qa.ngdev.eu.ad.cuda-inc.com:5000"] }'';
+    text = ''{
+      "dns": ["10.17.6.120", "1.1.1.1"],
+      "insecure-registries" : ["10.17.65.200:5000", "10.17.65.201:5000", "autotest-docker-registry.qa.ngdev.eu.ad.cuda-inc.com:5000"]
+    }'';
   };
 
   environment.systemPackages = with pkgs; [
     poetry pipenv jq devpi-client docker-compose postgresql
-    #(python2.withPackages(ps: [
-    #  ps.requests
-    #  # ps.pynvim
-    #  ps.setuptools
-    #  ps.six
-    #  ps.virtualenv
-    #  ps.libvirt
-    #  ps.pycrypto
-    #]))
+    (python2.withPackages(ps: [
+      ps.requests
+      # ps.pynvim
+      ps.setuptools
+      ps.six
+      ps.virtualenv
+      ps.libvirt
+      ps.pycrypto
+    ]))
   ] ++ lib.optional ( config.roles.cudawork.novpn == false ) barracudavpn;
 
   nixpkgs.config.permittedInsecurePackages = [

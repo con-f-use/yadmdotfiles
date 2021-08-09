@@ -29,10 +29,12 @@ export LESS_TERMCAP_us=$'\E[01;32m'
 ##############
 # Python
 ##############
-export PYTHONIOENCODING="UTF-8"
+export PYTHONIOENCODING='UTF-8'
 export PYTHONSTARTUP="$HOME/.config/yadmdotfiles/python/pycustom"
 export COOKIECUTTER_CONFIG="$HOME/.config/yadmdotfiles/cookiecutter/cookiecutter.yaml"
-export CUDAPI_PIP="--trusted-host 10.17.65.203 --index-url http://10.17.65.203/root/"
+export CUDAPI_PIP='--trusted-host 10.17.65.203 --index-url http://10.17.65.203/root/'
+export CUDA_QADOMAIN='qa.ngdev.eu.ad.cuda-inc.com'
+
 
 
 #############
