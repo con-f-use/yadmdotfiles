@@ -145,6 +145,7 @@ if os.path.exists(f"{$HOME}/.nix-profile"):
 
 aliases["ss"] = "sudo nixos-rebuild switch"
 aliases["ff"] = "sudo vi /etc/nixos/configuration.nix"
+aliases["vv"] = "vi $HOME/.config/nvim/init.vim"
 
 aliases["jj"] = "vi $HOME/.config/xonsh/rc.xsh"
 aliases["kk"] = "vi $HOME/.config/kitty/kitty.conf"
