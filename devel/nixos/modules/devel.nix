@@ -1,7 +1,8 @@
 { config, lib, pkgs, ... }:
 let
+  unstable = import <unstable> {};  # until nvim v0.5.0 is part of stable nixos: sudo nix-channel --add https://nixos.org/channels/nixos-unstable unstable
 
-  base-neovim = (pkgs.neovim.override {
+  base-neovim = (unstable.neovim.override {  # pkgs.neovim.override
       viAlias = true; vimAlias = true; withNodeJs = true;
       configure = {
         customRC = ''
