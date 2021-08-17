@@ -18,6 +18,8 @@ set clipboard=unnamedplus  " use system clipboard
 set history=10000    "Longer history
 set undolevels=1000
 let mapleader=';'
+set wildignore+=*.pyc
+set wildignore+=**/.git/*
 
 call plug#begin('~/.vim/plugged')
     " essential stuff
@@ -37,6 +39,7 @@ call plug#begin('~/.vim/plugged')
         Plug 'akinsho/nvim-bufferline.lua'
         Plug 'Yggdroot/indentLine'
         Plug 'folke/which-key.nvim'
+        Plug 'norcalli/nvim-colorizer.lua'
     endif
     "Plug 'airblade/vim-gitgutter'
     Plug 'tpope/vim-surround'  " Surround text objects with stuff
@@ -149,19 +152,23 @@ set hidden
 set list                            " show invisible characters
 set listchars=tab:»·,trail:·,nbsp:· " Display extra whitespace
 
+if exists(":lua")
+    lua require'colorizer'.setup()
+endif
+
 set inccommand=split
 
 command! -bang ProjectFiles call fzf#vim#files('~/devel', <bang>0)
 
+nmap <leader><tab> <plug>(fzf-maps-n)
 nnoremap <leader>o :ProjectFiles<CR>
 nnoremap <leader><SPACE> :Files<CR>
+nnoremap <leader>n :Neoformat<CR>
 nnoremap <leader>b :Buffers<CR>
 nnoremap <leader>L :Lines<CR>
 nnoremap <leader>r :Tags<CR>
-nnoremap <leader>n :Neoformat<CR>
 nnoremap <leader>m :Marks<CR>
 nnoremap <leader>z :Goyo<CR>
-nmap <leader><tab> <plug>(fzf-maps-n)
 
 nnoremap <leader>a :Startify<CR>
 nnoremap <leader>C :call CocAction('pickColor')<CR>
@@ -181,6 +188,16 @@ nnoremap <leader>k :call <SID>show_documentation()<CR>
 
 nnoremap <leader>. :bn<CR>
 nnoremap <leader>, :bp<CR>
+
+"Y behave like D and P
+nnoremap Y y$
+"keep centered
+nnoremap n nzzzv
+nnoremap N Nzzzv
+nnoremap J mzJ`z
+"Jumplist contains jumps larger 5 lines for Ctrl+o/i
+nnoremap <expr> k (v:count > 5 ? "m'" . v:count : "") . 'k'
+nnoremap <expr> j (v:count > 5 ? "m'" . v:count : "") . 'j'
 
 autocmd FileType sh inoremap <leader>B if [ "$0" = "$BASH_SOURCE" ]; then<cr>fi<Esc>O
 autocmd FileType python inoremap <leader>M if __name__ == "__main__":<cr>    <Esc>O
@@ -229,6 +246,10 @@ function! s:show_documentation()
     call CocAction('doHover')
   endif
 endfunction
+
+if executable('rg')
+    let g:rg_derive_root='true'
+endif
 
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
