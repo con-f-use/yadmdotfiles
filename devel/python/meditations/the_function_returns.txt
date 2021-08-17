@@ -1,0 +1,279 @@
+>>> # The Function Returns
+>>> # @dabeaz
+>>> # https://www.dabeaz.com
+>>> 
+>>> import time
+>>> def after(seconds, func):
+...     time.sleep(seconds)
+...     return func()
+... 
+>>> def greeting():
+...     print("Hello World")
+... 
+>>> after(5, greeting)
+Hello World
+>>> def K(x):
+...     print("K")
+...     return x+2
+... 
+>>> after(10, K(10))
+K
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<stdin>", line 3, in after
+TypeError: 'int' object is not callable
+>>> after(10, lambda: K(10))
+K
+12
+>>> after(10, lambda: K("10"))
+K
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<stdin>", line 3, in after
+  File "<stdin>", line 1, in <lambda>
+  File "<stdin>", line 3, in K
+TypeError: can only concatenate str (not "int") to str
+>>> try:
+...     after(10, lambda: K("10"))
+... except TypeError:
+...     print("Nope")
+... 
+K
+Nope
+>>> try:
+...     after(10, lambda: K(10))
+... except TypeError:
+...     print("Nope")
+... 
+K
+12
+>>> try:
+...     after("10", lambda: K(10))
+... except TypeError:
+...     print("Nope")
+... 
+Nope
+>>> K(10)
+K
+12
+>>> after("10", lambda: K(10))
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<stdin>", line 2, in after
+TypeError: an integer is required (got type str)
+>>> time.sleep("10")
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: an integer is required (got type str)
+>>> K("10")
+K
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<stdin>", line 3, in K
+TypeError: can only concatenate str (not "int") to str
+>>> class AfterError(Exception):
+...     pass
+... 
+>>> def after(seconds, func):
+...     time.sleep(seconds)
+...     try:
+...         return func()
+...     except Exception as err:
+...         raise AfterError("Fail!") from err
+... 
+>>> after("10", lambda: K(10))
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<stdin>", line 2, in after
+TypeError: an integer is required (got type str)
+>>> after(10, lambda: K("10"))
+K
+Traceback (most recent call last):
+  File "<stdin>", line 4, in after
+  File "<stdin>", line 1, in <lambda>
+  File "<stdin>", line 3, in K
+TypeError: can only concatenate str (not "int") to str
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<stdin>", line 6, in after
+__main__.AfterError: Fail!
+>>> try:
+...     after(10, lambda: K("10"))
+... except AfterError as err:
+...     print("Nope: Reason", err.__cause__)
+... 
+K
+Nope: Reason can only concatenate str (not "int") to str
+>>> class Result:
+...     def __init__(self, value=None, exc=None):
+...         self.value = value
+...         self.exc = exc
+...     def unwrap(self):
+...         if self.exc: raise self.exc
+...         else: return self.value
+... 
+>>> def after(seconds, func):
+...     time.sleep(seconds)
+...     try:
+...         return Result(func())
+...     except Exception as err:
+...         return Result(exc=err)
+... 
+>>> a = after(5, lambda: K(10))
+K
+>>> b = after(5, lambda: K("10"))
+K
+>>> a
+<__main__.Result object at 0x7f4676c5fa60>
+>>> b
+<__main__.Result object at 0x7f4676c750d0>
+>>> a.unwrap()
+12
+>>> b.unwrap()
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<stdin>", line 6, in unwrap
+  File "<stdin>", line 4, in after
+  File "<stdin>", line 1, in <lambda>
+  File "<stdin>", line 3, in K
+TypeError: can only concatenate str (not "int") to str
+>>> from typing import Callable, Any
+>>> def after(seconds: float, func: Callable[[], Any]) -> Result:
+...     time.sleep(seconds)
+...     try:
+...         return Result(func())
+...     except Exception as err:
+...         return Result(exc=err)
+...
+>>> after("10", lambda: K(10))
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<stdin>", line 2, in after
+TypeError: an integer is required (got type str)
+>>> after(10, lambda: K("10"))
+<__main__.Result object at 0x7f4676c3dd30>
+>>> _.unwrap()
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<stdin>", line 6, in unwrap
+  File "<stdin>", line 4, in after
+  File "<stdin>", line 1, in <lambda>
+  File "<stdin>", line 3, in K
+TypeError: can only concatenate str (not "int") to str
+>>> def U(x):
+...     print("U")
+...     return x * 5
+... 
+>>> def F(x):
+...     print("F")
+...     return x - 3
+... 
+>>> a = K(10)
+K
+>>> b = U(a)
+U
+>>> c = F(b)
+F
+>>> c
+57
+>>> a = after(1, lambda: K(10))
+>>> b = after(3, lambda: U(a))
+>>> c = after(3, lambda: F(b))
+>>> c
+<__main__.Result object at 0x7f4676c3dd30>
+>>> c.unwrap()
+F
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<stdin>", line 1, in <lambda>
+  File "<stdin>", line 3, in F
+TypeError: unsupported operand type(s) for -: 'Result' and 'int'
+>>> a = after(1, lambda: K(10))
+K
+>>> b = after(5, lambda: U(a.unwrap()))
+U
+>>> c = after(10, lambda: F(b.unwrap()))
+F
+>>> c.unwrap()
+57
+>>> c = F(U(K(10)))
+K
+U
+F
+>>> c = after(10, lambda: F(after(5, lambda: U(after(1, lambda: K(10)))
+... )
+... )
+... )
+K
+U
+F
+>>> )
+  File "<stdin>", line 1
+    )
+    ^
+SyntaxError: unmatched ')'
+>>> c.unwrap()
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<stdin>", line 6, in unwrap
+  File "<stdin>", line 4, in after
+  File "<stdin>", line 1, in <lambda>
+  File "<stdin>", line 3, in F
+TypeError: unsupported operand type(s) for -: 'Result' and 'int'
+>>> c.unwrap()
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<stdin>", line 6, in unwrap
+  File "<stdin>", line 1, in <module>
+  File "<stdin>", line 6, in unwrap
+  File "<stdin>", line 4, in after
+  File "<stdin>", line 1, in <lambda>
+  File "<stdin>", line 3, in F
+TypeError: unsupported operand type(s) for -: 'Result' and 'int'
+>>> c = after(10, lambda: F(after(5, lambda: U(after(1, lambda: K(10)).unwrap())).unwrap())))
+  File "<stdin>", line 1
+    c = after(10, lambda: F(after(5, lambda: U(after(1, lambda: K(10)).unwrap())).unwrap())))
+                                                                                            ^
+SyntaxError: unmatched ')'
+>>> c = after(10, lambda: F(after(5, lambda: U(after(1, lambda: K(10)).unwrap())).unwrap()))
+K
+U
+F
+>>> c.unwrap()
+57
+>>> from functools import partial
+>>> c = after(10, partial(F, after(5, partial(U, after(1, partial(K, 10)).unwrap())).unwrap()))
+K
+U
+F
+>>> class After:
+...     def __init__(self, value=None, exc=None):
+...         self.value = value
+...         self.exc = exc
+...     def unwrap(self):
+...         if self.exc: raise self.exc
+...         else: return self.value
+...     @classmethod
+...     def input(cls, value):
+...         return cls(value)
+...     def __rshift__(self, other):
+...         seconds, func = other
+...         time.sleep(seconds)
+...         try:
+...             return After(func(self.unwrap()))
+...         except Exception as err:
+...             return After(exc=err)
+... 
+>>> After.input(10) >> (1, K) >> (5, U) >> (10, F)
+K
+U
+F
+<__main__.After object at 0x7f4676bef7c0>
+>>> _.unwrap()
+57
+>>> # The end
+>>> # @dabeaz
+>>> # https://www.dabeaz.com

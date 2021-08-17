@@ -1,0 +1,111 @@
+>>> # The Function
+>>> # @dabeaz
+>>> def greeting():
+...     return 'Hello World'
+... 
+>>> greeting()
+'Hello World'
+>>> import time
+>>> def after(seconds, func):
+...     time.sleep(seconds)
+...     return func()
+... 
+>>> after(10, greeting)
+'Hello World'
+>>> def greeting(name):
+...     return f'Hello {name}'
+... 
+>>> after(10, greeting('Bob'))
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<stdin>", line 3, in after
+TypeError: 'str' object is not callable
+>>> def helper():
+...     return greeting('Bob')
+... 
+>>> after(10, helper)
+'Hello Bob'
+>>> after(10, lambda: greeting('Bob'))
+'Hello Bob'
+>>> greetings  = [ lambda: greeting(name) for name in ['Bob', 'Alice'] ]
+>>> for g in greetings:
+...     print(after(3, g))
+... 
+Hello Alice
+Hello Alice
+>>> greetings  = [ lambda name=name: greetings(name) for name in ['Bob', 'Alice']]
+>>> for g in greetings:
+...     print(after(3, g))
+... 
+Traceback (most recent call last):
+  File "<stdin>", line 2, in <module>
+  File "<stdin>", line 3, in after
+  File "<stdin>", line 1, in <lambda>
+TypeError: 'list' object is not callable
+>>> greetings  = [ lambda name=name: greetings(name) for name in ['Bob', 'Alice'] ]
+>>> for g in greetings:
+...     print(after(3, g))
+...
+Hello Bob
+Hello Alice
+>>> from functools import partial
+>>> after(10, partial(greeting, 'Bob'))
+'Hello Bob'
+>>> greetings = [ partial(greeting, name) for name in ['Bob', 'Alice']]
+>>> for g in greetings:
+...     print(after(3, g))
+... 
+Hello Bob
+Hello Alice
+>>> def after(seconds, func, args=()):
+...     time.sleep(seconds)
+...     return func(*args)
+... 
+>>> after(10, greeting, 'Bob')
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<stdin>", line 3, in after
+TypeError: greeting() takes 1 positional argument but 3 were given
+>>> after(10, greeting, ('Bob',))
+'Hello Bob'
+>>> def after(seconds, func, *args):
+...     time.sleep(seconds)
+...     return func(*args)
+... 
+>>> after(10, greeting, 'Bob')
+'Hello Bob'
+>>> def duration(*, hours, minutes, seconds):
+...     return 3600*hours + 60*minutes + seconds
+... 
+>>> after(10, duration, 1, 2, 3)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<stdin>", line 3, in after
+TypeError: duration() takes 0 positional arguments but 3 were given
+>>> after(10, duration, hours=1, minutes=2, seconds=3)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: after() got an unexpected keyword argument 'hours'
+>>> def after(seconds, func, *args, **kwargs):
+...     time.sleep(seconds)
+...     return func(*args, **kwargs)
+... 
+>>> after(10, duration, hours=1, minutes=2, seconds=3)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: after() got multiple values for argument 'seconds'
+>>> def after(seconds, func, /, *args, **kwargs):
+...     time.sleep(seconds)
+...     return func(*args, **kwargs)
+... 
+>>> after(10, duration, hours=1, minutes=2, seconds=3)
+3723
+>>> def after(seconds, func):
+...     time.sleep(seconds)
+...     return func()
+... 
+>>> after(10, lambda: duration(hours=1, minutes=2, seconds=3))
+3723
+>>> # The Function
+>>> # @dabeaz
+>>> # https://www.dabeaz.com

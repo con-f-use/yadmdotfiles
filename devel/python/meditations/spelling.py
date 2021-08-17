@@ -1,9 +1,9 @@
-#!/usr/bin/python3
-"""Code qualitly often amounts to spelling
+#!/usr/bin/env python3
+"""Code qualitly often reminds me of spelling
 
 color -- colour -- kaller -- quàhllähr -- kʌlər
 
-Some more sensible than others?
+Are some of these more sensible than others?
 
 Zen of Python tells us:
     "{obvious}"
@@ -13,14 +13,17 @@ But there are many.
 Obvious to whom?
 
 The last one is the IPA (International Phonetic Alphabet) spelling...
-It has letters of every phonem that exists in human language. It is more general and precise.
+It has letters of every phonem that exists in human language.
+It is more general and precise than the others.
 
 It is also only obvious to people who know.
 Understanding requires knowledge.
-The "under" in undertstand does not mean beneath.
-It means "under these circumstances" I can stand, be confident with this.
-So to talk objectivly about code quality, is to talk about what knowledge is presumed
-   and what the possibilities to express the underlying concept are.
+The "under" in undertstand does not mean "beneath".
+It means "under these circumstances". 
+"Under these circumstances, I can stand, be confident with this."
+So to talk objectivly about code quality, is to talk about
+what knowledge is presumed and what the possibilities to express the
+underlying concept are.
 
 These two:
 
