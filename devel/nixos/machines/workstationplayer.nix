@@ -12,7 +12,10 @@
     electronics.enable = true;
     windowed.enable = true;
     workstation.enable = true;
-    cudawork.enable = true;
+    cudawork = {
+      enable = true;
+      #use_builders = true;
+    };
   };
   users.users.root.openssh.authorizedKeys.keys = config.users.users.jan.openssh.authorizedKeys.keys;
   #environment.systemPackages = with pkgs; [ ];
@@ -20,8 +23,8 @@
   # ToDo: This is a dirty hack so I can merge this with unfrees from other modles
   # no idea how to do it properly.
   unfrees = [ "discord" "typora" "hplip" "joypixels" "barracudavpn" "faac" ];  # ToDo: Move these to the modules that install them
-  #nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) config.unfrees;
+  nixpkgs.config.allowUnfree = true;
+  #nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) config.unfrees;
 
   virtualisation.vmware.guest.enable = true;
   boot.initrd.availableKernelModules = [ "ata_piix" "mptspi" "uhci_hcd" "ehci_pci" "ahci" "xhci_pci" "sd_mod" "sr_mod" ];
@@ -30,6 +33,7 @@
   boot.extraModulePackages = [ ];
   networking.interfaces.ens33.useDHCP = true;
   networking.hostId = "1c47b078";
+  # networking.hosts= { "192.168.0.10" = [ "confus.me" "conserve" "conserve.dynu.net" ]; };
   #console.font = "latarcyrheb-sun32";  # larger bootmode fonts
   #boot.loader.systemd-boot.consoleMode = lib.mkDefault "max";
   #hardware.video.hidpi.enable = true;
@@ -81,7 +85,7 @@
     }
   ];
 
-  system.stateVersion = "20.09";
+  system.stateVersion = "21.05";
 }
 
 # sudo cp -r ~/devel/nixos/ /etc/ && sudo chown -R root:root /etc/nixos/

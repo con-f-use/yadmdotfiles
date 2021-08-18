@@ -14,6 +14,7 @@ libfile="$HOME/.config/yadmdotfiles/bash/jcgb.bash"
 
 fldrcd() {
     fldir="$HOME/Downloads/HT/antbar/$(date "+%Y%m%d")"
+    echo "$fldir"
     mkdir -p "$fldir"
     cd "$fldir"
 }
@@ -28,6 +29,9 @@ yudl_agg() {
     case "$command" in
         c)
             fldrcd
+        ;;
+        C)
+            fldrcd && xdg-open ./
         ;;
         d)
             dbg "$@"

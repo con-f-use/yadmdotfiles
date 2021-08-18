@@ -1,6 +1,6 @@
 
-{ stdenv, fetchurl, zlib, glib, xorg, dbus, fontconfig, libGL,
-  freetype, xkeyboard_config, makeDesktopItem, makeWrapper }:
+{ stdenv, lib, fetchurl, zlib, glib, xorg, dbus, fontconfig, libGL,
+  freetype, xkeyboard_config, makeDesktopItem, makeWrapper, qtdpi ? "120" }:
 
 stdenv.mkDerivation rec {
   pname = "qamongo";
@@ -29,7 +29,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [makeWrapper];
 
-  ldLibraryPath = stdenv.lib.makeLibraryPath [
+  ldLibraryPath = lib.makeLibraryPath [
     stdenv.cc.cc
     zlib
     glib
@@ -60,7 +60,7 @@ stdenv.mkDerivation rec {
     mkdir $out/bin
     makeWrapper $BASEDIR/bin/robo3t $out/bin/robo3t \
       --suffix LD_LIBRARY_PATH : ${ldLibraryPath} \
-      --suffix QT_FONT_DPI : 200 \
+      --suffix QT_FONT_DPI : ${qtdpi} \
       --suffix QT_XKB_CONFIG_ROOT : ${xkeyboard_config}/share/X11/xkb
       # QT_SCALE_FACTOR
   '';
@@ -69,7 +69,7 @@ stdenv.mkDerivation rec {
     homepage = "https://robomongo.org/";
     description = "Query GUI for mongodb";
     platforms = [ "x86_64-linux" ];
-    license = stdenv.lib.licenses.gpl3;
-    maintainers = [ stdenv.lib.maintainers.eperuffo ];
+    license = lib.licenses.gpl3;
+    maintainers = [ lib.maintainers.eperuffo ];
   };
 }

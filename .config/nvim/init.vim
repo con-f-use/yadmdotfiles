@@ -18,6 +18,8 @@ set clipboard=unnamedplus  " use system clipboard
 set history=10000    "Longer history
 set undolevels=1000
 let mapleader=';'
+set wildignore+=*.pyc
+set wildignore+=**/.git/*
 
 call plug#begin('~/.vim/plugged')
     " essential stuff
@@ -28,11 +30,16 @@ call plug#begin('~/.vim/plugged')
     "Plug 'tpope/vim-eunuch'  " Unix command in vim
     "Plug 'xolox/vim-misc'  " Glue to make other xolox plugins work
     Plug 'joshdick/onedark.vim'  " Nice color theme for vim
-    if has('lua')
+    if exists(':lua')
         Plug 'nvim-lua/popup.nvim'
         Plug 'nvim-lua/plenary.nvim'
-        Plug 'nvim-telescope/telescope.nvim', { 'on': 'Telescope' }
-        Plug 'nvim-treesitter/nvim-treesitter'
+        "Plug 'nvim-telescope/telescope.nvim', { 'on': 'Telescope' }
+        Plug 'nvim-treesitter/nvim-treesitter' ", { 'commit': '47a4eadf4471af2b57fad405bd0a7b42cdf0fba6'}
+        Plug 'hoob3rt/lualine.nvim'
+        Plug 'akinsho/nvim-bufferline.lua'
+        Plug 'Yggdroot/indentLine'
+        Plug 'folke/which-key.nvim'
+        Plug 'norcalli/nvim-colorizer.lua'
     endif
     "Plug 'airblade/vim-gitgutter'
     Plug 'tpope/vim-surround'  " Surround text objects with stuff
@@ -40,7 +47,9 @@ call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-repeat'
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-sleuth'    " Autodetect indentation style
-    Plug 'Yggdroot/indentLine'  " Show vertical line for indent levels
+    Plug 'kana/vim-textobj-user'
+    Plug 'kana/vim-textobj-function'
+    "Plug 'Yggdroot/indentLine'  " Show vertical line for indent levels
     Plug 'honza/vim-snippets'
     " experimental stuff
     Plug 'ryanoasis/vim-devicons'
@@ -55,8 +64,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }  " Centered buffer reading
     Plug 'jiangmiao/auto-pairs'
     Plug 'psliwka/vim-smoothie'
-    Plug 'itchyny/lightline.vim'
-    Plug 'mengelbrecht/lightline-bufferline'
+    "Plug 'itchyny/lightline.vim'
+    "Plug 'mengelbrecht/lightline-bufferline'
     Plug 'LnL7/vim-nix'           " Nix syntax
     "Plug 'lervag/vimtex'
 call plug#end()
@@ -143,19 +152,23 @@ set hidden
 set list                            " show invisible characters
 set listchars=tab:»·,trail:·,nbsp:· " Display extra whitespace
 
+if exists(":lua")
+    lua require'colorizer'.setup()
+endif
+
 set inccommand=split
 
 command! -bang ProjectFiles call fzf#vim#files('~/devel', <bang>0)
 
+nmap <leader><tab> <plug>(fzf-maps-n)
 nnoremap <leader>o :ProjectFiles<CR>
 nnoremap <leader><SPACE> :Files<CR>
+nnoremap <leader>n :Neoformat<CR>
 nnoremap <leader>b :Buffers<CR>
 nnoremap <leader>L :Lines<CR>
 nnoremap <leader>r :Tags<CR>
-nnoremap <leader>N :Neoformat<CR>
 nnoremap <leader>m :Marks<CR>
 nnoremap <leader>z :Goyo<CR>
-nmap <leader><tab> <plug>(fzf-maps-n)
 
 nnoremap <leader>a :Startify<CR>
 nnoremap <leader>C :call CocAction('pickColor')<CR>
@@ -164,15 +177,27 @@ nnoremap <leader>e :CocCommand explorer<CR>
 nnoremap <leader>F :CocSearch -S 
 nnoremap <leader>g :Gcd<CR>
 nnoremap <leader>h :GitGutterPreviewHunk<CR>
-nnoremap <leader>l :Telescope live_grep<CR>
+"nnoremap <leader>j :.!nextline %:p 5<Enter>G'
+nnoremap <leader>j :.!nextline de.md 5<Enter>G'
+nnoremap <leader>l :Rg<CR>
 nnoremap <leader>s :G<CR>
 nnoremap <leader>q :q<CR>
 nnoremap <leader>p :vsplit<CR> \| :terminal git push<CR>i
-nnoremap <leader>n :tabnew<CR>
+nnoremap <leader>N :tabnew<CR>
 nnoremap <leader>k :call <SID>show_documentation()<CR>
 
 nnoremap <leader>. :bn<CR>
 nnoremap <leader>, :bp<CR>
+
+"Y behave like D and P
+nnoremap Y y$
+"keep centered
+nnoremap n nzzzv
+nnoremap N Nzzzv
+nnoremap J mzJ`z
+"Jumplist contains jumps larger 5 lines for Ctrl+o/i
+nnoremap <expr> k (v:count > 5 ? "m'" . v:count : "") . 'k'
+nnoremap <expr> j (v:count > 5 ? "m'" . v:count : "") . 'j'
 
 autocmd FileType sh inoremap <leader>B if [ "$0" = "$BASH_SOURCE" ]; then<cr>fi<Esc>O
 autocmd FileType python inoremap <leader>M if __name__ == "__main__":<cr>    <Esc>O
@@ -201,10 +226,18 @@ nmap ź 'z
 " Faster global replace
 nnoremap S :%s///gg<Left><Left><Left><Left>
 
-if has('lua')
+if exists(':lua')
     lua require'nvim-treesitter.configs'.setup { highlight = { enable = true } }
 endif
 
+if exists(':lua')
+    lua << EOF
+    require('lualine').setup{ options = { theme = 'onedark', icons_enabled = true }}
+    require'bufferline'.setup{}
+    require'nvim-treesitter.configs'.setup { highlight = { enable = true } }
+EOF
+
+endif
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
@@ -213,6 +246,10 @@ function! s:show_documentation()
     call CocAction('doHover')
   endif
 endfunction
+
+if executable('rg')
+    let g:rg_derive_root='true'
+endif
 
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
@@ -291,5 +328,4 @@ set title
 set ruler
 set colorcolumn=72
 highlight ColorColumn ctermbg=233
-
 

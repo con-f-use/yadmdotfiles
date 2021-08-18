@@ -1,7 +1,8 @@
 { config, lib, pkgs, ... }:
 let
+  unstable = import <unstable> {};  # until nvim v0.5.0 is part of stable nixos: sudo nix-channel --add https://nixos.org/channels/nixos-unstable unstable
 
-  base-neovim = (pkgs.neovim.override {
+  base-neovim = (unstable.neovim.override {  # pkgs.neovim.override
       viAlias = true; vimAlias = true; withNodeJs = true;
       configure = {
         customRC = ''
@@ -85,7 +86,7 @@ config = lib.mkIf config.roles.dev.enable {
 
   environment.systemPackages = with pkgs; [
     # Essential
-    htop gnupg screen tree file binutils-unwrapped age execline
+    htop gnupg screen tree file binutils-unwrapped age execline expect
     wget curl w3m magic-wormhole
 
     # Base
@@ -95,6 +96,8 @@ config = lib.mkIf config.roles.dev.enable {
     gitAndTools.git
     gitAndTools.pre-commit gitAndTools.git-open gitAndTools.delta git-lfs
     fasd fzf ripgrep direnv parallel pandoc figlet
+    #texlive.combined.scheme-medium
+    (texlive.combine { inherit (texlive) scheme-medium xargs bigfoot moderncv lipsum footmisc multibib soul; })
     # ungoogled-chromium # in unstable!
 
     # Nix
@@ -104,13 +107,17 @@ config = lib.mkIf config.roles.dev.enable {
     (python3.withPackages(ps: [
       ps.setuptools
       ps.virtualenv
+      #ps.virtualenv-tools3
       ps.requests
       ps.beautifulsoup4
       ps.pygls
-      ps.pynvim
+      #ps.pynvim
       ps.jedi
       ps.python-language-server
       ps.matplotlib
+      ps.coloredlogs
+      ps.numpy
+      #ps.pygrep
     ]))
 
     # Vim

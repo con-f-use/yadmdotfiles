@@ -86,20 +86,40 @@ let
   systemCert = { security.pki.certificates = [ interceptionCert qacaCert ]; };
   barracudavpn = (import ../packages { pkgs=pkgs; }).barracudavpn;
   qamongo = (import ../packages { pkgs=pkgs; }).qamongo;
+  nixbuilderkeypath = "nix/nixbuilder";
 
 in {
 options.roles.cudawork = with lib; {
   enable = mkEnableOption "Enable cuda-specific settings for my workstation";
   novpn = mkOption { description = "Do not install barracudavpn"; type = types.bool; default = false; };
   interception = mkOption { description = "Are we beind SSL-Interception? If true add Cert."; type = types.bool; default = false; };
+  use_builders = mkOption { description = "Use nix builder client specific configuration"; type = types.bool; default = false; };
 };
 config = lib.mkIf (config.roles.cudawork.enable) (lib.mkMerge [
 
 {
 
   virtualisation.docker = { enable = true; enableOnBoot = true; };
+  networking.hosts= {
+    "10.17.79.11" = [ "qda-vault.qa.ngdev.eu.ad.cuda-inc.com" "vault.qa" ];
+    "10.17.65.203" = [ "pypi.qa.ngdev.eu.ad.cuda-inc.com" "pypi.qa" ];
+    "10.17.36.246" = [ "jenkins-cgf.qa.ngdev.eu.ad.cuda-inc.com" "jenkins2.qa" ];
+    "10.17.6.61" = [ "nixbld01.qa.ngdev.eu.ad.cuda-inc.com" "nixbld01.qa" ];
+    "10.17.6.62" = [ "nixbld02.qa.ngdev.eu.ad.cuda-inc.com" "nixbld02.qa" ];
+    "10.17.6.63" = [ "nixbld03.qa.ngdev.eu.ad.cuda-inc.com" "nixbld03.qa" ];
+    "10.17.65.201" = [ "autotest-docker-registry.qa.ngdev.eu.ad.cuda-inc.com" "autodocker.qa" ];
+    "10.17.65.200" = [ "docker-registry.qa.ngdev.eu.ad.cuda-inc.com" "docker.qa" ];
+    "10.17.6.120" = [ "dns.qa" ];
+    "10.14.0.22" = [ "docker-c7.3sp.co.uk" ];
+  };
 
   environment.etc."docker/cert.d/10.17.65.201:5000/certificate.crt" = {
+    enable = true;
+    user = "docker";
+    group = "docker";
+    text = if config.roles.cudawork.interception then interceptionCert else dockregCert;
+  };
+  environment.etc."docker/cert.d/10.17.65.200:5000/certificate.crt" = {
     enable = true;
     user = "docker";
     group = "docker";
@@ -110,14 +130,17 @@ config = lib.mkIf (config.roles.cudawork.enable) (lib.mkMerge [
     enable = true;
     user = "docker";
     group = "docker";
-    text = ''{ "insecure-registries" : ["10.17.65.201:5000", "autotest-docker-registry.qa.ngdev.eu.ad.cuda-inc.com:5000"] }'';
+    text = ''{
+      "dns": ["10.17.6.120", "1.1.1.1"],
+      "insecure-registries" : ["10.17.65.200:5000", "10.17.65.201:5000", "autotest-docker-registry.qa.ngdev.eu.ad.cuda-inc.com:5000"]
+    }'';
   };
 
   environment.systemPackages = with pkgs; [
-    poetry pipenv jq devpi-client postgresql
+    poetry pipenv jq devpi-client docker-compose postgresql
     (python2.withPackages(ps: [
       ps.requests
-      ps.pynvim
+      # ps.pynvim
       ps.setuptools
       ps.six
       ps.virtualenv
@@ -140,6 +163,30 @@ config = lib.mkIf (config.roles.cudawork.enable) (lib.mkMerge [
   #  [ "slack" "zoom-us" ]
   #;
   unfrees = [ "slack" "zoom-us" "zoom" ];
+})
+
+(lib.mkIf config.roles.cudawork.use_builders {
+  environment.etc."${nixbuilderkeypath}" = {
+    text = builtins.readFile ./../secrets/nixbuilder;
+    enable = true;
+    mode = "0400";
+    uid = 0;
+    gid = 0;
+  };
+
+  nix.buildMachines = builtins.map (idx: {
+    hostName = "nixbld0${toString idx}.qa.ngdev.eu.ad.cuda-inc.com";
+    system = "x86_64-linux";
+    maxJobs = 2;
+    speedFactor = 1;
+    supportedFeatures = [ "big-parallel" "kvm" "nixos-test" "benchmark" ];
+    sshUser = "nixbuilder";
+    sshKey = "etc/${nixbuilderkeypath}";
+  }) [ 1 2 3 ];
+
+  nix.distributedBuilds = true;
+  nix.extraOptions = ''builders-use-substitutes = true'';
+
 })
 
 ]);

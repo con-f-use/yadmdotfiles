@@ -1,10 +1,11 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 import sys, os
 from pprint import pprint, pformat
 
 def main(args=None):
-    if args is None: args = sys.argv[1:]
+    if args is None:
+        args = sys.argv[1:]
 
     ret = {}
     for ln in sys.stdin:

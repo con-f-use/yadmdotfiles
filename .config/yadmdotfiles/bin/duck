@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+url="https://lite.duckduckgo.com/lite?kd=-1&kp=-1&q=$(jq -s -R -r @uri <<< "$*")" # 🦆
+echo "$url"
+exec w3m "$url"

@@ -1,26 +1,39 @@
 #!/usr/bin/env bash
-# Follow command through linkages and nix store wrapping and open its source
+# encoding: UTF-8, break: linux, indent: 4 spaces, lang: bash 4+/eng
+description="./$0 -l | <command-name>
+Follow command through links and nix store wrapping and open or
+display (-l) its source.
 
+date: 31 Jan 2021
+author: confus <con-f-use@gmx.net>"
 
-err() { echo "$@" 1>&2; }
+libfile="$HOME/.local/lib/jcgb/jcgb.bash"
+[ -e "$libfile" ] || curl --insecure --create-dirs --output "$libfile" 'https://gist.githubusercontent.com/con-f-use/7914e4896f615b926eef63b4739e993f/raw/8c343944e760c0d26cce55a2f1eaf06ddcf257cb/jcgb.sh' || { 2>echo "Requires '$libfile'!"; exit 1; }
+source "$libfile"
 
 follow() {
     final=''
     new="$(realpath "$(which "$1")")"
-    err "inital: $new"
+    dbg "inital: $new"
     while [ ! -z "$new" ] && [ -r "$new" ]; do
         final="$new"
         new=$(sed -n -E 's|^\s*exec\s+-a\s+"\$0"\s+["]?(/nix/store/[A-Za-z0-9_/.-]+)["]?.*$|\1|p' "$new")
-        err "$final --> $new"
+        dbg "$final --> $new"
         # we want the store path in this line even through multiple layes of wrapping:
         #    exec -a "$0" "/nix/store/vcmfh1ad9567swf86s8viinapvi6awmq-instantUtils-unstable/bin/.instantstartmenu-wrapped"  "$@"
     done
-    err "final: '$final'"
+    dbg "final: '$final'"
     echo "$final"
 }
 
 if [ "$0" = "$BASH_SOURCE" ]; then
-    # ToDo: Do not hard-code eidtor
-    vi "$(follow "$1")"
+    usage "$@"
+    if [ "$1" = "-l" ]; then
+        follow "$2"
+    else
+        fl="${1:-}"
+        shift
+        exec "$EDITOR" "$(follow "$fl")" "$@"
+    fi
 fi
 

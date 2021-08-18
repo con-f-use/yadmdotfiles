@@ -27,6 +27,9 @@ config = lib.mkIf config.roles.windowed.enable {
 
   programs.dconf.enable = true;
 
+  # fix java windows
+  environment.variables._JAVA_AWT_WM_NONREPARENTING = "1";
+
   services.xserver = {
     enable = true;
     layout = "us";
@@ -39,8 +42,8 @@ config = lib.mkIf config.roles.windowed.enable {
       lightdm.greeters.gtk.theme.name = "Arc-Dark";
     };
     desktopManager = {
-      gnome3.enable = false;
-      gnome3.extraGSettingsOverrides = ''
+      gnome.enable = false;
+      gnome.extraGSettingsOverrides = ''
         [org/gnome/nautilus/list-view]
         default-visible-columns=['name', 'size', 'date_modified_with_time']
         default-zoom-level='small'
@@ -88,7 +91,7 @@ config = lib.mkIf config.roles.windowed.enable {
     arc-theme
     gnome3.nautilus gsettings-desktop-schemas gnome3.dconf-editor
     firefox youtube-dl
-    franz signal-desktop tdesktop discord thunderbird
+    signal-desktop tdesktop discord thunderbird
 
     # Multimedia
     mpv sxiv flameshot kazam zathura

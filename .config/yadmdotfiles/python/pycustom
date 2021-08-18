@@ -35,7 +35,7 @@ __builtin__.null = None
 
 # Standard Library
 import stat, subprocess, gzip, re, math, glob, time, random, tempfile
-import functools, operator, itertools, requests, datetime, time, string
+import functools, operator, itertools, datetime, time, string
 import importlib, json, binascii, hashlib, platform, socket, collections
 import textwrap, base64 as b64, inspect, dis
 from pprint import pprint, pformat
@@ -72,6 +72,7 @@ pkgs = {
     'click',
     'attrs',
     'pandas',
+    'requests',
 }
 
 if 'jcgbx' in platform.node():

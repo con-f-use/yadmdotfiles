@@ -23,6 +23,7 @@
     subup = submodule foreach git pull origin master
     g = log --all --color --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --grep
     a = add
+    au = add -u
     s = status
     st = status
     ci = commit
@@ -31,12 +32,14 @@
     cl = clone
     re = remote
     tags = tag
+    git = !git
     d = diff -w --ignore-all-space
+    dc = diff -w --ignore-all-space --cached
     sl = stash list --pretty=format:\"%C(red)%h%C(reset) - %C(dim yellow)(%C(bold magenta)%gd%C(dim yellow))%C(reset) %<(70,trunc)%s %C(green)(%cd) %C(bold blue)<%an>%C(reset)\"
     lol = log --graph --decorate --pretty=oneline --abbrev-commit
     lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
     ls = ls-files
-    lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cD) %C(bold blue)<%an>%Creset' --abbrev-commit
     l =  log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --first-parent
     # Pull Upstream
     pu = !"git fetch origin -v; git fetch upstream -v; git merge upstream/master"
@@ -51,7 +54,7 @@
 [conserve.dynu.net]
     user = jan
 
-[url "http://github.com/"]
+[url "https://github.com/"]
     insteadOf = "gith:"
 
 [url "git@github.com:"]
