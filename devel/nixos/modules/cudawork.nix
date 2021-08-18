@@ -110,6 +110,7 @@ config = lib.mkIf (config.roles.cudawork.enable) (lib.mkMerge [
     "10.17.65.201" = [ "autotest-docker-registry.qa.ngdev.eu.ad.cuda-inc.com" "autodocker.qa" ];
     "10.17.65.200" = [ "docker-registry.qa.ngdev.eu.ad.cuda-inc.com" "docker.qa" ];
     "10.17.6.120" = [ "dns.qa" ];
+    "10.14.0.22" = [ "docker-c7.3sp.co.uk" ];
   };
 
   environment.etc."docker/cert.d/10.17.65.201:5000/certificate.crt" = {
