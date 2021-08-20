@@ -30,6 +30,7 @@ call plug#begin('~/.vim/plugged')
     "Plug 'tpope/vim-eunuch'  " Unix command in vim
     "Plug 'xolox/vim-misc'  " Glue to make other xolox plugins work
     Plug 'joshdick/onedark.vim'  " Nice color theme for vim
+    Plug 'alfredodeza/pytest.vim'
     if exists(':lua')
         Plug 'nvim-lua/popup.nvim'
         Plug 'nvim-lua/plenary.nvim'
@@ -169,7 +170,7 @@ nnoremap <leader>L :Lines<CR>
 nnoremap <leader>r :Tags<CR>
 nnoremap <leader>m :Marks<CR>
 nnoremap <leader>z :Goyo<CR>
-
+nnoremap <leader>P :Pytest project<CR>
 nnoremap <leader>a :Startify<CR>
 nnoremap <leader>C :call CocAction('pickColor')<CR>
 nnoremap <leader>d :cd %:p:h<CR>
