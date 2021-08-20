@@ -40,7 +40,7 @@ sys.path.append('.')
 # python -m ensurepip --user
 # $PYTHONPATH = "$HOME/.local/lib/python3.8/site-packages"
 # xonsh
-# python -m pip install --user -U pip xontrib-z xonsh-direnv 
+# python -m pip install --user -U pip xontrib-z xonsh-direnv xontrib-fzf-widgets
 for p in map(lambda s: str(s.resolve()), p"~/.local/lib/".glob("python*/site-packages")):
     if p not in sys.path:
         sys.path.append(p)
@@ -84,6 +84,8 @@ xontrib load z
 xontrib load direnv
 xontrib load whole_word_jumping
 xontrib load prompt_ret_code
+xontrib load fzf-widgets
+$fzf_file_binding = "c-s"
 #xontrib load bashisms
 #xontrib load histcpy
 

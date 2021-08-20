@@ -329,3 +329,23 @@ set ruler
 set colorcolumn=72
 highlight ColorColumn ctermbg=233
 
+if has("nvim")
+  command! -nargs=* -complete=file_in_path Make lua require'async_make'.make(<q-args>)
+else
+  command! -nargs=* -complete=file_in_path Make silent make!
+endif
+
+function! RunMake()
+  if empty(&l:makeprg)
+    return
+  endif
+  let compiler = get(b:, "current_compiler", "")
+  if index(["pytest"], compiler) >= 0
+    make! %
+    return
+  endif
+  Make %
+endfunction
+
+nnoremap <silent> <leader>M :call RunMake()<CR>
+
