@@ -114,6 +114,7 @@ $BOTTOM_TOOLBAR=''
 $XONSH_GITSTATUS_STASHED = '⚑ '
 $XONSH_STDERR_PREFIX='{BOLD_#ff0000}'
 $XONSH_STDERR_POSTFIX='{BOLDOFF_RED}' + reset_color
+$CALIBRE_USE_DARK_PALETTE=1
 
 def _zdata():
     def format_z_data(fl):
