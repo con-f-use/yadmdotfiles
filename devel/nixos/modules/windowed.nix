@@ -94,7 +94,7 @@ config = lib.mkIf config.roles.windowed.enable {
     signal-desktop tdesktop discord thunderbird
 
     # Multimedia
-    mpv sxiv flameshot kazam zathura
+    mpv sxiv flameshot kazam zathura foliate
 
     # Office
     libreoffice gimp
