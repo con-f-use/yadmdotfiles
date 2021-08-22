@@ -29,7 +29,9 @@ in {
 options.roles.dev = {
   enable = lib.mkEnableOption "Development tools I use often";
 };
+imports = [ <nix-ld/modules/nix-ld.nix> ];  # sudo nix-channel --add https://github.com/Mic92/nix-ld/archive/main.tar.gz nix-ld
 config = lib.mkIf config.roles.dev.enable {
+
 
   boot.tmpOnTmpfs = true;
 
