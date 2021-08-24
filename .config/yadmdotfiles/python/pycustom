@@ -93,7 +93,7 @@ if nopes:
 try:
     import matplotlib as mpl
 except (ImportError, SyntaxError):
-    warn("Package not imported: %s", sys.exc_info()[1])
+    debug("Package not imported: %s", exc_info=True)  #sys.exc_info()[1])
 else:
     if 'DISPLAY' not in os.environ:
         mpl.use('agg')  # or 'Pdf' BEFORE importing pyplot
@@ -177,5 +177,20 @@ try:
     p = P(p).expanduser()
 except:
     pass
+info('start python without PYTHON* env vars (disbles all of this): python -E ...')
 info('vars:\nd: dict  l: list  s: string  M: matrix  p: path  t:today  r:flrex')
 info('funcs:\nmeth attr item starmap permutations repeat groupby product partial wraps reduce')
+
+import readline
+
+historyPath = os.path.expanduser("~/.cache/pyhistory")
+
+def save_history(historyPath=historyPath):
+    import readline
+    readline.write_history_file(historyPath)
+
+if os.path.exists(historyPath):
+    readline.read_history_file(historyPath)
+
+#import atexit
+#atexit.register(save_history)
