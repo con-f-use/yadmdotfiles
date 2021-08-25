@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+cat - <<'EndHereDoc'
+sudo barracudavpn -p; sleep 3; sudo barracudavpn --verbose --start --config '/home/jan/.config/yadmdotfiles/cuda/barracudavpn' --login 'jbischko' --serverpw "$(gopass show Cuda/cudaws)"
+eval "$(xclip -o -selection primary | sed -n 's/executing:/sudo ip/p' | sed 's/executing.*$//')"; sudo chmod a+r /etc/resolv.conf;
+EndHereDoc
