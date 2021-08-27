@@ -1,5 +1,4 @@
 set selection-clipboard clipboard
-set recolor true
 
 # Lighthaus Colors:
 
@@ -42,5 +41,9 @@ set render-loading-bg           "#18191E"
 set recolor-lightcolor          "#21252D" 
 set recolor-darkcolor           "#FFFADE"
 
+
+# Transparency settings
+set recolor true
+map <C-i> recolor
 set default-bg rgba(0,0,0,0.7)
 set recolor-lightcolor rgba(0,0,0,0)
