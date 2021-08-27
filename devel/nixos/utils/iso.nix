@@ -11,8 +11,8 @@ let
     # branch: master
     owner = "con-f-use";
     repo = "yadmdotfiles";
-    rev = "2754943ba21003ce5eaca9b46a484ab07b440e39";
-    sha256 = "sha256-b4bISFtyJe0UxzDkZcFfIwRXwi8FV53CWp6esOsWlgA=";
+    rev = "823613e27bf57d1f6c153d9e1f0cc85779d01bc3";
+    sha256 = "sha256-AjQJ+YJ9abrOZEK+0YzUnQH5QloqXb15U7B0nrAo52E=";
     fetchSubmodules = false;
   };
   janify = pkgs.writeScriptBin "jan" ''
