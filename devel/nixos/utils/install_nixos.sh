@@ -129,6 +129,8 @@ generate_config() {
     echo "DO NOT FORGET TO ENABLE EFI BOOT!"
     echo -e "EDIT CONFIG, then run:\n    nixos-install"
     $SUDO nix-channel --add https://github.com/NixOS/nixos-hardware/archive/master.tar.gz nixos-hardware
+    $SUDO nix-channel --add https://github.com/Mic92/nix-ld/archive/main.tar.gz nix-ld nix-ld
+    $SUDO nix-channel --add https://nixos.org/channels/nixos-unstable unstable
 }
 
 echo wifi
