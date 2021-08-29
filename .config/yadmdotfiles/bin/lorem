@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+# Get random text.
+
+curl "http://metaphorpsum.com/${2:-paragraphs}/${1:-10}"
+
