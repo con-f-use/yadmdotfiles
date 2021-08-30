@@ -31,6 +31,7 @@ call plug#begin('~/.vim/plugged')
     "Plug 'xolox/vim-misc'  " Glue to make other xolox plugins work
     Plug 'joshdick/onedark.vim'  " Nice color theme for vim
     Plug 'alfredodeza/pytest.vim'
+    Plug 'easymotion/vim-easymotion'
     if exists(':lua')
         Plug 'nvim-lua/popup.nvim'
         Plug 'nvim-lua/plenary.nvim'
@@ -189,6 +190,11 @@ nnoremap <leader>k :call <SID>show_documentation()<CR>
 
 nnoremap <leader>. :bn<CR>
 nnoremap <leader>, :bp<CR>
+
+" Move to word
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+map  <leader>w <plug>(easymotion-bd-w)
+nmap <leader>w <plug>(easymotion-overwin-w)
 
 "Y behave like D and P
 nnoremap Y y$
