@@ -192,9 +192,12 @@ nnoremap <leader>. :bn<CR>
 nnoremap <leader>, :bp<CR>
 
 " Move to word
+"map <Leader>/ <Plug>(easymotion-prefix)
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
 map  <leader>w <plug>(easymotion-bd-w)
 nmap <leader>w <plug>(easymotion-overwin-w)
+map  <leader>- <plug>(easymotion-s)
+map  <leader>/ <plug>(easymotion-bd-n)
 
 "Y behave like D and P
 nnoremap Y y$
