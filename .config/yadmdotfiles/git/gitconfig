@@ -47,7 +47,8 @@
     carmh = commit --amend --reuse-message=HEAD
     fh = log --follow -p --
     fza = "!git ls-files -m -o --exclude-standard | fzf --print0 -m | xargs -0 -t -o git add"
-    
+    jcb = '!git config --local user.name "Jan Christoph Bischko" && git config --local user.email "jbischko@barracuda.com"'
+
 [github]
   user = con-f-use
 
