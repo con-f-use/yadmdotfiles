@@ -166,3 +166,8 @@ if [ "$0" = "$BASH_SOURCE" ]; then
     cleanup
 fi
 
+# zpool list
+# zpool history
+# zfs list
+# zfs set dedup=on rpool/home  # RAM hog and only for new data after the fact
+# sudo zpool get all
