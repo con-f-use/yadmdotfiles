@@ -40,6 +40,16 @@ Host qadns
 Host qavault
     HostName 10.17.79.11
 
+Host qdavault
+    HostName 10.17.36.11
+    User jan
+    IdentitiesOnly = yes
+    IdentityFile ~/.ssh/id_rsa_cuda
+    PreferredAuthentications publickey
+    ControlMaster auto
+    ControlPath /tmp/ssh-%l@%n.%r@%h.%p
+    ControlPersist 360000
+
 Host czdev
     HostName 10.17.36.102
     User czangerle
@@ -54,6 +64,14 @@ Host vmspanni
     User root
     PreferredAuthentications publickey,password,keyboard-interactive
     IdentityFile ~/.ssh/id_rsa
+    ControlMaster auto
+    ControlPath /tmp/ssh-%l@%n.%r@%h.%p
+    ControlPersist 360000
+
+Host aherb
+    HostName 10.14.8.120
+    User aherbert
+    PreferredAuthentications publickey,password,keyboard-interactive
     ControlMaster auto
     ControlPath /tmp/ssh-%l@%n.%r@%h.%p
     ControlPersist 360000
@@ -86,6 +104,7 @@ Host devpi
 # Cudadevpi Master, Zeroblobber, apt-cacher-ng
     HostName 10.17.65.203
     User root
+    IdentityFile ~/.ssh/id_rsa##Cuda
     PreferredAuthentications publickey
     ControlMaster auto
     ControlPath /tmp/ssh-%l@%n.%r@%h.%p
@@ -118,8 +137,9 @@ Host li0
 # Webserver, Personal Zeroblobber, Cudadevpi Replica
     HostName 10.17.70.10
     User jan
+    IdentityFile ~/.ssh/id_rsa_cuda
+    PreferredAuthentications publickey
     StrictHostKeyChecking no
-    PreferredAuthentications publickey,password
     UserKnownHostsFile /dev/null
 
 Host cudaws
