@@ -50,6 +50,14 @@ Host qdavault
     ControlPath /tmp/ssh-%l@%n.%r@%h.%p
     ControlPersist 360000
 
+Host qdaproxie
+    HostName 10.17.6.11
+    User main
+    IdentitiesOnly = yes
+    IdentityFile ~/.ssh/id_rsa_cuda
+    PreferredAuthentications publickey
+    # Sudo password in vaul
+
 Host czdev
     HostName 10.17.36.102
     User czangerle
