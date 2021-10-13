@@ -17,7 +17,7 @@ main() {
 
             cbzname=$(basename "$dir")
             bla=$(basename "$(dirname "$dir")")
-            grep -iq '^issue' <<< "$cbzname" && cbzname="$bla-$cbzname"
+            grep -iqE '^(issue|part|vol)' <<< "$cbzname" && cbzname="$bla-$cbzname"
 
             # Put images in archive
             zip \

@@ -3,12 +3,12 @@
 import logging, os, sys
 from logging import info, debug, error, warning as warn
 
-logcfg = {
-    'level': logging.INFO,
-    'format': '[%(levelname)-3.3s](%(lineno)4s:%(filename)s): %(message)s',
-    'datefmt': '%y.%m.%d %H:%M',
-    'stream': sys.stderr,
-}
+logcfg = dict(
+    level=logging.INFO,
+    format='[%(levelname)-3.3s](%(lineno)4s:%(filename)s): %(message)s',
+    datefmt='%y.%m.%d %H:%M',
+    stream=sys.stderr,
+)
 
 
 try:
