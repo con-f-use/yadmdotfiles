@@ -50,6 +50,16 @@ Host qdavault
     ControlPath /tmp/ssh-%l@%n.%r@%h.%p
     ControlPersist 360000
 
+Host qdavault2
+    HostName 10.17.36.12
+    User main
+    IdentitiesOnly = yes
+    IdentityFile ~/.ssh/id_rsa_cuda
+    PreferredAuthentications publickey
+    ControlMaster auto
+    ControlPath /tmp/ssh-%l@%n.%r@%h.%p
+    ControlPersist 360000
+
 Host qdaproxie
     HostName 10.17.6.11
     User main
@@ -57,6 +67,18 @@ Host qdaproxie
     IdentityFile ~/.ssh/id_rsa_cuda
     PreferredAuthentications publickey
     # Sudo password in vaul
+
+Host atregistry
+    HostName 10.17.65.201
+    User root
+    IdentityFile ~/.ssh/id_rsa_cuda
+    PreferredAuthentications publickey
+
+Host qaregistry
+    HostName 10.17.65.200
+    User root
+    IdentityFile ~/.ssh/id_rsa_cuda
+    PreferredAuthentications publickey
 
 Host czdev
     HostName 10.17.36.102
@@ -102,11 +124,6 @@ Host frskvm
     ControlMaster auto
     ControlPath /tmp/ssh-%l@%n.%r@%h.%p
     ControlPersist 360000
-
-Host zangvault
-    HostName 10.17.79.11
-    User qa
-    PreferredAuthentications publickey
 
 Host devpi
 # Cudadevpi Master, Zeroblobber, apt-cacher-ng
