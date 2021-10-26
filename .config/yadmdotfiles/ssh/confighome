@@ -52,10 +52,11 @@ Host *serve
     VisualHostKey yes
 
 Host maren
-    HostName marentoaster.dyndns.org
-    User maren
-    UserKnownHostsFile /dev/null
-    StrictHostKeyChecking no
+    HostName maren.selfhost.co
+    User jan
+    Port 60022
+    #UserKnownHostsFile /dev/null
+    #StrictHostKeyChecking no
     Compression yes
 
 Host franzsrv
