@@ -36,6 +36,8 @@ main() {
 
 #-------------
 
+err() { echo "Error: $*" 1>&2; exit 1; }
+
 install_debs(){
     if command -v apt-get &>/dev/null; then
         $sudo apt-get update
@@ -50,12 +52,13 @@ get_tmpsh() {
     # --pinentry-mode loopback -a --homedir ./ubupg/ --export-secret-keys  > all_priv.key
     # -K --keyid-format LONG    --edit-key 1892548CB9500B06   expire
     # gopass recipient add
+    trap "cd $(pwd); set +o errexit" RETURN INT ERR EXIT
+    cd $(mktemp -d)
+    set -o errexit
     git clone --recursive \
       'https://conserve.dynu.net/gitlab/jan/pass.git' \
       ~/.config/password-store || true
     echo 'tV5|Htm|ek'
-    oldpwd=$(pwd)
-    cd $(mktemp -d)
     curl -L "https://confus:$(systemd-ask-password unithi0)@unethische.org/misc/ident/keys.gpg" -o "keys.gpg"
     file keys.gpg | grep -q "encrypted data"
     gpg -d --batch --passphrase "$(systemd-ask-password smspw)" keys.gpg > keys.tgz
@@ -67,7 +70,6 @@ get_tmpsh() {
     rm -rf keys keys.tgz keys.gpg
     gpgconf --kill gpg-agent
     echo "gopass remote/cuda > ~/...; gopass remote/confusion > ~/..."
-    cd "$oldpwd"
 }
 
 
