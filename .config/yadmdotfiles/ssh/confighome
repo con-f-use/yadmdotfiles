@@ -40,7 +40,7 @@ Host lanserve
 
 Host *serve
     #HostName conserve.no-ip.org
-    HostName conserve.dynu.net
+    HostName confus.me
     UserKnownHostsFile /dev/null
     StrictHostKeyChecking no
     LogLevel ERROR

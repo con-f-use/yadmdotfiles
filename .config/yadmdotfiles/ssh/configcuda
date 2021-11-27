@@ -55,6 +55,7 @@ Host qdavault2
     User main
     IdentitiesOnly = yes
     IdentityFile ~/.ssh/id_rsa_cuda
+    IdentityFile ~/.ssh/id_rsa_cuda-cert.pub
     PreferredAuthentications publickey
     ControlMaster auto
     ControlPath /tmp/ssh-%l@%n.%r@%h.%p
