@@ -60,6 +60,8 @@ config = lib.mkIf config.roles.dev.enable {
     extraConfig.Datastore.StorageMax = "100GB";
   };
 
+  networking.firewall.allowedTCPPorts = [ 8000 8080 8081 8443 ];
+
   # Nix Package Manager
   nix = {
     package = pkgs.nixFlakes;

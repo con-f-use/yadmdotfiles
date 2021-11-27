@@ -38,6 +38,8 @@ yudl_agg() {
             youtube-dl \
                 --output "%(title)s.%(ext)s" \
                 --restrict-filenames \
+                --continue \
+                --no-overwrites \
                 --format best \
                 --add-metadata \
                 "$@" <&0
