@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+#instantmenu -p "desktop" -lc "instantmenu_smartrun terminal" -rc "instantmenu_smartrun" -f -q "search apps" -l 10 -c -i -w -1 -h -1 -bw 4 | golaunch
+
+export PASSWORD_STORE_DIR=${PASSWORD_STORE_DIR:-/home/jan/.config/password-store}
+export PATH="/run/current-system/sw/bin/gopass:$PATH"
+
+gopass ls --flat |
+  instantmenu -l 10 -c -i -w -1 -h -1 -bw 4 |
+  xargs --no-run-if-empty gopass show -f -o |
+  head -n 1 |
+  xdotool type --clearmodifiers --file -
+
