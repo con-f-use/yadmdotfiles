@@ -86,10 +86,10 @@ config = lib.mkIf config.roles.windowed.enable {
   environment.systemPackages = with pkgs; [
     # X
     xorg.xrandr xorg.xinit xorg.xsetroot xorg.xkill xclip fribidi
-    gnome3.file-roller font-manager
+    gnome.file-roller font-manager
     papirus-icon-theme
     arc-theme
-    gnome3.nautilus gsettings-desktop-schemas gnome3.dconf-editor
+    gnome.nautilus gsettings-desktop-schemas gnome.dconf-editor
     firefox youtube-dl
     signal-desktop tdesktop discord thunderbird
 

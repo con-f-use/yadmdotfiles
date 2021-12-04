@@ -2,8 +2,8 @@
 {
   perswitch = import (
     fetchTarball {
-      url = "https://github.com/con-f-use/PERSwitch/archive/80cc25dc29c7921d890185fef66ca89eabee6850.tar.gz"; 
-      sha256 = "14fxyh728mm3xsvrqaq4pchla7crbzni366hnyb0k8zxk9gsp31c";
+      url = "https://github.com/con-f-use/PERSwitch/archive/4ddf0c5f12d7ff7259672de0c7278c76ddb229a9.tar.gz"; 
+      sha256 = "18km0cwjkcx7067c861s10lpb94qb3n889iy03alavqa3p0p9xgx";
     }
   ) { pkgs=pkgs; };
   barracudavpn = pkgs.callPackage ./barracudavpn.nix {};

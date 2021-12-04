@@ -138,19 +138,20 @@ config = lib.mkIf (config.roles.cudawork.enable) (lib.mkMerge [
 
   environment.systemPackages = with pkgs; [
     poetry pipenv jq devpi-client docker-compose postgresql
-    (python2.withPackages(ps: [
-      ps.requests
-      # ps.pynvim
-      ps.setuptools
-      ps.six
-      ps.virtualenv
-      ps.libvirt
-      ps.pycrypto
-    ]))
+    # (python2.withPackages(ps: [
+    #   ps.requests
+    #   # ps.pynvim
+    #   ps.setuptools
+    #   ps.six
+    #   ps.virtualenv
+    #   ps.libvirt
+    #   ps.pycrypto
+    # ]))
   ] ++ lib.optional ( config.roles.cudawork.novpn == false ) barracudavpn;
 
   nixpkgs.config.permittedInsecurePackages = [
     "libvirt-5.9.0"
+    "electron-9.4.4"  # ToDo: Remove this https://github.com/tuxedocomputers/tuxedo-control-center/issues/148
   ];
 }
 

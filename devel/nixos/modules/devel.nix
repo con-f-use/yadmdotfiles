@@ -64,15 +64,14 @@ config = lib.mkIf config.roles.dev.enable {
 
   # Nix Package Manager
   nix = {
-    package = pkgs.nixFlakes;
+    package = pkgs.nix_2_4;
     extraOptions = ''
-      # builders-use-substitutes = true;
       experimental-features = nix-command flakes
     '';
     autoOptimiseStore = true;
     optimise.automatic = true;
     useSandbox = true;  # sandboxing for builds
-    daemonNiceLevel = 19;
+    # daemonCPUSchedPolicy = 19;
     gc = {
       automatic = true;
       options = "--delete-older-than 14d";
@@ -117,7 +116,7 @@ config = lib.mkIf config.roles.dev.enable {
       ps.pygls
       #ps.pynvim
       ps.jedi
-      ps.python-language-server
+      # ps.python-language-server
       ps.matplotlib
       ps.coloredlogs
       ps.numpy
@@ -126,6 +125,6 @@ config = lib.mkIf config.roles.dev.enable {
 
     # Vim
     nodejs python-language-server base-neovim
-  ] ++ (lib.optionals (config.services.xserver.enable) [ pkgs.meld pkgs.typora pkgs.xournalpp ]);
+  ] ++ (lib.optionals (config.services.xserver.enable) [ pkgs.meld pkgs.xournalpp ]);
 }; }
 

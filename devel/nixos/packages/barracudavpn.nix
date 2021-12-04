@@ -1,4 +1,4 @@
-{ stdenv, lib, callPackage, buildFHSUserEnv, requireFile, iproute, binutils-unwrapped, autoPatchelfHook }:
+{ stdenv, lib, callPackage, buildFHSUserEnv, requireFile, binutils-unwrapped, autoPatchelfHook }:
 
 let
 
