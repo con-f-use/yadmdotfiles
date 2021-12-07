@@ -156,6 +156,14 @@ Host stash
     HostName stash.cudaops.com
     Port 7999
     User jbischko
+    IdentitiesOnly yes
+    IdentityFile ~/.ssh/id_ed25519_cuda
+
+Host stash.cudaops.com
+    HostName stash.cudaops.com
+    User jbischko
+    IdentitiesOnly yes
+    IdentityFile ~/.ssh/id_ed25519_cuda
 
 #### Jan
 
