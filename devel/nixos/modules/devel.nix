@@ -1,8 +1,6 @@
 { config, lib, pkgs, ... }:
 let
-  unstable = import <unstable> {};  # until nvim v0.5.0 is part of stable nixos: sudo nix-channel --add https://nixos.org/channels/nixos-unstable unstable
-
-  base-neovim = (unstable.neovim.override {  # pkgs.neovim.override
+  base-neovim = (pkgs.neovim.override {
       viAlias = true; vimAlias = true; withNodeJs = true;
       configure = {
         customRC = ''
@@ -29,7 +27,7 @@ in {
 options.roles.dev = {
   enable = lib.mkEnableOption "Development tools I use often";
 };
-imports = [ <nix-ld/modules/nix-ld.nix> ];  # sudo nix-channel --add https://github.com/Mic92/nix-ld/archive/main.tar.gz nix-ld
+# imports = [ <nix-ld/modules/nix-ld.nix> ];  # sudo nix-channel --add https://github.com/Mic92/nix-ld/archive/main.tar.gz nix-ld
 config = lib.mkIf config.roles.dev.enable {
 
 

@@ -6,6 +6,7 @@
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     # sudo nix-channel --add https://github.com/NixOS/nixos-hardware/archive/master.tar.gz nixos-hardware"
+    # ToDo: flake this
     <nixos-hardware/common/cpu/intel>
     <nixos-hardware/common/pc/laptop>
     <nixos-hardware/common/pc/ssd>
@@ -55,7 +56,7 @@
  config.roles.zfs.enable = true;
  config.boot.loader.systemd-boot.enable = true;
  config.boot.loader.efi.canTouchEfiVariables = true;
- config.networking.hostName = "janlap";
+ config.networking.hostName = "worklap";
   #networking.wireless.enable = true;
  config.networking.useDHCP = false;
  config.networking.networkmanager.enable = true;
