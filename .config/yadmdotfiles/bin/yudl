@@ -39,6 +39,7 @@ yudl_agg() {
                 --output "%(title)s.%(ext)s" \
                 --restrict-filenames \
                 --continue \
+                --ignore-errors \
                 --no-overwrites \
                 --format best \
                 --add-metadata \
