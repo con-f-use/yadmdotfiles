@@ -1,4 +1,4 @@
-{ stdenv, lib, callPackage, buildFHSUserEnv, requireFile, iproute, binutils-unwrapped, autoPatchelfHook }:
+{ stdenv, lib, callPackage, buildFHSUserEnv, requireFile, binutils-unwrapped, autoPatchelfHook }:
 
 let
 
@@ -6,11 +6,13 @@ let
     # nix-hash --type sha256 --flat --base32 VPNClient_*_Linux.tar.gz
     "5.1.5rc1" = "0gdn8rw0r9d4vb0vwy9ylwmbqd6zdaafgjfhx7l3b3ngy1syz56n";
     "5.1.4" = "00qwq3ma5whfws9i2z205q48j8z9i3vgbvaqgx6rvcbip6ld14zy";
+    "5.2.2" = "1bp47179rvs2ahv02f0hna210n886bg7bj8x68qclkk3xj39hici";
   };
 
 in stdenv.mkDerivation rec {
-    version = "5.1.5rc1";
-    # version = "5.1.4";
+    #version = "5.1.5rc1";
+    #version = "5.1.4";
+    version = "5.2.2";
     pname = "barracudavpn";
     vpnfile = requireFile {
       name = "VPNClient_${version}_Linux.tar.gz";

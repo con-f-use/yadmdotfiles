@@ -41,6 +41,8 @@ config = lib.mkIf config.roles.essentials.enable {
   '';
 
   documentation.nixos.enable = false;  # When multiple output, don't install docs
+  #system.autoUpgrade.enable = true;
+  #system.autoUpgrade.allowReboot = true;
 
   security.sudo = {
     enable = true;

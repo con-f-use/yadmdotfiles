@@ -1,8 +1,6 @@
 { config, lib, pkgs, ... }:
 let
-  unstable = import <unstable> {};  # until nvim v0.5.0 is part of stable nixos: sudo nix-channel --add https://nixos.org/channels/nixos-unstable unstable
-
-  base-neovim = (unstable.neovim.override {  # pkgs.neovim.override
+  base-neovim = (pkgs.neovim.override {
       viAlias = true; vimAlias = true; withNodeJs = true;
       configure = {
         customRC = ''
@@ -29,7 +27,7 @@ in {
 options.roles.dev = {
   enable = lib.mkEnableOption "Development tools I use often";
 };
-imports = [ <nix-ld/modules/nix-ld.nix> ];  # sudo nix-channel --add https://github.com/Mic92/nix-ld/archive/main.tar.gz nix-ld
+# imports = [ <nix-ld/modules/nix-ld.nix> ];  # sudo nix-channel --add https://github.com/Mic92/nix-ld/archive/main.tar.gz nix-ld
 config = lib.mkIf config.roles.dev.enable {
 
 
@@ -64,15 +62,14 @@ config = lib.mkIf config.roles.dev.enable {
 
   # Nix Package Manager
   nix = {
-    package = pkgs.nixFlakes;
+    package = pkgs.nix_2_4;
     extraOptions = ''
-      # builders-use-substitutes = true;
       experimental-features = nix-command flakes
     '';
     autoOptimiseStore = true;
     optimise.automatic = true;
     useSandbox = true;  # sandboxing for builds
-    daemonNiceLevel = 19;
+    # daemonCPUSchedPolicy = 19;
     gc = {
       automatic = true;
       options = "--delete-older-than 14d";
@@ -117,7 +114,7 @@ config = lib.mkIf config.roles.dev.enable {
       ps.pygls
       #ps.pynvim
       ps.jedi
-      ps.python-language-server
+      # ps.python-language-server
       ps.matplotlib
       ps.coloredlogs
       ps.numpy
@@ -126,6 +123,6 @@ config = lib.mkIf config.roles.dev.enable {
 
     # Vim
     nodejs python-language-server base-neovim
-  ] ++ (lib.optionals (config.services.xserver.enable) [ pkgs.meld pkgs.typora pkgs.xournalpp ]);
+  ] ++ (lib.optionals (config.services.xserver.enable) [ pkgs.meld pkgs.xournalpp ]);
 }; }
 

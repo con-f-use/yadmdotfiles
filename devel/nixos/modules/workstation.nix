@@ -17,7 +17,7 @@ config = lib.mkIf config.roles.workstation.enable {
 
   environment.systemPackages = with pkgs; [
     # Workstation
-    yadm gopass pinentry
+    yadm gopass gopass-jsonapi pinentry
     mkpasswd zip trash-cli
     st kitty kitty-xterm-link xonsh
     oathToolkit qrencode

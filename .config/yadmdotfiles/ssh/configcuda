@@ -55,6 +55,7 @@ Host qdavault2
     User main
     IdentitiesOnly = yes
     IdentityFile ~/.ssh/id_rsa_cuda
+    IdentityFile ~/.ssh/id_rsa_cuda-cert.pub
     PreferredAuthentications publickey
     ControlMaster auto
     ControlPath /tmp/ssh-%l@%n.%r@%h.%p
@@ -155,6 +156,14 @@ Host stash
     HostName stash.cudaops.com
     Port 7999
     User jbischko
+    IdentitiesOnly yes
+    IdentityFile ~/.ssh/id_ed25519_cuda
+
+Host stash.cudaops.com
+    HostName stash.cudaops.com
+    User jbischko
+    IdentitiesOnly yes
+    IdentityFile ~/.ssh/id_ed25519_cuda
 
 #### Jan
 

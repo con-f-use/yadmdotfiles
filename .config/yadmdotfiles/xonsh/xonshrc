@@ -201,8 +201,11 @@ if os.path.exists($HOME + '/.local/bin/nvim'):
     aliases['vim']='nvim'
     aliases['vi']='nvim'
 
+$DOCKER_BUILDKIT=1
+
 $CUDA_QADOMAIN='qa.ngdev.eu.ad.cuda-inc.com'
-$VAULT_CACERT='/home/jan/devel/cuda/qda_rest/src/qda_rest/data/cacert.pem'
+$qa="."+$CUDA_QADOMAIN
+$VAULT_CACERT='/home/jan/devel/cuda/qda_rest/dev/src/qda_rest/data/cacert.pem'
 $VAULT_ADDR='https://qda-vault.qa.ngdev.eu.ad.cuda-inc.com:8200'
 
 if $(which xset):
