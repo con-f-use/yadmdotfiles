@@ -1,5 +1,5 @@
 #!/usr/bin/env nix-shell
-#!nix-shell -i python -p python27Packages.beautifulsoup4 python27Packages.docopt python27Packages.pyperclip python27Packages.html5-parser python27Packages.urllib3
+#!nix-shell -i python3 -p python39Packages.beautifulsoup4 python39Packages.docopt python39Packages.pyperclip python39Packages.html5-parser python39Packages.urllib3
 
 
 
@@ -30,7 +30,7 @@ Examples:
 """
 
 # =======================================================================
-
+#ToDo count failed "x" requests
 from __future__ import division, print_function, unicode_literals
 from logging import info, debug, error, warning as warn
 import sys, os, re, logging, time
@@ -38,6 +38,8 @@ import pyperclip as clp
 from docopt import docopt
 from bs4 import BeautifulSoup
 import multiprocessing
+
+from html import unescape
 
 try:  # Python 2.6-2.7
     from HTMLParser import HTMLParser
@@ -151,7 +153,7 @@ def get_fldr(gs):
         fldr = "/".join(fldr)
     else:
         fldr = re.sub(" \|.*$", "", gs.title.text)
-    return h.unescape(fldr)
+    return unescape(fldr)
 
 
 def is_img(img):
@@ -209,7 +211,7 @@ def walk_urls(url, maxdepth=10, nodl=False, lvl=0):
     gs = BeautifulSoup(urlhandel, "lxml")
     domain = "{uri.scheme}://{uri.netloc}/".format(uri=urlparse(url))
     urls = get_urls(gs, domain)
-    print("\r" + "\t" * lvl + h.unescape(gs.title.text))
+    print("\r" + "\t" * lvl + unescape(gs.title.text))
     if not urls:
         return 0
 
@@ -284,7 +286,7 @@ def queue_download(args):
 if __name__ == "__main__":
     progname = os.path.splitext(os.path.basename(__file__))[0]
     vstring = (
-        " v0.8.5\nWritten by confus\n" "(Sun Aug 21 23:20:09 CEST 2016) on confusion"
+        " v0.8.6\nWritten by confus\n" "(Sun Aug 21 23:20:09 CEST 2016) on confusion"
     )
     args = docopt(__doc__.format(**locals()), version=progname + vstring)
     logging.basicConfig(
