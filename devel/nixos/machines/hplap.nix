@@ -5,9 +5,6 @@
     # sudo nix-channel --add https://github.com/NixOS/nixos-hardware/archive/master.tar.gz nixos-hardware"
 
     # ToDo: Falke this!
-    <nixos-hardware/common/cpu/intel>
-    <nixos-hardware/common/pc/laptop>
-    <nixos-hardware/common/pc/ssd>
     ../modules
     ../users
   ] ++ (lib.optional (builtins.pathExists ../cachix.nix) ../cachix.nix);
@@ -80,7 +77,7 @@
 
  config.swapDevices = [ ];
 
-  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+ config.powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
  config.system.stateVersion = "21.05";
 }
 

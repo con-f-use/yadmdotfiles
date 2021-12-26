@@ -7,9 +7,9 @@
     (modulesPath + "/installer/scan/not-detected.nix")
     # sudo nix-channel --add https://github.com/NixOS/nixos-hardware/archive/master.tar.gz nixos-hardware"
     # ToDo: flake this
-    <nixos-hardware/common/cpu/intel>
-    <nixos-hardware/common/pc/laptop>
-    <nixos-hardware/common/pc/ssd>
+    # <nixos-hardware/common/cpu/intel>
+    # <nixos-hardware/common/pc/laptop>
+    # <nixos-hardware/common/pc/ssd>
     ../modules
     ../users
   ] ++ (lib.optional (builtins.pathExists ./cachix.nix) ./cachix.nix);
@@ -23,11 +23,12 @@
       enable = true;
       interception = true;
     };
-    cudawork.novpn = true;
+    cudawork.novpn = false;
+    cudawork.use_builders = false;
   };
  config.users.users.root.openssh.authorizedKeys.keys = config.users.users.jan.openssh.authorizedKeys.keys;
   #environment.systemPackages = with pkgs; [ ];
-  security.pki.certificates = [ (builtins.readFile ../cuda.crt) ];
+ # config.security.pki.certificates = [ (builtins.readFile ../cuda.crt) ];
 
   # ToDo: This is a dirty hack so I can merge this withconfig.unfrees. from other modles
   # no idea how to do it properly.
@@ -92,6 +93,6 @@
 
  config.swapDevices = [ ];
 
-  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+ config.powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 }
 

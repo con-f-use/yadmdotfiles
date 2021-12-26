@@ -120,6 +120,7 @@ config = lib.mkIf config.roles.dev.enable {
       ps.numpy
       #ps.pygrep
     ]))
+    black
 
     # Vim
     nodejs python-language-server base-neovim

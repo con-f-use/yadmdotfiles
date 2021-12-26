@@ -94,11 +94,13 @@ config = lib.mkIf config.roles.windowed.enable {
     signal-desktop tdesktop discord thunderbird
 
     # Multimedia
-    mpv sxiv flameshot kazam zathura foliate
+    mpv sxiv flameshot kazam zathura  mcomix3
 
     # Office
     libreoffice gimp
-    font-manager bookworm
+    font-manager
+
+    bookworm foliate  # maybe pick one
   ];
 
 }; }

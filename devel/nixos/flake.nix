@@ -26,7 +26,7 @@
         ];
       };
 
-      worklap = nixpkgs.lib.nixosSystem {
+      worklap = nixunstable.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           nixos-hardware.nixosModules.dell-latitude-7490
@@ -40,6 +40,14 @@
         modules = [
           nix-ld.nixosModules.nix-ld
           ./machines/workstationplayer.nix
+        ];
+      };
+
+      raspi = nixunstable.lib.nixosSystem {
+        system = "aarch64-linux";
+        modules = [
+          nixos-hardware.nixosModules.raspberry-pi-4
+          ./machines/raspi.nix
         ];
       };
 

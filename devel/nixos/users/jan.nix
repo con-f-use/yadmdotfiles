@@ -4,7 +4,7 @@ rec {
   users.users."jan" = {
     isNormalUser = true;
     uid = 1000;
-    extraGroups = [ "wheel" "audio" "networkmanager" "wireshark" "dialout" "plugdev" "adm" "disk" "video" "docker" ];
+    extraGroups = [ "wheel" "audio" "networkmanager" "wireshark" "dialout" "plugdev" "adm" "disk" "video" "docker" "gpio" config.services.ipfs.group ];
     #openssh.authorizedKeys.keys = ssh_pkeys;
     hashedPassword = "$6$Xe3WNdmP$JqMUSRF3j6ytfCz7ceT1pI4Gw05FLy3n5UxkjSpQ7cilxcH/WoN8g2lOoVskJKoIDsadH9OiwHEaAUYZQXze7.";
     openssh.authorizedKeys.keys = [
@@ -17,7 +17,7 @@ rec {
     isNormalUser = true;
     uid = 1001;
     #gid = 1000;
-    extraGroups = [ "wheel" "audio" "networkmanager" "wireshark" "dialout" "plugdev" "adm" "disk" "video" "docker" config.services.ipfs.group ];
+    extraGroups = users.users.jan.extraGroups;
     hashedPassword = users.users.jan.hashedPassword;
     openssh.authorizedKeys.keys = users.users.jan.openssh.authorizedKeys.keys;
   };
