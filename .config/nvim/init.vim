@@ -308,8 +308,8 @@ inoremap <special> jk <ESC>:
 tnoremap <special> jk <C-\><C-n>
 map <leader><leader> <Esc>/<++<Enter>"_cf>
 "noremap <leader>c <Esc>:silent execute "!xdg_open https://conserve.dynu.net/gitlab/jan/cheatsheets/-/blob/master/"
-nnoremap <leader>c <Esc>:!"%:p"<Enter>
-inoremap <leader>c <Esc>:!"%:p"<Enter>
+nnoremap <leader>c <Esc>:w<Enter>:!chmod +x "%:p"; "%:p"<Enter>
+inoremap <leader>c <Esc>:w<Enter>:!chmod +x "%:p"; "%:p"<Enter>
 " maybe you want setxkbmap -option caps:escape int your (x-)profile
 
 " Shortcutting split navigation, saving a keypress:

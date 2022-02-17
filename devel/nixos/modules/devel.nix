@@ -66,9 +66,9 @@ config = lib.mkIf config.roles.dev.enable {
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
-    autoOptimiseStore = true;
     optimise.automatic = true;
-    useSandbox = true;  # sandboxing for builds
+    settings.sandbox = true;  # sandboxing for builds
+    settings.auto-optimise-store = true;
     # daemonCPUSchedPolicy = 19;
     gc = {
       automatic = true;
@@ -98,7 +98,7 @@ config = lib.mkIf config.roles.dev.enable {
     gitAndTools.pre-commit gitAndTools.git-open gitAndTools.delta git-lfs
     fasd fzf ripgrep direnv parallel pandoc figlet
     #texlive.combined.scheme-medium
-    (texlive.combine { inherit (texlive) scheme-medium xargs bigfoot moderncv lipsum footmisc multibib soul; })
+    # (texlive.combine { inherit (texlive) scheme-medium xargs bigfoot moderncv lipsum footmisc multibib soul; })
     # ungoogled-chromium # in unstable!
 
     # Nix
