@@ -51,6 +51,15 @@ Host *serve
     ControlPersist 360000
     VisualHostKey yes
 
+Host gnubee
+    HostName 192.168.1.251
+    User root
+    PreferredAuthentications publickey
+    HostKeyAlgorithms +ssh-rsa
+    PubkeyAcceptedKeyTypes +ssh-rsa
+    IdentitiesOnly=yes
+    IdentityFile ~/.ssh/id_rsa_confusion
+
 Host maren
     HostName maren.selfhost.co
     User jan

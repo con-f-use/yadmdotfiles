@@ -46,12 +46,14 @@ config = lib.mkIf config.roles.essentials.enable {
 
   security.sudo = {
     enable = true;
-    extraConfig = ''
-      Defaults    insults
-      Cmnd_Alias BOOTCMDS = /sbin/shutdown,/usr/sbin/pm-suspend,/sbin/reboot
-      ${config.roles.essentials.main_user} ALL=(root)NOPASSWD:BOOTCMDS
-      wheel ALL=(root)NOPASSWD:BOOTCMDS
-    '';
+    extraRules = [
+      {
+        users = [ "${config.roles.essentials.main_user}" ];
+        commands = [
+          { command = "${pkgs.systemd}/bin/shutdown"; options = [ "NOPASSWD" ]; }
+        ];
+      }
+    ];
   };
 
   environment.systemPackages = with pkgs; [

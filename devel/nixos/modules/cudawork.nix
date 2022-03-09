@@ -102,14 +102,15 @@ config = lib.mkIf (config.roles.cudawork.enable) (lib.mkMerge [
   virtualisation.docker = { enable = true; enableOnBoot = true; };
   networking.hosts= {
     "10.17.36.11" = [ "qda-vault.qa.ngdev.eu.ad.cuda-inc.com" "vault.qa" ];
-    "10.17.65.203" = [ "pypi.qa.ngdev.eu.ad.cuda-inc.com" "pypi.qa" ];
     "10.17.36.246" = [ "jenkins-cgf.qa.ngdev.eu.ad.cuda-inc.com" "jenkins2.qa" ];
     "10.17.6.61" = [ "nixbld01.qa.ngdev.eu.ad.cuda-inc.com" "nixbld01.qa" ];
     "10.17.6.62" = [ "nixbld02.qa.ngdev.eu.ad.cuda-inc.com" "nixbld02.qa" ];
     "10.17.6.63" = [ "nixbld03.qa.ngdev.eu.ad.cuda-inc.com" "nixbld03.qa" ];
-    "10.17.65.201" = [ "autotest-docker-registry.qa.ngdev.eu.ad.cuda-inc.com" "autodocker.qa" ];
-    "10.17.65.200" = [ "docker-registry.qa.ngdev.eu.ad.cuda-inc.com" "docker.qa" ];
     "10.17.6.120" = [ "dns.qa" ];
+    "10.17.65.200" = [ "docker-registry.qa.ngdev.eu.ad.cuda-inc.com" "docker.qa" ];
+    "10.17.65.201" = [ "autotest-docker-registry.qa.ngdev.eu.ad.cuda-inc.com" "autodocker.qa" ];
+    "10.17.65.203" = [ "pypi.qa.ngdev.eu.ad.cuda-inc.com" "pypi.qa" ];
+    "10.17.210.145" = [ "folsom.ngdev.eu.ad.cuda-inc.com" "folsom.qa" ];
     "10.14.0.22" = [ "docker-c7.3sp.co.uk" ];
   };
 
@@ -137,7 +138,7 @@ config = lib.mkIf (config.roles.cudawork.enable) (lib.mkMerge [
   };
 
   environment.systemPackages = with pkgs; [
-    poetry pipenv jq devpi-client docker-compose postgresql
+    poetry pipenv jq docker-compose postgresql # devpi-client 
     # (python2.withPackages(ps: [
     #   ps.requests
     #   # ps.pynvim
@@ -157,7 +158,7 @@ config = lib.mkIf (config.roles.cudawork.enable) (lib.mkMerge [
 
 (lib.mkIf config.services.xserver.enable {
   environment.systemPackages = with pkgs; [
-    zoom-us slack qamongo
+    zoom-us slack # qamongo
   ];
 
   #nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg)

@@ -65,10 +65,17 @@ config = lib.mkIf config.roles.dev.enable {
     package = pkgs.nix_2_4;
     extraOptions = ''
       experimental-features = nix-command flakes
+      keep-outputs = true
+      keep-derivations = true
     '';
-    autoOptimiseStore = true;
+    # keep-* options:
+    # - https://nixos.org/manual/nix/stable/command-ref/conf-file.html?highlight=keep-outputs#description
+    # - https://github.com/NixOS/nix/issues/2208
     optimise.automatic = true;
-    useSandbox = true;  # sandboxing for builds
+    # autoOptimiseStore = true;  # old
+    settings.auto-optimise-store = true;  # newer
+    # useSandbox = true;  # old
+    settings.sandbox = true;  # newer
     # daemonCPUSchedPolicy = 19;
     gc = {
       automatic = true;

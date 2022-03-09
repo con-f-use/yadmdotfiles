@@ -16,15 +16,17 @@ The last one is the IPA (International Phonetic Alphabet) spelling...
 It has letters for every phonem that exists in human language.
 It is more general and precise than the others.
 
-IPA is only "obvious" to people who know and comprehensible to those
-who spend significant time learning it.
+IPA is also "obvious" only to people who know and comprehensible to 
+those who spend significant time learning it.
 Understanding requires knowledge.
 The "under" in undertstand does not mean "beneath".
 It means "under these circumstances".
 "Under these circumstances, I can stand, be confident with this."
-So to talk objectivly about code quality, is to talk about
-what knowledge is presumed and what the possibilities to express the
+So to talk objectivly about code quality, is to talk about what 
+knowledge is presumed and what the possibilities to express the
 underlying concept are.
+We trick ourself very easily into thinking we can understand a thing
+simply because we can use it.
 
 These two:
 

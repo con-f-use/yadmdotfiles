@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+mapfile -t routes <<<"$(ip route show)"
+select x in "${routes[@]}"
+do
+    [ -n "$x" ] && 
+        sudo ip route del $var
+done
+

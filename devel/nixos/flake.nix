@@ -1,5 +1,9 @@
 {
   description = "confus' NixOS configuration, modules and packages";
+  # Build with:
+  # sudo nixos-rebuild switch --flake '/home/jan/devel/nixos/#<machine-name>'
+  # --no-build-hook : don't use subsitutors/builders
+  # --show-trace : show error traceback
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-21.11";
@@ -35,7 +39,7 @@
         ];
       };
 
-      conix = nixpkgs.lib.nixosSystem {
+      conix = nixunstable.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           nix-ld.nixosModules.nix-ld
