@@ -61,9 +61,9 @@ Host gnubee
     IdentityFile ~/.ssh/id_rsa_confusion
 
 Host maren
-    HostName maren.selfhost.co
+    HostName maren.confus.me
     User jan
-    Port 60022
+    Port 22
     #UserKnownHostsFile /dev/null
     #StrictHostKeyChecking no
     Compression yes

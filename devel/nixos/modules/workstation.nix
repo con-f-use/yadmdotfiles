@@ -19,7 +19,9 @@ config = lib.mkIf config.roles.workstation.enable {
     # Workstation
     yadm gopass gopass-jsonapi pinentry
     mkpasswd zip trash-cli
-    st kitty kitty-xterm-link xonsh
+    st
+    # kitty kitty-xterm-link
+    xonsh
     oathToolkit qrencode
     # network
     inetutils dnsutils nmap mtr openssl sshpass nload

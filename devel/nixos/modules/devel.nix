@@ -105,7 +105,7 @@ config = lib.mkIf config.roles.dev.enable {
     gitAndTools.pre-commit gitAndTools.git-open gitAndTools.delta git-lfs
     fasd fzf ripgrep direnv parallel pandoc figlet
     #texlive.combined.scheme-medium
-    (texlive.combine { inherit (texlive) scheme-medium xargs bigfoot moderncv lipsum footmisc multibib soul; })
+    # (texlive.combine { inherit (texlive) scheme-medium xargs bigfoot moderncv lipsum footmisc multibib soul; })
     # ungoogled-chromium # in unstable!
 
     # Nix
