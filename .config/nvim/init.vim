@@ -209,7 +209,7 @@ nnoremap J mzJ`z
 nnoremap <expr> k (v:count > 5 ? "m'" . v:count : "") . 'k'
 nnoremap <expr> j (v:count > 5 ? "m'" . v:count : "") . 'j'
 
-autocmd FileType sh inoremap <leader>B if [ "$0" = "$BASH_SOURCE" ]; then<cr>fi<Esc>O
+autocmd FileType sh inoremap <leader>M if [ "$0" = "$BASH_SOURCE" ]; then<cr>fi<Esc>O
 autocmd FileType python inoremap <leader>M if __name__ == "__main__":<cr>    <Esc>O
 
 
@@ -308,8 +308,9 @@ inoremap <special> jk <ESC>:
 tnoremap <special> jk <C-\><C-n>
 map <leader><leader> <Esc>/<++<Enter>"_cf>
 "noremap <leader>c <Esc>:silent execute "!xdg_open https://conserve.dynu.net/gitlab/jan/cheatsheets/-/blob/master/"
-nnoremap <leader>c <Esc>:!"%:p"<Enter>
-inoremap <leader>c <Esc>:!"%:p"<Enter>
+
+nnoremap <leader>c <Esc>:w<Enter>:!,run "%:p"<Enter>
+inoremap <leader>c <Esc>:w<Enter>:!,run "%:p"<Enter>
 " maybe you want setxkbmap -option caps:escape int your (x-)profile
 
 " Shortcutting split navigation, saving a keypress:

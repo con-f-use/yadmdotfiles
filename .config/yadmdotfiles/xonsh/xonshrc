@@ -97,6 +97,7 @@ def get_shelldate():
     return time.strftime('%d-%H:%M')
 get_shelldate.fulldate = 0
 
+$PYTHONDONTWRITEBYTECODE="TRUE"
 $PYTHONSTARTUP = $HOME +"/.config/yadmdotfiles/python/pycustom"
 $PROMPT_FIELDS['shelldate'] = get_shelldate
 

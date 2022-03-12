@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+main() {
+    local fl="$(readlink -f "$1")"
+    [ -r "$fl" ] || return
+    if [ ! -x "$fl" ]; then
+        if [[ ! $(head -n 1 "$fl") =~ ^#\! ]]; then
+            echo "Error: Cowardly not executing without hashbang!" 1>&2
+            return 1
+        fi
+        local perms="$(stat -c%a "$fl")"
+        chmod +x "$fl"
+        "$fl"
+        chmod "$perms" "$fl"
+    else
+        "$fl"
+    fi
+}
+
+if [ "$0" = "$BASH_SOURCE" ]; then
+    set -o errexit
+    main "$@"
+fi
+

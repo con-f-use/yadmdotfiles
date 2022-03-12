@@ -50,7 +50,6 @@ export CONSERVE=conserve.dynu.net
 #############
 # Misc
 #############
-export MAKEFLAGS="-j"
 export _FASD_MAX=5000
 export _FASD_BACKENDS="native recently-used current"
 

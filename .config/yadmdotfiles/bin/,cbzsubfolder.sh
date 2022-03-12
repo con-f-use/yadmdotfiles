@@ -13,7 +13,7 @@ main() {
         while IFS= read -r -d $'\0' dir; do
             [ "$dir" == "." ] && continue
 
-            fiximgext.sh "$dir"
+            ,fiximgext "$dir"
 
             cbzname=$(basename "$dir")
             bla=$(basename "$(dirname "$dir")")

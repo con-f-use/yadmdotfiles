@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 # Setup webcam camera properly for video calls.
 
-v4l2-ctl -d /dev/video0 --set-ctrl=zoom_absolute=460
+v4l2-ctl -d /dev/video0 --set-ctrl=zoom_absolute=400
 
