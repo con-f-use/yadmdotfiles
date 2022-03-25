@@ -100,6 +100,8 @@ config = lib.mkIf config.roles.windowed.enable {
     libreoffice gimp
     font-manager
 
+    kitty
+
     bookworm foliate  # maybe pick one
   ];
 

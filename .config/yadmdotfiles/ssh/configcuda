@@ -31,6 +31,9 @@ Host qajenkins
 Host qastjen
     HostName 10.17.36.246
 
+Host qawebuijen
+    HostName 10.17.36.247
+
 Host qamain
     HostName 10.17.36.241
 

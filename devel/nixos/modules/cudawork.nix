@@ -99,7 +99,14 @@ config = lib.mkIf (config.roles.cudawork.enable) (lib.mkMerge [
 
 {
 
-  virtualisation.docker = { enable = true; enableOnBoot = true; };
+  virtualisation.docker = {
+    enable = true; 
+    enableOnBoot = true;
+    autoPrune.enable = true;
+    daemon.settings.insecure-registries = [
+        "10.17.65.200:5000" "10.17.65.201:5000" "autotest-docker-registry.qa.ngdev.eu.ad.cuda-inc.com:5000"
+      ];
+  };
   networking.hosts= {
     "10.17.36.11" = [ "qda-vault.qa.ngdev.eu.ad.cuda-inc.com" "vault.qa" ];
     "10.17.36.246" = [ "jenkins-cgf.qa.ngdev.eu.ad.cuda-inc.com" "jenkins2.qa" ];

@@ -108,6 +108,8 @@ config = lib.mkIf config.roles.dev.enable {
     # (texlive.combine { inherit (texlive) scheme-medium xargs bigfoot moderncv lipsum footmisc multibib soul; })
     # ungoogled-chromium # in unstable!
 
+    gparted
+
     # Nix
     nix-prefetch-scripts nix-update nix-index nixpkgs-review nix-tree nix-top nixpkgs-fmt cachix morph
 
