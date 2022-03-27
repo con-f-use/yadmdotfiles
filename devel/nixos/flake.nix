@@ -39,6 +39,15 @@
         ];
       };
 
+      framework = nixunstable.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          nixos-hardware.nixosModules.framework
+          nix-ld.nixosModules.nix-ld
+          ./machines/framework.nix
+        ];
+      };
+
       conix = nixunstable.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
