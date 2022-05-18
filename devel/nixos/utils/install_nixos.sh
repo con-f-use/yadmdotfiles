@@ -19,14 +19,16 @@ partition() {
     echo 'Always use the by-id aliases, otherwise ZFS can choke on imports:'
     echo '  /dev/disk/by-id/...'
     export DISK=${1:?Please give name of disk to partition $DISK - DANGER!}
+    [ -d "$DISK" ] || { echo "Error: no such disk '$DISK'."; return 1; }
     if grep -q /by-id/ <<< "$DISK"; then
         export middle='-part'
     fi
-    if ! [ -z "${noencryption:-}" ]; then
+    if [ -z "${noencryption:-}" ]; then
         encryptionflags=" -O encryption=on -O keyformat=passphrase"
     fi
 
     log "# PARTITIONING ${DISK}"
+    # mkpart primary linux-swap 1GiB 9GiB
     "$SUDO" parted --script "${DISK}" -- \
         mklabel gpt \
         mkpart esp fat32 1MiB 1GiB \
@@ -85,7 +87,7 @@ partition() {
     fi
 
     log "# CREATE A BOOT PARTITON"
-    echo "$SUDO" mkfs.fat -F 32 -n BOOT "${DISK}${middle}1"
+    "$SUDO" mkfs.fat -F 32 -n BOOT "${DISK}${middle}1"
 }
 
 echo mount_system
@@ -113,6 +115,7 @@ generate_config() {
    boot.initrd.supportedFilesystems = [ \"zfs\" ];
    boot.supportedFilesystems = [ \"zfs\" ];
    boot.zfs.enableUnstable = true;
+   # boot.kernelPackages = pkgs.linuxPackages_5_15;  # pkgs.linuxKernel.packages.linux_5_15
    services.zfs.autoScrub.enable = true;
    boot.zfs.devNodes = \"/dev/disk/by-partuuid\";  # https://discourse.nixos.org/t/cannot-import-zfs-pool-at-boot/4805/14
    #services.zfs.trim.enable = true;
@@ -129,7 +132,7 @@ generate_config() {
     echo "DO NOT FORGET TO ENABLE EFI BOOT!"
     echo -e "EDIT CONFIG, then run:\n    nixos-install"
     $SUDO nix-channel --add https://github.com/NixOS/nixos-hardware/archive/master.tar.gz nixos-hardware
-    $SUDO nix-channel --add https://github.com/Mic92/nix-ld/archive/main.tar.gz nix-ld nix-ld
+    $SUDO nix-channel --add https://github.com/Mic92/nix-ld/archive/main.tar.gz nix-ld
     $SUDO nix-channel --add https://nixos.org/channels/nixos-unstable unstable
 }
 
