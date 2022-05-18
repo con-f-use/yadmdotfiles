@@ -10,10 +10,9 @@ libfile="$HOME/.config/yadmdotfiles/bash/jcgb.bash"
 
 sshng () {
     # ToDo: expand e.g. "101" to "10.17.70.101"
-    host=${1?Expected host as first parameter}
-    shift
+    host=${1?Expected host as first parameter}; shift
     host=$(python <<< "
-comps = '$host'.split('.')
+comps = '$host'.strip('.').split('.')
 if any(int(c)>255 or int(c)<1 or not c for c in comps): exit(1)
 print('.'.join( '10.17.70.10'.split('.')[:4-len(comps)] + comps))
     " 2>/dev/null || echo "$host")

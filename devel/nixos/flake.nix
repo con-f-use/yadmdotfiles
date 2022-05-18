@@ -3,11 +3,13 @@
   # Build with:
   # sudo nixos-rebuild switch --flake '/home/jan/devel/nixos/#<machine-name>'
   # --no-build-hook : don't use subsitutors/builders
+  # --builders "": same
   # --show-trace : show error traceback
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-21.11";
     nixunstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    # nixunstable.url = "github:NixOS/nixpkgs/8203e061ec0556b4d4a972b18ba92509cb1ddd04";  # temporary because https://github.com/NixOS/nixpkgs/issues/172558
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     nix-ld = {
       url = "github:Mic92/nix-ld";

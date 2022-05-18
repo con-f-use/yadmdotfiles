@@ -127,12 +127,13 @@ config = lib.mkIf config.roles.dev.enable {
       ps.matplotlib
       ps.coloredlogs
       ps.numpy
+      ps.dill
       #ps.pygrep
     ]))
     black
 
     # Vim
-    nodejs python-language-server base-neovim
+    nodejs base-neovim # python-language-server  # dotnet3.1-broken, waiting for patch https://github.com/NixOS/nixpkgs/issues/172558
   ] ++ (lib.optionals (config.services.xserver.enable) [ pkgs.meld pkgs.xournalpp ]);
 }; }
 

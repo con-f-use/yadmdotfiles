@@ -32,7 +32,7 @@ Host qastjen
     HostName 10.17.36.246
 
 Host qawebuijen
-    HostName 10.17.36.247
+    HostName 10.17.50.247
 
 Host qamain
     HostName 10.17.36.241
@@ -44,7 +44,7 @@ Host qavault
     HostName 10.17.79.11
 
 Host qdavault
-    HostName 10.17.36.11
+    HostName 10.17.50.11
     User jan
     IdentitiesOnly = yes
     IdentityFile ~/.ssh/id_rsa_cuda
