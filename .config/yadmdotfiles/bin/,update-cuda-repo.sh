@@ -24,16 +24,15 @@ main() {
         bnnga/{autotest,ansible,autotest-infrastructure,webservices,jenkins-files} \
         bnnga/{autotest-dockerfiles,dockerfiles-general,docker-registry} \
         bnnga/{resource-analyzer,random_scripts,jenkins-files,jenkins-libraries,weasel} \
-        bnnga/{sphinx-doc-ng,qda_rest} \
+        bnnga/{sphinx-doc-ng,qda_rest,autoweasel,tess-deploy} \
         '~jbischko/'{cudadevpi,touchmysc,cudasetuptools,ztcrypt,atdiff,deploytester,fwhelpers} \
         '~gchappell/ztdclient' \
-        '~czangerle/'{cookiecutter,qa_mongoengine,qa_host_controller,qctrl} \
         'https:///folsom.ngdev.eu.ad.cuda-inc.com/scm/env/'{git-ng,ngbuild,doc-overall};
     do
         repodir="$basedir/$(basename "$repo")"
         if [ -d "$repodir/.git" ]; then
             echo -n "cd '$repodir'; "
-            echo -n "git config --local user.username '${FULL_NAME:-confus}'; git config --local user.email '$STASH_USERNAME@barracuda.com'; "
+            echo -n "git config --local user.username 'Jan Christoph Bischko'; git config --local user.email 'jbischko@barracuda.com'; "
             echo -n "git fetch --recurse-submodules --all && "
             echo "git pull || 1>&2 echo 'Pull failed for $repo'"
         else
@@ -44,7 +43,7 @@ main() {
             else
                 fullrepo="ssh://git@stash.cudaops.com:7999/$repo.git"
             fi
-            echo "'$fullrepo' '$repodir' || 1>&2 echo 'Cone failed for $repo'"
+            echo "'$fullrepo' '$repodir' || 1>&2 echo 'Clone failed for $repo'"
         fi
     done | parallel --jobs 4
 }
