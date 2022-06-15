@@ -106,8 +106,11 @@ from xonsh import __version__
 try:
     from packaging.version import Version
 except ImportError:
-    from distutils.version import LooseVersion as Version
-reset_color = '{NO_COLOR}' if Version(__version__) < Version('0.9.24') else '{RESET}'
+        from distutils.version import LooseVersion as Version
+import warnings
+with warnings.catch_warnings():
+    warnings.filterwarnings("ignore", category=DeprecationWarning)
+    reset_color = '{NO_COLOR}' if Version(__version__) < Version('0.9.24') else '{RESET}'
 $PROMPT=(
     '\n{ret_code_color}┌─' + reset_color + '{#555}{shelldate}' + reset_color + ' ' + 
     '{FAINT_BLUE}[' + reset_color + '{env_name}{BOLD_GREEN}{user}@{hostname}{FAINT_ITALIC_BLUE} {cwd}{FAINT_BLUE}] ' +

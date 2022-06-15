@@ -67,6 +67,24 @@ config = lib.mkIf config.roles.windowed.enable {
     };
   };
 
+  # Becasue discord "looses" this damn setting all the time
+  systemd = {
+    timers.discord-skip-update = {
+      wantedBy = [ "timers.target" ];
+      partOf = [ "discord-skip-update.service" ];
+      timerConfig.OnCalendar = "daily";
+    };
+    services.discord-skip-update = {
+      serviceConfig.Type = "oneshot";
+      path = [ pkgs.jq ];
+      script = ''
+        target='/home/jan/.config/discord/settings.json'
+        text=$(jq '. + {"SKIP_HOST_UPDATE": true}' $target)
+        echo "$text" > "$target" || true
+      '';
+    };
+  };
+
   fonts.fonts = with pkgs; [
     cantarell-fonts
     noto-fonts
