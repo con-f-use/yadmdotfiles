@@ -114,25 +114,26 @@ config = lib.mkIf config.roles.dev.enable {
     nix-prefetch-scripts nix-update nix-index nixpkgs-review nix-tree nix-top nixpkgs-fmt cachix morph
 
     # Python
-    (python3.withPackages(ps: [
-      ps.setuptools
-      ps.virtualenv
-      #ps.virtualenv-tools3
-      ps.requests
-      ps.beautifulsoup4
-      ps.pygls
-      #ps.pynvim
-      ps.jedi
-      # ps.python-language-server
-      ps.matplotlib
-      ps.coloredlogs
-      ps.numpy
+    (python3.withPackages(ps: with ps; [
+      setuptools
+      virtualenv
+      #virtualenv-tools3
+      requests
+      beautifulsoup4
+      pygls
+      #pynvim
+      jedi
+      # python-language-server
+      matplotlib
+      coloredlogs
+      numpy
+      dill
       #ps.pygrep
     ]))
     black
 
     # Vim
-    nodejs python-language-server base-neovim
+    nodejs base-neovim python-language-server
   ] ++ (lib.optionals (config.services.xserver.enable) [ pkgs.meld pkgs.xournalpp ]);
 }; }
 
