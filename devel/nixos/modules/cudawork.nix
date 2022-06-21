@@ -108,8 +108,8 @@ config = lib.mkIf (config.roles.cudawork.enable) (lib.mkMerge [
       ];
   };
   networking.hosts= {
-    "10.17.36.11" = [ "qda-vault.qa.ngdev.eu.ad.cuda-inc.com" "vault.qa" ];
-    "10.17.36.246" = [ "jenkins-cgf.qa.ngdev.eu.ad.cuda-inc.com" "jenkins2.qa" ];
+    "10.17.6.11" = [ "qda-vault.qa.ngdev.eu.ad.cuda-inc.com" "vault.qa" ];
+    "10.17.50.246" = [ "jenkins-cgf.qa.ngdev.eu.ad.cuda-inc.com" "jenkins2.qa" ];
     "10.17.6.61" = [ "nixbld01.qa.ngdev.eu.ad.cuda-inc.com" "nixbld01.qa" ];
     "10.17.6.62" = [ "nixbld02.qa.ngdev.eu.ad.cuda-inc.com" "nixbld02.qa" ];
     "10.17.6.63" = [ "nixbld03.qa.ngdev.eu.ad.cuda-inc.com" "nixbld03.qa" ];
