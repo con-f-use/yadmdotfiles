@@ -204,7 +204,7 @@ nnoremap Y y$
 "keep centered
 nnoremap n nzzzv
 nnoremap N Nzzzv
-nnoremap J mzJ`z
+"nnoremap J mzJ`z
 "Jumplist contains jumps larger 5 lines for Ctrl+o/i
 nnoremap <expr> k (v:count > 5 ? "m'" . v:count : "") . 'k'
 nnoremap <expr> j (v:count > 5 ? "m'" . v:count : "") . 'j'
@@ -309,8 +309,9 @@ tnoremap <special> jk <C-\><C-n>
 map <leader><leader> <Esc>/<++<Enter>"_cf>
 "noremap <leader>c <Esc>:silent execute "!xdg_open https://conserve.dynu.net/gitlab/jan/cheatsheets/-/blob/master/"
 
-nnoremap <leader>c <Esc>:w<Enter>:!,run "%:p"<Enter>
-inoremap <leader>c <Esc>:w<Enter>:!,run "%:p"<Enter>
+nnoremap <leader>c <Esc>:w<Enter>:vnew \| r!2>&1 ,run #<Enter>
+inoremap <leader>c <Esc>:w<Enter>:vnew \| r!,run #<Enter>
+" inoremap <leader>c <Esc>:w<Enter>:!,run #<Enter>
 " maybe you want setxkbmap -option caps:escape int your (x-)profile
 
 " Shortcutting split navigation, saving a keypress:

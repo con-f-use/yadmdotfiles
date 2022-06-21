@@ -32,6 +32,9 @@ __builtin__.true = True
 __builtin__.false = False
 __builtin__.null = None
 
+# Don't be smartass, exit!
+type(exit).__repr__ = lambda s: exit()
+
 
 # Standard Library
 import stat, subprocess, gzip, re, math, glob, time, random, tempfile

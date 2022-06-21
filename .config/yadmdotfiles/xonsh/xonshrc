@@ -76,7 +76,7 @@ $_Z_DATA = (zdata if os.path.exists(zdata) else $HOME+"/.config/") + "z.txt"
 #$XONSH_HISTORY_BACKEND = 'sqlite'  # means no diff or replay and only "commands" for history size and does not seem to capture output
 $XONSH_HISTORY_SIZE = (16256, 'commands') # b=bytes, s=load timeout in second, files
 $HISTFILE=$HOME+'/.bash_history'  # basy only (or swap with e.g. ~/.zsh_history)
-$XONSH_STORE_STDOUT=True # store stdout for subprocess comands (buggy)
+# $XONSH_STORE_STDOUT=True # store stdout for subprocess comands (buggy)
 $XONSH_HISTORY_MATCH_ANYWHERE = True
 
 #$XONSH_SHOW_TRACEBACK = True
@@ -86,6 +86,7 @@ xontrib load whole_word_jumping
 xontrib load prompt_ret_code
 xontrib load fzf-widgets
 $fzf_file_binding = "c-s"
+$XONSH_CTRL_BKSP_DELETION=True
 #xontrib load bashisms
 #xontrib load histcpy
 
@@ -102,8 +103,14 @@ $PYTHONSTARTUP = $HOME +"/.config/yadmdotfiles/python/pycustom"
 $PROMPT_FIELDS['shelldate'] = get_shelldate
 
 from xonsh import __version__
-from distutils.version import LooseVersion
-reset_color = '{NO_COLOR}' if LooseVersion(__version__) < LooseVersion('0.9.24') else '{RESET}'
+try:
+    from packaging.version import Version
+except ImportError:
+        from distutils.version import LooseVersion as Version
+import warnings
+with warnings.catch_warnings():
+    warnings.filterwarnings("ignore", category=DeprecationWarning)
+    reset_color = '{NO_COLOR}' if Version(__version__) < Version('0.9.24') else '{RESET}'
 $PROMPT=(
     '\n{ret_code_color}┌─' + reset_color + '{#555}{shelldate}' + reset_color + ' ' + 
     '{FAINT_BLUE}[' + reset_color + '{env_name}{BOLD_GREEN}{user}@{hostname}{FAINT_ITALIC_BLUE} {cwd}{FAINT_BLUE}] ' +

@@ -146,6 +146,7 @@ config = lib.mkIf (config.roles.cudawork.enable) (lib.mkMerge [
 
   environment.systemPackages = with pkgs; [
     poetry pipenv jq docker-compose postgresql # devpi-client 
+    vault
     # (python2.withPackages(ps: [
     #   ps.requests
     #   # ps.pynvim
@@ -165,7 +166,7 @@ config = lib.mkIf (config.roles.cudawork.enable) (lib.mkMerge [
 
 (lib.mkIf config.services.xserver.enable {
   environment.systemPackages = with pkgs; [
-    zoom-us slack # qamongo
+    zoom-us slack qamongo
   ];
 
   #nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg)
