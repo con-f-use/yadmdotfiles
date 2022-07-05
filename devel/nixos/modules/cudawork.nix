@@ -83,7 +83,7 @@ let
     nbDw7DyHV3cBjIClpEYRUV+BR47hWWO8W5f4fQ0pmFCGU4EobPZI+IUiw3TWf5vV
     -----END CERTIFICATE-----
   '';
-  systemCert = { security.pki.certificates = [ interceptionCert qacaCert ]; };
+  systemCerts = [ interceptionCert qacaCert ];
   barracudavpn = (import ../packages { pkgs=pkgs; }).barracudavpn;
   qamongo = (import ../packages { pkgs=pkgs; }).qamongo;
   nixbuilderkeypath = "nix/nixbuilder";
@@ -100,7 +100,7 @@ config = lib.mkIf (config.roles.cudawork.enable) (lib.mkMerge [
 {
 
   virtualisation.docker = {
-    enable = true; 
+    enable = true;
     enableOnBoot = true;
     autoPrune.enable = true;
     daemon.settings.insecure-registries = [
@@ -120,6 +120,8 @@ config = lib.mkIf (config.roles.cudawork.enable) (lib.mkMerge [
     "10.17.210.145" = [ "folsom.ngdev.eu.ad.cuda-inc.com" "folsom.qa" ];
     "10.14.0.22" = [ "docker-c7.3sp.co.uk" ];
   };
+
+  security.pki.certificates = systemCerts;
 
   environment.etc."docker/cert.d/10.17.65.201:5000/certificate.crt" = {
     enable = true;
@@ -145,7 +147,7 @@ config = lib.mkIf (config.roles.cudawork.enable) (lib.mkMerge [
   };
 
   environment.systemPackages = with pkgs; [
-    poetry pipenv jq docker-compose postgresql # devpi-client 
+    poetry pipenv jq docker-compose postgresql devpi-client
     vault
     # (python2.withPackages(ps: [
     #   ps.requests

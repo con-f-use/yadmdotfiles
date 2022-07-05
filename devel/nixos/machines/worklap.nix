@@ -19,7 +19,7 @@
       interception = true;
     };
     cudawork.novpn = false;
-    cudawork.use_builders = false;
+    cudawork.use_builders = true;
   };
  config.users.users.root.openssh.authorizedKeys.keys = config.users.users.jan.openssh.authorizedKeys.keys;
   #environment.systemPackages = with pkgs; [ ];
