@@ -85,6 +85,16 @@ Host qaregistry
     PreferredAuthentications publickey
 
 Host czdev
+    HostName 10.17.50.102
+    # User czangerle
+    User qa
+    PreferredAuthentications publickey,password,keyboard-interactive
+    ControlMaster auto
+    ControlPath /tmp/ssh-%l@%n.%r@%h.%p
+    ControlPersist 360000
+    # HP pw
+
+Host czdev2
     HostName 10.17.36.102
     # User czangerle
     User qa
