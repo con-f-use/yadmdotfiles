@@ -62,7 +62,7 @@ config = lib.mkIf config.roles.dev.enable {
 
   # Nix Package Manager
   nix = {
-    package = pkgs.nix_2_4;
+    # package = pkgs.nix_2_4;
     extraOptions = ''
       experimental-features = nix-command flakes
       keep-outputs = true
@@ -133,7 +133,7 @@ config = lib.mkIf config.roles.dev.enable {
     black
 
     # Vim
-    nodejs base-neovim python-language-server
+    nodejs base-neovim # python-language-server
   ] ++ (lib.optionals (config.services.xserver.enable) [ pkgs.meld pkgs.xournalpp ]);
 }; }
 

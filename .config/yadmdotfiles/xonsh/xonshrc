@@ -83,7 +83,6 @@ $XONSH_HISTORY_MATCH_ANYWHERE = True
 xontrib load z
 xontrib load direnv
 xontrib load whole_word_jumping
-xontrib load prompt_ret_code
 xontrib load fzf-widgets
 $fzf_file_binding = "c-s"
 $XONSH_CTRL_BKSP_DELETION=True
@@ -112,9 +111,9 @@ with warnings.catch_warnings():
     warnings.filterwarnings("ignore", category=DeprecationWarning)
     reset_color = '{NO_COLOR}' if Version(__version__) < Version('0.9.24') else '{RESET}'
 $PROMPT=(
-    '\n{ret_code_color}┌─' + reset_color + '{#555}{shelldate}' + reset_color + ' ' + 
+    '\n{BOLD_BLUE}{last_return_code_if_nonzero:{BOLD_RED}}┌─' + reset_color + '{#555}{shelldate}' + reset_color + ' ' + 
     '{FAINT_BLUE}[' + reset_color + '{env_name}{BOLD_GREEN}{user}@{hostname}{FAINT_ITALIC_BLUE} {cwd}{FAINT_BLUE}] ' +
-    '{BOLD_BLUE}{ret_code_color}{ret_code}\n' +
+    '{BOLD_BLUE}{last_return_code_if_nonzero:{BOLD_RED}{}}\n' +
     '└{prompt_end}' + reset_color + ' '
 )
 $RIGHT_PROMPT='😱 {branch_color}{gitstatus: {}}' + reset_color + ' 😱'
