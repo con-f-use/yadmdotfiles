@@ -18,8 +18,8 @@ echo partition
 partition() {
     echo 'Always use the by-id aliases, otherwise ZFS can choke on imports:'
     echo '  /dev/disk/by-id/...'
-    export DISK=${1:?Please give name of disk to partition $DISK - DANGER!}
-    [ -d "$DISK" ] || { echo "Error: no such disk '$DISK'."; return 1; }
+    export DISK=${1:?Please give name of disk to partition (DISK=$DISK) - DANGER!}
+    [ -b "$(realpath "$DISK")" ] || { echo "Error: no such disk '$DISK'."; return 1; }
     if grep -q /by-id/ <<< "$DISK"; then
         export middle='-part'
     fi
