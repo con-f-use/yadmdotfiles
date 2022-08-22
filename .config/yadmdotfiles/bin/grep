@@ -8,6 +8,7 @@ exec grep \
   --binary-files=without-match \
   --exclude-dir venv --exclude-dir .tox --exclude-dir .pytest_cache \
   --exclude-dir .eggs \
-  --exclude-dir .git --exclude-dir .direnv \
+  --exclude-dir .git \
+  --exclude-dir .direnv \
   "$@"
 

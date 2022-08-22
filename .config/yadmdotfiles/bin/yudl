@@ -73,11 +73,17 @@ yudl_agg() {
         ;;
         r)
             fldrcd
-            xclip -selection clipboard -o | sort -uR | yudl_agg f -
+            xclip -selection clipboard -o | sort -uR >> urls.txt
+            yudl_agg f urls.txt
+            yudl_agg f urls.txt
         ;;
         R)
             # no fldrcd!
             xclip -selection clipboard -o | sort -uR | yudl_agg f -
+        ;;
+        u)
+            fldrcd
+            yudl_agg f urls.txt
         ;;
         *)
             err "No command '$command'"

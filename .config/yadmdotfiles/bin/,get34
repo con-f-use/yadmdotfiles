@@ -139,7 +139,8 @@ def walk_inputs(args):
     print('Getting Image List...')
     for gal in get_urllist(args['ARGS']):
         urlhandle = url_request(gal)
-        galsoup = BeautifulSoup(urlhandle.read(), 'html.parser')
+        #galsoup = BeautifulSoup(urlhandle.read(), 'html.parser')
+        galsoup = BeautifulSoup(urlhandle.read(), 'lxml')
         galtitle = galsoup.title.string
         domain = '{uri.scheme}://{uri.netloc}/'.format(uri=urlparse(gal))
         newpath = galtitle.replace('&amp;', 'and ')

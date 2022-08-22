@@ -52,6 +52,7 @@
   #hardware.bluetooth.enable = true;
   #services.blueman.enable = true;
   config.services.xserver.libinput.enable = true;  # Enable touchpad and other input periphery support.
+  config.services.xserver.videoDrivers = [ "wmware" ];
   config.services.perswitch.enable = true;
   config.services.printing.enable = true;
   config.services.printing.drivers = [ pkgs.hplipWithPlugin ];  #pkgs.hplip

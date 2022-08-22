@@ -109,6 +109,8 @@ config = lib.mkIf (config.roles.cudawork.enable) (lib.mkMerge [
   };
   networking.hosts= {
     "10.17.6.11" = [ "qda-vault.qa.ngdev.eu.ad.cuda-inc.com" "vault.qa" ];
+    "10.17.50.250" = [ "portal.qa.ngdev.eu.ad.cuda-inc.com" "portal.qa" ];
+    "10.17.50.102" = [ "portal-staging.qa.ngdev.eu.ad.cuda-inc.com" "portal-staging.qa" ];
     "10.17.50.246" = [ "jenkins-cgf.qa.ngdev.eu.ad.cuda-inc.com" "jenkins2.qa" ];
     "10.17.6.61" = [ "nixbld01.qa.ngdev.eu.ad.cuda-inc.com" "nixbld01.qa" ];
     "10.17.6.62" = [ "nixbld02.qa.ngdev.eu.ad.cuda-inc.com" "nixbld02.qa" ];
@@ -142,7 +144,7 @@ config = lib.mkIf (config.roles.cudawork.enable) (lib.mkMerge [
     group = "docker";
     text = ''{
       "dns": ["10.17.6.120", "1.1.1.1"],
-      "insecure-registries" : ["10.17.65.200:5000", "10.17.65.201:5000", "autotest-docker-registry.qa.ngdev.eu.ad.cuda-inc.com:5000"]
+      "insecure-registries" : ["10.17.65.200:5000", "10.17.65.201:5000", "autotest-docker-registry.qa.ngdev.eu.ad.cuda-inc.com:5000" "docker-registry.qa.ngdev.eu.ad.cuda-inc.com"]
     }'';
   };
 
