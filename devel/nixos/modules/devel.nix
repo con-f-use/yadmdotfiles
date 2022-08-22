@@ -16,10 +16,9 @@ let
             source $HOME/.config/nvim/init.vim
           endif
         '';
-        vam.knownPlugins = pkgs.vimPlugins;
-        vam.pluginDictionaries = [ {
-          names= [ "vim-nix" "vim-commentary" ];
-        } ];
+        packages.myVimPackage = with pkgs.vimPlugins; {
+          start = [ vim-nix vim-commentary ];
+        };
       };
     });
 
@@ -95,7 +94,7 @@ config = lib.mkIf config.roles.dev.enable {
   environment.systemPackages = with pkgs; [
     # Essential
     htop gnupg screen tree file binutils-unwrapped age execline expect
-    wget curl w3m magic-wormhole
+    wget curl w3m #magic-wormhole
 
     # Base
     rename cryptsetup ncdu entr dos2unix
