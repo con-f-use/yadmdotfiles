@@ -32,40 +32,43 @@ config = lib.mkIf config.roles.windowed.enable {
 
   services.xserver = {
     enable = true;
+    videoDrivers = [ "intel" ];  # modsetting
     layout = "us";
     xkbVariant = "intl";
     autorun = true;
     displayManager = {
-      #defaultSession = "none+dwm";
+      # defaultSession = "none+dwm";
       defaultSession = "none+instantwm";
       #startx.enable = true;
+      lightdm.enable = true;
       lightdm.greeters.gtk.theme.name = "Arc-Dark";
     };
-    desktopManager = {
-      gnome.enable = false;
-      gnome.extraGSettingsOverrides = ''
-        [org/gnome/nautilus/list-view]
-        default-visible-columns=['name', 'size', 'date_modified_with_time']
-        default-zoom-level='small'
-        use-tree-view=false
+    # desktopManager = {
+    #   gnome.enable = false;
+    #   gnome.extraGSettingsOverrides = ''
+    #     [org/gnome/nautilus/list-view]
+    #     default-visible-columns=['name', 'size', 'date_modified_with_time']
+    #     default-zoom-level='small'
+    #     use-tree-view=false
 
-        [org/gnome/nautilus/preferences]
-        default-folder-viewer='list-view'
-        executable-text-activation='ask'
-        default-sort-order='mtime;'
-      '';
-    };
+    #     [org/gnome/nautilus/preferences]
+    #     default-folder-viewer='list-view'
+    #     executable-text-activation='ask'
+    #     default-sort-order='mtime;'
+    #   '';
+    # };
     windowManager = {
       session = pkgs.lib.singleton {
         name = "instantwm";
         start = ''
-          startinstantos &
+          /home/jan/.nix-profile/bin/startinstantos &
           waitPID=$!
         '';
       };
-      #dwm.enable = true;
+      # dwm.enable = true;
     };
   };
+  programs.nm-applet.enable = true;
 
   # Becasue discord "looses" this damn setting all the time
   systemd = {
@@ -112,7 +115,7 @@ config = lib.mkIf config.roles.windowed.enable {
     signal-desktop tdesktop discord thunderbird
 
     # Multimedia
-    mpv sxiv flameshot kazam zathura  mcomix3
+    mpv sxiv flameshot kazam mcomix #zathura
 
     # Office
     libreoffice gimp

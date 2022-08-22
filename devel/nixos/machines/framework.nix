@@ -15,16 +15,17 @@
       enable = true;
       interception = true;
     };
-    cudawork.novpn = false;
+    cudawork.novpn = true;
     cudawork.use_builders = false;
   };
   config.users.users.root.openssh.authorizedKeys.keys = config.users.users.jan.openssh.authorizedKeys.keys;
+  config.users.mutableUsers = false;
 
   config.nixpkgs.config.allowUnfree = true;
-  config.system.stateVersion = "21.11";
- 
+  config.system.stateVersion = "22.05";
+
   config.boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
-  config.boot.kernelPackages = pkgs.linuxPackages_5_15;
+  #config.boot.kernelPackages = pkgs.linuxPackages_5_15;
   config.boot.initrd.kernelModules = [ ];
   config.boot.kernelModules = [ "kvm-intel" ];
 
@@ -65,7 +66,7 @@
      };
 
   config.fileSystems."/boot" =
-     { device = "/dev/disk/by-uuid/8E11-3B68";
+     { device = "/dev/disk/by-uuid/C1DA-4C5B";
        fsType = "vfat";
      };
   config.swapDevices = [ ];
@@ -74,3 +75,4 @@
   config.hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
 
+#lrwxrwxrwx 1 root root 15 Aug 21 23:38  -> ../../nvme0n1p1
