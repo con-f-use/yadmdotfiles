@@ -37,10 +37,11 @@ call plug#begin('~/.vim/plugged')
         Plug 'nvim-lua/plenary.nvim'
         "Plug 'nvim-telescope/telescope.nvim', { 'on': 'Telescope' }
         Plug 'nvim-treesitter/nvim-treesitter' ", { 'commit': '47a4eadf4471af2b57fad405bd0a7b42cdf0fba6'}
-        Plug 'hoob3rt/lualine.nvim'
+        Plug 'nvim-treesitter/nvim-treesitter-context'
+        Plug 'nvim-lualine/lualine.nvim'
         Plug 'akinsho/nvim-bufferline.lua'
         Plug 'Yggdroot/indentLine'
-        Plug 'folke/which-key.nvim'
+        "Plug 'folke/which-key.nvim'
         Plug 'norcalli/nvim-colorizer.lua'
     endif
     "Plug 'airblade/vim-gitgutter'
@@ -54,8 +55,8 @@ call plug#begin('~/.vim/plugged')
     "Plug 'Yggdroot/indentLine'  " Show vertical line for indent levels
     Plug 'honza/vim-snippets'
     " experimental stuff
-    Plug 'ryanoasis/vim-devicons'
-    Plug 'szw/vim-maximizer', { 'on': 'MaximizerToggle' }
+    "Plug 'ryanoasis/vim-devicons'
+    "Plug 'szw/vim-maximizer', { 'on': 'MaximizerToggle' }
     "Plug 'dbeniamine/cheat.sh-vim', { 'on': 'Cheat' }
     "Plug 'kassio/neoterm', { 'on': 'Ttoggle' }
     Plug 'rhysd/vim-grammarous'
@@ -237,10 +238,6 @@ let &t_ut=''
 
 " Faster global replace
 nnoremap S :%s///gg<Left><Left><Left><Left>
-
-if exists(':lua')
-    lua require'nvim-treesitter.configs'.setup { highlight = { enable = true } }
-endif
 
 if exists(':lua')
     lua << EOF

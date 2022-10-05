@@ -1,4 +1,4 @@
-{ config, lib, pkgs, modulesPath, ... }:
+{ config, lib, pkgs, inputs, nixrepo, modulesPath, ... }:
 #let
 #pkgs = import (fetchTarball https://github.com/nixos/nixpkgs/archive/1b77b735ea.tar.gz) {};
 #in
