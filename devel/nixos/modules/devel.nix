@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, nixrepo, ... }:
 let
   base-neovim = (pkgs.neovim.override {
       viAlias = true; vimAlias = true; withNodeJs = true;
@@ -47,6 +47,8 @@ config = lib.mkIf config.roles.dev.enable {
       User git
   '';
 
+  programs.nix-ld.enable = true;
+
   services.udev.extraRules = ''
     # USBasp programmer
     ACTION=="add", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="05dc", GROUP="dialout", MODE="0660"
@@ -81,6 +83,8 @@ config = lib.mkIf config.roles.dev.enable {
       automatic = true;
       options = "--delete-older-than 14d";
     };
+    registry.nixpkgs.flake = nixrepo;
+    nixPath = [ "nixpkgs=${nixrepo}" "nixos-config=/etc/nixos/configuration.nix" "/nix/var/nix/profiles/per-user/root/channels" ];
     #binaryCaches = [];
     #binaryCachePublicKeys = [];
     #distributedBuilds = true;
@@ -91,6 +95,22 @@ config = lib.mkIf config.roles.dev.enable {
 
   #services.tor = { enable = true; client.enable = true; };
   #services.lorri.enable = true;
+
+  nixpkgs.overlays = [ (self: super: {
+    # Simple terminal
+    st = super.st.override {
+      patches = builtins.map super.fetchurl [
+        {
+          url = "https://st.suckless.org/patches/scrollback/st-scrollback-0.8.5.diff";
+          sha256 = "sha256-3H9SI7JvyBPZHUrjW9qlTWMCTK6fGK/Zs1lLozmd+lU=";
+        }
+        {
+          url = "https://st.suckless.org/patches/scrollback/st-scrollback-mouse-20220127-2c5edf2.diff";
+          sha256 = "sha256-Rqybzb/rABFTMgfLCrMWV6PrkZbaHQ2zRuap0fxLT3Y=";
+        }
+      ];
+    };
+  }) ];
 
   environment.systemPackages = with pkgs; [
     # Essential
