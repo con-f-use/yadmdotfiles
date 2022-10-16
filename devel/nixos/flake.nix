@@ -11,6 +11,7 @@
     nixpkgs.url = "nixpkgs/nixos-22.05";
     nixunstable.url = "nixpkgs/nixos-unstable";
     # nixunstable.url = "github:NixOS/nixpkgs/8203e061ec0556b4d4a972b18ba92509cb1ddd04";  # temporary because https://github.com/NixOS/nixpkgs/issues/172558
+    # nixunstable.url = "github:NixOS/nixpkgs/3a11db5f408095b8f08b098ec2066947f4b72ce2";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
   };
 
