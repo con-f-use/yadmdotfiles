@@ -1,7 +1,7 @@
 { config, lib, pkgs, inputs, nixrepo, ... }:
 let
   base-neovim = (pkgs.neovim.override {
-      viAlias = true; vimAlias = true; withNodeJs = true;
+      viAlias = true; vimAlias = true; withNodeJs = true; withPython3 = true;
       configure = {
         customRC = ''
           set history=10000 | set undolevels=1000 | set laststatus=2 | set complete-=i | set list | set listchars=tab:»·,trail:·,nbsp:· | set autoindent | set backspace=indent,eol,start
@@ -17,7 +17,7 @@ let
           endif
         '';
         packages.myVimPackage = with pkgs.vimPlugins; {
-          start = [ vim-nix vim-commentary ];
+          start = [ vim-nix vim-commentary  ];
         };
       };
     });
@@ -54,7 +54,7 @@ config = lib.mkIf config.roles.dev.enable {
   '';
 
   services.ipfs = {
-    enable = true;
+    # enable = true;
     autoMount = true;
     extraConfig.Datastore.StorageMax = "100GB";
   };
@@ -142,7 +142,7 @@ config = lib.mkIf config.roles.dev.enable {
       pygls
       #pynvim
       jedi
-      # python-language-server
+      python-lsp-server
       matplotlib
       coloredlogs
       numpy
@@ -152,7 +152,7 @@ config = lib.mkIf config.roles.dev.enable {
     black
 
     # Vim
-    nodejs base-neovim # python-language-server
+    nodejs base-neovim python-language-server
   ] ++ (lib.optionals (config.services.xserver.enable) [ pkgs.meld pkgs.xournalpp ]);
 }; }
 

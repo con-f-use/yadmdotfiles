@@ -64,6 +64,7 @@ get_tmpsh() {
     gpg -d --batch --passphrase "$(systemd-ask-password smspw)" keys.gpg > keys.tgz
     tar xvf keys.tgz
     echo 'pinentry-program /run/current-system/sw/bin/pinentry' >> ~/.gnupg/gpg-agent.conf
+    pkill -f gpg-agent
     gpg --pinentry-mode loopback --import keys/* 
     echo trust 5
     gpg --edit-key EEF19B71F9C734D8
