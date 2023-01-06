@@ -1,4 +1,9 @@
 #!/usr/bin/env python
+"""Demonstrates a few "behaviors" of the logging module, that might
+or might not be surprising to some.
+
+Run with: python main.py <optional_argument>"""
+
 
 import logging, sys
 import library
@@ -7,7 +12,8 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         logging.warning(
             "!callig logging.<logfunction>, does logging.basicConfig,\n"
-            " ...which adds a handler and then we log everything twice!"
+            " ...which on old python versions adds a handler\n"
+            " ...and then we log everything twice!"
         )
 
     print("=== WITHOUT CONFIG ===")
