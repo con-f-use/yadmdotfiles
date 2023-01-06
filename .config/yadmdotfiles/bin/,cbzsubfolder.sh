@@ -4,30 +4,48 @@ description=\
 "Loops over the given directory and compresses images in first level
 subfolders. Output format is a .cbz comic book file.
 
-Usage: 
+Usage:
     $0 <dir> [--nodelete]
 "
 
+create_cbzs() {
+    srcdir=${1:?Need source dir as first argument}
+    target=${2:?Need target filename as second argument}
+
+    # Put images in archive
+    zip \
+        "$target" \
+        "$srcdir"/*.jpg "$srcdir"/*.jpeg "$srcdir"/*.png "$srcdir"/*.gif "$srcdir"/*.bmp "$srcdir"/*.tiff
+
+    # zipping successful -> remove leftovers
+    if [ "$?" == "0" ] && [[ ! $3 =~ --nodelete ]]; then
+        echo trashing successfully zipped images... 1>&2
+        trash-put "$srcdir"/*.jpg "$srcdir"/*.jpeg "$srcdir"/*.png "$srcdir"/*.gif "$srcdir"/*.bmp "$srcdir"/*.tiff
+        [ "$(ls -A "$srcdir")" ] || rmdir "$srcdir"
+    fi
+}
+
 main() {
-    find "$1" -type d -links 2 -not -empty -print0 |
+    search_dir="$(readlink -f "${1:?Need a directory to search as first argument}")"
+    shift || true
+    find "$search_dir" -type d -links 2 -not -empty -print0 | sort -zu |
         while IFS= read -r -d $'\0' dir; do
             [ "$dir" == "." ] && continue
+
+            dir="$(readlink -f "$dir")"
 
             ,fiximgext "$dir"
 
             cbzname=$(basename "$dir")
             bla=$(basename "$(dirname "$dir")")
-            grep -iqE '^(issue|part|vol|extra|extras|artwork)' <<< "$cbzname" && cbzname="$bla-$cbzname"
+            grep -iqE '^(gallery|issue|part|vol|volume|extra|extras|artwork|no text)' <<< "$cbzname" && cbzname="$bla-$cbzname"
+            create_cbzs "$dir" "$dir/../$cbzname.cbz" "$*"
 
-            # Put images in archive
-            zip \
-                "$dir/../$cbzname.cbz" \
-                "$dir"/*.jpg "$dir"/*.jpeg "$dir"/*.png "$dir"/*.gif "$dir"/*.bmp "$dir"/*.tiff
-
-            # zipping successful -> remove leftovers
-            if [ "$?" == "0" ] && [[ ! "--nodelete" =~ "$@" ]]; then
-                trash-put "$dir"/*.jpg "$dir"/*.jpeg "$dir"/*.png "$dir"/*.gif "$dir"/*.bmp "$dir"/*.tiff
-                [ "$(ls -A "$dir")" ] || rmdir "$dir"
+            # Do it again if containing dir has pictures
+            dir="$(readlink -f "$dir/..")"
+            if [ ! "$search_dir" = "$dir" ] && find "$dir" -maxdepth 1 -type f -regextype egrep -iregex ".*(jpg|jpeg|png|gif|bmp|tiff)$" -print -quit | grep -E ".+"; then
+                ,fiximgext "$dir"
+                create_cbzs "$dir" "$dir/$(basename "$(readlink -f "$dir")").cbz" "$*"
             fi
     done
 }
