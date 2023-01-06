@@ -39,13 +39,14 @@ main() {
             cbzname=$(basename "$dir")
             bla=$(basename "$(dirname "$dir")")
             grep -iqE '^(gallery|issue|part|vol|volume|extra|extras|artwork|no text)' <<< "$cbzname" && cbzname="$bla-$cbzname"
+            cbzname=$(sed 's/ /_/g' <<< "$cbzname")
             create_cbzs "$dir" "$dir/../$cbzname.cbz" "$*"
 
             # Do it again if containing dir has pictures
             dir="$(readlink -f "$dir/..")"
             if [ ! "$search_dir" = "$dir" ] && find "$dir" -maxdepth 1 -type f -regextype egrep -iregex ".*(jpg|jpeg|png|gif|bmp|tiff)$" -print -quit | grep -E ".+"; then
                 ,fiximgext "$dir"
-                create_cbzs "$dir" "$dir/$(basename "$(readlink -f "$dir")").cbz" "$*"
+                create_cbzs "$dir" "$dir/$(basename "$(readlink -f "$dir") | sed 's/ /_/g'").cbz" "$*"
             fi
     done
 }
