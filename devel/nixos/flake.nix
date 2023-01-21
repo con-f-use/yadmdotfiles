@@ -9,14 +9,9 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-22.05";
-    nixunstable.url = "nixpkgs/nixos-unstable"; 
+    # nixunstable.url = "nixpkgs/nixos-unstable"; 
+    nixunstable.url = "github:NixOS/nixpkgs/d7705c01ef0a39c8ef532d1033bace8845a07d35";  # workes on workstation 21.01.2023
     # nixunstable.url = "9608ace7009ce5bc3aeb940095e01553e635cbc7";  # 13.9.22
-    # nixunstable.url = "github:NixOS/nixpkgs/7225ed3fb13dede4ddbad24e83509b0c8836c730";  # 30.9.22 has error
-    # nixunstable.url = "github:NixOS/nixpkgs/f8cac2894cc7748e36577109ae19b9a5755c2d40";  # 30.9.22 has error
-    # nixunstable.url = "github:NixOS/nixpkgs/141266be879bd1063e01085eec69ea1db37607d4";   # 29.9.22 has error
-    # nixunstable.url = "github:NixOS/nixpkgs/e94b2f2a9cea6ce14ffa22567d708371180886d6";   # 29.9.22 has error
-    # nixunstable.url = "github:NixOS/nixpkgs/d07c45feb55a838c5060f424f88aefbc88c25036";     # 29.9.22 has error
-    # nixunstable.url = "github:NixOS/nixpkgs/c0b69f571968269f35561cc09c17c710d938389d";     # 29.9.22 has error
     # nixunstable.url = "github:NixOS/nixpkgs/8203e061ec0556b4d4a972b18ba92509cb1ddd04";  # temporary because https://github.com/NixOS/nixpkgs/issues/172558
     nixos-hardware.url = "github:NixOS/nixos-hardware";
   };
