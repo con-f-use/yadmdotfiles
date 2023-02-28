@@ -1,7 +1,5 @@
 { config, lib, pkgs, ... }:
-let
-  x="x";
-in {
+{
 options = with lib; {
   unfrees = mkOption { description = "List of unfree packages allowed"; type = types.listOf types.str; default = []; };
   roles.essentials = {
