@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+#!/usr/bin/env nix-shell
+#!nix-shell -i bash -p sqlite qrencode jq oath-toolkit
 # Prints auth-tokes generated from a Google Authenticator database.
 # Invoke with 'get' as first argument to pull the database from a rooted phone using adb.
 
@@ -38,6 +39,9 @@ getdb() {
 qrcodify() {
     apti sqlite3 qrencode jq
 
+    target_dir=$(mktemp -d -t oauth_XXXXXX)
+    trap "rm -rf '$target_dir/'" EXIT INT ERR
+
     sqlite3 "$base" 'SELECT email,secret FROM accounts;' |
     while read entry; do
         service=$(echo "$entry" | cut -d '|' -f 1)
@@ -46,8 +50,14 @@ qrcodify() {
         uri="otpauth://totp/$name:$name?secret=$secret&issuer=confus&algorithm=SHA1&digits=6&period=30"
         echo "$entry; sec: $secret; ser: $service"
         echo "$uri"
-        qrencode -o /tmp/out.png "$uri" && xdg-open /tmp/out.png
+        target="/$target_dir/$name.oauth.png"
+        echo "$target"
+        qrencode -o "$target" "$uri"
+        chmod 700 "$target"
+        echo
     done
+    sxiv "$target_dir/"*.png &
+    read -p "Files in '$target_dir' will be deleted. Press any key to continue..." -n 1
 }
 
 tok() {
