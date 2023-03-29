@@ -55,7 +55,7 @@
   config.services.xserver.videoDrivers = [ "wmware" ];
   config.services.perswitch.enable = true;
   config.services.printing.enable = true;
-  config.services.printing.drivers = [ pkgs.hplipWithPlugin ];  #pkgs.hplip
+  # config.services.printing.drivers = [ pkgs.hplipWithPlugin ];  #pkgs.hplip
   config.programs.system-config-printer.enable = true;
 
   config.fileSystems."/" =

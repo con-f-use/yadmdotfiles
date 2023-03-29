@@ -1,7 +1,5 @@
 { config, lib, pkgs, ... }:
-let
-  x="x";
-in {
+{
 options = with lib; {
   unfrees = mkOption { description = "List of unfree packages allowed"; type = types.listOf types.str; default = []; };
   roles.essentials = {
@@ -13,7 +11,17 @@ config = lib.mkIf config.roles.essentials.enable {
 
   environment.homeBinInPath = true;
 
-  environment.shellAliases = { 
+  environment.sessionVariables = rec {
+    XDG_CACHE_HOME  = "\${HOME}/.cache";
+    XDG_CONFIG_HOME = "\${HOME}/.config";
+    XDG_BIN_HOME    = "\${HOME}/.local/bin";
+    XDG_DATA_HOME   = "\${HOME}/.local/share";
+    XDG_STATE_HOME  = "\${HOME}/.local/state";
+
+    PATH = [ "\${XDG_BIN_HOME}" ];
+  };
+
+  environment.shellAliases = {
     ll="ls -al --color=auto"; ff="sudo vi /etc/nixos/configuration.nix";
     ss="echo 'Set a label: -p <label>'; sudo nixos-rebuild switch";
     uu="sudo nix-channel --update; nix-channel --update";

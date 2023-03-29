@@ -1,6 +1,6 @@
 [user]
-    name = con-f-use
-    email = con-f-use@gmx.net
+	name = Jan Christoph Bischko
+	email = jbischko@barracuda.com
     signingkey = 2C726AD9
 
 [core]
@@ -33,6 +33,7 @@
     re = remote
     tags = tag
     git = !git
+    atinit = submodule update --init autotest-core/ pyapi/ user-emulation-bfw/
     d = diff -w --ignore-all-space
     dc = diff -w --ignore-all-space --cached
     sl = stash list --pretty=format:\"%C(red)%h%C(reset) - %C(dim yellow)(%C(bold magenta)%gd%C(dim yellow))%C(reset) %<(70,trunc)%s %C(green)(%cd) %C(bold blue)<%an>%C(reset)\"
