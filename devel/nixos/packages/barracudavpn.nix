@@ -19,6 +19,21 @@ in stdenv.mkDerivation rec {
       sha256 = shas."${version}";
       url = meta.homepage;
       message = ''
+        # Invocation notes:
+        # Does not work properly as script because "security"
+        # Run in bash terminal EXACTLY as is:
+        sudo barracudavpn -p; sleep 3; sudo chmod a+r /etc/resolv.conf;
+        sudo barracudavpn --verbose --start \
+           --login '<username>' --serverpw "$(<pwmanager_get_pw>)" \
+           --config '~/.config/yadmdotfiles/cuda/barracudavpn'
+        # First line restores state (also useful after disconnect)
+        # Then wait for the output and confirm MFA. After that copy the
+        # output and:
+        eval "$(
+          xclip -o -selection primary |
+          sed -n 's/executing:/sudo ip/p'
+        )"; sudo chmod a+r /etc/resolv.conf;
+         
         # Download from: ${meta.homepage}/#/search?page=1&search=Linux&type=6
         nix-store --add-fixed sha256 VPNClient_${version}_Linux.tar.gz
         # build:
