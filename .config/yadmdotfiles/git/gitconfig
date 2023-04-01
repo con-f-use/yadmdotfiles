@@ -81,6 +81,9 @@
 [include]
     path = .config/yadmdotfiles/git/gitconfiglocal
 
+[includeIf "gitdir:~/devel/cuda/**"]
+  path = ~/devel/cuda/.gitconfig
+
 [diff-so-fancy]
     first-run = false
 
