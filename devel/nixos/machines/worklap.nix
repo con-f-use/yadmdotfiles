@@ -42,7 +42,7 @@
   #boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usb_storage" "sd_mod" "sdhci_pci" ];
  config.boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
  config.boot.initrd.kernelModules = [ ];
- config.boot.kernelModules = [ "kvm-intel" ];
+ config.boot.kernelModules = [ "kvm-intel" "r8152" ];
   #boot.blacklistedKernelModules = [ "psmouse" ];
  config.boot.extraModulePackages = [ ];
   #services.xserver.videoDrivers = lib.mkDefault [ "intel" ];

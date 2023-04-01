@@ -4,7 +4,7 @@ rec {
   users.users."jan" = {
     isNormalUser = true;
     uid = 1000;
-    extraGroups = [ "wheel" "audio" "networkmanager" "wireshark" "dialout" "plugdev" "adm" "disk" "video" "docker" "gpio" config.services.ipfs.group ];
+    extraGroups = [ "wheel" "audio" "networkmanager" "wireshark" "dialout" "plugdev" "adm" "disk" "video" "docker" "gpio" config.services.kubo.group ];
     #openssh.authorizedKeys.keys = ssh_pkeys;
     hashedPassword = "$6$Xe3WNdmP$JqMUSRF3j6ytfCz7ceT1pI4Gw05FLy3n5UxkjSpQ7cilxcH/WoN8g2lOoVskJKoIDsadH9OiwHEaAUYZQXze7.";
     openssh.authorizedKeys.keys = [

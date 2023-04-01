@@ -14,3 +14,5 @@ do
     [ -r "$fl" ] && source "$fl"
 done
 
+
+complete -C /run/current-system/sw/bin/vault vault

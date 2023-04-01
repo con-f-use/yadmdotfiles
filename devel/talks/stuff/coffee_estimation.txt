@@ -1,0 +1,31 @@
+Time estimations of projects:
+
+"How long will you take to make me a coffee?"
+- "5 minutes" -
+"No no, how long will YOU take to make ME a coffee HERE and NOW?"
+- "Given that we are in a meeting, probably till 5 minutes after it ended, I guess."
+"You do know that the machine is broken."
+- "Well, I'd have to go to the store and buy instant." - 
+"Instant-coffee is no real coffee!"
+- "Okay, we have a kettle I'll go to the store and buy some, then make you a pour-over. Should be 20 minutes."
+10 minutes later:
+- "They only had beans, so I'd have to get a grinder and someone told me the kettle trips the braker, so pod boil, give me another 30 min." -
+"I prefer decaf."
+- "40 minutes."
+"Did you think of filters?"
+- "45 minutes."
+"You see my point now?"
+
+Other random thoughts:
+Engineering is a creative process of problem solving and sometimes
+you need find, shift and define the problem yourself.
+The problem is almost never stated in a rigorous precise way, because
+often the customer doesn't even really know it or doesn't know what
+they want. So it has a social and explorative components. It's also
+about learning and exploring the requirements and problem together.
+Great products surprise the customer and do things, they didn't know could be done.
+Even if the problem was stated precisely. was, real innovation doesn't come from having
+a well defined task to perform. Nobody gave Steve Jobs a requirements
+document for the iPhone. A developers job is more than turning requirements
+into code quickly, just like a plummers work is more than to use a pipe wrench.
+Optimize for learning and creativity, not the rate of feature production.

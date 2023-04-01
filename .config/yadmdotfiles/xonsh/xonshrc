@@ -209,6 +209,7 @@ if os.path.exists($HOME + '/.local/bin/nvim'):
     aliases['vi']='nvim'
 
 $DOCKER_BUILDKIT=1
+$AZURE_CONFIG_DIR=$XDG_DATA_HOME + '/azure'
 
 $CUDA_QADOMAIN='qa.ngdev.eu.ad.cuda-inc.com'
 $qa="."+$CUDA_QADOMAIN
@@ -221,4 +222,4 @@ if $(which xset):
 $TERM='xterm-kitty'
 tput smkx  # del key fix for some werid terminal emulators
 
-
+# problems with TERM: kitty +kitten ssh you@remote_server (https://github.com/kovidgoyal/kitty/issues/1241)

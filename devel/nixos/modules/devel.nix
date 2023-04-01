@@ -47,16 +47,28 @@ config = lib.mkIf config.roles.dev.enable {
   '';
 
   programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+    stdenv.cc.cc zlib fuse3 alsa-lib
+    # at-spi2-atk at-spi2-core atk cups
+    cairo curl dbus expat fontconfig freetype
+    gdk-pixbuf glib gtk3 libGL libappindicator-gtk3
+    libdrm libnotify libpulseaudio libuuid
+    libxkbcommon mesa nspr nss pango pipewire systemd icu openssl
+    xorg.libxcb xorg.libX11 xorg.libXScrnSaver xorg.libXcomposite
+    xorg.libXcursor xorg.libXdamage xorg.libXext xorg.libXfixes
+    xorg.libXi xorg.libXrandr xorg.libXrender xorg.libXtst
+    xorg.libxkbfile xorg.libxshmfence
+  ];
 
   services.udev.extraRules = ''
     # USBasp programmer
     ACTION=="add", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="05dc", GROUP="dialout", MODE="0660"
   '';
 
-  services.ipfs = {
+  services.kubo = {
     enable = true;
     autoMount = true;
-    extraConfig.Datastore.StorageMax = "100GB";
+    settings.Datastore.StorageMax = "100GB";
   };
 
   networking.firewall.allowedTCPPorts = [ 8000 8080 8081 8443 ];
@@ -66,17 +78,19 @@ config = lib.mkIf config.roles.dev.enable {
     # package = pkgs.nix_2_4;
     extraOptions = ''
       experimental-features = nix-command flakes
-      keep-outputs = true
-      keep-derivations = true
     '';
     # keep-* options:
     # - https://nixos.org/manual/nix/stable/command-ref/conf-file.html?highlight=keep-outputs#description
     # - https://github.com/NixOS/nix/issues/2208
     optimise.automatic = true;
     # autoOptimiseStore = true;  # old
-    settings.auto-optimise-store = true;  # newer
+    settings = {
+      auto-optimise-store = true;  # newer
+      keep-outputs = true;
+      keep-derivations = true;
+      sandbox = true;  # newer
     # useSandbox = true;  # old
-    settings.sandbox = true;  # newer
+    };
     # daemonCPUSchedPolicy = 19;
     gc = {
       automatic = true;
@@ -111,6 +125,7 @@ config = lib.mkIf config.roles.dev.enable {
     };
   }) ];
 
+  environment.pathsToLink = [ "/share/nix-direnv" ];
   environment.systemPackages = with pkgs; [
     # Essential
     htop gnupg screen tree file binutils-unwrapped age execline expect
@@ -122,7 +137,7 @@ config = lib.mkIf config.roles.dev.enable {
     # General
     gitAndTools.git
     gitAndTools.pre-commit gitAndTools.git-open gitAndTools.delta git-lfs
-    fasd fzf ripgrep direnv parallel pandoc figlet
+    fasd fzf ripgrep direnv nix-direnv parallel pandoc figlet
     #texlive.combined.scheme-medium
     # (texlive.combine { inherit (texlive) scheme-medium xargs bigfoot moderncv lipsum footmisc multibib soul; })
     # ungoogled-chromium # in unstable!

@@ -12,8 +12,11 @@ author: confus <con-f-use@gmx.net>"
 libfile="$HOME/.config/yadmdotfiles/bash/jcgb.bash"
 [ -r "$libfile" ] && source "$libfile" || { 2>echo "Requires '$libfile'!"; exit 1; }
 
+printf -v DATESTAMP '%(%Y%m%d)T' -1
+printf -v DATETIME "$DATESTAMP%(%H%M%S)T" -1
+
 fldrcd() {
-    fldir="$HOME/Downloads/HT/antbar/$(date "+%Y%m%d")"
+    fldir="$HOME/Downloads/HT/antbar/$DATESTAMP"
     echo "$fldir"
     mkdir -p "$fldir"
     cd "$fldir"
@@ -71,19 +74,21 @@ yudl_agg() {
             echo "$fl"
             cat "$fl" | sort -uR | yudl_agg f -
         ;;
+        R)
+            fn="urls_$DATETIME.txt"
+            xclip -selection clipboard -o | sort -uR > "$fn"
+            yudl_agg f "$fn"
+        ;;
         r)
             fldrcd
-            xclip -selection clipboard -o | sort -uR >> urls.txt
-            yudl_agg f urls.txt
-            yudl_agg f urls.txt
-        ;;
-        R)
-            # no fldrcd!
-            xclip -selection clipboard -o | sort -uR | yudl_agg f -
+            yudl_agg R
         ;;
         u)
             fldrcd
-            yudl_agg f urls.txt
+            fln="/tmp/yudl_urls_$DATETIME.txt"
+            cat urls*.txt > "$fln"
+            yudl_agg f "$fln"
+            rm "$fln"
         ;;
         *)
             err "No command '$command'"
