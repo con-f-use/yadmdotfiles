@@ -144,7 +144,8 @@ Host devpi
 # Cudadevpi Master, Zeroblobber, apt-cacher-ng
     HostName 10.17.65.203
     User root
-    IdentityFile ~/.ssh/id_rsa##Cuda
+    # IdentityFile ~/.ssh/id_rsa##Cuda
+    IdentityFile ~/.ssh/id_rsa_cuda
     PreferredAuthentications publickey
     ControlMaster auto
     ControlPath /tmp/ssh-%l@%n.%r@%h.%p
@@ -162,9 +163,13 @@ Host rike
     HostName friederike.ngdev.eu.ad.cuda-inc.com
     User jbischko
 
-Host folsom
+# ssh://git@folsom.ngdev.eu.ad.cuda-inc.com:7999/bnnga/qa_pypackage.git
+Host fol
     HostName folsom.ngdev.eu.ad.cuda-inc.com
+    Port 7999
     User jbischko
+    IdentitiesOnly yes
+    IdentityFile ~/.ssh/id_ed25519_cuda
 
 Host stash
     HostName stash.cudaops.com
