@@ -27,7 +27,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'junegunn/fzf.vim'
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     " Plug 'neoclide/coc.nvim', {'branch': 'release'}
-    Plug 'neoclide/coc.nvim', {'commit': 'cf651a31736fc36c441bf307d2babff78280dd59'}
+    " Plug 'neoclide/coc.nvim', {'commit': 'cf651a31736fc36c441bf307d2babff78280dd59'}
+    Plug 'neoclide/coc.nvim'
     "Plug 'tpope/vim-eunuch'  " Unix command in vim
     "Plug 'xolox/vim-misc'  " Glue to make other xolox plugins work
     Plug 'joshdick/onedark.vim'  " Nice color theme for vim
@@ -38,7 +39,7 @@ call plug#begin('~/.vim/plugged')
         Plug 'nvim-lua/plenary.nvim'
         "Plug 'nvim-telescope/telescope.nvim', { 'on': 'Telescope' }
         Plug 'nvim-treesitter/nvim-treesitter' ", { 'commit': '47a4eadf4471af2b57fad405bd0a7b42cdf0fba6'}
-        Plug 'nvim-treesitter/nvim-treesitter-context'
+        " Plug 'nvim-treesitter/nvim-treesitter-context' "https://github.com/nvim-treesitter/nvim-treesitter-context/issues/150
         Plug 'nvim-lualine/lualine.nvim'
         Plug 'akinsho/nvim-bufferline.lua'
         Plug 'Yggdroot/indentLine'
@@ -244,7 +245,7 @@ if exists(':lua')
     lua << EOF
     require('lualine').setup{ options = { theme = 'onedark', icons_enabled = true }}
     require'bufferline'.setup{}
-    require'nvim-treesitter.configs'.setup { highlight = { enable = true } }
+    require'nvim-treesitter.configs'.setup { highlight = { enable = true }, zindex=300 }
 EOF
 
 endif
