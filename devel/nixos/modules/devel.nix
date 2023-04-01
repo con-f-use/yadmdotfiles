@@ -53,10 +53,10 @@ config = lib.mkIf config.roles.dev.enable {
     ACTION=="add", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="05dc", GROUP="dialout", MODE="0660"
   '';
 
-  services.ipfs = {
-    # enable = true;
+  services.kubo = {
+    enable = false;
     autoMount = true;
-    extraConfig.Datastore.StorageMax = "100GB";
+    settings.Datastore.StorageMax = "100GB";
   };
 
   networking.firewall.allowedTCPPorts = [ 8000 8080 8081 8443 ];

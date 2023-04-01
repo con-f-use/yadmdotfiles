@@ -32,7 +32,7 @@ config = lib.mkIf config.roles.windowed.enable {
 
   services.xserver = {
     enable = true;
-    videoDrivers = [ "intel" ];  # modsetting
+    # videoDrivers = [ "intel" ];  # modsetting
     layout = "us";
     xkbVariant = "intl";
     autorun = true;
@@ -115,10 +115,11 @@ config = lib.mkIf config.roles.windowed.enable {
     signal-desktop tdesktop discord thunderbird
 
     # Multimedia
-    mpv sxiv flameshot kazam mcomix #zathura
+    mpv sxiv flameshot kazam mcomix zathura
 
     # Office
-    libreoffice gimp
+    # libreoffice
+    gimp
     font-manager
 
     kitty
