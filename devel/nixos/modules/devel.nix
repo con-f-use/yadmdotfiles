@@ -79,17 +79,19 @@ config = lib.mkIf config.roles.dev.enable {
     # package = pkgs.nix_2_4;
     extraOptions = ''
       experimental-features = nix-command flakes
-      keep-outputs = true
-      keep-derivations = true
     '';
     # keep-* options:
     # - https://nixos.org/manual/nix/stable/command-ref/conf-file.html?highlight=keep-outputs#description
     # - https://github.com/NixOS/nix/issues/2208
     optimise.automatic = true;
     # autoOptimiseStore = true;  # old
-    settings.auto-optimise-store = true;  # newer
+    settings = {
+      auto-optimise-store = true;  # newer
+      keep-outputs = true;
+      keep-derivations = true;
+      sandbox = true;  # newer
     # useSandbox = true;  # old
-    settings.sandbox = true;  # newer
+    };
     # daemonCPUSchedPolicy = 19;
     gc = {
       automatic = true;
@@ -124,6 +126,7 @@ config = lib.mkIf config.roles.dev.enable {
     };
   }) ];
 
+  environment.pathsToLink = [ "/share/nix-direnv" ];
   environment.systemPackages = with pkgs; [
     # Essential
     htop gnupg screen tree file binutils-unwrapped age execline expect
@@ -135,7 +138,7 @@ config = lib.mkIf config.roles.dev.enable {
     # General
     gitAndTools.git
     gitAndTools.pre-commit gitAndTools.git-open gitAndTools.delta git-lfs
-    fasd fzf ripgrep direnv parallel pandoc figlet
+    fasd fzf ripgrep direnv nix-direnv parallel pandoc figlet
     #texlive.combined.scheme-medium
     # (texlive.combine { inherit (texlive) scheme-medium xargs bigfoot moderncv lipsum footmisc multibib soul; })
     # ungoogled-chromium # in unstable!

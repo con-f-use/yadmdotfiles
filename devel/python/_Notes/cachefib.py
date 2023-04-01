@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 """
-Demonstrates that the cache decorator can save time on some computations.
+Demonstrates the cache decorator can save time on some computations.
+Who needs Church-Turing teorem and tail-recursion anyway, right?
 
 The naive Fibonacci implementation is by far the fastest, when cached
 because we fully leverage the power of lookups, which are fast.
-Of course, our loop here duplicates a lot of work between individual
-iderations but that happens in the real world a lot, too.
+Of course, our loop in `main()` duplicates a lot of work between
+individual iderations but that happens in the real world a lot, too.
 
 Note that now integers may be limted to 4300 digits in some
 Python versions, unless:
@@ -13,16 +14,17 @@ Python versions, unless:
 See: https://github.com/python/cpython/issues/95778
 """
 
-import time
+import sys, time
 from functools import cache
 
 
 def main(variant):
+    cached = f"{' with cache' if hasattr(variant, 'cache_info') else ''}"
     start = time.monotonic()
-    for i in range(400):
-        print(f"{variant.__name__}({i}) = {variant(i)}")
-    cache_satus = f"{' (used cache)' if 'cache' in variant.__class__.__name__ else ''}"
-    print(f"done. took {time.monotonic()-start:.5f}s{cache_satus}.")
+    for n in range(400):
+        result = variant(n)
+        print(f"{variant.__name__}({n}) = {result}")
+    print(f"done, took {time.monotonic()-start:.5f}s{cached}.")
 
 
 def rec(n):
@@ -48,19 +50,17 @@ def itr(n, a=0, b=1):
     return a
 
 
-# smoke tests
+# Smoke tests
 assert rec(0) == 0; assert rec(1) == 1; assert rec(5) == 5
 for x in range(10): assert rec(x) == tail(x) == itr(x), f"failed for {x}"
 
 
+# Boring Argument Handling
 if __name__ == "__main__":
-    # Boring argument handling
-    import sys
-
-    if len(sys.argv) < 2 or sys.argv[1] not in ["rec", "tail", "itr"]:
-        sys.stderr.write(
-            "ERR: Use one of 'rec', 'tail', 'itr' and optional 'cache' argument!\n"
-        )
+    allowed = ["rec", "tail", "itr"]
+    if len(sys.argv) < 2 or sys.argv[1] not in allowed:
+        msg = f"ERR: Use {allowed} and optional 'cache' argument!\n"
+        sys.stderr.write(msg)
         raise SystemExit(1)
 
     if "cache" in sys.argv:

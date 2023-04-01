@@ -9,7 +9,7 @@ Include ~/.config/yadmdotfiles/ssh/confighome ~/.config/yadmdotfiles/ssh/configc
 Host *
     ServerAliveInterval 60
     PreferredAuthentications publickey,keyboard-interactive,password,hostbased,gssapi-with-mic
-    VisualHostKey yes
+    #VisualHostKey yes
 
 Host *+*
     ProxyCommand ssh $(echo %h | sed 's/+[^+]*$//;s/\([^+%%]*\)%%\([^+]*\)$/\2 -l \1/;s/:/ -p /') exec nc -w1 $(echo %h | sed 's/^.*+//;/:/!s/$/ %p/;s/:/ /')
