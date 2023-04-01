@@ -12,8 +12,5 @@
 
     # Modules
     ./perswitch.nix
-
-    # Experiment
-    ./authprin.nix
   ];
 }
