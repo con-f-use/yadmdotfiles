@@ -48,6 +48,8 @@ config = lib.mkIf config.roles.essentials.enable {
     theme = "Monokai Extended"
   '';
 
+  environment.enableAllTerminfo = true;
+
   documentation.nixos.enable = false;  # When multiple output, don't install docs
   #system.autoUpgrade.enable = true;
   #system.autoUpgrade.allowReboot = true;

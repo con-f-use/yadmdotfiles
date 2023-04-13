@@ -144,7 +144,7 @@ config = lib.mkIf (config.roles.cudawork.enable) (lib.mkMerge [
     group = "docker";
     text = ''{
       "dns": ["10.17.6.120", "1.1.1.1"],
-      "insecure-registries" : ["10.17.65.200:5000", "10.17.65.201:5000", "autotest-docker-registry.qa.ngdev.eu.ad.cuda-inc.com:5000" "docker-registry.qa.ngdev.eu.ad.cuda-inc.com"]
+      "insecure-registries" : ["10.17.65.200:5000", "10.17.65.201:5000", "autotest-docker-registry.qa.ngdev.eu.ad.cuda-inc.com:5000", "docker-registry.qa.ngdev.eu.ad.cuda-inc.com"]
     }'';
   };
 

@@ -107,6 +107,8 @@ config = lib.mkIf config.roles.windowed.enable {
   environment.systemPackages = with pkgs; [
     # X
     xorg.xrandr xorg.xinit xorg.xsetroot xorg.xkill xclip fribidi
+    wmctrl xorg.xwininfo  # wmctrl-1.07 xwininfo-1.1.4 
+    # xdotool  # no idea why, but leads to x not starting
     gnome.file-roller font-manager
     papirus-icon-theme
     arc-theme
