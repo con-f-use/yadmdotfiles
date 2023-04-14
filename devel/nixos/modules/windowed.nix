@@ -32,16 +32,18 @@ config = lib.mkIf config.roles.windowed.enable {
 
   services.xserver = {
     enable = true;
-    videoDrivers = [ "intel" ];  # modsetting
+    videoDrivers = [ "modsetting" ];  # intel
     layout = "us";
     xkbVariant = "intl";
     autorun = true;
+    verbose = 7;
     displayManager = {
       # defaultSession = "none+dwm";
       defaultSession = "none+instantwm";
       #startx.enable = true;
       lightdm.enable = true;
       lightdm.greeters.gtk.theme.name = "Arc-Dark";
+      xserverArgs = [ "-verbose" ];
     };
     # desktopManager = {
     #   gnome.enable = false;
@@ -65,7 +67,7 @@ config = lib.mkIf config.roles.windowed.enable {
           waitPID=$!
         '';
       };
-      # dwm.enable = true;
+      dwm.enable = true;
     };
   };
   programs.nm-applet.enable = true;

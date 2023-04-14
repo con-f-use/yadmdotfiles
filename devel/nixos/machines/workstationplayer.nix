@@ -28,6 +28,7 @@
   #nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) config.unfrees;
 
   config.virtualisation.vmware.guest.enable = true;
+  # config.boot.kernelPackages = pkgs.linuxPackages_5_15;
   config.boot.initrd.availableKernelModules = [ "ata_piix" "mptspi" "uhci_hcd" "ehci_pci" "ahci" "xhci_pci" "sd_mod" "sr_mod" ];
   config.boot.initrd.kernelModules = [ ];
   config.boot.kernelModules = [ "kvm-amd" ];
