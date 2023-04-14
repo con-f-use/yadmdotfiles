@@ -32,7 +32,7 @@
         specialArgs = { inherit inputs; nixrepo=nixunstable; };
         modules = [
           nixos-hardware.nixosModules.framework
-          ./machines/framework.nix
+          ./machines/framework12.nix
         ];
       };
 
