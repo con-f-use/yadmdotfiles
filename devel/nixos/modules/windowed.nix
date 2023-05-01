@@ -127,6 +127,7 @@ config = lib.mkIf config.roles.windowed.enable {
 
     kitty
 
+    zathura
     bookworm foliate  # maybe pick one
   ];
 
