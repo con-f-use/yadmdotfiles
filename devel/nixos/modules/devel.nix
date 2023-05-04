@@ -52,7 +52,7 @@ config = lib.mkIf config.roles.dev.enable {
     # at-spi2-atk at-spi2-core atk cups
     cairo curl dbus expat fontconfig freetype
     gdk-pixbuf glib gtk3 libGL libappindicator-gtk3
-    libdrm libnotify libpulseaudio libuuid libxcrypt
+    glibc libdrm libnotify libpulseaudio libuuid libxcrypt libxcrypt-legacy
     libxkbcommon mesa nspr nss pango pipewire systemd icu openssl
     xorg.libxcb xorg.libX11 xorg.libXScrnSaver xorg.libXcomposite
     xorg.libXcursor xorg.libXdamage xorg.libXext xorg.libXfixes
