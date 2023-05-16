@@ -149,17 +149,8 @@ config = lib.mkIf (config.roles.cudawork.enable) (lib.mkMerge [
   };
 
   environment.systemPackages = with pkgs; [
-    poetry pipenv jq docker-compose postgresql #devpi-client
+    poetry pipenv jq docker-compose postgresql groovy #devpi-client
     vault
-    # (python2.withPackages(ps: [
-    #   ps.requests
-    #   # ps.pynvim
-    #   ps.setuptools
-    #   ps.six
-    #   ps.virtualenv
-    #   ps.libvirt
-    #   ps.pycrypto
-    # ]))
   ] ++ lib.optional ( config.roles.cudawork.novpn == false ) barracudavpn;
 
   nixpkgs.config.permittedInsecurePackages = [

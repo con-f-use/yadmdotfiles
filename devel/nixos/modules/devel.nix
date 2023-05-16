@@ -30,7 +30,7 @@ options.roles.dev = {
 config = lib.mkIf config.roles.dev.enable {
 
 
-  boot.tmpOnTmpfs = true;
+  boot.tmp.useTmpfs = true;
 
   fileSystems."/var/tmp" = {
     fsType = "tmpfs";
@@ -109,27 +109,32 @@ config = lib.mkIf config.roles.dev.enable {
   #services.tor = { enable = true; client.enable = true; };
   #services.lorri.enable = true;
 
-  nixpkgs.overlays = [ (self: super: {
-    # Simple terminal
-    st = super.st.override {
-      patches = builtins.map super.fetchurl [
-        {
-          url = "https://st.suckless.org/patches/scrollback/st-scrollback-0.8.5.diff";
-          sha256 = "sha256-3H9SI7JvyBPZHUrjW9qlTWMCTK6fGK/Zs1lLozmd+lU=";
-        }
-        {
-          url = "https://st.suckless.org/patches/scrollback/st-scrollback-mouse-20220127-2c5edf2.diff";
-          sha256 = "sha256-Rqybzb/rABFTMgfLCrMWV6PrkZbaHQ2zRuap0fxLT3Y=";
-        }
-      ];
-    };
-  }) ];
+  nixpkgs.overlays = [
+    (self: super: {
+      # Simple terminal
+      st = super.st.override {
+        patches = builtins.map super.fetchurl [
+          {
+            url = "https://st.suckless.org/patches/scrollback/st-scrollback-0.8.5.diff";
+            sha256 = "sha256-3H9SI7JvyBPZHUrjW9qlTWMCTK6fGK/Zs1lLozmd+lU=";
+          }
+          {
+            url = "https://st.suckless.org/patches/scrollback/st-scrollback-mouse-20220127-2c5edf2.diff";
+            sha256 = "sha256-Rqybzb/rABFTMgfLCrMWV6PrkZbaHQ2zRuap0fxLT3Y=";
+          }
+        ];
+      };
+    })
+    (self: super: { 
+      nix-direnv = super.nix-direnv.override { enableFlakes = true; }; 
+    })
+  ];
 
   environment.pathsToLink = [ "/share/nix-direnv" ];
   environment.systemPackages = with pkgs; [
     # Essential
     htop gnupg screen tree file binutils-unwrapped age execline expect
-    wget curl w3m #magic-wormhole
+    wget curl w3m magic-wormhole bat
 
     # Base
     rename cryptsetup ncdu entr dos2unix

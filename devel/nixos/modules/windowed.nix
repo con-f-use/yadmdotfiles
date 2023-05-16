@@ -110,10 +110,9 @@ config = lib.mkIf config.roles.windowed.enable {
     # X
     xorg.xrandr xorg.xinit xorg.xsetroot xorg.xkill xclip fribidi
     wmctrl xorg.xwininfo  # wmctrl-1.07 xwininfo-1.1.4 
-    # xdotool  # no idea why, but leads to x not starting
-    gnome.file-roller font-manager
-    papirus-icon-theme
-    arc-theme
+    xdotool
+    gnome.file-roller 
+    font-manager papirus-icon-theme arc-theme
     gnome.nautilus gsettings-desktop-schemas gnome.dconf-editor
     firefox youtube-dl
     signal-desktop tdesktop discord thunderbird
@@ -123,10 +122,10 @@ config = lib.mkIf config.roles.windowed.enable {
 
     # Office
     libreoffice gimp
-    font-manager
 
     kitty
 
+    zathura
     bookworm foliate  # maybe pick one
   ];
 
