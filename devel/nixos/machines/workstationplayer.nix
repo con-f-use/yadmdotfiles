@@ -1,4 +1,4 @@
-{ config, lib, pkgs, inputs, nixrepo, ...}:
+{ config, lib, pkgs, inputs, nixrepo, ... }:
 {
   imports = [
     ../modules
@@ -22,7 +22,7 @@
 
   # ToDo: This is a dirty hack so I can merge this with unfrees from other modles
   # no idea how to do it properly.
-  config.unfrees = [ "discord" "typora" "hplip" "joypixels" "barracudavpn" "faac" ];  # ToDo: Move these to the modules that install them
+  config.unfrees = [ "discord" "typora" "hplip" "joypixels" "barracudavpn" "faac" ]; # ToDo: Move these to the modules that install them
   config.nixpkgs.config.allowUnfree = true;
   # config.nixpkgs.config.allowAliases = false;
   #nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) config.unfrees;
@@ -52,7 +52,7 @@
   #hardware.opengl.extraPackages = [ pkgs.intel-ocl ];
   #hardware.bluetooth.enable = true;
   #services.blueman.enable = true;
-  config.services.xserver.libinput.enable = true;  # Enable touchpad and other input periphery support.
+  config.services.xserver.libinput.enable = true; # Enable touchpad and other input periphery support.
   config.services.xserver.videoDrivers = [ "wmware" ];
   config.services.perswitch.enable = true;
   config.services.printing.enable = true;
@@ -60,22 +60,26 @@
   config.programs.system-config-printer.enable = true;
 
   config.fileSystems."/" =
-    { device = "rpool/root";
+    {
+      device = "rpool/root";
       fsType = "zfs";
     };
 
   config.fileSystems."/nix" =
-    { device = "rpool/nix";
+    {
+      device = "rpool/nix";
       fsType = "zfs";
     };
 
   config.fileSystems."/home" =
-    { device = "rpool/home";
+    {
+      device = "rpool/home";
       fsType = "zfs";
     };
 
   config.fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/D806-C699";
+    {
+      device = "/dev/disk/by-uuid/D806-C699";
       fsType = "vfat";
     };
 

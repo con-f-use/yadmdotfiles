@@ -1,133 +1,155 @@
 { config, lib, pkgs, ... }:
 let
-  x="x";
-in {
-options.roles.windowed = {
-  enable = lib.mkEnableOption "My graphical system based on X and instantOS";
-};
-config = lib.mkIf config.roles.windowed.enable {
+  x = "x";
+in
+{
+  options.roles.windowed = {
+    enable = lib.mkEnableOption "My graphical system based on X and instantOS";
+  };
+  config = lib.mkIf config.roles.windowed.enable {
 
-  sound.enable = true;
+    sound.enable = true;
 
-  hardware.pulseaudio = { enable = true; package = pkgs.pulseaudioFull; };
+    hardware.pulseaudio = { enable = true; package = pkgs.pulseaudioFull; };
 
-  services.gvfs.enable = true;
+    services.gvfs.enable = true;
 
-  services.udev.extraRules = ''
-    ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", MODE="0666", RUN+="${pkgs.coreutils}/bin/chmod a+w /sys/class/backlight/%k/brightness"
-  '';
+    services.udev.extraRules = ''
+      ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", MODE="0666", RUN+="${pkgs.coreutils}/bin/chmod a+w /sys/class/backlight/%k/brightness"
+    '';
 
-  services.clipmenu.enable = true;
+    services.clipmenu.enable = true;
 
-  programs.slock.enable = true;  # screen lock needs privileges
+    programs.slock.enable = true; # screen lock needs privileges
 
-  services.xserver.exportConfiguration = true;
+    services.xserver.exportConfiguration = true;
 
-  #programs.xonsh.enable = true;
+    #programs.xonsh.enable = true;
 
-  programs.dconf.enable = true;
+    programs.dconf.enable = true;
 
-  # fix java windows
-  environment.variables._JAVA_AWT_WM_NONREPARENTING = "1";
+    # fix java windows
+    environment.variables._JAVA_AWT_WM_NONREPARENTING = "1";
 
-  services.xserver = {
-    enable = true;
-    videoDrivers = [ "modsetting" ];  # intel
-    layout = "us";
-    xkbVariant = "intl";
-    autorun = true;
-    verbose = 7;
-    displayManager = {
-      # defaultSession = "none+dwm";
-      defaultSession = "none+instantwm";
-      #startx.enable = true;
-      lightdm.enable = true;
-      lightdm.greeters.gtk.theme.name = "Arc-Dark";
-      xserverArgs = [ "-verbose" ];
+    services.xserver = {
+      enable = true;
+      videoDrivers = [ "modsetting" ]; # intel
+      layout = "us";
+      xkbVariant = "intl";
+      autorun = true;
+      verbose = 7;
+      displayManager = {
+        # defaultSession = "none+dwm";
+        defaultSession = "none+instantwm";
+        #startx.enable = true;
+        lightdm.enable = true;
+        lightdm.greeters.gtk.theme.name = "Arc-Dark";
+        xserverArgs = [ "-verbose" ];
+      };
+      # desktopManager = {
+      #   gnome.enable = false;
+      #   gnome.extraGSettingsOverrides = ''
+      #     [org/gnome/nautilus/list-view]
+      #     default-visible-columns=['name', 'size', 'date_modified_with_time']
+      #     default-zoom-level='small'
+      #     use-tree-view=false
+
+      #     [org/gnome/nautilus/preferences]
+      #     default-folder-viewer='list-view'
+      #     executable-text-activation='ask'
+      #     default-sort-order='mtime;'
+      #   '';
+      # };
+      windowManager = {
+        session = pkgs.lib.singleton {
+          name = "instantwm";
+          start = ''
+            /home/jan/.nix-profile/bin/startinstantos &
+            waitPID=$!
+          '';
+        };
+        dwm.enable = true;
+      };
     };
-    # desktopManager = {
-    #   gnome.enable = false;
-    #   gnome.extraGSettingsOverrides = ''
-    #     [org/gnome/nautilus/list-view]
-    #     default-visible-columns=['name', 'size', 'date_modified_with_time']
-    #     default-zoom-level='small'
-    #     use-tree-view=false
+    programs.nm-applet.enable = true;
 
-    #     [org/gnome/nautilus/preferences]
-    #     default-folder-viewer='list-view'
-    #     executable-text-activation='ask'
-    #     default-sort-order='mtime;'
-    #   '';
-    # };
-    windowManager = {
-      session = pkgs.lib.singleton {
-        name = "instantwm";
-        start = ''
-          /home/jan/.nix-profile/bin/startinstantos &
-          waitPID=$!
+    # Becasue discord "looses" this damn setting all the time
+    systemd = {
+      timers.discord-skip-update = {
+        wantedBy = [ "timers.target" ];
+        partOf = [ "discord-skip-update.service" ];
+        timerConfig.OnCalendar = "daily";
+      };
+      services.discord-skip-update = {
+        serviceConfig.Type = "oneshot";
+        path = [ pkgs.jq ];
+        script = ''
+          target='/home/jan/.config/discord/settings.json'
+          text=$(jq '. + {"SKIP_HOST_UPDATE": true}' $target)
+          echo "$text" > "$target" || true
         '';
       };
-      dwm.enable = true;
     };
+
+    fonts.fonts = with pkgs; [
+      cantarell-fonts
+      noto-fonts
+      noto-fonts-cjk
+      noto-fonts-emoji
+      liberation_ttf
+      fira-code
+      fira-code-symbols
+      dina-font
+      proggyfonts
+      joypixels
+      (nerdfonts.override { fonts = [ "FiraCode" "FiraMono" ]; })
+    ];
+
+    nixpkgs.config.joypixels.acceptLicense = true;
+
+    environment.systemPackages = with pkgs; [
+      # X
+      xorg.xrandr
+      xorg.xinit
+      xorg.xsetroot
+      xorg.xkill
+      xclip
+      fribidi
+      wmctrl
+      xorg.xwininfo # wmctrl-1.07 xwininfo-1.1.4 
+      xdotool
+      gnome.file-roller
+      font-manager
+      papirus-icon-theme
+      arc-theme
+      gnome.nautilus
+      gsettings-desktop-schemas
+      gnome.dconf-editor
+      firefox
+      youtube-dl
+      signal-desktop
+      tdesktop
+      discord
+      thunderbird
+
+      # Multimedia
+      mpv
+      sxiv
+      flameshot
+      kazam
+      mcomix #zathura
+
+      # Office
+      libreoffice
+      gimp
+
+      kitty
+
+      zathura
+      bookworm
+      foliate # maybe pick one
+    ];
+
   };
-  programs.nm-applet.enable = true;
-
-  # Becasue discord "looses" this damn setting all the time
-  systemd = {
-    timers.discord-skip-update = {
-      wantedBy = [ "timers.target" ];
-      partOf = [ "discord-skip-update.service" ];
-      timerConfig.OnCalendar = "daily";
-    };
-    services.discord-skip-update = {
-      serviceConfig.Type = "oneshot";
-      path = [ pkgs.jq ];
-      script = ''
-        target='/home/jan/.config/discord/settings.json'
-        text=$(jq '. + {"SKIP_HOST_UPDATE": true}' $target)
-        echo "$text" > "$target" || true
-      '';
-    };
-  };
-
-  fonts.fonts = with pkgs; [
-    cantarell-fonts
-    noto-fonts
-    noto-fonts-cjk
-    noto-fonts-emoji
-    liberation_ttf
-    fira-code
-    fira-code-symbols
-    dina-font
-    proggyfonts
-    joypixels
-    (nerdfonts.override { fonts = [ "FiraCode" "FiraMono" ]; })
-  ];
-
-  nixpkgs.config.joypixels.acceptLicense = true;
-
-  environment.systemPackages = with pkgs; [
-    # X
-    xorg.xrandr xorg.xinit xorg.xsetroot xorg.xkill xclip fribidi
-    wmctrl xorg.xwininfo  # wmctrl-1.07 xwininfo-1.1.4 
-    xdotool
-    gnome.file-roller 
-    font-manager papirus-icon-theme arc-theme
-    gnome.nautilus gsettings-desktop-schemas gnome.dconf-editor
-    firefox youtube-dl
-    signal-desktop tdesktop discord thunderbird
-
-    # Multimedia
-    mpv sxiv flameshot kazam mcomix #zathura
-
-    # Office
-    libreoffice gimp
-
-    kitty
-
-    zathura
-    bookworm foliate  # maybe pick one
-  ];
-
-}; }
+}
 

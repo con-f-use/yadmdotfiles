@@ -80,7 +80,7 @@
   #   font = "Lat2-Terminus16";
   #   keyMap = "us";
   # };
-  users.groups.gpio = {};
+  users.groups.gpio = { };
   services.udev.extraRules = ''
     ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", MODE="0666", RUN+="${pkgs.coreutils}/bin/chmod a+w /sys/class/backlight/%k/brightness"
     SUBSYSTEM=="bcm2835-gpiomem", KERNEL=="gpiomem", GROUP="gpio",MODE="0660"
@@ -118,21 +118,21 @@
     fira-code-symbols
     dina-font
     joypixels
-    (pkgs.python3.withPackages(ps: with ps; [
+    (pkgs.python3.withPackages (ps: with ps; [
       setuptools
       virtualenv
       requests
       beautifulsoup4
       pygls
     ]))
-   (nerdfonts.override { fonts = [ "FiraCode" "FiraMono" ]; })
+    (nerdfonts.override { fonts = [ "FiraCode" "FiraMono" ]; })
   ];
   nixpkgs.config.joypixels.acceptLicense = true;
   nixpkgs.config.allowUnfree = true;
 
 
   # Shell Convenience
-  environment.shellAliases = { ll="ls -al --color=auto"; ff="sudo vi /etc/nixos/configuration.nix"; ss="sudo nixos-rebuild switch"; };
+  environment.shellAliases = { ll = "ls -al --color=auto"; ff = "sudo vi /etc/nixos/configuration.nix"; ss = "sudo nixos-rebuild switch"; };
   environment.homeBinInPath = true;
   environment.etc."gitconfig".text = ''
     [user]
@@ -157,15 +157,33 @@
 
   # Packages
   environment.systemPackages = with pkgs; [
-    htop gnupg screen tree file
-    fasd fzf direnv
-    wget curl w3m inetutils dnsutils nmap openssl mkpasswd
+    htop
+    gnupg
+    screen
+    tree
+    file
+    fasd
+    fzf
+    direnv
+    wget
+    curl
+    w3m
+    inetutils
+    dnsutils
+    nmap
+    openssl
+    mkpasswd
     flameshot
-    gitAndTools.git git-lfs
-    nix-prefetch-scripts nix-update nixpkgs-review cachix
+    gitAndTools.git
+    git-lfs
+    nix-prefetch-scripts
+    nix-update
+    nixpkgs-review
+    cachix
     vim
-    papirus-icon-theme arc-theme
-    (python3.withPackages(ps: with ps; [
+    papirus-icon-theme
+    arc-theme
+    (python3.withPackages (ps: with ps; [
       setuptools
       wheel
       appdirs
@@ -181,12 +199,14 @@
   systemd.services.porkbun_ddns = {
     serviceConfig.Type = "oneshot";
     #path = [ pgks.bash ];
-    script = let
-      porkbun = pkgs.writers.writePython3Bin "porkbun-ddns" { libraries = [ pkgs.python3Packages.requests ]; flakeIgnore = [ "E" "F" "W" ]; } (builtins.readFile ./porkbun-ddns.py);
-    in ''
-      ${porkbun}/bin/porkbun-ddns
-      ${porkbun}/bin/porkbun-ddns -4 || true
-    '';
+    script =
+      let
+        porkbun = pkgs.writers.writePython3Bin "porkbun-ddns" { libraries = [ pkgs.python3Packages.requests ]; flakeIgnore = [ "E" "F" "W" ]; } (builtins.readFile ./porkbun-ddns.py);
+      in
+      ''
+        ${porkbun}/bin/porkbun-ddns
+        ${porkbun}/bin/porkbun-ddns -4 || true
+      '';
   };
   systemd.timers.porkbun_ddns = {
     wantedBy = [ "timers.target" ];

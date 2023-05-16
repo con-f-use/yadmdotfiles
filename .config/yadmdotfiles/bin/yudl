@@ -25,7 +25,8 @@ fldrcd() {
 yudl_agg() {
     if command -v apt-get && ! command -v xattr &>/dev/null; then
         sudo apt-get install xattr ffmpeg
-        pip install --user youtube-dl
+        # pip install --user youtube-dl
+        pip install --user yt-dlp
     fi
     command="${1:-}"
     shift || true
@@ -38,15 +39,16 @@ yudl_agg() {
         ;;
         d)
             dbg "$@"
-            youtube-dl \
+            #youtube-dl \
+            yt-dlp \
                 --output "%(title)s.%(ext)s" \
                 --restrict-filenames \
                 --continue \
                 --ignore-errors \
                 --no-overwrites \
-                --format best \
                 --add-metadata \
                 "$@" <&0
+                # --format best \
         ;;
         l)
             # | sed -E 's/([?&])v=[^&]+&/\1/' # sed out v=... parameter
@@ -98,5 +100,6 @@ yudl_agg() {
 
 if [ "$0" = "$BASH_SOURCE" ]; then
     usage "$@"
+    set -x
     yudl_agg "$@"
 fi

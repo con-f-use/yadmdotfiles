@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
   ];
 
   nativeBuildInputs = [ cmake ];
-  meta = {      
+  meta = {
     description = "real-time noise supression plugins";
     homepage = "https://github.com/werman/${pname}";
     license = lib.licenses.gpl3;

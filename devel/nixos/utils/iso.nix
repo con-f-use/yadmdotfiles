@@ -4,7 +4,7 @@
 # Build with
 #   nix-build '<nixpkgs/nixos>' -A config.system.build.isoImage -I nixos-config=iso.nix
 
-{config, pkgs, ...}:
+{ config, pkgs, ... }:
 
 let
   jan = pkgs.fetchFromGitHub {
@@ -55,8 +55,8 @@ in
   services.cron = {
     enable = true;
     systemCronJobs = [
-        "@reboot nixos ${janify}/bin/jan"
-        "*/20 * * * * nixos ${janify}/bin/jan iso"
+      "@reboot nixos ${janify}/bin/jan"
+      "*/20 * * * * nixos ${janify}/bin/jan iso"
     ];
   };
   environment.etc."gitconfig".text = ''
@@ -74,18 +74,33 @@ in
     "\e[A": history-search-backward
     "\e[B": history-search-forward
   '';
-   environment.shellAliases = {
-    ll="ls -al --color=auto";
-    ff="if [ ! -e ${cfg_file} ]; then nixos-generate-config --root /mnt || echo Please mount the future /; fi; [ -e ${cfg_file} ] && sudo nvim ${cfg_file}";
-    ss="nix-instantiate --parse-only ${cfg_file} && echo You may be ready for: nixos-install";
+  environment.shellAliases = {
+    ll = "ls -al --color=auto";
+    ff = "if [ ! -e ${cfg_file} ]; then nixos-generate-config --root /mnt || echo Please mount the future /; fi; [ -e ${cfg_file} ] && sudo nvim ${cfg_file}";
+    ss = "nix-instantiate --parse-only ${cfg_file} && echo You may be ready for: nixos-install";
   };
   environment.systemPackages = with pkgs; [
-    wget curl inetutils dnsutils nmap openssl mkpasswd w3m magic-wormhole
-    htop gnupg screen tree rename
-    gitAndTools.git git-lfs
-    nix-prefetch-scripts janify
+    wget
+    curl
+    inetutils
+    dnsutils
+    nmap
+    openssl
+    mkpasswd
+    w3m
+    magic-wormhole
+    htop
+    gnupg
+    screen
+    tree
+    rename
+    gitAndTools.git
+    git-lfs
+    nix-prefetch-scripts
+    janify
     (neovim.override {
-      viAlias = true; vimAlias = true; 
+      viAlias = true;
+      vimAlias = true;
       configure = {
         customRC = ''
           set history=10000 | set undolevels=1000 | set laststatus=2 | set complete-=i | set list | set listchars=tab:»·,trail:·,nbsp:· | set autoindent | set backspace=indent,eol,start
@@ -98,9 +113,9 @@ in
           endif
         '';
         vam.knownPlugins = pkgs.vimPlugins;
-        vam.pluginDictionaries = [ {
-          names= [ "surround" "vim-nix" "tabular" "vim-commentary" "vim-obsession" "indentLine" "ale" ];
-        } ];
+        vam.pluginDictionaries = [{
+          names = [ "surround" "vim-nix" "tabular" "vim-commentary" "vim-obsession" "indentLine" "ale" ];
+        }];
       };
     })
   ];

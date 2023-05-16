@@ -1,4 +1,4 @@
-with import <nixpkgs> {};
+with import <nixpkgs> { };
 
 mkShell {
   buildInputs = [ pkgs.curl pkgs.wally-cli ];

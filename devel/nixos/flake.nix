@@ -9,62 +9,68 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-22.05";
-    nixunstable.url = "nixpkgs/nixos-unstable"; 
+    nixunstable.url = "nixpkgs/nixos-unstable";
     # nixunstable.url = "github:NixOS/nixpkgs/d7705c01ef0a39c8ef532d1033bace8845a07d35";  # workes on workstation 21.01.2023
     # nixunstable.url = "9608ace7009ce5bc3aeb940095e01553e635cbc7";  # 13.9.22
     # nixunstable.url = "github:NixOS/nixpkgs/8203e061ec0556b4d4a972b18ba92509cb1ddd04";  # temporary because https://github.com/NixOS/nixpkgs/issues/172558
     nixos-hardware.url = "github:NixOS/nixos-hardware";
   };
 
-  outputs = { self, nixpkgs, nixunstable, nixos-hardware }@inputs: {
-    nixosConfigurations = {
+  outputs = { self, nixpkgs, nixunstable, nixos-hardware }@inputs:
+    let
+      system = "x86_64-linux";
+    in
+    {
+      nixosConfigurations = {
 
-      conix = nixunstable.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs; nixrepo=nixunstable; };
-        modules = [
-          ./machines/workstationplayer.nix
-        ];
+        conix = nixunstable.lib.nixosSystem {
+          system = system;
+          specialArgs = { inherit inputs; nixrepo = nixunstable; };
+          modules = [
+            ./machines/workstationplayer.nix
+          ];
+        };
+
+        framework = nixunstable.lib.nixosSystem {
+          system = system;
+          specialArgs = { inherit inputs; nixrepo = nixunstable; };
+          modules = [
+            nixos-hardware.nixosModules.framework
+            ./machines/framework.nix
+          ];
+        };
+
+        worklap = nixunstable.lib.nixosSystem {
+          system = system;
+          specialArgs = { inherit inputs; nixrepo = nixunstable; };
+          modules = [
+            nixos-hardware.nixosModules.dell-latitude-7490
+            ./machines/worklap.nix
+          ];
+        };
+
+        connote = nixunstable.lib.nixosSystem {
+          system = system;
+          specialArgs = { inherit inputs; nixrepo = nixunstable; };
+          modules = [
+            nixos-hardware.nixosModules.common-cpu-intel
+            nixos-hardware.nixosModules.common-pc-laptop
+            nixos-hardware.nixosModules.common-pc-ssd
+            ./machines/hplap.nix
+          ];
+        };
+
+        raspi = nixunstable.lib.nixosSystem {
+          system = "aarch64-linux";
+          specialArgs = { inherit inputs; nixrepo = nixunstable; };
+          modules = [
+            nixos-hardware.nixosModules.raspberry-pi-4
+            ./machines/raspi.nix
+          ];
+        };
+
       };
 
-      framework = nixunstable.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs; nixrepo=nixunstable; };
-        modules = [
-          nixos-hardware.nixosModules.framework
-          ./machines/framework.nix
-        ];
-      };
-
-      worklap = nixunstable.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs; nixrepo=nixunstable; };
-        modules = [
-          nixos-hardware.nixosModules.dell-latitude-7490
-          ./machines/worklap.nix
-        ];
-      };
-
-      connote = nixunstable.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs; nixrepo=nixunstable; };
-        modules = [
-          nixos-hardware.nixosModules.common-cpu-intel
-          nixos-hardware.nixosModules.common-pc-laptop
-          nixos-hardware.nixosModules.common-pc-ssd
-          ./machines/hplap.nix
-        ];
-      };
-
-      raspi = nixunstable.lib.nixosSystem {
-        system = "aarch64-linux";
-        specialArgs = { inherit inputs; nixrepo=nixunstable; };
-        modules = [
-          nixos-hardware.nixosModules.raspberry-pi-4
-          ./machines/raspi.nix
-        ];
-      };
-
+      formatter."${system}" = nixunstable.legacyPackages."${system}".nixpkgs-fmt;
     };
-  };
 }

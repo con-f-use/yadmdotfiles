@@ -45,30 +45,34 @@
   #hardware.opengl.extraPackages = [ pkgs.intel-ocl ];
   #hardware.bluetooth.enable = true;
   #services.blueman.enable = true;
-  config.services.xserver.libinput.enable = true;  # Enable touchpad support.
+  config.services.xserver.libinput.enable = true; # Enable touchpad support.
   config.services.logind.lidSwitch = "ignore";
   config.networking.hostId = "f3dc4d2a";
 
   config.roles.zfs.enable = true;
   config.fileSystems."/" =
-     { device = "rpool/root";
-       fsType = "zfs";
-     };
- 
+    {
+      device = "rpool/root";
+      fsType = "zfs";
+    };
+
   config.fileSystems."/nix" =
-     { device = "rpool/nix";
-       fsType = "zfs";
-     };
+    {
+      device = "rpool/nix";
+      fsType = "zfs";
+    };
 
   config.fileSystems."/home" =
-     { device = "rpool/home";
-       fsType = "zfs";
-     };
+    {
+      device = "rpool/home";
+      fsType = "zfs";
+    };
 
   config.fileSystems."/boot" =
-     { device = "/dev/disk/by-uuid/C1DA-4C5B";
-       fsType = "vfat";
-     };
+    {
+      device = "/dev/disk/by-uuid/C1DA-4C5B";
+      fsType = "vfat";
+    };
   config.swapDevices = [ ];
 
   config.powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";

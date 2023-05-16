@@ -1,6 +1,18 @@
-
-{ stdenv, lib, fetchurl, zlib, glib, xorg, dbus, fontconfig, libGL,
-  freetype, xkeyboard_config, makeDesktopItem, makeWrapper, qtdpi ? "120" }:
+{ stdenv
+, lib
+, fetchurl
+, zlib
+, glib
+, xorg
+, dbus
+, fontconfig
+, libGL
+, freetype
+, xkeyboard_config
+, makeDesktopItem
+, makeWrapper
+, qtdpi ? "120"
+}:
 
 stdenv.mkDerivation rec {
   pname = "qamongo";
@@ -24,10 +36,10 @@ stdenv.mkDerivation rec {
     comment = "Query GUI for mongodb";
     desktopName = "Robo3T";
     genericName = "MongoDB management tool";
-    categories = ["Development" "IDE"];
+    categories = [ "Development" "IDE" ];
   };
 
-  nativeBuildInputs = [makeWrapper];
+  nativeBuildInputs = [ makeWrapper ];
 
   ldLibraryPath = lib.makeLibraryPath [
     stdenv.cc.cc
