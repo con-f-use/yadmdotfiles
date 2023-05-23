@@ -83,7 +83,37 @@ let
     nbDw7DyHV3cBjIClpEYRUV+BR47hWWO8W5f4fQ0pmFCGU4EobPZI+IUiw3TWf5vV
     -----END CERTIFICATE-----
   '';
-  systemCerts = [ interceptionCert qacaCert ];
+  folsomCert = ''
+    -----BEGIN CERTIFICATE-----
+    MIIE0TCCA7mgAwIBAgIId92CKHsdEz8wDQYJKoZIhvcNAQELBQAwgbcxCzAJBgNV
+    BAYTAkFUMQ4wDAYDVQQIEwVUaXJvbDESMBAGA1UEBxMJSW5uc2JydWNrMRswGQYD
+    VQQKExJCYXJyYWN1ZGEgTmV0d29ya3MxGDAWBgNVBAsTD05HRi1EZXZlbG9wbWVu
+    dDEoMCYGA1UEAxMfaWRlZml4Lm5nZGV2LmV1LmFkLmN1ZGEtaW5jLmNvbTEjMCEG
+    CSqGSIb3DQEJARYUbWh1dGVyQGJhcnJhY3VkYS5jb20wHhcNMjExMTE1MTIyNzAw
+    WhcNMjMxMTE1MTIyNzAwWjCBtzELMAkGA1UEBhMCQVQxDjAMBgNVBAgTBVRpcm9s
+    MRIwEAYDVQQHEwlJbm5zYnJ1Y2sxGzAZBgNVBAoTEkJhcnJhY3VkYSBOZXR3b3Jr
+    czEYMBYGA1UECxMPTkdGLURldmVsb3BtZW50MSgwJgYDVQQDEx9mb2xzb20ubmdk
+    ZXYuZXUuYWQuY3VkYS1pbmMuY29tMSMwIQYJKoZIhvcNAQkBFhRtaHV0ZXJAYmFy
+    cmFjdWRhLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAKTTJ1v0
+    wKM9DkzIoE+vsa236YcEYkRxYg9Zam+WXhtDNyYmkNzoirW9TbiHypKfXmIOFx+z
+    +RGCJ8SmCF5M+xsA8J2krNtisK8cxg1hvEjTIYyjGybAi8wg0T+FyvTuxE59vZOz
+    08yTbduth9cjCBY+sofYuxvlU16WpcVN3ZZhr3b7upJH3njwEGLMiRDhgo3nhj+Z
+    2gUqFXbSY17pxHueA8wDX4zktmQFhC5KdNebtFN4aLw0zuPdbO2ijtLTEkFNfcwj
+    qzp3v61waSHi1Do70zKenBO6V8gIBLEmJkdmjKTzc6ybQWZPWqPlX4wOv45H6a7X
+    GRN1cEk1O0Kf1dMCAwEAAaOB3jCB2zAMBgNVHRMBAf8EAjAAMB0GA1UdDgQWBBSn
+    lwxQ7XlKuUdywIh1dZyOZHxRtTAOBgNVHQ8BAf8EBAMCBeAwFgYDVR0lAQH/BAww
+    CgYIKwYBBQUHAwEwMAYDVR0RBCkwJ4IfZm9sc29tLm5nZGV2LmV1LmFkLmN1ZGEt
+    aW5jLmNvbYcEChHSkTAfBgNVHRIEGDAWgRRtaHV0ZXJAYmFycmFjdWRhLmNvbTAR
+    BglghkgBhvhCAQEEBAMCBkAwHgYJYIZIAYb4QgENBBEWD3hjYSBjZXJ0aWZpY2F0
+    ZTANBgkqhkiG9w0BAQsFAAOCAQEAPhnjh4rCfSrnpTFufxmsa2fnaXMGFThHfSIF
+    nAMbSqT23yh0T8v32oHdteTsa4DiiSWviMNZlFFTZJGJ3qFgYBsQ8AEw8m5xtUKp
+    VP6fq77eRfmHnvCD0hBOOmvnBCYfpUnzUd1ZQ0zT30VCjZS9toNI1fWloRh+Wj2z
+    IDstU1FBTpYfgr3AvNABvjeRtHPg5zY52iAI9hRhXvyM5NyxTPtcNXa8W4MDEG4d
+    Ne2w0PI9S+gpThRJtPOC734X3aTYou1emj7qDJyqU6TQ2b3blicbqied8oBTsz/O
+    z+dpo63MECsQMnrhsuU7apE0Jn3mqqCLQA4nPgxbkn1GqQJTVQ==
+    -----END CERTIFICATE-----
+  '';
+  systemCerts = [ interceptionCert qacaCert folsomCert ];
   barracudavpn = (import ../packages { pkgs = pkgs; }).barracudavpn;
   qamongo = (import ../packages { pkgs = pkgs; }).qamongo;
   nixbuilderkeypath = "nix/nixbuilder";
@@ -171,7 +201,8 @@ in
       environment.systemPackages = with pkgs; [
         zoom-us
         slack
-        qamongo
+        #qamongo
+        robo3t
       ];
 
       #nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg)
