@@ -82,4 +82,5 @@
       #templates (nix flake init -t ./#<name>)
       #hydraJobs
     };
+  };
 }

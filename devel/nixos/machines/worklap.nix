@@ -21,6 +21,7 @@
     cudawork.novpn = false;
     cudawork.use_builders = true;
   };
+  config.services.kubo.enable = lib.mkForce false;
   config.users.users.root.openssh.authorizedKeys.keys = config.users.users.jan.openssh.authorizedKeys.keys;
   #environment.systemPackages = with pkgs; [ ];
   # config.security.pki.certificates = [ (builtins.readFile ../cuda.crt) ];

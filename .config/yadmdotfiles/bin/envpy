@@ -23,7 +23,13 @@ main() {
         "#watch_file <path>,..  #reload env if <path> changes\n" \
         "#export VAR_NAME=VALUE #exports a varialbe to the environment\n" \
         "#dotenv <path>         #load a .env file e.g. used in node & ruby\n" \
-        "#use <tool>            # e.g. nix for version pinning"
+        "#export DEBUG=1\n" \
+        "#export PKG_CONFIG_PATH=\n" \
+        "#export LD_LIBRARY_PATH=\n" \
+        "#export NIX_SSL_CERT_FILE=\n" \
+        "#export REQUESTS_CA_BUNDLE=\n" \
+        "#use nix  # --builders ''\n" \
+        "#use flake"
     direnv allow ./
     eval "$(direnv export bash)"
     # python -m pip install -U wheel setuptools pip setuptools-scm pipenv requests 2>&1 >pip.log &

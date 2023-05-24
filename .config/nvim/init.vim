@@ -26,9 +26,9 @@ call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-fugitive'  " Git for vim
     Plug 'junegunn/fzf.vim'
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-    " Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
     " Plug 'neoclide/coc.nvim', {'commit': 'cf651a31736fc36c441bf307d2babff78280dd59'}
-    Plug 'neoclide/coc.nvim'
+    " Plug 'neoclide/coc.nvim'
     "Plug 'tpope/vim-eunuch'  " Unix command in vim
     "Plug 'xolox/vim-misc'  " Glue to make other xolox plugins work
     Plug 'joshdick/onedark.vim'  " Nice color theme for vim

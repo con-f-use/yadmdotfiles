@@ -139,6 +139,18 @@ in
       #distributedBuilds = true;
       #buildMachines = [ { hostname=; system="x86_64-linux"; maxJobs=100; supportedFeatures=["benchmark" "big-parallel"] } ];
     };
+    # daemonCPUSchedPolicy = 19;
+    gc = {
+      automatic = true;
+      options = "--delete-older-than 14d";
+    };
+    registry.nixpkgs.flake = nixrepo;
+    nixPath = [ "nixpkgs=${nixrepo}" "nixos-config=/etc/nixos/configuration.nix" "/nix/var/nix/profiles/per-user/root/channels" ];
+    #binaryCaches = [];
+    #binaryCachePublicKeys = [];
+    #distributedBuilds = true;
+    #buildMachines = [ { hostname=; system="x86_64-linux"; maxJobs=100; supportedFeatures=["benchmark" "big-parallel"] } ];
+  };
 
     environment.variables = { EDITOR = "nvim"; };
 
@@ -205,6 +217,8 @@ in
       parallel
       pandoc
       figlet
+      bat
+      lnav
       #texlive.combined.scheme-medium
       # (texlive.combine { inherit (texlive) scheme-medium xargs bigfoot moderncv lipsum footmisc multibib soul; })
       # ungoogled-chromium # in unstable!
