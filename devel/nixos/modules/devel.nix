@@ -218,6 +218,7 @@ in
       nixpkgs-review
       nix-tree
       nix-top
+      rnix-lsp
       nixpkgs-fmt
       cachix
       morph

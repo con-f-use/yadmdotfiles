@@ -156,6 +156,7 @@ colorscheme onedark
 set hidden
 set list                            " show invisible characters
 set listchars=tab:»·,trail:·,nbsp:· " Display extra whitespace
+let g:vim_json_conceal=0   " display quotes in json
 
 if exists(":lua")
     lua require'colorizer'.setup()

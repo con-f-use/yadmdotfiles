@@ -15,9 +15,9 @@
 
 # Aliases for copy&pasting json
 try:
-    import __builtin__
-except ImportError:
     import builtins as __builtin__
+except ImportError:
+    import __builtin__
 __builtin__.true = True
 __builtin__.false = False
 __builtin__.null = None

@@ -23,5 +23,11 @@
                 }
         },
         "coc.preferences.noselect": false,
-        "suggest.noselect": false
+        "suggest.noselect": false,
+        "languageserver": {
+                "nix": {
+                        "command": "rnix-lsp",
+                        "filetypes": [ "nix" ]
+                }
+        }
 }
