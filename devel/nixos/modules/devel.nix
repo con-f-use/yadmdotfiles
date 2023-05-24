@@ -137,7 +137,7 @@ config = lib.mkIf config.roles.dev.enable {
     # General
     gitAndTools.git
     gitAndTools.pre-commit gitAndTools.git-open gitAndTools.delta git-lfs
-    fasd fzf ripgrep direnv nix-direnv parallel pandoc figlet
+    fasd fzf ripgrep direnv nix-direnv parallel pandoc figlet bat lnav
     #texlive.combined.scheme-medium
     # (texlive.combine { inherit (texlive) scheme-medium xargs bigfoot moderncv lipsum footmisc multibib soul; })
     # ungoogled-chromium # in unstable!
