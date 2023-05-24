@@ -24,15 +24,16 @@
       nixosConfigurations = {
 
         conix = nixunstable.lib.nixosSystem {
-          system = system;
+          inherit system;
           specialArgs = { inherit inputs; nixrepo = nixunstable; };
           modules = [
+            #{ nixpkgs.overlays = [ inputs.emacs-overlay.overlay ]; }
             ./machines/workstationplayer.nix
           ];
         };
 
         framework = nixunstable.lib.nixosSystem {
-          system = system;
+          inherit system;
           specialArgs = { inherit inputs; nixrepo = nixunstable; };
           modules = [
             nixos-hardware.nixosModules.framework
@@ -41,7 +42,7 @@
         };
 
         worklap = nixunstable.lib.nixosSystem {
-          system = system;
+          inherit system;
           specialArgs = { inherit inputs; nixrepo = nixunstable; };
           modules = [
             nixos-hardware.nixosModules.dell-latitude-7490
@@ -50,7 +51,7 @@
         };
 
         connote = nixunstable.lib.nixosSystem {
-          system = system;
+          inherit system;
           specialArgs = { inherit inputs; nixrepo = nixunstable; };
           modules = [
             nixos-hardware.nixosModules.common-cpu-intel
@@ -72,5 +73,13 @@
       };
 
       formatter."${system}" = nixunstable.legacyPackages."${system}".nixpkgs-fmt;
+      #devShells
+      #packages
+      #apps
+      #overlays
+      #formatter
+      #checks (nix flake check)
+      #templates (nix flake init -t ./#<name>)
+      #hydraJobs
     };
 }
