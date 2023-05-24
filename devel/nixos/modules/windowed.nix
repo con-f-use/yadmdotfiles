@@ -89,10 +89,7 @@ in
           echo "$text" > "$target" || true
         '';
       };
-      dwm.enable = true;
     };
-  };
-  programs.nm-applet.enable = true;
 
     fonts.fonts = with pkgs; [
       cantarell-fonts

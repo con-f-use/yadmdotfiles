@@ -7,14 +7,6 @@
   # --builders "": same
   # --show-trace : show error traceback
 
-  inputs = {
-    nixpkgs.url = "nixpkgs/nixos-22.05";
-    nixunstable.url = "nixpkgs/nixos-unstable";
-    # nixunstable.url = "github:NixOS/nixpkgs/d7705c01ef0a39c8ef532d1033bace8845a07d35";  # workes on workstation 21.01.2023
-    # nixunstable.url = "9608ace7009ce5bc3aeb940095e01553e635cbc7";  # 13.9.22
-    # nixunstable.url = "github:NixOS/nixpkgs/8203e061ec0556b4d4a972b18ba92509cb1ddd04";  # temporary because https://github.com/NixOS/nixpkgs/issues/172558
-    nixos-hardware.url = "github:NixOS/nixos-hardware";
-  };
 
   outputs = { self, nixpkgs, nixunstable, nixos-hardware }@inputs:
     let
@@ -82,5 +74,14 @@
       #templates (nix flake init -t ./#<name>)
       #hydraJobs
     };
+
+  inputs = {
+    nixpkgs.url = "nixpkgs/nixos-22.05";
+    nixunstable.url = "nixpkgs/nixos-unstable";
+    # nixunstable.url = "github:NixOS/nixpkgs/d7705c01ef0a39c8ef532d1033bace8845a07d35";  # workes on workstation 21.01.2023
+    # nixunstable.url = "9608ace7009ce5bc3aeb940095e01553e635cbc7";  # 13.9.22
+    # nixunstable.url = "github:NixOS/nixpkgs/8203e061ec0556b4d4a972b18ba92509cb1ddd04";  # temporary because https://github.com/NixOS/nixpkgs/issues/172558
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
   };
+
 }

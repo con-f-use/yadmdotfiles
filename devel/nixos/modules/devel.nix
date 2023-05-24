@@ -32,7 +32,6 @@ in
   # imports = [ <nix-ld/modules/nix-ld.nix> ];  # sudo nix-channel --add https://github.com/Mic92/nix-ld/archive/main.tar.gz nix-ld
   config = lib.mkIf config.roles.dev.enable {
 
-
     boot.tmp.useTmpfs = true;
 
     fileSystems."/var/tmp" = {
@@ -139,18 +138,6 @@ in
       #distributedBuilds = true;
       #buildMachines = [ { hostname=; system="x86_64-linux"; maxJobs=100; supportedFeatures=["benchmark" "big-parallel"] } ];
     };
-    # daemonCPUSchedPolicy = 19;
-    gc = {
-      automatic = true;
-      options = "--delete-older-than 14d";
-    };
-    registry.nixpkgs.flake = nixrepo;
-    nixPath = [ "nixpkgs=${nixrepo}" "nixos-config=/etc/nixos/configuration.nix" "/nix/var/nix/profiles/per-user/root/channels" ];
-    #binaryCaches = [];
-    #binaryCachePublicKeys = [];
-    #distributedBuilds = true;
-    #buildMachines = [ { hostname=; system="x86_64-linux"; maxJobs=100; supportedFeatures=["benchmark" "big-parallel"] } ];
-  };
 
     environment.variables = { EDITOR = "nvim"; };
 
@@ -194,7 +181,6 @@ in
       curl
       w3m
       magic-wormhole
-      bat
 
       # Base
       rename
@@ -261,5 +247,6 @@ in
       base-neovim # python-language-server
     ] ++ (lib.optionals (config.services.xserver.enable) [ pkgs.meld pkgs.xournalpp ]);
   };
+
 }
 
