@@ -125,6 +125,8 @@ in
         keep-derivations = true;
         sandbox = true; # newer
         # useSandbox = true;  # old
+        allowed-users = [ "@wheel" ];
+        trusted-users = [ "@wheel" ];
       };
       # daemonCPUSchedPolicy = 19;
       gc = {
@@ -217,8 +219,13 @@ in
       nix-index
       nixpkgs-review
       nix-tree
+      tree-sitter-grammars.tree-sitter-nix
+      tree-sitter-grammars.tree-sitter-nickel
+      manix
+      nix-index
       nix-top
       rnix-lsp
+      nix-output-monitor
       nixpkgs-fmt
       cachix
       morph

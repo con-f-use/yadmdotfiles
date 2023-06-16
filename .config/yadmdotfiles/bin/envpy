@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # encoding: UTF-8, break: linux, indent: 4 spaces, lang: bash 3+/eng
-description="./$0 -h | [2|3]
-Initialize folder for direnv.
+description="./$0 -h
+Initialize python project folder for direnv.
 
 "
 
@@ -28,6 +28,7 @@ main() {
         "#export LD_LIBRARY_PATH=\n" \
         "#export NIX_SSL_CERT_FILE=\n" \
         "#export REQUESTS_CA_BUNDLE=\n" \
+        "#source <(direnv apply_dump .envrc.cache 1>/dev/null)  # update cache with: \`DIRENV_LOG_FORMAT=\"\" nix develop -c sh -c 'direnv dump > .envrc.cache'\`\n" \
         "#use nix  # --builders ''\n" \
         "#use flake"
     direnv allow ./

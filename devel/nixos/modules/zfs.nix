@@ -12,6 +12,8 @@
     services.zfs.autoScrub.enable = true;
     boot.zfs.devNodes = "/dev/disk/by-partuuid"; # https://discourse.nixos.org/t/cannot-import-zfs-pool-at-boot/4805/14
     #services.zfs.trim.enable = true;
+    #  services.fstrim = { enable = true; interval = "weekly"; };
+
 
     services.zfs.autoSnapshot = {
       enable = true;

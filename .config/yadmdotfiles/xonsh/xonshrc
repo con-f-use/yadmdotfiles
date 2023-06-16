@@ -11,7 +11,7 @@
 
 # Install with:
 # sudo pip3 install xonsh[ptk,linux,pygments,proctitle]
-# xonsh -c xpip install xonsh-direnv xontrib-z xontrib-histcpy
+# xonsh -c xpip install xonsh-direnv xontrib-z xontrib-histcpy xontrib-whole-word-jumping
 
 # Aliases for copy&pasting json
 try:
@@ -40,7 +40,7 @@ sys.path.append('.')
 # python -m ensurepip --user
 # $PYTHONPATH = "$HOME/.local/lib/python3.8/site-packages"
 # xonsh
-# python -m pip install --user -U pip xontrib-z xonsh-direnv xontrib-fzf-widgets
+# python -m pip install --user -U pip xontrib-z xonsh-direnv xontrib-fzf-widgets xontrib-whole-word-jumping
 for p in map(lambda s: str(s.resolve()), p"~/.local/lib/".glob("python*/site-packages")):
     if p not in sys.path:
         sys.path.append(p)
@@ -159,6 +159,7 @@ aliases["vv"] = "vi $HOME/.config/nvim/init.vim"
 
 aliases["jj"] = "vi $HOME/.config/xonsh/rc.xsh"
 aliases["kk"] = "vi $HOME/.config/kitty/kitty.conf"
+aliases[":q"] = "exit"
 
 import shlex
 def alias(args, stdin=None):

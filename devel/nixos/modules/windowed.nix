@@ -138,6 +138,7 @@ in
       flameshot
       kazam
       mcomix #zathura
+      rar # needed by mcomix for cbr support
 
       # Office
       libreoffice

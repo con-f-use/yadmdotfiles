@@ -27,19 +27,23 @@ call plug#begin('~/.vim/plugged')
     Plug 'junegunn/fzf.vim'
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
-    " Plug 'neoclide/coc.nvim', {'commit': 'cf651a31736fc36c441bf307d2babff78280dd59'}
-    " Plug 'neoclide/coc.nvim'
+    "Plug 'neoclide/coc.nvim', {'commit': 'cf651a31736fc36c441bf307d2babff78280dd59'}
     "Plug 'tpope/vim-eunuch'  " Unix command in vim
     "Plug 'xolox/vim-misc'  " Glue to make other xolox plugins work
     Plug 'joshdick/onedark.vim'  " Nice color theme for vim
     Plug 'alfredodeza/pytest.vim'
     Plug 'easymotion/vim-easymotion'
+    Plug 'chrisbra/matchit'  " Makes % match more  (e.g. if-else)
+    Plug 'vim-scripts/ReplaceWithRegister'  " [count]["x]gr[r|motion] replates motion with register content
+    Plug 'machakann/vim-highlightedyank'  " higlights what was yanked shortly
+    " Plug 'unblevable/quick-scope'  " highlits unique letter for fFtT
     if exists(':lua')
         Plug 'nvim-lua/popup.nvim'
         Plug 'nvim-lua/plenary.nvim'
         "Plug 'nvim-telescope/telescope.nvim', { 'on': 'Telescope' }
         Plug 'nvim-treesitter/nvim-treesitter' ", { 'commit': '47a4eadf4471af2b57fad405bd0a7b42cdf0fba6'}
-        " Plug 'nvim-treesitter/nvim-treesitter-context' "https://github.com/nvim-treesitter/nvim-treesitter-context/issues/150
+        Plug 'nvim-treesitter/nvim-treesitter-context', {'do': ':TSUpdate'} "https://github.com/nvim-treesitter/nvim-treesitter-context/issues/150  "run `TSInstall <language>` after!
+        Plug 'nvim-treesitter/nvim-treesitter-refactor'
         Plug 'nvim-lualine/lualine.nvim'
         Plug 'akinsho/nvim-bufferline.lua'
         Plug 'Yggdroot/indentLine'
@@ -166,7 +170,7 @@ set inccommand=split
 
 command! -bang ProjectFiles call fzf#vim#files('~/devel', <bang>0)
 
-nmap <leader><tab> <plug>(fzf-maps-n)
+nmap <leader>? <plug>(fzf-maps-n)
 nnoremap <leader>o :ProjectFiles<CR>
 nnoremap <leader><SPACE> :Files<CR>
 nnoremap <leader>n :Neoformat<CR>
@@ -194,9 +198,11 @@ nnoremap <leader>k :call <SID>show_documentation()<CR>
 
 nnoremap <leader>. :bn<CR>
 nnoremap <leader>, :bp<CR>
+nnoremap <leader>dd :execute "normal \<Plug>Ysurroundiw\""<cr>
+nnoremap <leader>bb :execute "normal \<Plug>Ysurroundiw)"<cr>
 
-" Move to word
-"map <Leader>/ <Plug>(easymotion-prefix)
+"Move to word
+"map <Leader>/ <Plug>(easymotion"-prefix)
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
 map  <leader>w <plug>(easymotion-bd-w)
 nmap <leader>w <plug>(easymotion-overwin-w)
@@ -246,7 +252,23 @@ if exists(':lua')
     lua << EOF
     require('lualine').setup{ options = { theme = 'onedark', icons_enabled = true }}
     require'bufferline'.setup{}
-    require'nvim-treesitter.configs'.setup { highlight = { enable = true }, zindex=300 }
+    require'nvim-treesitter.configs'.setup {
+      highlight = { enable = true },
+      zindex=300,
+      refactor = {
+        navigation = {
+          enable = true,
+          -- Assign keymaps to false to disable them, e.g. `goto_definition = false`.
+          keymaps = {
+            goto_definition = "gnd",
+            list_definitions = "gnD",
+            list_definitions_toc = "gO",
+            goto_next_usage = "<a-*>",
+            goto_previous_usage = "<a-#>",
+          },
+        },
+      },
+    }
 EOF
 
 endif
