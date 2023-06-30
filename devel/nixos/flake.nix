@@ -76,7 +76,7 @@
     };
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-22.05";
+    nixpkgs.url = "nixpkgs/nixos-23.05";
     nixunstable.url = "nixpkgs/nixos-unstable";
     # nixunstable.url = "github:NixOS/nixpkgs/d7705c01ef0a39c8ef532d1033bace8845a07d35";  # workes on workstation 21.01.2023
     # nixunstable.url = "9608ace7009ce5bc3aeb940095e01553e635cbc7";  # 13.9.22

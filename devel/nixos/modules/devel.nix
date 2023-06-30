@@ -32,7 +32,9 @@ in
   # imports = [ <nix-ld/modules/nix-ld.nix> ];  # sudo nix-channel --add https://github.com/Mic92/nix-ld/archive/main.tar.gz nix-ld
   config = lib.mkIf config.roles.dev.enable {
 
-    boot.tmp.useTmpfs = true;
+    # boot.tmp.useTmpfs = true;  # set false if large nix builds fail
+    # boot.tmp.tmpfsSize = 80;   # percent of ram
+    boot.tmp.cleanOnBoot = true;
 
     fileSystems."/var/tmp" = {
       fsType = "tmpfs";
@@ -207,6 +209,7 @@ in
       figlet
       bat
       lnav
+      libtool
       #texlive.combined.scheme-medium
       # (texlive.combine { inherit (texlive) scheme-medium xargs bigfoot moderncv lipsum footmisc multibib soul; })
       # ungoogled-chromium # in unstable!
