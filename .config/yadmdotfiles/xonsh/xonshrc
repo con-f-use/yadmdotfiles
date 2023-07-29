@@ -77,6 +77,7 @@ $_Z_DATA = (zdata if os.path.exists(zdata) else $HOME+"/.config/") + "z.txt"
 $XONSH_HISTORY_SIZE = (16256, 'commands') # b=bytes, s=load timeout in second, files
 $HISTFILE=$HOME+'/.bash_history'  # basy only (or swap with e.g. ~/.zsh_history)
 # $XONSH_STORE_STDOUT=True # store stdout for subprocess comands (buggy)
+# $XONSH_HISTORY_IGNORE_REGEX = r""
 $XONSH_HISTORY_MATCH_ANYWHERE = True
 
 #$XONSH_SHOW_TRACEBACK = True

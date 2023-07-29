@@ -154,6 +154,8 @@ in
         "10.17.65.203" = [ "pypi.qa.ngdev.eu.ad.cuda-inc.com" "pypi.qa" ];
         "10.17.210.145" = [ "folsom.ngdev.eu.ad.cuda-inc.com" "folsom.qa" ];
         "10.14.0.22" = [ "docker-c7.3sp.co.uk" ];
+        "10.17.33.51" = [ "idefix.ngdev.eu.ad.cuda-inc.com" ];
+        "10.17.210.200" = [ "order.ngdev.eu.ad.cuda-inc.com" ];
       };
 
       security.pki.certificates = systemCerts;
