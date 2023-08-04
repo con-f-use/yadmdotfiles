@@ -28,6 +28,12 @@
                 "nix": {
                         "command": "rnix-lsp",
                         "filetypes": [ "nix" ]
+                },
+                "rust": {
+                        "command": "rust-analyzer",
+                        "filetypes": ["rust"],
+                        "rootPatterns": ["Cargo.toml"]
                 }
-        }
+        },
+        "rust-analyzer.serverPath": "/run/current-system/sw/bin/rust-analyzer"
 }
