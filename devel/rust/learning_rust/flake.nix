@@ -1,33 +1,41 @@
 {
+
   description = "Rust Environment";
 
   inputs = {
     cargo2nix.url = "github:cargo2nix/cargo2nix/release-0.11.0";
     rust-overlay.url = "github:oxalica/rust-overlay";
-    flake-utils.url  = "github:numtide/flake-utils";
   };
 
   outputs = { self, nixpkgs, rust-overlay, cargo2nix, flake-utils, ... }:
-    flake-utils.lib.eachDefaultSystem (system:
-      let
+    let
+      system = "x86_64-linux";
+      pkgs = import nixpkgs {
+        inherit system;
         overlays = [
-          (import rust-overlay)
+          rust-overlay.overlays.default
           # cargo2nix.overlays.default
         ];
-        pkgs = import nixpkgs { inherit system overlays; };
-      in {
-        devShells.default = pkgs.mkShell {
-          buildInputs = with pkgs; [
-            openssl
-            pkg-config
-            rustfilt
-            # cargo2nix.package
-            rust-analyzer
-            rust-bin.stable.latest.default
-          ];
+      };
+      toolchain = pkgs.rust-bin.stable.latest.default.override {
+        extensions = [ "rust-src" ];
+      };
+      # toolchain = pkgs.rust-bin.fromRustupToolchainFile ./toolchain.toml;
+    in {
+      devShells."${system}".default = pkgs.mkShell {
+        buildInputs = with pkgs; [
+          openssl
+          pkg-config
+          # rustfilt
+          # cargo2nix.package
+          rust-analyzer-unwrapped
+          toolchain
+        ];
 
-          shellHook = ''echo "Welcome to Rust Environment"'';
-        };
-      }
-    );
+        shellHook = ''echo "Welcome to Rust Environment (${toolchain})"'';
+
+        RUST_SRC_PATH = "${toolchain}/lib/rustlib/src/rust/library";
+      };
+    };
+
 }
