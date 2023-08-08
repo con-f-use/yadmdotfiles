@@ -139,20 +139,20 @@ def _zdata():
         print(f'{p:70.70}  {r:>5g}    {t}')
 
 
-if os.path.exists(f"{$HOME}/.nix-profile"):
-    nixvars = dict(
-        NIX_REMOTE="daemon",
-        NIX_USER_PROFILE_DIR="/nix/var/nix/profiles/per-user/" + $USER,
-        NIX_PROFILES="/nix/var/nix/profiles/default " + $HOME + "/.nix-profile",
-        NIX_SSL_CERT_FILE="/etc/ssl/certs/ca-certificates.crt",
-    )
-    channel_path = p"/nix/var/nix/profiles/per-user/root/channels/"
-    nixpaths = [channel_path.joinpath(x) for x in ["nixpkgs", "nixos", "unstable", "nixos-unstable"]]
-    nixpaths = map(str, filter(lambda x: x.exists(), nixpaths))
-    nixvars["NIX_PATH"]="nixpkgs=" + ":".join(nixpaths)
-    for k,v in nixvars.items():
-        __xonsh__.env.setdefault(k, v)
-    $PATH += [f"{$HOME}/.nix-profile/bin", "/nix/var/nix/profiles/default/bin"]
+# if os.path.exists(f"{$HOME}/.nix-profile"):
+#     nixvars = dict(
+#         NIX_REMOTE="daemon",
+#         NIX_USER_PROFILE_DIR="/nix/var/nix/profiles/per-user/" + $USER,
+#         NIX_PROFILES="/nix/var/nix/profiles/default " + $HOME + "/.nix-profile",
+#         NIX_SSL_CERT_FILE="/etc/ssl/certs/ca-certificates.crt",
+#     )
+    #channel_path = p"/nix/var/nix/profiles/per-user/root/channels/"
+    #nixpaths = [channel_path.joinpath(x) for x in ["nixpkgs", "nixos", "unstable", "nixos-unstable"]]
+    #nixpaths = map(str, filter(lambda x: x.exists(), nixpaths))
+    #nixvars["NIX_PATH"]="nixpkgs=" + ":".join(nixpaths)
+    # for k,v in nixvars.items():
+    #     __xonsh__.env.setdefault(k, v)
+    #$PATH += [f"{$HOME}/.nix-profile/bin", "/nix/var/nix/profiles/default/bin"]
 
 aliases["ss"] = "sudo nixos-rebuild switch"
 aliases["ff"] = "sudo vi /etc/nixos/configuration.nix"

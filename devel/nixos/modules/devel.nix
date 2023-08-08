@@ -135,15 +135,20 @@ in
         automatic = true;
         options = "--delete-older-than 14d";
       };
+      channel.enable = false;
       registry.nixpkgs.flake = nixrepo;
-      nixPath = [ "nixpkgs=${nixrepo}" "nixos-config=/etc/nixos/configuration.nix" "/nix/var/nix/profiles/per-user/root/channels" ];
+      nixPath = [ "nixpkgs=/etc/nixpkgs" ];
       #binaryCaches = [];
       #binaryCachePublicKeys = [];
       #distributedBuilds = true;
       #buildMachines = [ { hostname=; system="x86_64-linux"; maxJobs=100; supportedFeatures=["benchmark" "big-parallel"] } ];
     };
+    
 
-    environment.variables = { EDITOR = "nvim"; };
+    environment = {
+      etc.nixpkgs.source = pkgs.path;
+      variables = { EDITOR = "nvim"; };
+    };
 
     #services.tor = { enable = true; client.enable = true; };
     #services.lorri.enable = true;
@@ -164,12 +169,13 @@ in
           ];
         };
       })
-      (self: super: {
-        nix-direnv = super.nix-direnv.override { enableFlakes = true; };
-      })
+      # (self: super: {
+      #   nix-direnv = super.nix-direnv.override { enableFlakes = true; };
+      # })
     ];
 
-    environment.pathsToLink = [ "/share/nix-direnv" ];
+    programs.direnv.enable = true;
+    # environment.pathsToLink = [ "/share/nix-direnv" ];
     environment.systemPackages = with pkgs; [
       # Essential
       htop
@@ -202,8 +208,8 @@ in
       fasd
       fzf
       ripgrep
-      direnv
-      nix-direnv
+      # direnv
+      # nix-direnv
       parallel
       pandoc
       figlet
@@ -255,6 +261,9 @@ in
       # Vim
       nodejs
       base-neovim # python-language-server
+
+      # Rust
+      rust-analyzer
     ] ++ (lib.optionals (config.services.xserver.enable) [ pkgs.meld pkgs.xournalpp ]);
   };
 

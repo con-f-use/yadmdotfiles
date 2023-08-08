@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Early exit in non-interactive or Mix shells
+# Early exit in non-interactive or nix shells
 if [[ -z $PS1 ]]; then return; fi
 if [[ -n $IN_NIX_SHELL ]]; then return; fi
 
@@ -14,5 +14,5 @@ do
     [ -r "$fl" ] && source "$fl"
 done
 
-
+eval "$(direnv hook bash)"
 complete -C /run/current-system/sw/bin/vault vault
