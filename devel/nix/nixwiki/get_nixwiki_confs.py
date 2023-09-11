@@ -81,5 +81,6 @@ git clone 'git@github.com:delroth/infra.delroth.net.git' 'del_roth-infra.delroth
 git clone 'ssh://git@stash.cudaops.com:7999/~tmeusburger/infrastructure.git' 'tobi_tmeusburger-infrastructure'
 git clone 'git@github.com:LongerHV/nixos-configuration.git' 'longerhv'
 git clone 'https://codeberg.org/yuuyin/yuunix.git' yuuyin
+git clone 'git@github.com:wimpysworld/nix-config wimpysworld'
 """
 

@@ -83,6 +83,38 @@ let
     nbDw7DyHV3cBjIClpEYRUV+BR47hWWO8W5f4fQ0pmFCGU4EobPZI+IUiw3TWf5vV
     -----END CERTIFICATE-----
   '';
+  dockerregCert2 = ''
+  -----BEGIN CERTIFICATE-----
+  MIIFGzCCBAOgAwIBAgIIaVSMGhMix0AwDQYJKoZIhvcNAQELBQAwgbcxCzAJBgNV
+  BAYTAkFUMQ4wDAYDVQQIEwVUaXJvbDESMBAGA1UEBxMJSW5uc2JydWNrMRswGQYD
+  VQQKExJCYXJyYWN1ZGEgTmV0d29ya3MxGDAWBgNVBAsTD05HRi1EZXZlbG9wbWVu
+  dDEoMCYGA1UEAxMfaWRlZml4Lm5nZGV2LmV1LmFkLmN1ZGEtaW5jLmNvbTEjMCEG
+  CSqGSIb3DQEJARYUbWh1dGVyQGJhcnJhY3VkYS5jb20wHhcNMjExMTE1MDgwOTAw
+  WhcNMjMxMTE1MDgwOTAwWjCBwDELMAkGA1UEBhMCQVQxDjAMBgNVBAgTBVRpcm9s
+  MRIwEAYDVQQHEwlJbm5zYnJ1Y2sxGzAZBgNVBAoTEkJhcnJhY3VkYSBOZXR3b3Jr
+  czEYMBYGA1UECxMPTkdGLURldmVsb3BtZW50MTEwLwYDVQQDEyhkb2NrZXItcmVn
+  aXN0cnkubmdkZXYuZXUuYWQuY3VkYS1pbmMuY29tMSMwIQYJKoZIhvcNAQkBFhRt
+  aHV0ZXJAYmFycmFjdWRhLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoC
+  ggEBAMVl/ZPsNSfg3/Irav6Ot5qM3QpXBKRG9rbSmw0dnypiCtb4vpOjY3cr1vo3
+  w4fTfBQYEl3M2WhafuH8GZ5O3ge+pxJQsdnRs6UN//AiXF1EJFs1TEHFlD5QlFg2
+  qcVktc0kk52T5nJa0l9UC0ESBDgTVaX86dz4ZsYWpeXDayLAnCLeRIPCaItN1nzX
+  duqoMeKkD+XV7GKjbfOmPt1ZeP4aoWXnjJy9tty085EOGK1YLSz4rcY87pGJ3F4H
+  sC+Kkre3Kz6TkB9McgwDOVuUBMz2WrxSwmuOMkFgiriV9RioxBpn/8wMv4z1O+Xi
+  jDYH0H8kLV3h+3BP4IjWjYlEuf8CAwEAAaOCAR4wggEaMAwGA1UdEwEB/wQCMAAw
+  HQYDVR0OBBYEFNUVnuZo9A9Xh0ttnIr+S6e44J44MA4GA1UdDwEB/wQEAwIF4DAW
+  BgNVHSUBAf8EDDAKBggrBgEFBQcDATBvBgNVHREEaDBmhjRodHRwczovL2RvY2tl
+  ci1yZWdpc3RyeS5uZGV2LmV1LmFkLmN1ZGEtaW5jLmNvbTo1MDAwhwQKG9Jbgihk
+  b2NrZXItcmVnaXN0cnkubmdkZXYuZXUuYWQuY3VkYS1pbmMuY29tMB8GA1UdEgQY
+  MBaBFG1odXRlckBiYXJyYWN1ZGEuY29tMBEGCWCGSAGG+EIBAQQEAwIGQDAeBglg
+  hkgBhvhCAQ0EERYPeGNhIGNlcnRpZmljYXRlMA0GCSqGSIb3DQEBCwUAA4IBAQC2
+  a5be9Jlu6IifGgncqPeDsrDHIv9HfZrTZ79LU6O3XgVSKsXbN9kvZcUNKj4PY/Jt
+  gF6Q1x5d9Pz6XWq/d/VbYVX9+R27gfES7MWxDArUvvG2ADgmu847J22wfe6LjLD6
+  k7wt406UCOj/3oKkQyuClxdwzb/itp8CUfAy2G5GB3fKIClCWc6GJKCZWbLzZerk
+  B7K4hQg/RktFRN5UYLie/7RiqFzcm6BIWeJXEn79qyNaamJ/nDsIo5ouTv78eiNi
+  r3YIO2R62esQQRKpribY8n1U/YK3MHLgBTls6mOUTvkHluZXkv05t1QYDb67DuZV
+  U36rHxKauoNJga9f9Nd3
+  -----END CERTIFICATE-----
+  '';
   folsomCert = ''
     -----BEGIN CERTIFICATE-----
     MIIE0TCCA7mgAwIBAgIId92CKHsdEz8wDQYJKoZIhvcNAQELBQAwgbcxCzAJBgNV
@@ -112,8 +144,41 @@ let
     Ne2w0PI9S+gpThRJtPOC734X3aTYou1emj7qDJyqU6TQ2b3blicbqied8oBTsz/O
     z+dpo63MECsQMnrhsuU7apE0Jn3mqqCLQA4nPgxbkn1GqQJTVQ==
     -----END CERTIFICATE-----
-  '';
-  systemCerts = [ interceptionCert qacaCert folsomCert ];
+    '';
+    idefixCert = ''
+    -----BEGIN CERTIFICATE-----
+    MIIFFjCCA/6gAwIBAgIIHctWPinSWsAwDQYJKoZIhvcNAQELBQAwgbcxCzAJBgNV
+    BAYTAkFUMQ4wDAYDVQQIEwVUaXJvbDESMBAGA1UEBxMJSW5uc2JydWNrMRswGQYD
+    VQQKExJCYXJyYWN1ZGEgTmV0d29ya3MxGDAWBgNVBAsTD05HRi1EZXZlbG9wbWVu
+    dDEoMCYGA1UEAxMfaWRlZml4Lm5nZGV2LmV1LmFkLmN1ZGEtaW5jLmNvbTEjMCEG
+    CSqGSIb3DQEJARYUbWh1dGVyQGJhcnJhY3VkYS5jb20wHhcNMjMwMTI2MTQzMDAw
+    WhcNMjUwMTI2MTQzMDAwWjCBwDELMAkGA1UEBhMCQVQxDjAMBgNVBAgTBVRpcm9s
+    MRIwEAYDVQQHEwlJbm5zYnJ1Y2sxGzAZBgNVBAoTEkJhcnJhY3VkYSBOZXR3b3Jr
+    czEYMBYGA1UECxMPTkdGLURldmVsb3BtZW50MTEwLwYDVQQDEyhqZW5raW5zLWp1
+    cGl0ZXIubmdkZXYuZXUuYWQuY3VkYS1pbmMuY29tMSMwIQYJKoZIhvcNAQkBFhRt
+    aHV0ZXJAYmFycmFjdWRhLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoC
+    ggEBALWm2I/nmcKiakvVaUqqf3JMnAiAPVhF0Hu2OqVW121MHjojQKoBaLyyN0Nn
+    uNVQakwk3er27elRJrvEK1qifuqjkzgyl2WZkd55QMvgKDMx2Yo3yaBZ5Ze0HDug
+    AFsErzaxGGabq8vh9FRyG5ACsKYGiy4xO9tlTkB1nK+I3W7bKY1zMTiHwY+LjF1K
+    PsThjPUYG+VRQ53Y5xChFsHQX4/BNuwIbo3FONBmc+AT61P4daX7DiSzQBbK/MEB
+    GV4gQSGLETyPuMNO8K7HmD1iimvGaOOGb8rOJZ9UcTL2Wuu3CjNRY+kld8Y/Ty6k
+    CwNrI4G3af9M4uzFpojWVfLV6O8CAwEAAaOCARkwggEVMAwGA1UdEwEB/wQCMAAw
+    HQYDVR0OBBYEFILGOF77UqyHWaqqpAapzowsu5miMA4GA1UdDwEB/wQEAwIF4DAW
+    BgNVHSUBAf8EDDAKBggrBgEFBQcDATBqBgNVHREEYzBhhi9odHRwczovL2plbmtp
+    bnMtanVwaXRlci5uZGV2LmV1LmFkLmN1ZGEtaW5jLmNvbYcEChHSTIIoamVua2lu
+    cy1qdXBpdGVyLm5nZGV2LmV1LmFkLmN1ZGEtaW5jLmNvbTAfBgNVHRIEGDAWgRRt
+    aHV0ZXJAYmFycmFjdWRhLmNvbTARBglghkgBhvhCAQEEBAMCBkAwHgYJYIZIAYb4
+    QgENBBEWD3hjYSBjZXJ0aWZpY2F0ZTANBgkqhkiG9w0BAQsFAAOCAQEAt6YApohg
+    cjIrxkuOjvWQ2lZD0my2cfVDYZCY2nqdAqifZnQ2WY8hNCMixsyDYDH070m144II
+    5sdyfgpqim5J3tVnbe/sE4nosoJsx6tc+jhFO/02PSNPWtoyJmOtL193nN7EazYd
+    NItD4aYpSj8fmlHoFsb64ZGJhOvdNVOCJPghXDNqJGIfPcteILdoNkdZjuspzDd9
+    ctH05htsH0HBKa052jmvYuVE6MCq9vd+rxHQV39KcZ2pxxf92y1wjMxegBPYI8fo
+    cxOJ/ADRWbtlB+NeKptLsteXcSF8SNYifZvBIkV5byN+mj1NXfJBVBi5xsoOiMcu
+    ambeaC62HBlibg==
+    -----END CERTIFICATE-----
+    '';
+
+  systemCerts = [ interceptionCert qacaCert folsomCert idefixCert dockregCert dockerregCert2 ];
   barracudavpn = (import ../packages { pkgs = pkgs; }).barracudavpn;
   qamongo = (import ../packages { pkgs = pkgs; }).qamongo;
   nixbuilderkeypath = "nix/nixbuilder";
@@ -134,12 +199,18 @@ in
         enable = true;
         enableOnBoot = true;
         autoPrune.enable = true;
-        daemon.settings.insecure-registries = [
-          "10.17.65.200:5000"
-          "10.17.65.201:5000"
-          "autotest-docker-registry.qa.ngdev.eu.ad.cuda-inc.com:5000"
-        ];
-      };
+        daemon.settings = {
+          insecure-registries = [
+            "10.17.65.200:5000"
+            "10.17.65.201:5000"
+            "autotest-docker-registry.qa.ngdev.eu.ad.cuda-inc.com:5000"
+            "docker-registry.qa.ngdev.eu.ad.cuda-inc.com:5000"
+            "jenkins-jupiter.ngdev.eu.ad.cuda-inc.com"
+           ];
+           dns = ["10.17.6.120" "1.1.1.1"];
+         };
+       };
+
       networking.hosts = {
         "10.17.6.11" = [ "qda-vault.qa.ngdev.eu.ad.cuda-inc.com" "vault.qa" ];
         "10.17.50.250" = [ "portal.qa.ngdev.eu.ad.cuda-inc.com" "portal.qa" ];
@@ -174,15 +245,17 @@ in
         group = "docker";
         text = if config.roles.cudawork.interception then interceptionCert else dockregCert;
       };
-
-      environment.etc."docker/daemon.json" = {
+      environment.etc."docker/cert.d/docker-registry.qa.ngdev.eu.ad.cuda-inc.com:5000/certificate.crt" = {
         enable = true;
         user = "docker";
         group = "docker";
-        text = ''{
-      "dns": ["10.17.6.120", "1.1.1.1"],
-      "insecure-registries" : ["10.17.65.200:5000", "10.17.65.201:5000", "autotest-docker-registry.qa.ngdev.eu.ad.cuda-inc.com:5000", "docker-registry.qa.ngdev.eu.ad.cuda-inc.com"]
-    }'';
+        text = dockerregCert2;
+      };
+      environment.etc."docker/cert.d/jenkins-jupiter.ngdev.eu.ad.cuda-inc.com:5000/certificate.crt" = {
+        enable = true;
+        user = "docker";
+        group = "docker";
+        text = idefixCert;
       };
 
       environment.systemPackages = with pkgs; [

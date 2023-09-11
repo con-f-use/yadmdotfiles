@@ -235,6 +235,7 @@ in
       nix-top
       rnix-lsp
       nix-output-monitor
+      nix-info
       nixpkgs-fmt
       cachix
       morph

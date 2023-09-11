@@ -31,6 +31,20 @@ in
     # fix java windows
     environment.variables._JAVA_AWT_WM_NONREPARENTING = "1";
 
+    programs.firefox = {
+      enable = true;
+      preferences = {
+        "ui.systemUsesDarkTheme" = 1;
+        "toolkit.telemetry.pioneer-new-studies-available" = false;
+        "toolkit.telemetry.reportingpolicy.firstRun" = false;
+        "browser.urlbar.suggest.history" = false;
+        "extensions.activeThemeID" = "firefox-compact-dark@mozilla.org";
+        "browser.newtabpage.activity-stream.showSearch" = false;
+        "browser.search.hiddenOneOffs" = "Google,Bing,Amazon.com,eBay,Twitter,Wikipedia (en)";
+        "browser.tabs.unloadOnLowMemory" = true;
+      };
+    };
+
     services.xserver = {
       enable = true;
       videoDrivers = [ "modsetting" ]; # intel
@@ -125,7 +139,6 @@ in
       gnome.nautilus
       gsettings-desktop-schemas
       gnome.dconf-editor
-      firefox
       youtube-dl
       signal-desktop
       tdesktop

@@ -36,7 +36,7 @@ find "$@" -type f -iregex '.*\(avi\|mp4\|mkv\|m4v\|mpg\|mpeg\|mpeg2\|mpeg4\|ogm\
         file=$(readlink -f "$file")
         echo "$i: $file"
         play "$file" &
-        if (( i==0 )) || (( i==-2 )); then sleep 2; (( i++ )); fi
+        if (( i==0 )) || (( i==-2 )); then sleep 5; (( i++ )); fi
         if (( i>0 )); then (( i++ )); fi
         if (( i>last )); then break; fi
     done
