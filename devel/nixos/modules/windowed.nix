@@ -152,6 +152,7 @@ in
       kazam
       mcomix #zathura
       rar # needed by mcomix for cbr support
+      v4l-utils
 
       # Office
       libreoffice

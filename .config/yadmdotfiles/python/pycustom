@@ -32,6 +32,9 @@ __builtin__.true = True
 __builtin__.false = False
 __builtin__.null = None
 
+# import pretty_traceback
+# pretty_traceback.install()
+
 # Don't be smartass, exit!
 type(exit).__repr__ = lambda s: exit()
 

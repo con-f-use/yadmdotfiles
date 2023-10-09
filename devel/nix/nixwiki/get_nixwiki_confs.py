@@ -42,6 +42,8 @@ if __name__ == "__main__":
 
 """
 #!/bin/sh
+git clone 'ssh://git@stash.cudaops.com:7999/~tmeusburger/infrastructure.git' 'tobi_tmeusburger-infrastructure'
+
 git clone 'git@github.com:areina/nixos-config.git' 'areina_nixos-config'
 git clone 'git@github.com:barrucadu/nixfiles.git' 'barrucadu_nixfiles'
 git clone 'git@github.com:Baughn/machine-config.git' 'Baughn_machine-config'
@@ -73,12 +75,12 @@ git clone 'git@github.com:utdemir/dotfiles.git' 'utdemir_dotfiles'
 git clone 'git@github.com:openlab-aux/vuizvui.git' 'openlab-aux_vuizvui'
 git clone 'git@github.com:davidtwco/veritas.git' 'davidtwco_veritas'
 git clone 'git@github.com:delroth/infra.delroth.net.git' 'delroth_infra'
-
+git clone 'git@github.com:NobbZ/nixos-config.git' 'NobbZ_Norbert'
+git clone 'ssh://git@stash.cudaops.com:7999/~tmeusburger/infrastructure.git' 'tobi_tmeusburger-infrastructure'
 git clone 'git@github.com:Xe/nixos-configs.git' 'xe_nixos-configs'
 git clone 'git@github.com:burke/b.git' 'burke_libbey-b'
 git clone 'git@git@github.com:adisbladis/nixconfig.git' 'adam_hose-adisbladis'
 git clone 'git@github.com:delroth/infra.delroth.net.git' 'del_roth-infra.delroth.net'
-git clone 'ssh://git@stash.cudaops.com:7999/~tmeusburger/infrastructure.git' 'tobi_tmeusburger-infrastructure'
 git clone 'git@github.com:LongerHV/nixos-configuration.git' 'longerhv'
 git clone 'https://codeberg.org/yuuyin/yuunix.git' yuuyin
 git clone 'git@github.com:wimpysworld/nix-config wimpysworld'

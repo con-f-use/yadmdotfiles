@@ -56,7 +56,8 @@ $PASSWORD_STORE_DIR=f"{$HOME}/.config/password-store/"
 $XONSH_TRACEBACK_LOGFILE = '/tmp/xonsh-tracebacks.log'
 $c = f"{$HOME}/.config/yadmdotfiles"
 $VI_MODE=false
-$THREAD_SUBPROCS = False # remove after https://github.com/xonsh/xonsh/pull/4283
+# $THREAD_SUBPROCS = False # remove after https://github.com/xonsh/xonsh/pull/4283
+$XONSH_CAPTURE_INTERACTIVE=false
 
 $XONSH_COLOR_STYLE='monokai'
 $LS_COLORS='rs=0:di=01;36:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:'

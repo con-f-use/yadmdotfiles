@@ -129,6 +129,7 @@ in
         # useSandbox = true;  # old
         allowed-users = [ "@wheel" ];
         trusted-users = [ "@wheel" ];
+        cores = 3;
       };
       # daemonCPUSchedPolicy = 19;
       gc = {

@@ -10,16 +10,26 @@ xclip -o -selection clipboard |
     sed -E "s/(https:\/\/thumbsnap.com\/)(.\/)?([a-zA-Z0-9]+).*/\1i\/\3.jpg?$tstamp/" |
     wget -i -
 
+grep -Fl '<html>' *.gif *.webp *.jpeg *.jpg |
+    tee "errors_$urlsfile" |
+    xargs rm
+
 received=$(ls -1 ./*.jpg | sed -E -n 's/\.\/(.*)\.jpg$/\1/p' | sort -u)
 wanted=$(sed -E -n 's#^.*/([a-zA-Z0-9]+)\?.*$#\1#p' ./urls*.txt)
 diff -y <(printf "$wanted") <(printf "$received") |
     sed -E -n 's/^([a-zA-Z0-9]+)\s*</\1/p' |
 while read img; do
-    for ext in gif webp jpeg jpg; do 
-        curl --location --remote-name "https://thumbsnap.com/i/$img.$ext?$tstamp" &&
+    for ext in gif webp jpeg jpg; do
+        target="https://thumbsnap.com/i/$img.$ext?$tstamp"
+        curl --location --remote-name "$target"
+        code=$?
+        if [ "$code" = "0" ]; then
             break
+        fi
     done
 done
+
+
 
 rename 's/\.(jpg|png|gif|jpeg|webp)\?[0-1][0-9]{2,}$/.\1/' *
 #sxiv -a *.jpg *.png *.webp *.jpeg *.gif &
