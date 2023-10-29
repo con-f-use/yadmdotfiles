@@ -15,7 +15,7 @@
       enable = true;
       interception = true;
     };
-    cudawork.novpn = true;
+    cudawork.novpn = false;
     cudawork.use_builders = false;
   };
   config.users.users.root.openssh.authorizedKeys.keys = config.users.users.jan.openssh.authorizedKeys.keys;

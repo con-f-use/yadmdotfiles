@@ -147,6 +147,7 @@ in
 
       # Multimedia
       mpv
+      yt-dlp
       sxiv
       flameshot
       kazam

@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
       # Run in bash terminal EXACTLY as is:
       sudo barracudavpn -p; sleep 3; sudo chmod a+r /etc/resolv.conf;
       sudo barracudavpn --verbose --start \
-         --login '<username>' --serverpw "$(<pwmanager_get_pw>)" \
+         --login '<username>' --serverpw "\$(<pwmanager_get_pw>)" \
          --config '~/.config/yadmdotfiles/cuda/barracudavpn'
       # First line restores state (also useful after disconnect)
       # Then wait for the output and confirm MFA. After that copy the

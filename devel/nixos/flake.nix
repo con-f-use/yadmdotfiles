@@ -8,7 +8,7 @@
   # --show-trace : show error traceback
 
 
-  outputs = { self, nixpkgs, nixunstable, nixos-hardware }@inputs:
+  outputs = { self, nixpkgs, nixunstable, nixos-hardware, programsdb }@inputs:
     let
       system = "x86_64-linux";
     in
@@ -82,6 +82,7 @@
     # nixunstable.url = "9608ace7009ce5bc3aeb940095e01553e635cbc7";  # 13.9.22
     # nixunstable.url = "github:NixOS/nixpkgs/8203e061ec0556b4d4a972b18ba92509cb1ddd04";  # temporary because https://github.com/NixOS/nixpkgs/issues/172558
     nixos-hardware.url = "github:NixOS/nixos-hardware";
+    programsdb.url = "github:wamserma/flake-programs-sqlite";
   };
 
 }

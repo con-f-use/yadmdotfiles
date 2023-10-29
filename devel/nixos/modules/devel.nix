@@ -144,10 +144,11 @@ in
       #distributedBuilds = true;
       #buildMachines = [ { hostname=; system="x86_64-linux"; maxJobs=100; supportedFeatures=["benchmark" "big-parallel"] } ];
     };
-    
+    environment.etc."programs.sqlite".source = inputs.programsdb.packages.${pkgs.system}.programs-sqlite;
+    programs.command-not-found.dbPath = "/etc/programs.sqlite";
+    environment.etc.nixpkgs.source = pkgs.path;
 
     environment = {
-      etc.nixpkgs.source = pkgs.path;
       variables = { EDITOR = "nvim"; };
     };
 
