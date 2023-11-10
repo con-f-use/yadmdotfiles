@@ -29,7 +29,10 @@ in
     programs.dconf.enable = true;
 
     # fix java windows
-    environment.variables._JAVA_AWT_WM_NONREPARENTING = "1";
+    environment.variables = {
+      _JAVA_AWT_WM_NONREPARENTING = "1";
+      GTK_THEME="Arc-Dark";
+    };
 
     programs.firefox = {
       enable = true;
@@ -134,6 +137,7 @@ in
       xdotool
       gnome.file-roller
       font-manager
+      libadwaita
       papirus-icon-theme
       arc-theme
       gnome.nautilus
