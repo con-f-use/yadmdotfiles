@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 export PASSWORD_STORE_DIR=/home/jan/.config/password-store/
+export GTK_THEME=Arc-Dark
 [ -f "/tmp/inaust_env.txt" ] ||
     env > /tmp/inaust_env.txt
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env nix-shell
-#!nix-shell --builders '' -i python3 -p python39Packages.beautifulsoup4 python39Packages.docopt python39Packages.pyperclip python39Packages.html5-parser python39Packages.urllib3
+#!nix-shell --builders '' -I nixpkgs=/etc/nixpkgs -i python3 -p python3Packages.beautifulsoup4 python3Packages.docopt python3Packages.pyperclip python3Packages.html5-parser python3Packages.urllib3
 
 
 
