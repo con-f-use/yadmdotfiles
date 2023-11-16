@@ -28,8 +28,8 @@
           inherit system;
           specialArgs = { inherit inputs; nixrepo = nixunstable; };
           modules = [
-            nixos-hardware.nixosModules.framework
-            ./machines/framework.nix
+            nixos-hardware.nixosModules.framework-12th-gen-intel
+            ./machines/framework-13in-12th.nix
           ];
         };
 
@@ -38,7 +38,7 @@
           specialArgs = { inherit inputs; nixrepo = nixunstable; };
           modules = [
             nixos-hardware.nixosModules.dell-latitude-7490
-            ./machines/worklap.nix
+            ./machines/maren.nix
           ];
         };
 
