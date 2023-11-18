@@ -130,6 +130,7 @@ in
         allowed-users = [ "@wheel" ];
         trusted-users = [ "@wheel" ];
         cores = 3;
+        use-xdg-base-directories = true;
       };
       # daemonCPUSchedPolicy = 19;
       gc = {
