@@ -145,9 +145,16 @@ in
       #distributedBuilds = true;
       #buildMachines = [ { hostname=; system="x86_64-linux"; maxJobs=100; supportedFeatures=["benchmark" "big-parallel"] } ];
     };
-    environment.etc."programs.sqlite".source = self.inputs.programsdb.packages.${pkgs.system}.programs-sqlite;
     programs.command-not-found.dbPath = "/etc/programs.sqlite";
-    environment.etc.nixpkgs.source = pkgs.path;
+    environment.etc = let
+      self-rev = self.rev or self.dirtyRev or "dirty-inputs";
+    in
+    {
+      "programs.sqlite".source = self.inputs.programsdb.packages.${pkgs.system}.programs-sqlite;
+      nixpkgs.source = pkgs.path;
+      "source-${self-rev}".source = self; # system.copySystemConfiguration = true # for non-flake
+      self-rev.text = builtins.trace self-rev self-rev;
+    };
 
     environment = {
       variables = { EDITOR = "nvim"; };
