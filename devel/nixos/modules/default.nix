@@ -1,16 +1,14 @@
-{
-  imports = [
-    # Roles
-    ./zfs.nix
-    ./electronics.nix
-    ./essential.nix
-    ./devel.nix
-    ./workstation.nix
-    ./cudawork.nix
-    ./windowed.nix
-    ./gaming.nix
+{ ... }: {
+  conferencing = import ./conferencing.nix;
+  cudawork = import ./cudawork.nix;
+  devel = import ./devel.nix;
+  electronics = import ./electronics.nix;
+  essential = import ./essential.nix;
+  gaming = import ./gaming.nix;
+  perswitch = import ./perswitch.nix;
+  windowed = import ./windowed.nix;
+  workstation = import ./workstation.nix;
+  zfs = import ./zfs.nix;
 
-    # Modules
-    ./perswitch.nix
-  ];
+  users = ../users/default.nix;
 }

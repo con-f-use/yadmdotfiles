@@ -22,10 +22,8 @@
     };
 
     environment.shellAliases = {
-      ll = "ls -al --color=auto";
-      ff = "sudo vi /etc/nixos/configuration.nix";
+      ll = "ls -hal --color=auto";
       ss = "echo 'Set a label: -p <label>'; sudo nixos-rebuild switch";
-      uu = "sudo nix-channel --update; nix-channel --update";
       gg = "sudo nix-collect-garbage -d; nix-collect-garbage";
     };
 
@@ -37,17 +35,19 @@
       "\e[B": history-search-forward
     '';
 
-    environment.etc."gitconfig".text = ''
-      [alias]
-      ci = commit
-      co = checkout
-      st = status
-      d = diff
-      l = log
-      [core]
-      pager = delta
-      theme = "Monokai Extended"
-    '';
+    programs.git = {
+      enable = true;
+      lfs.enable = true;
+      config.alias = {
+        st = "status";
+        ci = "commit";
+        co = "checkout";
+        cl = "clone";
+        d = "diff";
+        dc = "diff --cached";
+        lg = "log";
+      };
+    };
 
     environment.enableAllTerminfo = true;
 

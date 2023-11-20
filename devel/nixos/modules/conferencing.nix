@@ -1,9 +1,7 @@
 { config, lib, pkgs, ... }:
-
 {
-  options.roles.conferencing = {
-    enable = lib.mkEnableOption "Setup for video conferencing";
-  };
+  options.roles.conferencing.enable = lib.mkEnableOption "Setup for video conferencing";
+
   config = lib.mkIf config.roles.conferencing.enable {
     # https://wiki.archlinux.org/index.php/Udev
     # https://wiki.archlinux.org/index.php/Webcam_setup
@@ -26,10 +24,10 @@
     #              exposure_absolute 0x009a0902 (int)    : min=1 max=10000 step=1 default=166 value=166 flags=inactive
     #         exposure_auto_priority 0x009a0903 (bool)   : default=0 value=1
 
-    services.udev.extraRules = ''
-      # Webcam 
-      # SUBSYSTEM=="video4linux", KERNEL=="video[0-9]*", ATTRS{product}=="HD Pro Webcam C920", ATTRS{serial}=="BBBBFFFF", ATTR{index}=="0", RUN+="/usr/bin/v4l2-ctl -d $devnode --set-ctrl=zoom_absolute=170"
-    '';
+    # services.udev.extraRules = ''
+    #   # Webcam
+    #   # SUBSYSTEM=="video4linux", KERNEL=="video[0-9]*", ATTRS{product}=="HD Pro Webcam C920", ATTRS{serial}=="BBBBFFFF", ATTR{index}=="0", RUN+="/usr/bin/v4l2-ctl -d $devnode --set-ctrl=zoom_absolute=170"
+    # '';
 
     environment.systemPackages = with pkgs; [
       v4l-utils

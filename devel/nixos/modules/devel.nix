@@ -1,4 +1,4 @@
-{ config, lib, pkgs, inputs, nixrepo, ... }:
+{ self, config, lib, pkgs, inputs, ... }:
 let
   base-neovim = (pkgs.neovim.override {
     viAlias = true;
@@ -138,14 +138,14 @@ in
         options = "--delete-older-than 14d";
       };
       channel.enable = false;
-      registry.nixpkgs.flake = nixrepo;
+      registry.nixpkgs.flake = self.inputs.nixunstable;
       nixPath = [ "nixpkgs=/etc/nixpkgs" ];
       #binaryCaches = [];
       #binaryCachePublicKeys = [];
       #distributedBuilds = true;
       #buildMachines = [ { hostname=; system="x86_64-linux"; maxJobs=100; supportedFeatures=["benchmark" "big-parallel"] } ];
     };
-    environment.etc."programs.sqlite".source = inputs.programsdb.packages.${pkgs.system}.programs-sqlite;
+    environment.etc."programs.sqlite".source = self.inputs.programsdb.packages.${pkgs.system}.programs-sqlite;
     programs.command-not-found.dbPath = "/etc/programs.sqlite";
     environment.etc.nixpkgs.source = pkgs.path;
 
@@ -155,27 +155,6 @@ in
 
     #services.tor = { enable = true; client.enable = true; };
     #services.lorri.enable = true;
-
-    nixpkgs.overlays = [
-      (self: super: {
-        # Simple terminal
-        st = super.st.override {
-          patches = builtins.map super.fetchurl [
-            {
-              url = "https://st.suckless.org/patches/scrollback/st-scrollback-0.8.5.diff";
-              sha256 = "sha256-3H9SI7JvyBPZHUrjW9qlTWMCTK6fGK/Zs1lLozmd+lU=";
-            }
-            {
-              url = "https://st.suckless.org/patches/scrollback/st-scrollback-mouse-20220127-2c5edf2.diff";
-              sha256 = "sha256-Rqybzb/rABFTMgfLCrMWV6PrkZbaHQ2zRuap0fxLT3Y=";
-            }
-          ];
-        };
-      })
-      # (self: super: {
-      #   nix-direnv = super.nix-direnv.override { enableFlakes = true; };
-      # })
-    ];
 
     programs.direnv.enable = true;
     # environment.pathsToLink = [ "/share/nix-direnv" ];

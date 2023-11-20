@@ -25,7 +25,7 @@ waitforwin() {
 while ! PERScom 2 2 on; do sleep 2; done &  # wait for perswitch
 
 instantwmctrl animated 1  # turn off window manager animations
-while ! xrandr | grep -E "Virtual\S?2\s+connected\s+2560"; do sleep 1; done  # Wait for second monitor
+while ! xrandr | grep -E "Virtual\S?2\s+connected"; do sleep 1; done  # Wait for second monitor
 xrandr \
     --output Virtual-1 --mode 3440x1440 --pos 0x0 --rotate normal --primary \
     --output Virtual-2 --mode 2560x1440 --pos 3440x0 --rotate normal

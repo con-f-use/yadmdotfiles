@@ -84,36 +84,36 @@ let
     -----END CERTIFICATE-----
   '';
   dockerregCert2 = ''
-  -----BEGIN CERTIFICATE-----
-  MIIFGzCCBAOgAwIBAgIIaVSMGhMix0AwDQYJKoZIhvcNAQELBQAwgbcxCzAJBgNV
-  BAYTAkFUMQ4wDAYDVQQIEwVUaXJvbDESMBAGA1UEBxMJSW5uc2JydWNrMRswGQYD
-  VQQKExJCYXJyYWN1ZGEgTmV0d29ya3MxGDAWBgNVBAsTD05HRi1EZXZlbG9wbWVu
-  dDEoMCYGA1UEAxMfaWRlZml4Lm5nZGV2LmV1LmFkLmN1ZGEtaW5jLmNvbTEjMCEG
-  CSqGSIb3DQEJARYUbWh1dGVyQGJhcnJhY3VkYS5jb20wHhcNMjExMTE1MDgwOTAw
-  WhcNMjMxMTE1MDgwOTAwWjCBwDELMAkGA1UEBhMCQVQxDjAMBgNVBAgTBVRpcm9s
-  MRIwEAYDVQQHEwlJbm5zYnJ1Y2sxGzAZBgNVBAoTEkJhcnJhY3VkYSBOZXR3b3Jr
-  czEYMBYGA1UECxMPTkdGLURldmVsb3BtZW50MTEwLwYDVQQDEyhkb2NrZXItcmVn
-  aXN0cnkubmdkZXYuZXUuYWQuY3VkYS1pbmMuY29tMSMwIQYJKoZIhvcNAQkBFhRt
-  aHV0ZXJAYmFycmFjdWRhLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoC
-  ggEBAMVl/ZPsNSfg3/Irav6Ot5qM3QpXBKRG9rbSmw0dnypiCtb4vpOjY3cr1vo3
-  w4fTfBQYEl3M2WhafuH8GZ5O3ge+pxJQsdnRs6UN//AiXF1EJFs1TEHFlD5QlFg2
-  qcVktc0kk52T5nJa0l9UC0ESBDgTVaX86dz4ZsYWpeXDayLAnCLeRIPCaItN1nzX
-  duqoMeKkD+XV7GKjbfOmPt1ZeP4aoWXnjJy9tty085EOGK1YLSz4rcY87pGJ3F4H
-  sC+Kkre3Kz6TkB9McgwDOVuUBMz2WrxSwmuOMkFgiriV9RioxBpn/8wMv4z1O+Xi
-  jDYH0H8kLV3h+3BP4IjWjYlEuf8CAwEAAaOCAR4wggEaMAwGA1UdEwEB/wQCMAAw
-  HQYDVR0OBBYEFNUVnuZo9A9Xh0ttnIr+S6e44J44MA4GA1UdDwEB/wQEAwIF4DAW
-  BgNVHSUBAf8EDDAKBggrBgEFBQcDATBvBgNVHREEaDBmhjRodHRwczovL2RvY2tl
-  ci1yZWdpc3RyeS5uZGV2LmV1LmFkLmN1ZGEtaW5jLmNvbTo1MDAwhwQKG9Jbgihk
-  b2NrZXItcmVnaXN0cnkubmdkZXYuZXUuYWQuY3VkYS1pbmMuY29tMB8GA1UdEgQY
-  MBaBFG1odXRlckBiYXJyYWN1ZGEuY29tMBEGCWCGSAGG+EIBAQQEAwIGQDAeBglg
-  hkgBhvhCAQ0EERYPeGNhIGNlcnRpZmljYXRlMA0GCSqGSIb3DQEBCwUAA4IBAQC2
-  a5be9Jlu6IifGgncqPeDsrDHIv9HfZrTZ79LU6O3XgVSKsXbN9kvZcUNKj4PY/Jt
-  gF6Q1x5d9Pz6XWq/d/VbYVX9+R27gfES7MWxDArUvvG2ADgmu847J22wfe6LjLD6
-  k7wt406UCOj/3oKkQyuClxdwzb/itp8CUfAy2G5GB3fKIClCWc6GJKCZWbLzZerk
-  B7K4hQg/RktFRN5UYLie/7RiqFzcm6BIWeJXEn79qyNaamJ/nDsIo5ouTv78eiNi
-  r3YIO2R62esQQRKpribY8n1U/YK3MHLgBTls6mOUTvkHluZXkv05t1QYDb67DuZV
-  U36rHxKauoNJga9f9Nd3
-  -----END CERTIFICATE-----
+    -----BEGIN CERTIFICATE-----
+    MIIFGzCCBAOgAwIBAgIIaVSMGhMix0AwDQYJKoZIhvcNAQELBQAwgbcxCzAJBgNV
+    BAYTAkFUMQ4wDAYDVQQIEwVUaXJvbDESMBAGA1UEBxMJSW5uc2JydWNrMRswGQYD
+    VQQKExJCYXJyYWN1ZGEgTmV0d29ya3MxGDAWBgNVBAsTD05HRi1EZXZlbG9wbWVu
+    dDEoMCYGA1UEAxMfaWRlZml4Lm5nZGV2LmV1LmFkLmN1ZGEtaW5jLmNvbTEjMCEG
+    CSqGSIb3DQEJARYUbWh1dGVyQGJhcnJhY3VkYS5jb20wHhcNMjExMTE1MDgwOTAw
+    WhcNMjMxMTE1MDgwOTAwWjCBwDELMAkGA1UEBhMCQVQxDjAMBgNVBAgTBVRpcm9s
+    MRIwEAYDVQQHEwlJbm5zYnJ1Y2sxGzAZBgNVBAoTEkJhcnJhY3VkYSBOZXR3b3Jr
+    czEYMBYGA1UECxMPTkdGLURldmVsb3BtZW50MTEwLwYDVQQDEyhkb2NrZXItcmVn
+    aXN0cnkubmdkZXYuZXUuYWQuY3VkYS1pbmMuY29tMSMwIQYJKoZIhvcNAQkBFhRt
+    aHV0ZXJAYmFycmFjdWRhLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoC
+    ggEBAMVl/ZPsNSfg3/Irav6Ot5qM3QpXBKRG9rbSmw0dnypiCtb4vpOjY3cr1vo3
+    w4fTfBQYEl3M2WhafuH8GZ5O3ge+pxJQsdnRs6UN//AiXF1EJFs1TEHFlD5QlFg2
+    qcVktc0kk52T5nJa0l9UC0ESBDgTVaX86dz4ZsYWpeXDayLAnCLeRIPCaItN1nzX
+    duqoMeKkD+XV7GKjbfOmPt1ZeP4aoWXnjJy9tty085EOGK1YLSz4rcY87pGJ3F4H
+    sC+Kkre3Kz6TkB9McgwDOVuUBMz2WrxSwmuOMkFgiriV9RioxBpn/8wMv4z1O+Xi
+    jDYH0H8kLV3h+3BP4IjWjYlEuf8CAwEAAaOCAR4wggEaMAwGA1UdEwEB/wQCMAAw
+    HQYDVR0OBBYEFNUVnuZo9A9Xh0ttnIr+S6e44J44MA4GA1UdDwEB/wQEAwIF4DAW
+    BgNVHSUBAf8EDDAKBggrBgEFBQcDATBvBgNVHREEaDBmhjRodHRwczovL2RvY2tl
+    ci1yZWdpc3RyeS5uZGV2LmV1LmFkLmN1ZGEtaW5jLmNvbTo1MDAwhwQKG9Jbgihk
+    b2NrZXItcmVnaXN0cnkubmdkZXYuZXUuYWQuY3VkYS1pbmMuY29tMB8GA1UdEgQY
+    MBaBFG1odXRlckBiYXJyYWN1ZGEuY29tMBEGCWCGSAGG+EIBAQQEAwIGQDAeBglg
+    hkgBhvhCAQ0EERYPeGNhIGNlcnRpZmljYXRlMA0GCSqGSIb3DQEBCwUAA4IBAQC2
+    a5be9Jlu6IifGgncqPeDsrDHIv9HfZrTZ79LU6O3XgVSKsXbN9kvZcUNKj4PY/Jt
+    gF6Q1x5d9Pz6XWq/d/VbYVX9+R27gfES7MWxDArUvvG2ADgmu847J22wfe6LjLD6
+    k7wt406UCOj/3oKkQyuClxdwzb/itp8CUfAy2G5GB3fKIClCWc6GJKCZWbLzZerk
+    B7K4hQg/RktFRN5UYLie/7RiqFzcm6BIWeJXEn79qyNaamJ/nDsIo5ouTv78eiNi
+    r3YIO2R62esQQRKpribY8n1U/YK3MHLgBTls6mOUTvkHluZXkv05t1QYDb67DuZV
+    U36rHxKauoNJga9f9Nd3
+    -----END CERTIFICATE-----
   '';
   folsomCert = ''
     -----BEGIN CERTIFICATE-----
@@ -144,8 +144,8 @@ let
     Ne2w0PI9S+gpThRJtPOC734X3aTYou1emj7qDJyqU6TQ2b3blicbqied8oBTsz/O
     z+dpo63MECsQMnrhsuU7apE0Jn3mqqCLQA4nPgxbkn1GqQJTVQ==
     -----END CERTIFICATE-----
-    '';
-    idefixCert = ''
+  '';
+  idefixCert = ''
     -----BEGIN CERTIFICATE-----
     MIIFFjCCA/6gAwIBAgIIHctWPinSWsAwDQYJKoZIhvcNAQELBQAwgbcxCzAJBgNV
     BAYTAkFUMQ4wDAYDVQQIEwVUaXJvbDESMBAGA1UEBxMJSW5uc2JydWNrMRswGQYD
@@ -176,11 +176,9 @@ let
     cxOJ/ADRWbtlB+NeKptLsteXcSF8SNYifZvBIkV5byN+mj1NXfJBVBi5xsoOiMcu
     ambeaC62HBlibg==
     -----END CERTIFICATE-----
-    '';
+  '';
 
   systemCerts = [ interceptionCert qacaCert folsomCert idefixCert dockregCert dockerregCert2 ];
-  barracudavpn = (import ../packages { pkgs = pkgs; }).barracudavpn;
-  qamongo = (import ../packages { pkgs = pkgs; }).qamongo;
   nixbuilderkeypath = "nix/nixbuilder";
 
 in
@@ -191,10 +189,9 @@ in
     interception = mkOption { description = "Are we beind SSL-Interception? If true add Cert."; type = types.bool; default = false; };
     use_builders = mkOption { description = "Use nix builder client specific configuration"; type = types.bool; default = false; };
   };
+
   config = lib.mkIf (config.roles.cudawork.enable) (lib.mkMerge [
-
     {
-
       virtualisation.docker = {
         enable = true;
         enableOnBoot = true;
@@ -206,10 +203,10 @@ in
             "autotest-docker-registry.qa.ngdev.eu.ad.cuda-inc.com:5000"
             "docker-registry.qa.ngdev.eu.ad.cuda-inc.com:5000"
             "jenkins-jupiter.ngdev.eu.ad.cuda-inc.com"
-           ];
-           dns = ["10.17.6.120" "1.1.1.1"];
-         };
-       };
+          ];
+          dns = [ "10.17.6.120" "1.1.1.1" ];
+        };
+      };
 
       networking.hosts = {
         "10.17.6.11" = [ "qda-vault.qa.ngdev.eu.ad.cuda-inc.com" "vault.qa" ];
@@ -280,7 +277,6 @@ in
       environment.systemPackages = with pkgs; [
         zoom-us
         slack
-        #qamongo
         robo3t
       ];
 
@@ -291,13 +287,13 @@ in
     })
 
     (lib.mkIf config.roles.cudawork.use_builders {
-      environment.etc."${nixbuilderkeypath}" = {
-        text = builtins.readFile ./../secrets/nixbuilder;
-        enable = true;
-        mode = "0400";
-        uid = 0;
-        gid = 0;
-      };
+      # environment.etc."${nixbuilderkeypath}" = {
+      #   text = builtins.readFile ./../secrets/nixbuilder;
+      #   enable = true;
+      #   mode = "0400";
+      #   uid = 0;
+      #   gid = 0;
+      # };
 
       nix.buildMachines = builtins.map
         (idx: {

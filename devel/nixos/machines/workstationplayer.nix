@@ -1,12 +1,6 @@
-{ config, lib, pkgs, inputs, nixrepo, ... }:
+{ config, lib, pkgs, inputs, ... }:
 {
-  imports = [
-    ../modules
-    ../users
-  ] ++ (lib.optional (builtins.pathExists ../cachix.nix) ../cachix.nix);
-
-
-  config.roles = {
+  roles = {
     essentials = { enable = true; main_user = config.users.users.jan.name; };
     dev.enable = true;
     electronics.enable = true;
@@ -17,74 +11,75 @@
       use_builders = true;
     };
   };
-  config.users.users.root.openssh.authorizedKeys.keys = config.users.users.jan.openssh.authorizedKeys.keys;
+  users.users.root.openssh.authorizedKeys.keys = config.users.users.jan.openssh.authorizedKeys.keys;
   #environment.systemPackages = with pkgs; [ ];
 
   # ToDo: This is a dirty hack so I can merge this with unfrees from other modles
   # no idea how to do it properly.
-  config.unfrees = [ "discord" "typora" "hplip" "joypixels" "barracudavpn" "faac" ]; # ToDo: Move these to the modules that install them
-  config.nixpkgs.config.allowUnfree = true;
+  unfrees = [ "discord" "typora" "hplip" "joypixels" "barracudavpn" "faac" ]; # ToDo: Move these to the modules that install them
   # config.nixpkgs.config.allowAliases = false;
+  nixpkgs.config.allowUnfree = true;
   #nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) config.unfrees;
 
-  config.virtualisation.vmware.guest.enable = true;
+  virtualisation.vmware.guest.enable = true;
+  virtualisation.docker.storageDriver = "zfs";
   # config.boot.kernelPackages = pkgs.linuxPackages_5_15;
-  config.boot.initrd.availableKernelModules = [ "ata_piix" "mptspi" "uhci_hcd" "ehci_pci" "ahci" "xhci_pci" "sd_mod" "sr_mod" ];
-  config.boot.initrd.kernelModules = [ ];
-  config.boot.kernelModules = [ "kvm-amd" ];
-  config.boot.extraModulePackages = [ ];
-  config.networking.interfaces.ens33.useDHCP = true;
-  config.networking.hostId = "1c47b078";
+  boot.initrd.availableKernelModules = [ "ata_piix" "mptspi" "uhci_hcd" "ehci_pci" "ahci" "xhci_pci" "sd_mod" "sr_mod" ];
+  boot.initrd.kernelModules = [ ];
+  boot.kernelModules = [ "kvm-amd" ];
+  boot.extraModulePackages = [ ];
+  networking.interfaces.ens33.useDHCP = true;
+  networking.hostId = "1c47b078";
   #config.networking.hosts= { "192.168.0.10" = [ "confus.me" "conserve" "conserve.dynu.net" ]; };
   #console.font = "latarcyrheb-sun32";  # larger bootmode fonts
   #boot.loader.systemd-boot.consoleMode = lib.mkDefault "max";
   #hardware.video.hidpi.enable = true;
-  config.roles.zfs.enable = true;
-  config.boot.loader.systemd-boot.enable = true;
-  config.boot.loader.efi.canTouchEfiVariables = true;
-  config.networking.hostName = "conix";
+  roles.zfs.enable = true;
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  networking.hostName = "conix";
   #networking.wireless.enable = true;
-  config.networking.useDHCP = false;
-  config.networking.networkmanager.enable = true;
-  config.programs.nm-applet.enable = true;
-  config.time.timeZone = "Europe/Vienna";
-  config.hardware.opengl.driSupport32Bit = true;
+  networking.useDHCP = false;
+  networking.networkmanager.enable = true;
+  programs.nm-applet.enable = true;
+  time.timeZone = "Europe/Vienna";
+  hardware.opengl.driSupport32Bit = true;
   #hardware.opengl.extraPackages = [ pkgs.intel-ocl ];
   #hardware.bluetooth.enable = true;
   #services.blueman.enable = true;
-  config.services.xserver.libinput.enable = true; # Enable touchpad and other input periphery support.
-  config.services.xserver.videoDrivers = [ "wmware" ];
-  config.services.perswitch.enable = true;
-  config.services.printing.enable = true;
+  services.xserver.libinput.enable = true; # Enable touchpad and other input periphery support.
+  services.xserver.videoDrivers = [ "wmware" ];
+  services.perswitch.enable = true;
+  services.printing.enable = true;
   # config.services.printing.drivers = [ pkgs.hplipWithPlugin ];  #pkgs.hplip
-  config.programs.system-config-printer.enable = true;
+  programs.system-config-printer.enable = true;
 
-  config.fileSystems."/" =
+  fileSystems."/" =
     {
       device = "rpool/root";
       fsType = "zfs";
     };
 
-  config.fileSystems."/nix" =
+  fileSystems."/nix" =
     {
       device = "rpool/nix";
       fsType = "zfs";
     };
 
-  config.fileSystems."/home" =
+  fileSystems."/home" =
     {
       device = "rpool/home";
       fsType = "zfs";
     };
 
-  config.fileSystems."/boot" =
+  fileSystems."/boot" =
     {
       device = "/dev/disk/by-uuid/D806-C699";
       fsType = "vfat";
     };
 
   #swapDevices = [ "/dev/disk/by-uuid/a4566692-dc22-4fad-8c76-6260359da180" ];
-  config.swapDevices = [
+  swapDevices = [
     {
       device = "/dev/disk/by-uuid/fa6b7340-3321-49fa-a602-d036c221e160";
       #device = "4c5e5e6c-01";
@@ -92,7 +87,7 @@
     }
   ];
 
-  config.system.stateVersion = "21.11";
+  system.stateVersion = "21.11";
 }
 
 # sudo cp -r ~/devel/nixos/ /etc/ && sudo chown -R root:root /etc/nixos/

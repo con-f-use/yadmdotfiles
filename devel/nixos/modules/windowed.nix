@@ -31,7 +31,7 @@ in
     # fix java windows
     environment.variables = {
       _JAVA_AWT_WM_NONREPARENTING = "1";
-      GTK_THEME="Arc-Dark";
+      GTK_THEME = "Arc-Dark";
     };
 
     programs.firefox = {
