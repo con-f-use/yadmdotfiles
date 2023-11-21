@@ -1,10 +1,6 @@
-{ config, lib, pkgs, modulesPath, ... }:
+{ self, config, lib, pkgs, ... }:
 
 {
-  imports = [
-    (modulesPath + "/installer/scan/not-detected.nix")
-  ];
-
   boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
@@ -121,7 +117,7 @@
   users.users.jan = {
     isNormalUser = true;
     description = "jan";
-    extraGroups = [ "pulse" "pulseaudio" "networkmanager" "wheel" "pipewire" "users" "kvm" "input" "gdm" "adm" "video" "dailout" "disk" "tape" "cdrom" "floppy" "audio" "lp" "messgebus" "kmem" ];
+    extraGroups = [ "pulse" "pulseaudio" "pulse" "puse-user" "networkmanager" "wheel" "pipewire" "users" "kvm" "input" "gdm" "adm" "video" "dailout" "disk" "tape" "cdrom" "floppy" "audio" "lp" "messgebus" "kmem" ];
     hashedPassword = "$6$Xe3WNdmP$JqMUSRF3j6ytfCz7ceT1pI4Gw05FLy3n5UxkjSpQ7cilxcH/WoN8g2lOoVskJKoIDsadH9OiwHEaAUYZQXze7.";
   };
   users.users.naj = {
@@ -167,32 +163,6 @@
   environment.shellAliases = {
     ff = "sudo vi /etc/nixos/configuration.nix";
     ss = ''echo 'Set a label: -p <label>'; [ -n "$(sudo git -C /etc/nixos status --porcelain=v1 2>/dev/null)" ] && sudo git -C /etc/nixos add -A && git status && git -C /etc/nixos commit -m 'alias switch' && sudo nixos-rebuild switch && git -C /etc/nixos tag -a -m 'alias switch' "$(readlink -f /run/current-system/ | cut -d'-' -f 5)"'';
-  };
-
-  programs.neovim = {
-    enable = true;
-    vimAlias = true;
-    viAlias = true;
-    defaultEditor = true;
-    configure = {
-      customRC = ''
-        set history=10000 | set undolevels=1000 | set laststatus=2 | set complete-=i | set list | set listchars=tab:»·,trail:·,nbsp:· | set autoindent | set backspace=indent,eol,start
-        set smarttab | set tabstop=4 | set softtabstop=4 | set shiftwidth=4 | set expandtab | set shiftround | set number | set relativenumber | set nrformats-=octal | set incsearch
-        set hlsearch | set autoread | set undofile | set undodir=~/.vim/dirs/undos | set nostartofline | set formatoptions+=j | set ruler | set scrolloff=3 | set sidescrolloff=8
-        set display+=lastline | set wildmenu | set encoding=utf-8 | set tabpagemax=50 | set shell=/usr/bin/env\ bash | set visualbell | set noerrorbells | set ls=2
-        let g:netrw_liststyle=3 | nnoremap Q q | nnoremap q <Nop> | command Wsudo :%!sudo tee > /dev/null %
-        colorscheme default "delek "desert "darkblue "slate
-        if has("autocmd")
-          au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
-        endif
-        if filereadable(glob("~/.config/nvim/init.vim"))
-          source $HOME/.config/nvim/init.vim
-        endif
-      '';
-      packages.myVimPackage = with pkgs.vimPlugins; {
-        start = [ vim-nix vim-commentary vim-surround vim-ReplaceWithRegister ];
-      };
-    };
   };
 
   programs.git = {

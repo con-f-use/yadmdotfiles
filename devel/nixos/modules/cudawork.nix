@@ -266,11 +266,6 @@ in
         groovy #devpi-client
         vault
       ] ++ lib.optional (config.roles.cudawork.novpn == false) barracudavpn;
-
-      nixpkgs.config.permittedInsecurePackages = [
-        "libvirt-5.9.0"
-        "electron-9.4.4" # ToDo: Remove this https://github.com/tuxedocomputers/tuxedo-control-center/issues/148
-      ];
     }
 
     (lib.mkIf config.services.xserver.enable {
@@ -294,6 +289,18 @@ in
       #   uid = 0;
       #   gid = 0;
       # };
+      environment.etc = {
+        "${nixbuilderkeypath}" = {
+          source = pkgs.fetchurl {
+            url = "ftp://qa:qa@10.17.6.4/nix/nixbuilder";
+            hash = "sha256-YHklGvvnUlTHTNkyapTjHBiYRKieRRRejooqAHihWN0=";
+          };
+          enable = true;
+          mode = "0400";
+          uid = 0;
+          gid = 0;
+        };
+      };
 
       nix.buildMachines = builtins.map
         (idx: {
@@ -303,12 +310,11 @@ in
           speedFactor = 1;
           supportedFeatures = [ "big-parallel" "kvm" "nixos-test" "benchmark" ];
           sshUser = "nixbuilder";
-          sshKey = "etc/${nixbuilderkeypath}";
+          sshKey = "/etc/${nixbuilderkeypath}";
         }) [ 1 2 3 ];
 
       nix.distributedBuilds = true;
       nix.extraOptions = ''builders-use-substitutes = true'';
-
     })
 
   ]);

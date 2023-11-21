@@ -67,6 +67,32 @@
       ];
     };
 
+    programs.neovim = {
+      enable = true;
+      vimAlias = true;
+      viAlias = true;
+      defaultEditor = true;
+      configure = {
+        customRC = ''
+          set history=10000 | set undolevels=1000 | set laststatus=2 | set complete-=i | set list | set listchars=tab:»·,trail:·,nbsp:· | set autoindent | set backspace=indent,eol,start
+          set smarttab | set tabstop=4 | set softtabstop=4 | set shiftwidth=4 | set expandtab | set shiftround | set number | set relativenumber | set nrformats-=octal | set incsearch
+          set hlsearch | set autoread | set undofile | set undodir=~/.vim/dirs/undos | set nostartofline | set formatoptions+=j | set ruler | set scrolloff=3 | set sidescrolloff=8
+          set display+=lastline | set wildmenu | set encoding=utf-8 | set tabpagemax=50 | set shell=/usr/bin/env\ bash | set visualbell | set noerrorbells | set ls=2
+          let g:netrw_liststyle=3 | nnoremap Q q | nnoremap q <Nop> | command Wsudo :%!sudo tee > /dev/null %
+          colorscheme default "delek "desert "darkblue "slate
+          if has("autocmd")
+            au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+          endif
+          if filereadable(glob("~/.config/nvim/init.vim"))
+            source $HOME/.config/nvim/init.vim
+          endif
+        '';
+        packages.myVimPackage = with pkgs.vimPlugins; {
+          start = [ vim-nix vim-commentary vim-surround vim-ReplaceWithRegister ];
+        };
+      };
+    };
+
     environment.systemPackages = with pkgs; [
       # Essential
       htop

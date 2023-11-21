@@ -10,11 +10,11 @@ in
 
     # programs.mtr.enable = true;
 
-    # programs.gnupg.agent = {
-    #   enable = true;
-    #   enableSSHSupport = true;
-    #   pinentryFalvor = "gtk2";  # "curses" "tty" "gnome3" "qt"
-    # };
+    programs.gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+      pinentryFlavor = "gtk2";  # "curses" "tty" "gnome3" "qt"
+    };
     #services.dbus.packages = [ pkgs.gcr ];
     #services.pcscd.enable = true;
     # pkill -f gpg-agent; pkill -f pinentry

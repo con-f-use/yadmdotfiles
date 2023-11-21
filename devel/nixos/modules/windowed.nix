@@ -1,11 +1,9 @@
 { config, lib, pkgs, ... }:
-let
-  x = "x";
-in
 {
   options.roles.windowed = {
     enable = lib.mkEnableOption "My graphical system based on X and instantOS";
   };
+
   config = lib.mkIf config.roles.windowed.enable {
 
     sound.enable = true;

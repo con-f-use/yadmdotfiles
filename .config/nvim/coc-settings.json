@@ -26,8 +26,9 @@
         "suggest.noselect": false,
         "languageserver": {
                 "nix": {
-                        "command": "rnix-lsp",
-                        "filetypes": [ "nix" ]
+                        "command": "nil",
+                        "filetypes": [ "nix" ],
+                        "rootPatterns": [ "flake.nix" ]
                 },
                 "rust": {
                         "command": "rust-analyzer",

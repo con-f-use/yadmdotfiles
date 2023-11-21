@@ -1,35 +1,9 @@
 { self, config, lib, pkgs, inputs, ... }:
-let
-  base-neovim = (pkgs.neovim.override {
-    viAlias = true;
-    vimAlias = true;
-    withNodeJs = true;
-    configure = {
-      customRC = ''
-        set history=10000 | set undolevels=1000 | set laststatus=2 | set complete-=i | set list | set listchars=tab:»·,trail:·,nbsp:· | set autoindent | set backspace=indent,eol,start
-        set smarttab | set tabstop=4 | set softtabstop=4 | set shiftwidth=4 | set expandtab | set shiftround | set number | set relativenumber | set nrformats-=octal | set incsearch
-        set hlsearch | set autoread | set undofile | set undodir=~/.vim/dirs/undos | set nostartofline | set formatoptions+=j | set ruler | set scrolloff=3 | set sidescrolloff=8
-        set display+=lastline | set wildmenu | set encoding=utf-8 | set tabpagemax=50 | set shell=/usr/bin/env\ bash | set visualbell | set noerrorbells | set ls=2
-        colorscheme delek "desert "darkblue | let g:netrw_liststyle=3 | nnoremap Q q | nnoremap q <Nop> | command Wsudo :%!sudo tee > /dev/null %
-        if has("autocmd")
-          au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
-        endif
-        if filereadable(glob("~/.config/nvim/init.vim"))
-          source $HOME/.config/nvim/init.vim
-        endif
-      '';
-      packages.myVimPackage = with pkgs.vimPlugins; {
-        start = [ vim-nix vim-commentary ];
-      };
-    };
-  });
-
-in
 {
   options.roles.dev = {
     enable = lib.mkEnableOption "Development tools I use often";
   };
-  # imports = [ <nix-ld/modules/nix-ld.nix> ];  # sudo nix-channel --add https://github.com/Mic92/nix-ld/archive/main.tar.gz nix-ld
+
   config = lib.mkIf config.roles.dev.enable {
 
     # boot.tmp.useTmpfs = true;  # set false if large nix builds fail
@@ -49,6 +23,8 @@ in
         HostName github.com
         User git
     '';
+
+    programs.neovim.withNodeJs = true;
 
     programs.nix-ld.enable = true;
     programs.nix-ld.libraries = with pkgs; [
@@ -97,11 +73,6 @@ in
       xorg.libxshmfence
     ];
 
-    services.udev.extraRules = ''
-      # USBasp programmer
-      ACTION=="add", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="05dc", GROUP="dialout", MODE="0660"
-    '';
-
     services.kubo = {
       enable = true;
       autoMount = true;
@@ -112,27 +83,21 @@ in
 
     # Nix Package Manager
     nix = {
-      # package = pkgs.nix_2_4;
-      extraOptions = ''
-        experimental-features = nix-command flakes
-      '';
-      # keep-* options:
-      # - https://nixos.org/manual/nix/stable/command-ref/conf-file.html?highlight=keep-outputs#description
-      # - https://github.com/NixOS/nix/issues/2208
       optimise.automatic = true;
-      # autoOptimiseStore = true;  # old
       settings = {
+        experimental-features = [ "nix-command" "flakes" ];
         auto-optimise-store = true; # newer
+        # keep-* options:
+        # - https://nixos.org/manual/nix/stable/command-ref/conf-file.html?highlight=keep-outputs#description
+        # - https://github.com/NixOS/nix/issues/2208
         keep-outputs = true;
         keep-derivations = true;
         sandbox = true; # newer
-        # useSandbox = true;  # old
         allowed-users = [ "@wheel" ];
         trusted-users = [ "@wheel" ];
         cores = 3;
         use-xdg-base-directories = true;
       };
-      # daemonCPUSchedPolicy = 19;
       gc = {
         automatic = true;
         options = "--delete-older-than 14d";
@@ -146,14 +111,10 @@ in
       #buildMachines = [ { hostname=; system="x86_64-linux"; maxJobs=100; supportedFeatures=["benchmark" "big-parallel"] } ];
     };
     programs.command-not-found.dbPath = "/etc/programs.sqlite";
-    environment.etc = let
-      self-rev = self.rev or self.dirtyRev or "dirty-inputs";
-    in
-    {
+    environment.etc = {
       "programs.sqlite".source = self.inputs.programsdb.packages.${pkgs.system}.programs-sqlite;
       nixpkgs.source = pkgs.path;
-      "source-${self-rev}".source = self; # system.copySystemConfiguration = true # for non-flake
-      self-rev.text = builtins.trace self-rev self-rev;
+      "source-${self.shortRev or self.dirtyShortRev or self.lastModified or "unknown"}".source = self; # system.copySystemConfiguration = true # for non-flake
     };
 
     environment = {
@@ -161,10 +122,8 @@ in
     };
 
     #services.tor = { enable = true; client.enable = true; };
-    #services.lorri.enable = true;
 
     programs.direnv.enable = true;
-    # environment.pathsToLink = [ "/share/nix-direnv" ];
     environment.systemPackages = with pkgs; [
       # Essential
       htop
@@ -189,16 +148,9 @@ in
       dos2unix
 
       # General
-      gitAndTools.git
-      gitAndTools.pre-commit
-      gitAndTools.git-open
-      gitAndTools.delta
-      git-lfs
       fasd
       fzf
       ripgrep
-      # direnv
-      # nix-direnv
       parallel
       pandoc
       figlet
@@ -222,7 +174,7 @@ in
       manix
       nix-index
       nix-top
-      rnix-lsp
+      nil
       nix-output-monitor
       nix-info
       nixpkgs-fmt
@@ -247,10 +199,6 @@ in
         #ps.pygrep
       ]))
       black
-
-      # Vim
-      nodejs
-      base-neovim # python-language-server
 
       # Rust
       rust-analyzer
