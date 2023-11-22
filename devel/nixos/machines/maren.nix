@@ -31,6 +31,7 @@
   #unfrees = [ "discord" "typora" "hplip" "joypixels" "barracudavpn" "faac" ];  # ToDo: Move these to the modules that install them
   #nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) config.unfrees;
   config.nixpkgs.config.allowUnfree = true;
+  config.nixpkgs.hostPlatform = "x86_64-linux";
 
   config.system.stateVersion = "21.05";
 

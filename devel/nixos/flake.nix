@@ -1,23 +1,21 @@
 {
   outputs = { self, nixunstable, nixos-hardware, programsdb } @ flake-inputs:
-  let
-    system = "x86_64-linux";
-    inputs = flake-inputs // {
-      inherit system;
+    let
+      system = "x86_64-linux";
       unfreeunstable = import nixunstable {
         inherit system;
         config.allowUnfree = true;
         overlays = [ self.overlays.default ];
       };
+      inputs = flake-inputs // { inherit system unfreeunstable; };
+    in
+    {
+      overlays = import ./packages/overlays.nix inputs;
+      nixosModules = import ./modules/default.nix inputs;
+      nixosConfigurations = import ./machines/default.nix inputs;
+      packages.${system} = import ./packages/default.nix inputs;
+      formatter.${system} = unfreeunstable.nixpkgs-fmt;
     };
-  in
-  {
-    packages.${system} = import ./packages/default.nix inputs;
-    overlays = import ./packages/overlays.nix inputs;
-    nixosModules = import ./modules/default.nix inputs;
-    nixosConfigurations = import ./machines/default.nix inputs;
-    formatter.${system} = inputs.unfreeunstable.nixpkgs-fmt;
-  };
 
   inputs = {
     programsdb.url = "github:wamserma/flake-programs-sqlite";

@@ -129,6 +129,7 @@
   ];
   nixpkgs.config.joypixels.acceptLicense = true;
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.hostPlatform = "aarch64-linux";
 
 
   # Shell Convenience

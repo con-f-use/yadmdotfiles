@@ -1,12 +1,6 @@
 { config, lib, pkgs, inputs, nixrepo, modulesPath, ... }:
 {
-  imports = [
-    (modulesPath + "/installer/scan/not-detected.nix")
-    ../modules
-    ../users
-  ] ++ (lib.optional (builtins.pathExists ./cachix.nix) ./cachix.nix);
-
-  config.roles = {
+  roles = {
     essentials = { enable = true; main_user = config.users.users.jan.name; };
     dev.enable = true;
     windowed.enable = true;
@@ -18,65 +12,65 @@
     cudawork.novpn = false;
     cudawork.use_builders = false;
   };
-  config.users.users.root.openssh.authorizedKeys.keys = config.users.users.jan.openssh.authorizedKeys.keys;
-  config.users.mutableUsers = false;
+  users.mutableUsers = false;
 
-  config.nixpkgs.config.allowUnfree = true;
-  config.system.stateVersion = "22.05";
+  nixpkgs.config.allowUnfree = true;
+  nixpkgs.hostPlatform = "x86_64-linux";
+  system.stateVersion = "22.05";
 
-  config.boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
   #config.boot.kernelPackages = pkgs.linuxPackages_5_15;
-  config.boot.initrd.kernelModules = [ ];
-  config.boot.kernelModules = [ "kvm-intel" ];
+  boot.initrd.kernelModules = [ ];
+  boot.kernelModules = [ "kvm-intel" ];
 
-  config.boot.extraModulePackages = [ ];
+  boot.extraModulePackages = [ ];
   #console.font = "latarcyrheb-sun32";  # larger bootmode fonts
   #boot.loader.systemd-boot.consoleMode = lib.mkDefault "max";
   #hardware.video.hidpi.enable = true;
-  config.boot.loader.systemd-boot.enable = true;
-  config.boot.loader.efi.canTouchEfiVariables = true;
-  config.networking.hostName = "contort";
-  config.networking.useDHCP = false;
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  networking.hostName = "contort";
+  networking.useDHCP = false;
   # config.networking.interfaces.enp0s13f0u4.useDHCP = true;  # zielstatt usb network adapter
-  config.networking.networkmanager.enable = true;
-  config.programs.nm-applet.enable = true;
-  config.time.timeZone = "Europe/Vienna";
+  networking.networkmanager.enable = true;
+  programs.nm-applet.enable = true;
+  time.timeZone = "Europe/Vienna";
   #hardware.opengl.driSupport32Bit = true;
   #hardware.opengl.extraPackages = [ pkgs.intel-ocl ];
   #hardware.bluetooth.enable = true;
   #services.blueman.enable = true;
-  config.services.xserver.libinput.enable = true; # Enable touchpad support.
-  config.services.logind.lidSwitch = "ignore";
-  config.networking.hostId = "f3dc4d2a";
+  services.xserver.libinput.enable = true; # Enable touchpad support.
+  services.logind.lidSwitch = "ignore";
+  networking.hostId = "f3dc4d2a";
 
-  config.roles.zfs.enable = true;
-  config.fileSystems."/" =
+  roles.zfs.enable = true;
+  fileSystems."/" =
     {
       device = "rpool/root";
       fsType = "zfs";
     };
 
-  config.fileSystems."/nix" =
+  fileSystems."/nix" =
     {
       device = "rpool/nix";
       fsType = "zfs";
     };
 
-  config.fileSystems."/home" =
+  fileSystems."/home" =
     {
       device = "rpool/home";
       fsType = "zfs";
     };
 
-  config.fileSystems."/boot" =
+  fileSystems."/boot" =
     {
       device = "/dev/disk/by-uuid/C1DA-4C5B";
       fsType = "vfat";
     };
-  config.swapDevices = [ ];
+  swapDevices = [ ];
 
-  config.powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
-  config.hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
 
 #lrwxrwxrwx 1 root root 15 Aug 21 23:38  -> ../../nvme0n1p1

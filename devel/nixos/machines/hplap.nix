@@ -30,6 +30,7 @@
   config.unfrees = [ "discord" "typora" "hplip" "joypixels" "barracudavpn" "faac" ]; # ToDo: Move these to the modules that install them
   #nixpkgs.config.allowUnfree = true;
   config.nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) config.unfrees;
+  config.nixpkgs.hostPlatform = "x86_64-linux";
 
   config.boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usb_storage" "sd_mod" "sdhci_pci" ];
   config.boot.initrd.kernelModules = [ ];

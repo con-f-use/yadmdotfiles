@@ -84,5 +84,6 @@ git clone 'git@github.com:delroth/infra.delroth.net.git' 'del_roth-infra.delroth
 git clone 'git@github.com:LongerHV/nixos-configuration.git' 'longerhv'
 git clone 'https://codeberg.org/yuuyin/yuunix.git' yuuyin
 git clone 'git@github.com:wimpysworld/nix-config wimpysworld'
+git clone 'https://github.com/tejing1/nixos-config.git'
 """
 

@@ -13,7 +13,7 @@ in
     programs.gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
-      pinentryFlavor = "gtk2";  # "curses" "tty" "gnome3" "qt"
+      pinentryFlavor = "gtk2"; # "curses" "tty" "gnome3" "qt"
     };
     #services.dbus.packages = [ pkgs.gcr ];
     #services.pcscd.enable = true;
