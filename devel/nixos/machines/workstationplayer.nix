@@ -16,9 +16,8 @@
 
   # ToDo: This is a dirty hack so I can merge this with unfrees from other modles
   # no idea how to do it properly.
-  unfrees = [ "discord" "typora" "hplip" "joypixels" "barracudavpn" "faac" ]; # ToDo: Move these to the modules that install them
+  # allowUnfreePackages = [ "discord" "typora" "hplip" "joypixels" "barracudavpn" "faac" ];
   # config.nixpkgs.config.allowAliases = false;
-  nixpkgs.config.allowUnfree = true;
   nixpkgs.hostPlatform = "x86_64-linux";
   #nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) config.unfrees;
 

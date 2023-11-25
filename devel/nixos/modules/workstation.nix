@@ -34,11 +34,15 @@ in
       zip
       trash-cli
       st
-      # kitty kitty-xterm-link
+      #kitty kitty-xterm-link
       xonsh
       oathToolkit
       qrencode
-      # network
+      conservetool
+      usbutils
+      lshw
+
+      # Network
       inetutils
       dnsutils
       nmap

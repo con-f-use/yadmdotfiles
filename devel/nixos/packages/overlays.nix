@@ -1,9 +1,9 @@
-{ self, system, nixunstable, ... }:
+{ self, lib, ... }:
 {
   # Make default contain all other "real" overlays defined here
-  default = nixunstable.lib.composeManyExtensions (
-    nixunstable.lib.attrValues (
-      nixunstable.lib.filterAttrs
+  default = lib.composeManyExtensions (
+    builtins.attrValues (
+      lib.filterAttrs
         (name: _: name != "default" && name != "pythonLibraries")
         self.overlays
     )
@@ -12,5 +12,14 @@
   rudeSudo = (final: prev: { sudo = prev.sudo.override { withInsults = true; }; });
 
   # Overlay all pacakges defined in this flake
-  packages = _: _: self.packages.${system};
+  packages = final: prev: import ./default.nix { pkgs = final; };
+
+  pythonLibraries = final: prev: import ./python/default.nix { pkgs = final; };
+
+  extendPythonPackages = final: prev: {
+    pythonPackagesExtensions =
+      prev.pythonPackagesExtensions ++ [
+        self.overlays.pythonLibraries
+      ];
+  };
 }

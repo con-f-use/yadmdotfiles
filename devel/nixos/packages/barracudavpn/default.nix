@@ -1,4 +1,4 @@
-{ stdenv, lib, callPackage, buildFHSUserEnv, requireFile, binutils-unwrapped, autoPatchelfHook }:
+{ stdenv, lib, requireFile, binutils-unwrapped, autoPatchelfHook, version ? "5.2.2" }:
 
 let
 
@@ -11,15 +11,13 @@ let
 
 in
 
-stdenv.mkDerivation rec {
-  #version = "5.1.5rc1";
-  #version = "5.1.4";
-  version = "5.2.2";
+stdenv.mkDerivation (finalAttrs: {
+  inherit version;
   pname = "barracudavpn";
   vpnfile = requireFile {
-    name = "VPNClient_${version}_Linux.tar.gz";
-    sha256 = shas."${version}";
-    url = meta.homepage;
+    name = "VPNClient_${finalAttrs.version}_Linux.tar.gz";
+    sha256 = shas."${finalAttrs.version}";
+    url = finalAttrs.meta.homepage;
     message = ''
       # Invocation notes:
       # Does not work properly as script because "security"
@@ -36,8 +34,9 @@ stdenv.mkDerivation rec {
         sed -n 's/executing:/sudo ip/p'
       )"; sudo chmod a+r /etc/resolv.conf;
          
-      # Download from: ${meta.homepage}/#/search?page=1&search=Linux&type=6
-      nix-store --add-fixed sha256 VPNClient_${version}_Linux.tar.gz
+      # Download from: ${finalAttrs.meta.homepage}/#/search?page=1&search=Linux&type=6
+      # Disclaimer: The Licences of that file may apply!
+      nix-store --add-fixed sha256 VPNClient_${finalAttrs.version}_Linux.tar.gz
       # build:
         nix-build -E "with import <nixpkgs> {}; callPackage ./barracudavpn.nix {}"
       # or install:
@@ -47,22 +46,21 @@ stdenv.mkDerivation rec {
   src = null;
   nativeBuildInputs = [ binutils-unwrapped autoPatchelfHook ];
   unpackPhase = ''
-    tar xf "${vpnfile}" &&
+    tar xf "${finalAttrs.vpnfile}" &&
       ar -x *.deb &&
       tar xf data.tar.xz ||
-        echo "'${vpnfile}' is not an archive type, using as executable..." 1>&2
+        echo "'${finalAttrs.vpnfile}' is not an archive type, using as executable..." 1>&2
   '';
   installPhase = ''
     mkdir -p "$out/bin"
     cp usr/local/bin/barracudavpn "$out/bin/barracudavpn" ||
-      cp ${vpnfile} "$out/bin/barracudavpn"
+      cp ${finalAttrs.vpnfile} "$out/bin/barracudavpn"
   '';
   meta = {
     description = "Barracuda VPN Client for Linux";
     homepage = "https://dlportal.barracudanetworks.com";
-    license = lib.licenses.unfree;
     platforms = lib.platforms.linux;
     maintainers = [ lib.maintainers.confus ];
   };
-}
+})
 

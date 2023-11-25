@@ -1,7 +1,6 @@
 { config, lib, pkgs, ... }:
 {
   options = with lib; {
-    unfrees = mkOption { description = "List of unfree packages allowed"; type = types.listOf types.str; default = [ ]; };
     roles.essentials = {
       enable = mkEnableOption "Things I can't linux without"; # Linux is a verb now!
       main_user = mkOption { description = "User name of the main user"; type = types.str; default = false; };
@@ -11,7 +10,7 @@
 
     environment.homeBinInPath = true;
 
-    environment.sessionVariables = rec {
+    environment.sessionVariables = {
       XDG_CACHE_HOME = "\${HOME}/.cache";
       XDG_CONFIG_HOME = "\${HOME}/.config";
       XDG_BIN_HOME = "\${HOME}/.local/bin";
@@ -45,7 +44,8 @@
         cl = "clone";
         d = "diff";
         dc = "diff --cached";
-        lg = "log";
+        l = "log";
+        lg = "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cD) %C(bold blue)<%an>%Creset' --abbrev-commit";
       };
     };
 
@@ -88,7 +88,7 @@
           endif
         '';
         packages.myVimPackage = with pkgs.vimPlugins; {
-          start = [ vim-nix vim-commentary vim-surround vim-ReplaceWithRegister ];
+          start = [ vim-nix vim-commentary vim-surround vim-ReplaceWithRegister ]; # nvim-treesitter.withAllGrammars
         };
       };
     };

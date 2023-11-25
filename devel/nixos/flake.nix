@@ -1,20 +1,18 @@
 {
-  outputs = { self, nixunstable, nixos-hardware, programsdb } @ flake-inputs:
+  description = "confus' Nix(OS) Stuff";
+
+  outputs = inputs:
     let
-      system = "x86_64-linux";
-      unfreeunstable = import nixunstable {
-        inherit system;
-        config.allowUnfree = true;
-        overlays = [ self.overlays.default ];
-      };
-      inputs = flake-inputs // { inherit system unfreeunstable; };
+      args = import ./args inputs;
     in
     {
-      overlays = import ./packages/overlays.nix inputs;
-      nixosModules = import ./modules/default.nix inputs;
-      nixosConfigurations = import ./machines/default.nix inputs;
-      packages.${system} = import ./packages/default.nix inputs;
-      formatter.${system} = unfreeunstable.nixpkgs-fmt;
+      overlays = import ./packages/overlays.nix args;
+      nixosModules = import ./modules/default.nix args;
+      nixosConfigurations = import ./machines/default.nix args;
+      packages = args.forSystems (system:
+        import ./packages/default.nix { pkgs = args.${system}; }
+      );
+      formatter = args.forSystems (system: args.${system}.nixpkgs-fmt);
     };
 
   inputs = {

@@ -6,6 +6,7 @@
   essential = import ./essential.nix;
   gaming = import ./gaming.nix;
   perswitch = import ./perswitch.nix;
+  unfreepackages = import ./unfreepackages.nix;
   windowed = import ./windowed.nix;
   workstation = import ./workstation.nix;
   zfs = import ./zfs.nix;

@@ -1,34 +1,59 @@
 { self, config, lib, pkgs, ... }:
 
 {
-  boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "usbhid" "sd_mod" ];
-  boot.initrd.kernelModules = [ ];
+  roles = {
+    essentials = {
+      enable = true;
+      main_user = config.users.users.jan.name;
+    };
+    dev.enable = true;
+  };
+
+  # boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "usbhid" "sd_mod" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "thunderbolt" "nvme" "usb_storage" "usbnet" "usbhid" "sd_mod" "e1000e" "r8169" "r8152" "cdc_ncm" ];
+  #boot.initrd.kernelModules = [ ];
+  boot.initrd.kernelModules = [ "xhci_pci" "cdc_ncm" "usbnet" "thunderbolt" "nvme" "usb_storage" "usbhid" "sd_mod" "r8152" "dm-snapshot" ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
-  system.stateVersion = "23.05"; # Do not edit this ever!
+  boot.initrd.preLVMCommands = lib.mkOrder 400 "sleep 5";  # wait for interfaces
+  boot.initrd.network = {
+    # For initrd networking, you should add the module(s) required for your network card to
+    #boot.initrd.availableKernelModules. lspci -v | grep -iA8 'network\|ethernet'
+    enable = true;
+    ssh.enable = true;
+    ssh.port = 3022;
+    ssh.authorizedKeys = config.users.users.jan.openssh.authorizedKeys.keys;
+  };
+  boot.initrd.network.ssh.hostKeys = [ "/etc/secrets/initrd/ssh_host_rsa_key" "/etc/secrets/initrd/ssh_host_ed25519_key" ];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/a0adcaeb-895d-4038-9f74-c890c12e2ca3";
+    device = "/dev/disk/by-uuid/dedcd975-a6f5-4583-8420-1c39d6a6183a";
     fsType = "ext4";
   };
 
+  boot.initrd.luks.reusePassphrases = true;
+  boot.initrd.luks.devices."conserve6".device = "/dev/disk/by-uuid/a8afd5ea-d5d9-4c21-aed8-44da7efdfd4a";
+  boot.initrd.luks.forceLuksSupportInInitrd = true;
+
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/41B6-51F6";
+    device = "/dev/disk/by-uuid/67B4-DC3C";
     fsType = "vfat";
   };
 
-  swapDevices = [ ];
+  swapDevices = [ { device = "/swapfile"; size = 33000; } ];
 
-  # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
-  # (the default) this is the recommended approach. When using systemd-networkd it's
-  # still possible to use this option, but it's recommended to use it in conjunction
-  # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
-  networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.enp0s13f0u4u3c2.useDHCP = lib.mkDefault true;
+  #networking.useDHCP = lib.mkDefault false;
+  networking.interfaces.enp0s13f0u4u3c2.useDHCP = true;  # anker mini dongle
+  # networking.interfaces.enp0s13f0u3.useDHCP = true;  # framework adapter module
 
-  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+  system.stateVersion = "23.05"; # Do not edit this ever!
+  nixpkgs.hostPlatform = "x86_64-linux";
+  nixpkgs.config.allowUnfree = true;
   hardware.enableAllFirmware = true;
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+  hardware.cpu.intel.updateMicrocode = true;
+
+  users.users.root.openssh.authorizedKeys.keys = config.users.users.jan.openssh.authorizedKeys.keys;
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -112,73 +137,12 @@
     # systemWide = true;
   };
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.mutableUsers = false;
-  users.users.jan = {
-    isNormalUser = true;
-    description = "jan";
-    extraGroups = [ "pulse" "pulseaudio" "pulse" "puse-user" "networkmanager" "wheel" "pipewire" "users" "kvm" "input" "gdm" "adm" "video" "dailout" "disk" "tape" "cdrom" "floppy" "audio" "lp" "messgebus" "kmem" ];
-    hashedPassword = "$6$Xe3WNdmP$JqMUSRF3j6ytfCz7ceT1pI4Gw05FLy3n5UxkjSpQ7cilxcH/WoN8g2lOoVskJKoIDsadH9OiwHEaAUYZQXze7.";
-  };
-  users.users.naj = {
-    isNormalUser = true;
-    description = "naj";
-    extraGroups = [ "pulse" "pulseaudio" "networkmanager" "wheel" "pipewire" "users" "kvm" "input" "gdm" "adm" "video" "dailout" "disk" "tape" "cdrom" "floppy" "audio" "lp" "messgebus" "kmem" ];
-    hashedPassword = "$6$Xe3WNdmP$JqMUSRF3j6ytfCz7ceT1pI4Gw05FLy3n5UxkjSpQ7cilxcH/WoN8g2lOoVskJKoIDsadH9OiwHEaAUYZQXze7.";
-  };
-
-  nixpkgs.config.allowUnfree = true;
-  nixpkgs.hostPlatform = "x86_64-linux";
-
   services.openssh = {
     enable = true;
     settings = {
       PasswordAuthentication = false;
-      PermitRootLogin = "no";
+      PermitRootLogin = "prohibit-password";
       X11Forwarding = true;
-    };
-  };
-
-  environment.homeBinInPath = true;
-
-  environment.sessionVariables = rec {
-    XDG_CACHE_HOME = "\${HOME}/.cache";
-    XDG_CONFIG_HOME = "\${HOME}/.config";
-    XDG_BIN_HOME = "\${HOME}/.local/bin";
-    XDG_DATA_HOME = "\${HOME}/.local/share";
-    XDG_STATE_HOME = "\${HOME}/.local/state";
-
-    PATH = [ "\${XDG_BIN_HOME}" ];
-  };
-
-  environment.etc."inputrc".text = ''
-    "\e[Z": menu-complete
-    "\e\e[C": forward-word
-    "\e\e[D": backward-word
-    "\e[A": history-search-backward
-    "\e[B": history-search-forward
-  '';
-
-  environment.enableAllTerminfo = true;
-
-  environment.shellAliases = {
-    ff = "sudo vi /etc/nixos/configuration.nix";
-    ss = ''echo 'Set a label: -p <label>'; [ -n "$(sudo git -C /etc/nixos status --porcelain=v1 2>/dev/null)" ] && sudo git -C /etc/nixos add -A && git status && git -C /etc/nixos commit -m 'alias switch' && sudo nixos-rebuild switch && git -C /etc/nixos tag -a -m 'alias switch' "$(readlink -f /run/current-system/ | cut -d'-' -f 5)"'';
-  };
-
-  programs.git = {
-    enable = true;
-    lfs.enable = true;
-    config = {
-      alias = {
-        ci = "commit";
-        co = "checkout";
-        st = "status";
-        d = "diff";
-        dc = "diff --cached";
-        l = "log";
-        lg = "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cD) %C(bold blue)<%an>%Creset' --abbrev-commit";
-      };
     };
   };
 
@@ -196,3 +160,25 @@
   ];
 
 }
+
+# Bus 002 Device 003: ID 0bda:8156 Realtek Semiconductor Corp. USB 10/100/1G/2.5G LAN
+# description: Ethernet interface
+# product: USB 10/100/1G/2.5G LAN
+# physical id: a
+# bus info: usb@2:3
+# logical name: enp0s13f0u3
+# serial: 9c:bf:0d:00:06:7b
+# size: 1Gbit/s
+# capacity: 2500Mbit/s
+# capabilities: ethernet physical tp mii 10bt 10bt-fd 100bt 100bt-fd 1000bt 1000bt-fd 2500bt-fd autonegotiation
+# configuration: autonegotiation=on broadcast=yes driver=r8152 driverversion=v1.12.13 duplex=full firmware=rtl8156b-2 v3 10/20/23 ip=192.168.1.17 link=yes multicast=yes port=MII speed=1Gbit/s
+#
+# Bus 002 Device 004: ID 0b95:1790 ASIX Electronics Corp. AX88179 Gigabit Ethernet
+# description: Ethernet interface
+# product: AX88179A
+# physical id: b
+# bus info: usb@2:4.3
+# logical name: enp0s13f0u4u3c2
+# serial: f8:e4:3b:40:b7:01
+# capabilities: ethernet physical
+# configuration: autonegotiation=off broadcast=yes driver=cdc_ncm driverversion=6.6.1 duplex=half firmware=CDC NCM (NO ZLP) link=no multicast=yes port=twisted pair

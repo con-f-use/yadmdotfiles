@@ -1,11 +1,5 @@
-{ config, lib, pkgs, inputs, nixrepo, modulesPath, ... }:
+{ config, lib, pkgs, ... }:
 {
-  imports = [
-    (modulesPath + "/installer/scan/not-detected.nix")
-    ../modules
-    ../users
-  ] ++ (lib.optional (builtins.pathExists ./cachix.nix) ./cachix.nix);
-
   fileSystems = {
     "/" = {
       device = "/dev/disk/by-label/NIXOS_SD";
@@ -112,7 +106,7 @@
       '';
     };
   };
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     cantarell-fonts
     fira-code
     fira-code-symbols
@@ -196,24 +190,25 @@
     black
   ];
 
-  # Porkbun update
-  systemd.services.porkbun_ddns = {
-    serviceConfig.Type = "oneshot";
-    #path = [ pgks.bash ];
-    script =
-      let
-        porkbun = pkgs.writers.writePython3Bin "porkbun-ddns" { libraries = [ pkgs.python3Packages.requests ]; flakeIgnore = [ "E" "F" "W" ]; } (builtins.readFile ./porkbun-ddns.py);
-      in
-      ''
-        ${porkbun}/bin/porkbun-ddns
-        ${porkbun}/bin/porkbun-ddns -4 || true
-      '';
-  };
-  systemd.timers.porkbun_ddns = {
-    wantedBy = [ "timers.target" ];
-    partOf = [ "porkbun_ddns.service" ];
-    timerConfig.OnCalendar = [ "*-*-* *:00:00" ]; # hourly
-  };
+  ## Porkbun update
+  # Disable until recovered script
+  #systemd.services.porkbun_ddns = {
+  #  serviceConfig.Type = "oneshot";
+  #  #path = [ pgks.bash ];
+  #  script =
+  #    let
+  #      porkbun = pkgs.writers.writePython3Bin "porkbun-ddns" { libraries = [ pkgs.python3Packages.requests ]; flakeIgnore = [ "E" "F" "W" ]; } (builtins.readFile ./porkbun-ddns.py);
+  #    in
+  #    ''
+  #      ${porkbun}/bin/porkbun-ddns
+  #      ${porkbun}/bin/porkbun-ddns -4 || true
+  #    '';
+  #};
+  #systemd.timers.porkbun_ddns = {
+  #  wantedBy = [ "timers.target" ];
+  #  partOf = [ "porkbun_ddns.service" ];
+  #  timerConfig.OnCalendar = [ "*-*-* *:00:00" ]; # hourly
+  #};
 
   # SSH
   services.openssh.enable = true;
@@ -224,7 +219,7 @@
   #networking.firewall.enable = false;
 
   # Nix
-  nix.autoOptimiseStore = true;
+  nix.settings.auto-optimise-store = true;
   nix.gc = {
     automatic = true;
     options = "--delete-older-than 14d";

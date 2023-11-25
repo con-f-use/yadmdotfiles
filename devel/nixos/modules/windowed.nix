@@ -122,6 +122,7 @@
 
     nixpkgs.config.joypixels.acceptLicense = true;
 
+    allowUnfreePackages = [ "discord" "rar" "joypixels" ];
     environment.systemPackages = with pkgs; [
       # X
       xorg.xrandr
