@@ -282,17 +282,12 @@ in
     })
 
     (lib.mkIf config.roles.cudawork.use_builders {
-      # environment.etc."${nixbuilderkeypath}" = {
-      #   text = builtins.readFile ./../secrets/nixbuilder;
-      #   enable = true;
-      #   mode = "0400";
-      #   uid = 0;
-      #   gid = 0;
-      # };
       environment.etc = {
         "${nixbuilderkeypath}" = {
           source = pkgs.fetchurl {
-            url = "ftp://qa:qa@10.17.6.4/nix/nixbuilder";
+            urls = [
+              "ftp://qa:qa@10.17.6.4/nix/nixbuilder";
+            ];
             hash = "sha256-YHklGvvnUlTHTNkyapTjHBiYRKieRRRejooqAHihWN0=";
           };
           enable = true;
