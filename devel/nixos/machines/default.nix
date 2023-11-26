@@ -23,7 +23,7 @@
     modules = (builtins.attrValues self.nixosModules) ++ [
       nixos-hardware.nixosModules.framework-11th-gen-intel
       { nixpkgs.overlays = [ self.overlays.default ]; }
-      ./conserve6.nix
+      ./conserve6
     ];
   };
 
