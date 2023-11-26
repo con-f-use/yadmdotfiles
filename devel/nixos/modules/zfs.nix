@@ -14,6 +14,7 @@
     #services.zfs.trim.enable = true;
     #  services.fstrim = { enable = true; interval = "weekly"; };
 
+    virtualisation.docker.storageDriver = "zfs";
 
     services.zfs.autoSnapshot = {
       enable = true;
