@@ -83,12 +83,19 @@
           if has("autocmd")
             au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
           endif
+          if executable('nil')
+            autocmd User lsp_setup call lsp#register_server({
+              \ 'name': 'nil',
+              \ 'cmd': {server_info->['nil']},
+              \ 'whitelist': ['nix'],
+              \ })
+          endif
           if filereadable(glob("~/.config/nvim/init.vim"))
             source $HOME/.config/nvim/init.vim
           endif
         '';
         packages.myVimPackage = with pkgs.vimPlugins; {
-          start = [ vim-nix vim-commentary vim-surround vim-ReplaceWithRegister ]; # nvim-treesitter.withAllGrammars
+          start = [ vim-nix vim-commentary vim-surround vim-ReplaceWithRegister ];
         };
       };
     };

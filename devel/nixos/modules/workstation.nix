@@ -22,6 +22,11 @@ in
     # systemctl --user restart gpg-agent
     # gpgconf --reload gpg-agent
 
+    programs.xonsh = {
+      enable = true;
+      #config = '' '';
+    };
+
     environment.systemPackages = with pkgs; [
       # Workstation
       yadm
@@ -34,8 +39,8 @@ in
       zip
       trash-cli
       st
-      #kitty kitty-xterm-link
-      xonsh
+      kitty
+      #kitty-xterm-link
       oathToolkit
       qrencode
       conservetool

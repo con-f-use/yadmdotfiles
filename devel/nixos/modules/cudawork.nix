@@ -230,6 +230,24 @@ in
         "10.27.210.91" = [ "docker-registry.ngdev.eu.ad.cuda-inc.com" ];
       };
 
+      programs.ssh = {
+        # knownHostsFiles = [ ./known_hosts ];
+        extraConfig = ''
+          Host stash st
+            HostName stash.cudaops.com
+            Port 7999
+            IdentitiesOnly yes
+          Host folsom fol fl
+            HostName folsom.ngdev.eu.ad.cuda-inc.com
+            Port 7999
+            IdentitiesOnly yes
+          Host friederike rike
+            HostName friederike.ngdev.eu.ad.cuda-inc.com
+          Host order
+            HostName order.ngdev.eu.ad.cuda-inc.com
+        '';
+      };
+
       security.pki.certificates = systemCerts;
 
       environment.etc."docker/cert.d/10.17.65.201:5000/certificate.crt" = {
@@ -265,6 +283,7 @@ in
         postgresql
         groovy #devpi-client
         vault
+        qda-repos
       ] ++ lib.optional (config.roles.cudawork.novpn == false) barracudavpn;
     }
 
@@ -286,7 +305,7 @@ in
         "${nixbuilderkeypath}" = {
           source = pkgs.fetchurl {
             urls = [
-              "ftp://qa:qa@10.17.6.4/nix/nixbuilder";
+              "ftp://qa:qa@10.17.6.4/nix/nixbuilder"
             ];
             hash = "sha256-YHklGvvnUlTHTNkyapTjHBiYRKieRRRejooqAHihWN0=";
           };

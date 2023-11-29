@@ -8,6 +8,7 @@
       enable = true;
       main_user = config.users.users.jan.name;
     };
+    workstation.enable = true;
     cudawork = {
       enable = true;
       novpn = false;
@@ -25,7 +26,7 @@
   systemd.targets.suspend.enable = false;
   systemd.targets.hibernate.enable = false;
   systemd.targets.hybrid-sleep.enable = false;
-  
+
   networking.hostName = "janix";
   networking.networkmanager.enable = true;
 

@@ -19,12 +19,17 @@
     boot.supportedFilesystems = [ "ntfs" ];
 
     programs.ssh.extraConfig = ''
-      Host gh
+      Host github hub gh
         HostName github.com
         User git
     '';
 
-    programs.neovim.withNodeJs = true;
+    programs.neovim = {
+      withNodeJs = true;
+      configure.packages.myVimPackage = with pkgs.vimPlugins; {
+          start = [ vim-nix vim-commentary vim-surround vim-ReplaceWithRegister nvim-treesitter.withAllGrammars ];
+      };
+    };
 
     programs.nix-ld.enable = true;
     programs.nix-ld.libraries = with pkgs; [
@@ -169,8 +174,6 @@
       nix-index
       nixpkgs-review
       nix-tree
-      tree-sitter-grammars.tree-sitter-nix
-      tree-sitter-grammars.tree-sitter-nickel
       manix
       nix-index
       nix-top

@@ -2,6 +2,7 @@
 {
   barracudavpn = pkgs.callPackage ./barracudavpn { };
   conservetool = pkgs.callPackage ./conservetool { };
+  qda-repos = pkgs.callPackage ./qda-repos { };
   perscom =
     let
       ref = "4ddf0c5f12d7ff7259672de0c7278c76ddb229a9";
