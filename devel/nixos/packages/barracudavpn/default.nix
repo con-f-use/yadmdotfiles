@@ -53,7 +53,7 @@ stdenv.mkDerivation (finalAttrs: {
   '';
   installPhase = ''
     mkdir -p "$out/bin"
-    cp "${./bcvpn.sh}" "$out/bin" && chmod a+x "$out/bin/bcvpn"
+    cp "${./bcvpn.sh}" "$out/bin/bcvpn" && chmod a+x "$out/bin/bcvpn"
     cp usr/local/bin/barracudavpn "$out/bin/barracudavpn" ||
       cp ${finalAttrs.vpnfile} "$out/bin/barracudavpn"
   '';

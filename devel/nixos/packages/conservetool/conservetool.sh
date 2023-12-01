@@ -27,7 +27,7 @@ csrv:push() {
 csrv:unlock() {
   target=${1:-ssh://root@$IP:3022}
   shift || true
-  gopass show -o Infrastrucutre/conserve6 |
+  gopass show -o Infrastructure/conserve6 |
     ssh ${DEBUG:+-vvvv} \
       -o UserKnownHostsFile=/dev/null \
       -o StrictHostKeyChecking=no \

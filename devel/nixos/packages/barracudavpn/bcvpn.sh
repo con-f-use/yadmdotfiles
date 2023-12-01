@@ -15,9 +15,9 @@ trap "rm -f '$logpath'" EXIT ERR # Has sensitive data, ensure deleteion
 
 # This is the real workaournd.
 # baracudavpn somehow expects the `ip` command not to be a symlink or
-# something (presumably for "security" reasons), so we need to extract
-# the calls to ip from the verbose output and run them manually 
-# (with sudo), but there's more prolems:
+# (presumably for "security" reasons), so we need to extract the calls
+# to ip from the verbose output and run them manually (with sudo), but
+# there's more prolems:
 # - Simple output redirect `...2>&1 >"$logpath"` seems to cause
 # barracudavpn to supress its verbose output completely, it needs to
 # be in an interactive shell, because it's a sensitive snowflake or
@@ -25,8 +25,6 @@ trap "rm -f '$logpath'" EXIT ERR # Has sensitive data, ensure deleteion
 # - Closing/Truncation of barracudavpn's input/output streems seems to
 # cause it to destory the tunnel, so the `script` command shouldn't
 # terminate.
-# - barracudavpn prints the clear text server password in its verbose
-# output, so the logfile needs to be truncated/edited ASAP.
 # - some sed/grep search patterns should not match themselves as `scripts`
 # puts them in log
 script "$logpath" --append --force --flush --command "
@@ -37,7 +35,7 @@ script "$logpath" --append --force --flush --command "
     }
     trap clean_bcvpn EXIT
     clean_bcvpn
-    sudo barracudavpn --verbose --start --config '/home/jan/.config/yadmdotfiles/cuda/barracudavpn' --login 'jbischko' --serverpw '$serverpw'
+    sudo barracudavpn --verbose --start --config '/home/jan/.config/yadmdotfiles/cuda/barracudavpn' -l 'jbischko' -r '$serverpw'
     if ! grep -Eq 'Tunnel read[y]' '$logpath'; then
         echo 'Error: barracudavpn did not respond with ready tunnel' 1>&2
         exit 1
@@ -62,8 +60,6 @@ script "$logpath" --append --force --flush --command "
             sed -n -E 's/^executing:\\s*([A-Za-z0-9 .\\/]+).*$/sudo ip \\1;/p'
     )
 "
-
-
 # Cleanup
 # sudo ip l s down dev tun0
 # sudo ip a flush dev tun0

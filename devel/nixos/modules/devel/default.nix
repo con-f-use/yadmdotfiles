@@ -28,7 +28,13 @@
     programs.neovim = {
       withNodeJs = true;
       configure.packages.myVimPackage = with pkgs.vimPlugins; {
-          start = [ vim-nix vim-commentary vim-surround vim-ReplaceWithRegister nvim-treesitter.withAllGrammars ];
+        start = [
+          vim-nix
+          vim-commentary
+          vim-surround
+          vim-ReplaceWithRegister
+          nvim-treesitter.withAllGrammars
+        ];
       };
     };
 
