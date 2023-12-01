@@ -1,10 +1,11 @@
 { ... }: {
   conferencing = import ./conferencing.nix;
-  cudawork = import ./cudawork.nix;
-  devel = import ./devel.nix;
+  cudawork = import ./cudawork;
+  devel = import ./devel;
   electronics = import ./electronics.nix;
   essential = import ./essential.nix;
   gaming = import ./gaming.nix;
+  nixnix = import ./nix.nix;
   perswitch = import ./perswitch.nix;
   unfreepackages = import ./unfreepackages.nix;
   windowed = import ./windowed.nix;
