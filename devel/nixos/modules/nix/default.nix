@@ -1,7 +1,7 @@
 { self, config, lib, pkgs, ... }:
 {
   config = lib.mkIf config.roles.dev.enable {
-  # config = lib.mkIf false {
+    # config = lib.mkIf false {
 
     nix = {
       optimise.automatic = true;
@@ -36,11 +36,15 @@
 
     programs.command-not-found.dbPath = "/etc/programs.sqlite";
 
-    environment.etc = {
-      "programs.sqlite".source = self.inputs.programsdb.packages.${pkgs.system}.programs-sqlite;
-      nixpkgs.source = pkgs.path;
-      "source-${toString (self.shortRev or self.dirtyShortRev or self.lastModified or "unknown")}".source = self; # system.copySystemConfiguration = true # for non-flake
-    };
+    environment.etc =
+      let
+        rev = self.shortRev or self.dirtyShortRev or self.lastModified or "unknown";
+      in
+      {
+        "programs.sqlite".source = self.inputs.programsdb.packages.${pkgs.system}.programs-sqlite;
+        nixpkgs.source = pkgs.path;
+        "source-${toString rev}".source = self; # system.copySystemConfiguration = true # for non-flake
+      };
 
   };
 }
