@@ -18,6 +18,7 @@
         cores = 3;
         use-xdg-base-directories = true;
         nix-path = "nixpkgs=/etc/nixpkgs";
+        flake-registry = "${./registry.json}";
       };
       gc = {
         automatic = true;

@@ -8,6 +8,18 @@
   };
   config = lib.mkIf config.roles.essentials.enable {
 
+    security.sudo = {
+      enable = true;
+      extraRules = [
+        {
+          users = [ "${config.roles.essentials.main_user}" ];
+          commands = [
+            { command = "${pkgs.systemd}/bin/shutdown"; options = [ "NOPASSWD" ]; }
+          ];
+        }
+      ];
+    };
+
     environment.homeBinInPath = true;
 
     environment.sessionVariables = {
@@ -22,8 +34,8 @@
 
     environment.shellAliases = {
       ll = "ls -hal --color=auto";
-      ss = "echo 'Set a label: -p <label>'; sudo nixos-rebuild switch";
       gg = "sudo nix-collect-garbage -d; nix-collect-garbage";
+      ss = ''sudo env GIT_DIR=$HOME/.local/share/yadm/repo.git/ nixos-rebuild switch --builders "" --flake "/home/jan/devel/nixos/#$HOSTNAME"'';
     };
 
     environment.etc."inputrc".text = ''
@@ -33,6 +45,8 @@
       "\e[A": history-search-backward
       "\e[B": history-search-forward
     '';
+
+    environment.enableAllTerminfo = true;
 
     programs.git = {
       enable = true;
@@ -47,24 +61,6 @@
         l = "log";
         lg = "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cD) %C(bold blue)<%an>%Creset' --abbrev-commit";
       };
-    };
-
-    environment.enableAllTerminfo = true;
-
-    documentation.nixos.enable = false; # When multiple output, don't install docs
-    #system.autoUpgrade.enable = true;
-    #system.autoUpgrade.allowReboot = true;
-
-    security.sudo = {
-      enable = true;
-      extraRules = [
-        {
-          users = [ "${config.roles.essentials.main_user}" ];
-          commands = [
-            { command = "${pkgs.systemd}/bin/shutdown"; options = [ "NOPASSWD" ]; }
-          ];
-        }
-      ];
     };
 
     programs.neovim = {
@@ -100,21 +96,24 @@
       };
     };
 
+    documentation.nixos.enable = false; # When multiple output, don't install docs
+    #system.autoUpgrade.enable = true;
+    #system.autoUpgrade.allowReboot = true;
+
     environment.systemPackages = with pkgs; [
       # Essential
-      htop
-      gnupg
       age
+      binutils-unwrapped
+      curl
+      execline
+      file
+      gnupg
+      htop
       screen
       tree
-      file
-      binutils-unwrapped
-      execline
-      wget
-      curl
       w3m
+      wget
     ];
 
   };
 }
-

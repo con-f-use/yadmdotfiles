@@ -1,15 +1,11 @@
 { config, lib, pkgs, ... }:
-let
-
-  cfg = config.my.roles.gaming-client;
-
-in
 {
+
   options.my.roles.gaming-client = {
     enable = lib.mkEnableOption "Gaming client";
   };
-  config = lib.mkIf cfg.enable {
 
+  config = lib.mkIf config.my.roles.gaming-client.enable {
     hardware.opengl.driSupport32Bit = true;
     hardware.pulseaudio.support32Bit = true;
 
@@ -21,7 +17,6 @@ in
       steam
       xorg.libxcb #chiaki
     ];
-
   };
 }
 

@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "flakes": [
+    {
+      "from": {
+        "type": "indirect",
+        "id": "nixpkgs"
+      },
+      "to": {
+        "type": "path",
+        "path": "/etc/nixpkgs"
+      } 
+    }
+  ]
+}

@@ -8,8 +8,10 @@
 
     services.udev.extraRules = ''
       # USBasp programmer
-      ACTION=="add", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="05dc", GROUP="dialout", MODE="0660"
+      SUBSYSTEMS=="usb", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="05dc", MODE="0660", TAG+="uaccess"
     '';
+    # uaccess: devices; udisks: storage devices; ????: input (hid) and display devices (dri)
+    # see: https://wiki.archlinux.org/title/udev#Allowing_regular_users_to_use_devices
 
     environment.systemPackages = with pkgs; [
       #kicad-unstable

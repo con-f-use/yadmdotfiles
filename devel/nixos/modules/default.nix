@@ -5,7 +5,7 @@
   electronics = import ./electronics.nix;
   essential = import ./essential.nix;
   gaming = import ./gaming.nix;
-  nixnix = import ./nix.nix;
+  nixnix = import ./nix;
   perswitch = import ./perswitch.nix;
   unfreepackages = import ./unfreepackages.nix;
   windowed = import ./windowed.nix;
