@@ -38,7 +38,10 @@
       };
     };
 
-    programs.nix-ld = import ./nix-ld.nix { inherit pkgs; };
+    programs.nix-ld = {
+      enable = true;
+      libraries = import ./nix-ld.nix { inherit pkgs; };
+    };
 
     services.kubo = {
       enable = true;
@@ -50,7 +53,11 @@
 
     #services.tor = { enable = true; client.enable = true; };
 
-    programs.direnv.enable = true;
+    programs.direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
+
     environment.systemPackages =
       (import ./develpkgs.nix { inherit pkgs; }) ++
       (lib.optionals (config.services.xserver.enable) [ pkgs.meld pkgs.xournalpp ])

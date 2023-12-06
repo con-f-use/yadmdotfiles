@@ -1,12 +1,13 @@
 { self, config, lib, pkgs, ... }:
 {
   config = lib.mkIf config.roles.dev.enable {
+  # config = lib.mkIf false {
 
     nix = {
       optimise.automatic = true;
       settings = {
         experimental-features = [ "nix-command" "flakes" ];
-        auto-optimise-store = true; # newer
+        auto-optimise-store = true;
         # keep-* options:
         # - https://nixos.org/manual/nix/stable/command-ref/conf-file.html?highlight=keep-outputs#description
         # - https://github.com/NixOS/nix/issues/2208
@@ -38,7 +39,7 @@
     environment.etc = {
       "programs.sqlite".source = self.inputs.programsdb.packages.${pkgs.system}.programs-sqlite;
       nixpkgs.source = pkgs.path;
-      "source-${self.shortRev or self.dirtyShortRev or self.lastModified or "unknown"}".source = self; # system.copySystemConfiguration = true # for non-flake
+      "source-${toString (self.shortRev or self.dirtyShortRev or self.lastModified or "unknown")}".source = self; # system.copySystemConfiguration = true # for non-flake
     };
 
   };

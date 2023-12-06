@@ -9,7 +9,7 @@
       "to": {
         "type": "path",
         "path": "/etc/nixpkgs"
-      } 
+      }
     }
   ]
 }

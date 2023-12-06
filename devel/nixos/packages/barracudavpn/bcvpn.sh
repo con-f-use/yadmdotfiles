@@ -28,7 +28,7 @@ trap "rm -f '$logpath'" EXIT ERR # Has sensitive data, ensure deleteion
 # - some sed/grep search patterns should not match themselves as `scripts`
 # puts them in log
 script "$logpath" --append --force --flush --command "
-    clean_bcvpn() { 
+    clean_bcvpn() {
         sudo barracudavpn -p
         sudo chmod a+r /etc/resolv.conf
         printf 'About to run these commands:\\n--->>>\\n%s\\n<<<--- end\\n' \"\$cmds\"
