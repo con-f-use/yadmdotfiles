@@ -12,11 +12,13 @@
     cudawork.novpn = false;
     cudawork.use_builders = false;
   };
+  users.users.root.openssh.authorizedKeys.keys = config.users.users.jan.openssh.authorizedKeys.keys;
   users.mutableUsers = false;
 
   nixpkgs.config.allowUnfree = true;
   nixpkgs.hostPlatform = "x86_64-linux";
   system.stateVersion = "22.05";
+  virtualisation.docker.storageDriver = "zfs";
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
   #config.boot.kernelPackages = pkgs.linuxPackages_5_15;
@@ -30,6 +32,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   networking.hostName = "contort";
+  # networking.wireless.enable = true;
   networking.useDHCP = false;
   # config.networking.interfaces.enp0s13f0u4.useDHCP = true;  # zielstatt usb network adapter
   networking.networkmanager.enable = true;
