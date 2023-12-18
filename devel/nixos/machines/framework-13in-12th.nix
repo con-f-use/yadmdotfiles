@@ -21,7 +21,7 @@
   virtualisation.docker.storageDriver = "zfs";
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
-  #config.boot.kernelPackages = pkgs.linuxPackages_5_15;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
 
@@ -73,7 +73,9 @@
   swapDevices = [ ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.enableAllFirmware = true;
+  # hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.intel.updateMicrocode = true;
 }
 
 #lrwxrwxrwx 1 root root 15 Aug 21 23:38  -> ../../nvme0n1p1
