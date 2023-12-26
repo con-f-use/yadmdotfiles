@@ -1,0 +1,12 @@
+[Unit]
+Description=Play a tone to keep bluetooth speaker from turing auto-off
+RefuseManualStart=no
+
+[Timer]
+Persistent=true
+; Works: OnCalendar=*:0/5
+OnCalendar=*:0/7
+Unit=play20hz
+
+[Install]
+WantedBy=timers.target

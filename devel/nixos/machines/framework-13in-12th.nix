@@ -40,8 +40,8 @@
   time.timeZone = "Europe/Vienna";
   #hardware.opengl.driSupport32Bit = true;
   #hardware.opengl.extraPackages = [ pkgs.intel-ocl ];
-  #hardware.bluetooth.enable = true;
-  #services.blueman.enable = true;
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
   services.xserver.libinput.enable = true; # Enable touchpad support.
   services.logind.lidSwitch = "ignore";
   networking.hostId = "f3dc4d2a";
