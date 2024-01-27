@@ -12,7 +12,7 @@
   inputs = {
     programsdb.url = "github:wamserma/flake-programs-sqlite";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
-    nixunstable.url = "nixpkgs/nixos-unstable";
+    nixunstable.url = "github:NixOS/nixpkgs/nixos-unstable";
   };
 }
 

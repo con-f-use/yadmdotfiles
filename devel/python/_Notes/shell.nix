@@ -1,6 +1,11 @@
 # Example for an impure way to deal with python dependencies
 
-with import <nixpkgs> { config = {}; overlays = []; };
+let
+  commit = "91a00709aebb3602f172a0bf47ba1ef013e34835";
+  pkgs = import (builtins.fetchTarball {
+    url = "https://github.com/NixOS/nixpkgs/archive/${commit}.tar.gz";
+  }) { config = {}; overlays = []; };
+in
 #{  # flake variant
 #  outputs = { self, nixpkgs }: let
 #    system = "x86_64-linux";
@@ -9,10 +14,10 @@ with import <nixpkgs> { config = {}; overlays = []; };
 pkgs.mkShell {
   name = "impurePythonEnv";
 
-  buildInputs = [
+  buildInputs = with pkgs; [
     python3Packages.python python3Packages.venvShellHook  # we need a python interpreter for the venv hook
-    python3Packages.requests # a nixpkgs packaged python requirements
-    git openssl # system dependency (both runtime or for pip install ...)
+    python3Packages.requests # a nixpkgs-packaged python requirements
+    git openssl # system dependencies (runtime or for pip install ...)
   ];
 
   venvDir = "./.venv";
@@ -21,15 +26,16 @@ pkgs.mkShell {
     if [ -r requirements.txt ]; then
       pip install -r requirements.txt  # install non-nix packaged requirements
     fi
+    pip install click
   '';
 
   postShellHook = ''
     # export SOURCE_DATE_EPOCH=$(printf %(%s)T -1)
-    # unset SOURCE_DATE_EPOCH
-    # echo before: $SOURCE_DATE_EPOCH
-    # export SOURCE_DATE_EPOCH=$EPOCHSECONDS
-    # echo after: $SOURCE_DATE_EPOCH
-    python -c 'import requests; print(f"{requests.__version__ = }")'
+    python -c 'import requests, click
+    print(f"{requests.__version__ = }\n{click.__version__ = }")
+    c = requests.get("https://api.github.com/repos/NixOS/nixpkgs/commits/nixos-unstable").json()["sha"]
+    print(f"latest nixos-unstable commit: {c}")'
+    echo using ${commit}
   '';
 }
 #  };

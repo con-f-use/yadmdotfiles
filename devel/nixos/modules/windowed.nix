@@ -150,6 +150,7 @@
 
       # Multimedia
       mpv
+      sox
       yt-dlp
       sxiv
       flameshot

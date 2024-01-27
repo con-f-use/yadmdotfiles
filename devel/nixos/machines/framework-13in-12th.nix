@@ -12,14 +12,16 @@
     cudawork.novpn = false;
     cudawork.use_builders = false;
   };
+  users.users.root.openssh.authorizedKeys.keys = config.users.users.jan.openssh.authorizedKeys.keys;
   users.mutableUsers = false;
 
   nixpkgs.config.allowUnfree = true;
   nixpkgs.hostPlatform = "x86_64-linux";
   system.stateVersion = "22.05";
+  virtualisation.docker.storageDriver = "zfs";
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
-  #config.boot.kernelPackages = pkgs.linuxPackages_5_15;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
 
@@ -30,6 +32,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   networking.hostName = "contort";
+  # networking.wireless.enable = true;
   networking.useDHCP = false;
   # config.networking.interfaces.enp0s13f0u4.useDHCP = true;  # zielstatt usb network adapter
   networking.networkmanager.enable = true;
@@ -37,8 +40,8 @@
   time.timeZone = "Europe/Vienna";
   #hardware.opengl.driSupport32Bit = true;
   #hardware.opengl.extraPackages = [ pkgs.intel-ocl ];
-  #hardware.bluetooth.enable = true;
-  #services.blueman.enable = true;
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
   services.xserver.libinput.enable = true; # Enable touchpad support.
   services.logind.lidSwitch = "ignore";
   networking.hostId = "f3dc4d2a";
@@ -70,7 +73,9 @@
   swapDevices = [ ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.enableAllFirmware = true;
+  # hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.intel.updateMicrocode = true;
 }
 
 #lrwxrwxrwx 1 root root 15 Aug 21 23:38  -> ../../nvme0n1p1

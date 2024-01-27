@@ -1,6 +1,6 @@
 [user]
-	name = Jan Christoph Bischko
-	email = jbischko@barracuda.com
+    name = Jan Christoph Bischko
+    email = jbischko@barracuda.com
     signingkey = 2C726AD9
 
 [core]
@@ -50,9 +50,10 @@
     fh = log --follow -p --
     fza = "!git ls-files -m -o --exclude-standard | fzf --print0 -m | xargs -0 -t -o git add"
     jcb = "!git config --local user.name 'Jan Christoph Bischko' && git config --local user.email 'jbischko@barracuda.com'"
+    cnf = "!git config --local user.name 'con-f-use' && git config --local user.email 'con-f-use@gmx.net'"
 
 [github]
-  user = con-f-use
+    user = con-f-use
 
 [conserve.dynu.net]
     user = jan
