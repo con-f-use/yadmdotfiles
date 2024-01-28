@@ -71,7 +71,7 @@ $AUTO_SUGGEST_IN_COMPLETIONS = True
 #$UPDATE_COMPLETIONS_ON_KEYPRESS = True
 #$DOTGLOB = False  # * and ** matches dotfiles
 
-zdata = $HOME + "/.config/yadmdotfiles/xonsh/" 
+zdata = $HOME + "/.config/yadmdotfiles/xonsh/"
 $_Z_DATA = (zdata if os.path.exists(zdata) else $HOME+"/.config/") + "z.txt"
 
 #$XONSH_HISTORY_BACKEND = 'sqlite'  # means no diff or replay and only "commands" for history size and does not seem to capture output
@@ -104,14 +104,10 @@ $PYTHONSTARTUP = $HOME +"/.config/yadmdotfiles/python/pycustom"
 $PROMPT_FIELDS['shelldate'] = get_shelldate
 
 from xonsh import __version__
-try:
-    from packaging.version import Version
-except ImportError:
-        from distutils.version import LooseVersion as Version
 import warnings
 with warnings.catch_warnings():
     warnings.filterwarnings("ignore", category=DeprecationWarning)
-    reset_color = '{NO_COLOR}' if Version(__version__) < Version('0.9.24') else '{RESET}'
+reset_color = '{RESET}'
 $PROMPT=(
     '\n{BOLD_BLUE}{last_return_code_if_nonzero:{BOLD_RED}}┌─' + reset_color + '{#555}{shelldate}' + reset_color + ' ' + 
     '{FAINT_BLUE}[' + reset_color + '{env_name}{BOLD_GREEN}{user}@{hostname}{FAINT_ITALIC_BLUE} {cwd}{FAINT_BLUE}] ' +
