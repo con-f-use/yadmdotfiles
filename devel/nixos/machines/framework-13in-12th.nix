@@ -21,7 +21,7 @@
   virtualisation.docker.storageDriver = "zfs";
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
 
