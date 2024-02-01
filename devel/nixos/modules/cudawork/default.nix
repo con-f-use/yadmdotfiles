@@ -68,7 +68,7 @@ in
       #nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg)
       #  [ "slack" "zoom-us" ]
       #;
-      allowUnfreePackages = [ "slack" "zoom-us" "zoom" "vault-*" ];
+      allowUnfreePackages = [ "slack" "zoom-us" "zoom" "vault.*" ];
     })
 
     (lib.mkIf config.roles.cudawork.use_builders {

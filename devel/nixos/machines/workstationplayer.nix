@@ -16,7 +16,7 @@
 
   # ToDo: This is a dirty hack so I can merge this with unfrees from other modles
   # no idea how to do it properly.
-  # allowUnfreePackages = [ "discord" "typora" "hplip" "joypixels" "barracudavpn" "faac" ];
+  allowUnfreePackages = [ "discord" "typora" "hplip" "joypixels" "barracudavpn" "faac" "vault.*" ];
   # config.nixpkgs.config.allowAliases = false;
   nixpkgs.hostPlatform = "x86_64-linux";
   #nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) config.unfrees;
@@ -24,11 +24,12 @@
   virtualisation.vmware.guest.enable = true;
   virtualisation.docker.storageDriver = "zfs";
   # config.boot.kernelPackages = pkgs.linuxPackages_5_15;
-  boot.initrd.availableKernelModules = [ "ata_piix" "mptspi" "uhci_hcd" "ehci_pci" "ahci" "xhci_pci" "sd_mod" "sr_mod" ];
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  boot.initrd.availableKernelModules = [  "nvme" "usbhid" "ata_piix" "mptspi" "uhci_hcd" "ehci_pci" "ahci" "xhci_pci" "sd_mod" "sr_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
-  networking.interfaces.ens33.useDHCP = true;
+  # networking.interfaces.ens33.useDHCP = true;
   networking.hostId = "1c47b078";
   #config.networking.hosts= { "192.168.0.10" = [ "confus.me" "conserve" "conserve.dynu.net" ]; };
   #console.font = "latarcyrheb-sun32";  # larger bootmode fonts
@@ -82,6 +83,7 @@
   swapDevices = [
     {
       device = "/dev/disk/by-uuid/fa6b7340-3321-49fa-a602-d036c221e160";
+      options = [ "nofail" ];
       #device = "4c5e5e6c-01";
       #randomEncryption.enable = true;
     }
