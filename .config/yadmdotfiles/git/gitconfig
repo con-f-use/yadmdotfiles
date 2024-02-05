@@ -51,6 +51,8 @@
     fza = "!git ls-files -m -o --exclude-standard | fzf --print0 -m | xargs -0 -t -o git add"
     jcb = "!git config --local user.name 'Jan Christoph Bischko' && git config --local user.email 'jbischko@barracuda.com'"
     cnf = "!git config --local user.name 'con-f-use' && git config --local user.email 'con-f-use@gmx.net'"
+    jcba = commit --amend --author='Jan Christoph Bischko <jbischko@barracuda.com>' --no-edit
+    cnfa = commit --amend --author='confus <con-f-use@gmx.net>' --no-edit
 
 [github]
     user = con-f-use

@@ -16,7 +16,7 @@
 
   # ToDo: This is a dirty hack so I can merge this with unfrees from other modles
   # no idea how to do it properly.
-  allowUnfreePackages = [ "discord" "typora" "hplip" "joypixels" "barracudavpn" "faac" "vault.*" ];
+  allowUnfreePackages = [ "discord" "typora" "hplip" "joypixels" "barracudavpn" "faac" "vault.*" "nvidia.*" ];
   # config.nixpkgs.config.allowAliases = false;
   nixpkgs.hostPlatform = "x86_64-linux";
   #nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) config.unfrees;
@@ -49,7 +49,29 @@
   #hardware.bluetooth.enable = true;
   #services.blueman.enable = true;
   services.xserver.libinput.enable = true; # Enable touchpad and other input periphery support.
-  services.xserver.videoDrivers = [ "wmware" ];
+  #services.xserver.videoDrivers = [ "wmware" ];
+  
+  services.xserver.videoDrivers = ["nvidia"];
+  hardware.opengl = {
+    enable = true;
+    driSupport = true;
+  };
+  hardware.nvidia = {
+    modesetting.enable = true;
+    powerManagement.enable = false;
+    powerManagement.finegrained = false;
+    # Use the NVidia open source kernel module (not to be confused with the
+    # independent third-party "nouveau" open source driver).
+    # Support is limited to the Turing and later architectures. Full list of 
+    # supported GPUs is at: 
+    # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus 
+    # Only available from driver 515.43.04+
+    # Currently alpha-quality/buggy, so false is currently the recommended setting.
+    open = false;
+    nvidiaSettings = true;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+  };
+
   services.perswitch.enable = true;
   services.printing.enable = true;
   # config.services.printing.drivers = [ pkgs.hplipWithPlugin ];  #pkgs.hplip
@@ -81,12 +103,12 @@
 
   #swapDevices = [ "/dev/disk/by-uuid/a4566692-dc22-4fad-8c76-6260359da180" ];
   swapDevices = [
-    {
-      device = "/dev/disk/by-uuid/fa6b7340-3321-49fa-a602-d036c221e160";
-      options = [ "nofail" ];
-      #device = "4c5e5e6c-01";
-      #randomEncryption.enable = true;
-    }
+    #{
+    #  device = "/dev/disk/by-uuid/fa6b7340-3321-49fa-a602-d036c221e160";
+    #  options = [ "nofail" ];
+    #  #device = "4c5e5e6c-01";
+    #  #randomEncryption.enable = true;
+    #}
   ];
 
   system.stateVersion = "21.11";
