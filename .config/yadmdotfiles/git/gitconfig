@@ -84,10 +84,7 @@
 [url "ssh://git@stash.cudaops.com:7999/bnnga/"]
     insteadOf = "nga:"
 
-[include]
-    path = ~/.config/yadmdotfiles/git/gitconfiglocal
-
-[includeIf "gitdir:~/devel/cuda"]
+[includeIf "gitdir:~/devel/cuda/**"]
     path = ~/.config/yadmdotfiles/git/gitconfigcuda
 
 [diff-so-fancy]
@@ -118,12 +115,16 @@
 
 [init]
     defaultBranch = main
+
 [rerere]
     enabled = true
+
 [column]
     ui = auto
+
 [branch]
     sort = -committerdate
+
 [gpg]
     format = ssh
 
@@ -136,4 +137,5 @@
     repo = /home/jan/devel/cuda/qda_rest/dev
     repo = /home/jan/devel/cuda/python-ci
     repo = /home/jan/devel/cuda/jenkins-files/dev
+    repo = /home/jan/devel/cuda/docker-registries
 
