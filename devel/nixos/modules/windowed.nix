@@ -49,8 +49,8 @@
     services.xserver = {
       enable = true;
       videoDrivers = [ "modsetting" ]; # intel
-      layout = "us";
-      xkbVariant = "intl";
+      xkb.layout = "us";
+      xkb.variant = "intl";
       autorun = true;
       verbose = 7;
       displayManager = {
