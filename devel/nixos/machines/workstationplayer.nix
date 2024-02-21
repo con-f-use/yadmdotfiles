@@ -49,9 +49,7 @@
   #hardware.bluetooth.enable = true;
   #services.blueman.enable = true;
   services.xserver.libinput.enable = true; # Enable touchpad and other input periphery support.
-  #services.xserver.videoDrivers = [ "wmware" ];
-  
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = [ "nvidia" "vmware" "modesetting" ];
   hardware.opengl = {
     enable = true;
     driSupport = true;

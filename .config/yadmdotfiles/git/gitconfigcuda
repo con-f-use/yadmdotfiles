@@ -1,8 +1,9 @@
 [user]
     global = true
+    override = global
     name = Jan Christoph Bischko
     email = jbischko@barracuda.com
-    override = global
+    signingkey = ~/.ssh/id_ed25519_cuda
 
 [github]
     user = bn-jbischko
