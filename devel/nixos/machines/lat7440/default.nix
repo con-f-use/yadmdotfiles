@@ -46,10 +46,12 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    wget
     curl
     firefox
     signal-desktop
+    tessen
+    wget
+    wofi
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

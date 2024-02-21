@@ -15,9 +15,12 @@ with pkgs; [
   #kitty-xterm-link
   oathToolkit
   qrencode
+  ripgrep
   conservetool
   usbutils
   lshw
+  lua
+  zoxide
 
   # Network
   inetutils
