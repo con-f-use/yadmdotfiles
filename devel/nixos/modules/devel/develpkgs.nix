@@ -52,6 +52,7 @@ with pkgs; [
   nixpkgs-fmt
   cachix
   morph
+  flakeroot
 
   # Python
   (python3.withPackages (ps: with ps; [

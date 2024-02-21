@@ -86,12 +86,22 @@
               \ 'whitelist': ['nix'],
               \ })
           endif
-          if filereadable(glob("~/.config/nvim/init.vim"))
+          if filereadable(glob("~/.config/nvim/init.lua"))
+            luafile $HOME/.config/nvim/init.lua
+          elseif filereadable(glob("~/.config/nvim/init.vim"))
             source $HOME/.config/nvim/init.vim
           endif
         '';
         packages.myVimPackage = with pkgs.vimPlugins; {
-          start = [ vim-nix vim-commentary vim-surround vim-ReplaceWithRegister ];
+          start = [
+            vim-nix
+            vim-fugitive
+            vim-rhubarb
+            vim-sleuth
+            # vim-commentary
+            vim-surround
+            vim-ReplaceWithRegister
+          ];
         };
       };
     };
@@ -110,6 +120,7 @@
       gnupg
       htop
       screen
+      gcc
       tree
       w3m
       wget
