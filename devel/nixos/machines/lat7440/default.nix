@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   imports = [ ./system.nix ];
@@ -52,8 +52,30 @@
     tessen
     wget
     wofi
+    flameshot
   ];
 
+  programs.starship = {
+    enable = true;
+    settings = lib.importTOML ./nerd-font-symbols.toml;
+  };
+
+  fonts.packages = with pkgs; [
+      cantarell-fonts
+      noto-fonts
+      noto-fonts-cjk
+      noto-fonts-emoji
+      liberation_ttf
+      fira-code
+      fira-code-symbols
+      dina-font
+      proggyfonts
+      joypixels
+      (nerdfonts.override { fonts = [ "FiraCode" "FiraMono" ]; })
+  ];
+
+  nixpkgs.config.joypixels.acceptLicense = true;
+  allowUnfreePackages = [ "joypixels.*" ];
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
