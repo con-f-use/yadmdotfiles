@@ -58,6 +58,8 @@
       nix-direnv.enable = true;
     };
 
+    environment.variables.TWINE_CERT = "/etc/ssl/certs/ca-bundle.crt";
+
     environment.systemPackages =
       (import ./develpkgs.nix { inherit pkgs; }) ++
       (lib.optionals (config.services.xserver.enable) [ pkgs.meld pkgs.xournalpp ])

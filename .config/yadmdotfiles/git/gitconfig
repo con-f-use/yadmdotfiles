@@ -139,3 +139,5 @@
     repo = /home/jan/devel/cuda/jenkins-files/dev
     repo = /home/jan/devel/cuda/docker-registries
 
+[diff]
+    algorithm = histogram

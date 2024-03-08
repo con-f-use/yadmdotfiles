@@ -162,6 +162,8 @@
       # Office
       libreoffice
       gimp
+      tessen
+      rofi
 
       kitty
 

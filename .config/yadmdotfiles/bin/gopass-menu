@@ -8,5 +8,6 @@ gopass ls --flat |
   instantmenu -l 10 -c -i -w -1 -h -1 -bw 4 |
   xargs --no-run-if-empty gopass show -f -o |
   head -n 1 |
-  xdotool type --clearmodifiers --file -
+  xclip -i -selection clipboard
+  # xdotool type --clearmodifiers --file -
 
