@@ -1,7 +1,7 @@
 { self, config, lib, pkgs, ... }:
 
 {
-  imports = [ ./filesystem.nix ./boot.nix ./system.nix ./networking.nix ./gnome.nix ./locale.nix ];
+  imports = [ ./filesystem.nix ./boot.nix ./system.nix ./networking.nix ./gnome.nix ./locale.nix ./arr.nix ../../users/roomies.nix ./vcs.nix ];
   roles = {
     essentials = {
       enable = true;
@@ -9,6 +9,7 @@
     };
     dev.enable = true;
   };
+  users.groups.conserve.members = [ config.users.users.jan.name config.users.users.roomies.name ];
 
   environment.systemPackages = import ./packages.nix pkgs;
 }
