@@ -16,7 +16,7 @@
         sandbox = true; # newer
         allowed-users = [ "@wheel" ];
         trusted-users = [ "@wheel" ];
-        cores = 3;
+        cores = 4;
         use-xdg-base-directories = true;
         nix-path = "nixpkgs=/etc/nixpkgs";
         flake-registry = "${./registry.json}";

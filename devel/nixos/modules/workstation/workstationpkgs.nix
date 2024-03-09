@@ -12,7 +12,6 @@ with pkgs; [
   trash-cli
   st
   kitty
-  #kitty-xterm-link
   oathToolkit
   qrencode
   ripgrep

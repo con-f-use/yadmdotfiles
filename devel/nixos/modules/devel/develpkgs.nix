@@ -51,7 +51,6 @@ with pkgs; [
   nix-info
   nixpkgs-fmt
   cachix
-  morph
   flakeroot
 
   # Python

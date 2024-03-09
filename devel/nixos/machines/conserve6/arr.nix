@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 let
   transmissionSecretLocation = "/etc/secrets/transmission/transmission_secrets.json";
   transmissionDownloadPath = "/mnt/Media/Downloads";
@@ -6,19 +6,20 @@ let
   transmissionWatchPath = "${transmissionDownloadPath}/.watch";
   transmissionRpcPort = 9091;
   transmissionExternalPort = 60191;
+  sonarrShowsPath = "/mnt/Media/Shows";
 in
 {
   # WebUI and Streaming
   services.jellyfin = {
     enable = true;
-    openFirewall = builtins.trace "block jellyfin port in  (behind nginx)" true;
+    openFirewall = builtins.trace "block jellyfin port in firewall (behind nginx)" true;
     group = "conserve";
   };
 
   # Shows
   services.sonarr = {
     enable = true;
-    openFirewall = builtins.trace "block sonarr port in  (behind nginx)" true;
+    openFirewall = builtins.trace "block sonarr port in firewall (behind nginx)" true;
     group = "conserve";
     # user = "deluge";
     #dataDir = ;
@@ -27,7 +28,7 @@ in
   # Movies
   services.radarr = {
     enable = true;
-    openFirewall = builtins.trace "block radarr port in  (behind nginx)" true;
+    openFirewall = builtins.trace "block radarr port in firewall (behind nginx)" true;
     group = "conserve";
     # user = "deluge";
     # dataDir = ;
@@ -36,19 +37,24 @@ in
   # Audio Books
   services.lidarr = {
     enable = true;
-    openFirewall = builtins.trace "block lidarr port in (behind nginx)" true;
+    openFirewall = builtins.trace "block lidarr port in firewall (behind nginx)" true;
     group = "conserve";
     # user = "";
     # dataDir = "";
   };
 
+  # services.jackett = {
+  #   enable = true;
+  #   openFirewall = builtins.trace "block jackett port in firewall (behind nginx)" true;
+  #   # group = ;
+  #   # user = ;
+  #   # dataDir = ;
+  # };
+
   # Sources
-  services.jackett = {
+  services.prowlarr = {
     enable = true;
-    openFirewall = builtins.trace "block jackett port in (behind nginx)" true;
-    # group = ;
-    # user = ;
-    # dataDir = ;
+    openFirewall = builtins.trace "block prowlarr port in firewall (behind nginx)" true;
   };
 
   services.transmission = {
@@ -78,7 +84,7 @@ in
       rpc-whitelist-enabled = true;
 
       # see: https://github.com/transmission/transmission/blob/main/docs/Editing-Configuration-Files.md
-      rpc-whitelist = "192.168.*.*";
+      rpc-whitelist = "192.168.*.* 127.0.*.*";
       anti-brute-force-enabled = true;
       watch-dir-enabled = true;
       watch-dir = transmissionWatchPath;
@@ -111,5 +117,7 @@ in
     "A+ ${transmissionIncompletePath} - - - - group:conserve:rwX"
     "d!- ${transmissionWatchPath} 770 jan conserve"
     "A+ ${transmissionWatchPath} - - - - group:conserve:rwX"
+    "d!- ${sonarrShowsPath} 770 jan conserve"
+    "A+ ${sonarrShowsPath} - - - - group:conserve:rwX"
   ];
 }

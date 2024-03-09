@@ -18,7 +18,7 @@ in
   };
 
   networking.firewall.allowedTCPPorts = [
-    builtins.trace "block forgejo port ${port} in prod" port
+    #(builtins.trace "block forgejo port ${port} in prod" port)
     config.services.forgejo.settings.server.SSH_PORT
   ];
 

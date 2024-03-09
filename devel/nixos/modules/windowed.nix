@@ -48,7 +48,7 @@
 
     services.xserver = {
       enable = true;
-      videoDrivers = [ "modsetting" ]; # intel
+      videoDrivers = [ "modsetting" ]; # intel, nvidia
       xkb.layout = "us";
       xkb.variant = "intl";
       autorun = true;
@@ -150,7 +150,7 @@
 
       # Multimedia
       mpv
-      sox
+      sox  # audio manipulation
       yt-dlp
       sxiv
       flameshot
@@ -168,8 +168,6 @@
       kitty
 
       zathura
-      bookworm
-      foliate # maybe pick one
     ];
 
   };
