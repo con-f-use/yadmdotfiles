@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 let
   transmissionSecretLocation = "/etc/secrets/transmission/transmission_secrets.json";
   transmissionDownloadPath = "/mnt/Media/Downloads";
@@ -7,42 +7,28 @@ let
   transmissionRpcPort = 9091;
   transmissionExternalPort = 60191;
   sonarrShowsPath = "/mnt/Media/Shows";
+  mail = "con-f-use@gmx.net";
+  primary = "confus.me";
+  secondary = "conserve.dynu.net";
+  webhome = "/var/www/html";
+
+  tls-cert = { alt ? [ ] }: builtins.trace "WARNING: tls-cert ends up in the nix store (world readable) & will change on every evaluation!"
+    (pkgs.runCommand "selfSignedCert" { buildInputs = [ pkgs.openssl ]; } ''
+      mkdir -p $out
+      openssl req -x509 -newkey ec -pkeyopt ec_paramgen_curve:secp384r1 -days 365 -nodes \
+        -keyout $out/cert.key -out $out/cert.crt \
+        -subj "/CN=localhost" \
+        -addext "subjectAltName=DNS:localhost,${builtins.concatStringsSep "," (["IP:127.0.0.1"] ++ alt)}"
+    '');
+  certout = tls-cert { alt = [ "IP:192.168.1.18" "DNS:*.confus.me" "DNS:*.conserve.dynu.net" ]; };
+  crtcfg = { sslCertificate = "${certout}/cert.crt"; sslCertificateKey = "${certout}/cert.key"; };
 in
 {
-  # WebUI and Streaming
-  services.jellyfin = {
-    enable = true;
-    openFirewall = builtins.trace "block jellyfin port in firewall (behind nginx)" true;
-    group = "conserve";
-  };
-
-  # Shows
-  services.sonarr = {
-    enable = true;
-    openFirewall = builtins.trace "block sonarr port in firewall (behind nginx)" true;
-    group = "conserve";
-    # user = "deluge";
-    #dataDir = ;
-  };
-
-  # Movies
-  services.radarr = {
-    enable = true;
-    openFirewall = builtins.trace "block radarr port in firewall (behind nginx)" true;
-    group = "conserve";
-    # user = "deluge";
-    # dataDir = ;
-  };
-
-  # Audio Books
-  services.lidarr = {
-    enable = true;
-    openFirewall = builtins.trace "block lidarr port in firewall (behind nginx)" true;
-    group = "conserve";
-    # user = "";
-    # dataDir = "";
-  };
-
+  services.jellyfin = { enable = true; group = "conserve"; }; # WebUI for Streaming
+  services.sonarr = { enable = true; group = "conserve"; }; # Shows
+  services.radarr = { enable = true; group = "conserve"; }; # Movies
+  services.lidarr = { enable = true; group = "conserve"; }; # Audio
+  services.prowlarr.enable = true; # Sources
   # services.jackett = {
   #   enable = true;
   #   openFirewall = builtins.trace "block jackett port in firewall (behind nginx)" true;
@@ -50,12 +36,6 @@ in
   #   # user = ;
   #   # dataDir = ;
   # };
-
-  # Sources
-  services.prowlarr = {
-    enable = true;
-    openFirewall = builtins.trace "block prowlarr port in firewall (behind nginx)" true;
-  };
 
   services.transmission = {
     # see: https://search.nixos.org/options?channel=unstable&show=services.transmission.settings&from=0&size=50
@@ -101,7 +81,6 @@ in
       alt-speed-down = 1500; # KB/s
     };
   };
-
   systemd.services.transmission.serviceConfig = {
     Restart = "always";
     RestartSec = 5;
@@ -109,15 +88,123 @@ in
   };
 
   systemd.tmpfiles.rules = [
-    "z ${transmissionSecretLocation} 440 root conserve"
+    "z ${transmissionSecretLocation} 0440 root conserve"
     "A+ /etc/secrets - - - - group:conserve:X"
-    "d!- ${transmissionDownloadPath} 770 jan conserve"
+    "d!- ${transmissionDownloadPath} 0770 jan conserve"
     "A+ ${transmissionDownloadPath} - - - - group:conserve:rwX"
-    "d!- ${transmissionIncompletePath} 770 jan conserve"
+    "d!- ${transmissionIncompletePath} 0770 jan conserve"
     "A+ ${transmissionIncompletePath} - - - - group:conserve:rwX"
-    "d!- ${transmissionWatchPath} 770 jan conserve"
+    "d!- ${transmissionWatchPath} 0770 jan conserve"
     "A+ ${transmissionWatchPath} - - - - group:conserve:rwX"
-    "d!- ${sonarrShowsPath} 770 jan conserve"
+    "d!- ${sonarrShowsPath} 0770 jan conserve"
     "A+ ${sonarrShowsPath} - - - - group:conserve:rwX"
+
+    # ToDo: factor out together with html root
+    "d!- ${webhome} 0750 jan ${config.services.nginx.user}"
+    "C- ${webhome}/index.html - - - - ${./index.html}"
+    "z- ${webhome}/index.html 0640 jan ${config.services.nginx.user}"
   ];
+
+  services.nginx =
+    let
+      virtualHosts = {
+
+        "${secondary}" = {
+          forceSSL = true;
+          # enableACME = true;
+          serverAliases = [ "192.168.1.18" ];
+          default = true;
+
+          locations = {
+            # We have the Servarr-suite as locations instead of subdomains
+            # so we can access them by IP, too and don't need to make an extra
+            # ACME request for each of them
+
+            "^~ /jelly" = {
+              proxyPass = "http://127.0.0.1:8096";
+              proxyWebsockets = true;
+              extraConfig = ''
+                proxy_hide_header X-Frame-Options;
+                proxy_buffering off;
+              '';
+            };
+
+            "^~ /sonarr".proxyPass = "http://127.0.0.1:8989";
+            "^~ /sonarr/api" = {
+              proxyPass = "http://127.0.0.1:8989";
+              extraConfig = "auth_basic off;";
+            };
+
+            "^~ /radarr".proxyPass = "http://127.0.0.1:7878";
+            "^~ /radarr/api" = {
+              proxyPass = "http://127.0.0.1:7878";
+              extraConfig = "auth_basic off;";
+            };
+
+            "^~ /lidarr".proxyPass = "http://127.0.0.1:8686";
+            "^~ /lidarr/api" = {
+              proxyPass = "http://127.0.0.1:8686";
+              extraConfig = "auth_basic off;";
+            };
+
+            "^~ /prowlarr".proxyPass = "http://127.0.0.1:9696";
+            "^~ /prowlarr/api" = {
+              proxyPass = "http://127.0.0.1:9696";
+              extraConfig = "auth_basic off;";
+            };
+
+            "^~ /transmission" = {
+              proxyPass = "http://127.0.0.1:9091";
+              proxyWebsockets = true;
+              # extraConfig = ''
+              #   proxy_hide_header X-Frame-Options;
+              #   proxy_buffering off;
+              # '';
+            };
+
+            # ToDo: factor out html root
+            "/".root = webhome;
+          };
+        } // crtcfg;
+
+      }; # end: virtualHosts;
+    in
+    {
+      enable = true;
+      appendHttpConfig = ''
+        error_log stderr;
+        access_log syslog:server=unix:/dev/log combined;
+        proxy_headers_hash_max_size 2048;
+        proxy_headers_hash_bucket_size 128;
+      '';
+      recommendedGzipSettings = true;
+      recommendedOptimisation = true;
+      recommendedProxySettings = true;
+      recommendedTlsSettings = true;
+
+      virtualHosts = virtualHosts // {
+        "${primary}" = virtualHosts."${secondary}"; # ToDo: move when refactoring html root
+        #   "transmission.${primary}" = virtualHosts."transmission.${secondary}";
+        #   "jelly.${primary}" = virtualHosts."jelly.${secondary}";
+      };
+    };
+  networking.firewall.allowedTCPPorts = [ 80 443 ];
+
+  security.acme.acceptTerms = true;
+  # security.acme.certs = {
+  #   "${secondary}".email = mail;
+  #   "trasmission.${secondary}".email = mail;
+  #   "jelly.${secondary}".email = mail;
+  #   "sonarr.${secondary}".email = mail;
+  #   "radarr.${secondary}".email = mail;
+  #   "lidarr.${secondary}".email = mail;
+  #   "prowlarr.${secondary}".email = mail;
+  #   "${primary}".email = mail;
+  #   "transmission.${primary}".email = mail;
+  #   "jelly.${primary}".email = mail;
+  #   "sonarr.${primary}".email = mail;
+  #   "radarr.${primary}".email = mail;
+  #   "lidarr.${primary}".email = mail;
+  #   "prowlarr.${primary}" .email = mail;
+  # };
 }
