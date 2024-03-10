@@ -183,7 +183,7 @@ in
       recommendedTlsSettings = true;
 
       virtualHosts = virtualHosts // {
-        "${primary}" = virtualHosts."${secondary}"; # ToDo: move when refactoring html root
+        # "${primary}" = virtualHosts."${secondary}"; # ToDo: move when refactoring html root
         #   "transmission.${primary}" = virtualHosts."transmission.${secondary}";
         #   "jelly.${primary}" = virtualHosts."jelly.${secondary}";
       };
