@@ -56,6 +56,7 @@
   };
   hardware.nvidia = {
     modesetting.enable = true;
+    hardware.nvidia.forceFullCompositionPipeline = true;
     powerManagement.enable = false;
     powerManagement.finegrained = false;
     # Use the NVidia open source kernel module (not to be confused with the

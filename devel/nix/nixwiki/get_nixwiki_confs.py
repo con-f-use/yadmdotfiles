@@ -86,5 +86,8 @@ git clone 'git@github.com:wimpysworld/nix-config wimpysworld'
 git clone 'git@github.com:tejing1/nixos-config.git tejing1_discord'
 git clone 'git@github.com:viperML/neoinfra.git viper_discord'
 git clone 'git@github.com:adamcstephens/dotfiles.git adamcstephens'
+git clone 'git@github.com:nrabulinski/settei.git' niko
+git clone 'git@github.com:NotAShelf/nyx.git' raf
+git clone 'git@github.com:privatevoid-net/depot.git' max_hardcore
 """
 

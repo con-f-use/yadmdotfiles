@@ -14,6 +14,8 @@ in
       # see: https://forgejo.org/docs/latest/admin/config-cheat-sheet/
       server.HTTP_PORT = port;
       server.ROOT_URL = "%(PROTOCOL)s://%(DOMAIN)s:%(HTTP_PORT)s/forgejo";
+      server.SSH_PORT = 7022;
+      server.START_SSH_SERVER = true;
       # server.LOCAL_ROOT_URL = "%(PROTOCOL)s://%(DOMAIN)s:%(HTTP_PORT)s/forgejo";
       # server.STATIC_URL_PREFIX = "/forgejo/public";
       # server.HTTP_ADDR = "listen address";
@@ -29,8 +31,11 @@ in
 
   services.nginx.virtualHosts.${secondary}.locations = {
     # see: https://docs.gitea.com/administration/reverse-proxies#nginx-with-a-sub-path
-    "^~ /forgejo" = {
+    "^~ /forgejo/" = {
       proxyPass = "http://127.0.0.1:${builtins.toString port}/";  # trailing slash seems to be important
+    };
+    "^~ /forgejo" = {
+      proxyPass = "http://127.0.0.1:${builtins.toString port}";  # trailing slash seems to be important
     };
   };
 
