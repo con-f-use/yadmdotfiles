@@ -75,9 +75,7 @@ in
       environment.etc = {
         "${nixbuilderkeypath}" = {
           source = pkgs.fetchurl {
-            urls = [
-              "ftp://qa:qa@10.17.6.4/nix/nixbuilder"
-            ];
+            urls = [ "ftp://qa:qa@10.17.6.4/nix/nixbuilder" ];
             hash = "sha256-YHklGvvnUlTHTNkyapTjHBiYRKieRRRejooqAHihWN0=";
           };
           enable = true;
@@ -100,6 +98,8 @@ in
 
       nix.distributedBuilds = true;
       nix.extraOptions = ''builders-use-substitutes = true'';
+
+      programs.ssh.knownHostsFiles = [ ./known_hosts ];
     })
 
   ]);
