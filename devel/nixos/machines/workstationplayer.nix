@@ -12,7 +12,7 @@
     };
   };
   users.users.root.openssh.authorizedKeys.keys = config.users.users.jan.openssh.authorizedKeys.keys;
-  #environment.systemPackages = with pkgs; [ ];
+  environment.systemPackages = with pkgs; [ gst_all_1.gstreamer ];
 
   # ToDo: This is a dirty hack so I can merge this with unfrees from other modles
   # no idea how to do it properly.
@@ -25,7 +25,7 @@
   virtualisation.docker.storageDriver = "zfs";
   # config.boot.kernelPackages = pkgs.linuxPackages_5_15;
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-  boot.initrd.availableKernelModules = [  "nvme" "usbhid" "ata_piix" "mptspi" "uhci_hcd" "ehci_pci" "ahci" "xhci_pci" "sd_mod" "sr_mod" ];
+  boot.initrd.availableKernelModules = [ "nvme" "usbhid" "ata_piix" "mptspi" "uhci_hcd" "ehci_pci" "ahci" "xhci_pci" "sd_mod" "sr_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
@@ -56,7 +56,7 @@
   };
   hardware.nvidia = {
     modesetting.enable = true;
-    hardware.nvidia.forceFullCompositionPipeline = true;
+    forceFullCompositionPipeline = true;
     powerManagement.enable = false;
     powerManagement.finegrained = false;
     # Use the NVidia open source kernel module (not to be confused with the
