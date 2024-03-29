@@ -8,7 +8,7 @@
 
     boot.initrd.supportedFilesystems = [ "zfs" ];
     boot.supportedFilesystems = [ "zfs" ];
-    boot.zfs.enableUnstable = true;
+    # boot.zfs.package = pkgs.zfs_unstable;
     services.zfs.autoScrub.enable = true;
     boot.zfs.devNodes = "/dev/disk/by-partuuid"; # https://discourse.nixos.org/t/cannot-import-zfs-pool-at-boot/4805/14
     #services.zfs.trim.enable = true;

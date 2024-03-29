@@ -1,8 +1,9 @@
 { self, config, lib, pkgs, ... }:
+let
+  rev = self.shortRev or self.dirtyShortRev or self.lastModified or "unknown";
+in
 {
   config = lib.mkIf config.roles.dev.enable {
-    # config = lib.mkIf false {
-
     nix = {
       optimise.automatic = true;
       settings = {
@@ -37,14 +38,12 @@
     programs.command-not-found.dbPath = "/etc/programs.sqlite";
 
     environment.etc =
-      let
-        rev = self.shortRev or self.dirtyShortRev or self.lastModified or "unknown";
-      in
       {
         "programs.sqlite".source = self.inputs.programsdb.packages.${pkgs.system}.programs-sqlite;
         nixpkgs.source = pkgs.path;
         "source-${toString rev}".source = self; # system.copySystemConfiguration = true # for non-flake
       };
 
+    system.configurationRevision = toString rev;
   };
 }
