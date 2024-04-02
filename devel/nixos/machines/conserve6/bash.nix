@@ -3,9 +3,21 @@
   programs.bash = {
     blesh.enable = true;
     interactiveShellInit = lib.mkAfter ''
-      [[ $- == *i* ]] && eval "$(atuin init bash)"
+        [ -r "$USER/.config/atuin/config.toml" ] ||
+            export ATUIN_CONFIG_DIR=/etc/atuin
+        eval "$(atuin init bash)"
     '';
   };
+
+  environment.etc."atuin/config.toml".text = ''
+    auto_sync = false
+    update_check = false
+    search_mode_shell_up_key_binding = "prefix"
+    style = "compact"
+    ctrl_n_shortcuts = true
+    enter_accept = false
+    local_timeout = 5
+  '';
 
   environment.systemPackages = [ pkgs.atuin ];
 
@@ -20,12 +32,41 @@
       os.symbols.NixOS = "";
       username.format = "\\[[$user]($style)";
       username.show_always = true;
-      hostname.format = "[@$hostname$ssh_symbol]($style)\\]";
+      hostname.format = "[@$hostname$ssh_symbol]($style)\\] ";
       hostname.ssh_symbol = "🌏";
       hostname.ssh_only = false;
       directory.read_only = "🔒";
       directory.truncate_to_repo = false;
       directory.truncation_symbol = "…/";
+      character.success_symbol = "[](bold fg:grey)";
+      character.error_symbol = "[](bold fg:color_red)";
+      palette = "catppuccin_mocha";
+      palettes.catppuccin_mocha.rosewater = "#f5e0dc";
+      palettes.catppuccin_mocha.flamingo = "#f2cdcd";
+      palettes.catppuccin_mocha.pink = "#f5c2e7";
+      palettes.catppuccin_mocha.mauve = "#cba6f7";
+      palettes.catppuccin_mocha.red = "#f38ba8";
+      palettes.catppuccin_mocha.maroon = "#eba0ac";
+      palettes.catppuccin_mocha.peach = "#fab387";
+      palettes.catppuccin_mocha.yellow = "#f9e2af";
+      palettes.catppuccin_mocha.green = "#a6e3a1";
+      palettes.catppuccin_mocha.teal = "#94e2d5";
+      palettes.catppuccin_mocha.sky = "#89dceb";
+      palettes.catppuccin_mocha.sapphire = "#74c7ec";
+      palettes.catppuccin_mocha.blue = "#89b4fa";
+      palettes.catppuccin_mocha.lavender = "#b4befe";
+      palettes.catppuccin_mocha.text = "#cdd6f4";
+      palettes.catppuccin_mocha.subtext1 = "#bac2de";
+      palettes.catppuccin_mocha.subtext0 = "#a6adc8";
+      palettes.catppuccin_mocha.overlay2 = "#9399b2";
+      palettes.catppuccin_mocha.overlay1 = "#7f849c";
+      palettes.catppuccin_mocha.overlay0 = "#6c7086";
+      palettes.catppuccin_mocha.surface2 = "#585b70";
+      palettes.catppuccin_mocha.surface1 = "#45475a";
+      palettes.catppuccin_mocha.surface0 = "#313244";
+      palettes.catppuccin_mocha.base = "#1e1e2e";
+      palettes.catppuccin_mocha.mantle = "#181825";
+      palettes.catppuccin_mocha.crust = "#11111b";
     };
     # settings = lib.importTOML ./starship_myth_left.toml;
   };

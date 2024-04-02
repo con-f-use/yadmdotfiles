@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  imports = [ ./system.nix ];
+  imports = [ ./system.nix ../conserve6/bash.nix ];  # ToDo: make bash a module
 
   roles = {
     essentials = {
@@ -37,7 +37,8 @@
   services.xserver.desktopManager.gnome.enable = true;
   services.xserver.xkb.layout = "us";
   services.xserver.xkb.variant = "intl";
-  services.xserver.xkbOptions = "caps:escape";
+  services.xserver.xkb.options = "caps:escape";
+  services.kubo.enable = lib.mkForce false;
 
   # services.printing.enable = true;
 
@@ -53,25 +54,6 @@
     wget
     wofi
     flameshot
-  ];
-
-  programs.starship = {
-    enable = true;
-    settings = lib.importTOML ./nerd-font-symbols.toml;
-  };
-
-  fonts.packages = with pkgs; [
-      cantarell-fonts
-      noto-fonts
-      noto-fonts-cjk
-      noto-fonts-emoji
-      liberation_ttf
-      fira-code
-      fira-code-symbols
-      dina-font
-      proggyfonts
-      joypixels
-      (nerdfonts.override { fonts = [ "FiraCode" "FiraMono" ]; })
   ];
 
   nixpkgs.config.joypixels.acceptLicense = true;
