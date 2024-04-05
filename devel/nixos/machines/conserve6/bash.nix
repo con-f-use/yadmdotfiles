@@ -3,9 +3,14 @@
   programs.bash = {
     blesh.enable = true;
     interactiveShellInit = lib.mkAfter ''
+      if command -v atuin 2>&1 >/dev/null; then
         [ -r "$USER/.config/atuin/config.toml" ] ||
             export ATUIN_CONFIG_DIR=/etc/atuin
         eval "$(atuin init bash)"
+      fi
+      if command -v zoxide 2>&1 >/dev/null; then
+        eval "$(zoxide init bash)"
+      fi
     '';
   };
 
@@ -19,7 +24,7 @@
     local_timeout = 5
   '';
 
-  environment.systemPackages = [ pkgs.atuin ];
+  environment.systemPackages = with pkgs; [ atuin fzf zoxide ];
 
   programs.starship = {
     enable = true;

@@ -1,5 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 {
+  imports = [ ./conserve6/bash.nix ];
   roles = {
     essentials = { enable = true; main_user = config.users.users.jan.name; };
     dev.enable = true;
