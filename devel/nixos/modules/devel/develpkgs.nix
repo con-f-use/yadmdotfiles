@@ -8,6 +8,9 @@ with pkgs; [
   file
   binutils-unwrapped
   age
+  age-plugin-yubikey
+  yubico-piv-tool
+  yubioath-flutter
   execline
   expect
   wget

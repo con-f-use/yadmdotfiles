@@ -13,7 +13,7 @@ in
     settings = {
       # see: https://forgejo.org/docs/latest/admin/config-cheat-sheet/
       server.HTTP_PORT = port;
-      server.ROOT_URL = "%(PROTOCOL)s://%(DOMAIN)s:%(HTTP_PORT)s/forgejo";
+      server.ROOT_URL = "%(PROTOCOL)s://%(DOMAIN)s:%(HTTP_PORT)s/forgejo";  # ToDo: try with trailing slash here, but without below
       server.SSH_PORT = 7022;
       server.START_SSH_SERVER = true;
       # server.LOCAL_ROOT_URL = "%(PROTOCOL)s://%(DOMAIN)s:%(HTTP_PORT)s/forgejo";
@@ -35,7 +35,7 @@ in
       proxyPass = "http://127.0.0.1:${builtins.toString port}/";  # trailing slash seems to be important
     };
     "^~ /forgejo" = {
-      proxyPass = "http://127.0.0.1:${builtins.toString port}";  # trailing slash seems to be important
+      proxyPass = "http://127.0.0.1:${builtins.toString port}/";  # trailing slash seems to be important
     };
   };
 

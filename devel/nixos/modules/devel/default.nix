@@ -49,6 +49,8 @@
       settings.Datastore.StorageMax = "100GB";
     };
 
+    services.pcscd.enable = true;
+
     networking.firewall.allowedTCPPorts = [ 8000 8080 8081 8443 ];
 
     #services.tor = { enable = true; client.enable = true; };
@@ -57,6 +59,12 @@
       enable = true;
       nix-direnv.enable = true;
     };
+
+    environment.etc."bat/config".text = ''
+      --theme="TwoDark"
+      --style=plain,header
+      --paging=never
+    '';
 
     environment.variables.TWINE_CERT = "/etc/ssl/certs/ca-bundle.crt";
 
