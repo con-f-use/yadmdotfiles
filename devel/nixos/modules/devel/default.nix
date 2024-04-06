@@ -49,6 +49,19 @@
       settings.Datastore.StorageMax = "100GB";
     };
 
+    # yubikey-related
+    services.pcscd.enable = true;
+    # security.pam.services = {
+    #   login.u2fAuth = true;
+    #   sudo.u2fAuth = true;
+    # };
+    # security.pam.yubico = {
+    #   enable = true;
+    #   debug = true;
+    #   mode = "challenge-response";
+    #   id = [ "17296814" "26700997" ];
+    # };
+
     networking.firewall.allowedTCPPorts = [ 8000 8080 8081 8443 ];
 
     #services.tor = { enable = true; client.enable = true; };
@@ -57,6 +70,12 @@
       enable = true;
       nix-direnv.enable = true;
     };
+
+    environment.etc."bat/config".text = ''
+      --theme="TwoDark"
+      --style=plain,header
+      --paging=never
+    '';
 
     environment.variables.TWINE_CERT = "/etc/ssl/certs/ca-bundle.crt";
 

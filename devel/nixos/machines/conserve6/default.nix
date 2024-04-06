@@ -1,7 +1,7 @@
 { self, config, lib, pkgs, ... }:
 
 {
-  imports = [ ./filesystem.nix ./boot.nix ./system.nix ./networking.nix ./gnome.nix ./locale.nix ./arr.nix ../../users/roomies.nix ./vcs.nix ];
+  imports = [ ./filesystem.nix ./boot.nix ./system.nix ./networking.nix ./gnome.nix ./locale.nix ./arr.nix ../../users/roomies.nix ./vcs.nix ./bash.nix ];
   roles = {
     essentials = {
       enable = true;

@@ -22,6 +22,7 @@ in
     reusePassphrases = true;
     devices."conserve6".device = id2d "a8afd5ea-d5d9-4c21-aed8-44da7efdfd4a"; # root luks
     devices."extshows".device = id2d "06127ecb-de8f-45b0-9da2-52f23b68b1d4"; # shows luks
+    devices."extmovs".device = id2d "875c71bb-00b0-4377-ad73-8bb079eb6592"; # movies luks
     forceLuksSupportInInitrd = true;
   };
 
@@ -36,6 +37,10 @@ in
     };
     "/mnt/Media/Shows" = {
       device = id2d "e2dc30f5-0bec-464c-a29f-49814f5e9fe3";  # shows inner
+      fsType = "ext4";
+    };
+    "/mnt/Media/Movies" = {
+      device = id2d "db1bb22b-f02b-43b3-842b-9006cee84b0f";  # movies inner
       fsType = "ext4";
     };
   };
