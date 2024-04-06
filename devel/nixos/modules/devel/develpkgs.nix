@@ -19,6 +19,7 @@ with pkgs; [
   magic-wormhole
 
   # Base
+  lsof
   rename
   cryptsetup
   ncdu
