@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  imports = [ ./system.nix ../conserve6/bash.nix ];  # ToDo: make bash a module
+  imports = [ ./system.nix ];  # ToDo: make bash a module
 
   roles = {
     essentials = {
@@ -16,6 +16,7 @@
       use_builders = true;
     };
     dev.enable = true;
+    bashbling.enable = true;
     zfs.enable = true;
   };
 

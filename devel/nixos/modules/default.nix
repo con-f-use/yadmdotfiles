@@ -1,4 +1,5 @@
 { ... }: {
+  bash = import ./bash.nix;
   conferencing = import ./conferencing.nix;
   cudawork = import ./cudawork;
   devel = import ./devel;

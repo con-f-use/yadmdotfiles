@@ -32,12 +32,6 @@
       PATH = [ "\${XDG_BIN_HOME}" ];
     };
 
-    environment.shellAliases = {
-      ll = "ls -hal --color=auto";
-      gg = "sudo nix-collect-garbage -d; nix-collect-garbage";
-      ss = ''sudo env GIT_DIR=$HOME/.local/share/yadm/repo.git/ nixos-rebuild switch --builders "" --flake "/home/jan/devel/nixos/#$HOSTNAME"'';
-    };
-
     environment.etc."inputrc".text = ''
       "\e[Z": menu-complete
       "\e\e[C": forward-word

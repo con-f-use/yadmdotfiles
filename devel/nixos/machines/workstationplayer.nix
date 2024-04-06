@@ -1,9 +1,9 @@
 { config, lib, pkgs, inputs, ... }:
 {
-  imports = [ ./conserve6/bash.nix ];
   roles = {
     essentials = { enable = true; main_user = config.users.users.jan.name; };
     dev.enable = true;
+    bashbling.enable = true;
     electronics.enable = true;
     windowed.enable = true;
     workstation.enable = true;
@@ -13,7 +13,10 @@
     };
   };
   users.users.root.openssh.authorizedKeys.keys = config.users.users.jan.openssh.authorizedKeys.keys;
-  environment.systemPackages = with pkgs; [ gst_all_1.gstreamer ];
+  environment.systemPackages = with pkgs; [
+    gst_all_1.gstreamer
+    (pkgs.writeScriptBin "mocondat" ''sudo cryptsetup luksOpen /dev/disk/by-uuid/bcca372b-f99a-41f1-8a86-c9431a3cee78 crydat1 --key-file=/home/jan/.cry-con/cry-con-dat; sudo mount -o defaults,users /dev/mapper/crydat1 /media/condat1/'')
+  ];
 
   # ToDo: This is a dirty hack so I can merge this with unfrees from other modles
   # no idea how to do it properly.
@@ -47,8 +50,8 @@
   time.timeZone = "Europe/Vienna";
   hardware.opengl.driSupport32Bit = true;
   #hardware.opengl.extraPackages = [ pkgs.intel-ocl ];
-  #hardware.bluetooth.enable = true;
-  #services.blueman.enable = true;
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
   services.xserver.libinput.enable = true; # Enable touchpad and other input periphery support.
   services.xserver.videoDrivers = [ "nvidia" "vmware" ];
   hardware.opengl = {

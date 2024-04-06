@@ -10,5 +10,8 @@ exec grep \
   --exclude-dir .eggs \
   --exclude-dir .git \
   --exclude-dir .direnv \
-  "$@"
+  --exclude-dir .venv \
+  --exclude '*.min.js' \
+  --color=always \
+  "$@" | cut -f 1-120
 

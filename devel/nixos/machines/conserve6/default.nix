@@ -1,12 +1,13 @@
 { self, config, lib, pkgs, ... }:
 
 {
-  imports = [ ./filesystem.nix ./boot.nix ./system.nix ./networking.nix ./gnome.nix ./locale.nix ./arr.nix ../../users/roomies.nix ./vcs.nix ./bash.nix ];
+  imports = [ ./filesystem.nix ./boot.nix ./system.nix ./networking.nix ./gnome.nix ./locale.nix ./arr.nix ../../users/roomies.nix ./vcs.nix ];
   roles = {
     essentials = {
       enable = true;
       main_user = config.users.users.jan.name;
     };
+    bashbling.enable = true;
     dev.enable = true;
   };
   users.groups.conserve.members = [ config.users.users.jan.name config.users.users.roomies.name ];

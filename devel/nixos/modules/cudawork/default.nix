@@ -50,6 +50,28 @@ in
         '';
       };
 
+      environment.variables =
+        let
+          cert-bundle = "/etc/ssl/certs/ca-bundle.crt";
+        in
+        {
+          PYTHONDONTWRITEBYTECODE = "TRUE";
+          CUDA_DOMAIN = "ngdev.eu.ad.cuda-inc.com";
+          qda = ".qa.$CUDA_DOMAIN";
+          VAULT_ADDR = "https://10.17.50.11:8200";
+          # PIP_INDEX_URL = "${(builtins.head pipfile.source).url}";
+          # UV_INDEX_URL = "${(builtins.head pipfile.source).url}";
+          # TWINE_REPOSITORY_URL = "${(builtins.head pipfile.source).url}";
+          TWINE_CERT = cert-bundle;
+          PIP_CERT = cert-bundle;
+          NIX_SSL_CERT_FILE = cert-bundle;
+          REQUESTS_CA_BUNDLE = cert-bundle;
+          GIT_SSL_CAINFO = cert-bundle;
+          CURL_CA_BUNDLE = cert-bundle;
+          UV_NATIVE_TLS = "true";
+          DOCKER_BUILDKIT = "1";
+        };
+
       security.pki.certificates = systemCerts;
 
       environment.systemPackages =
