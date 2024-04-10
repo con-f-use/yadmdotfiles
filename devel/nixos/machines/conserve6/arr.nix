@@ -190,6 +190,15 @@ in
     };
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 
+  # https://thedutch.dev/setup-dynamic-dns-with-ddclient-and-porkbun
+  services.ddclient = {
+    enable = true;
+    protocol = "porkbun";
+    interval = "9000";
+    domains = [ "confus.me" ];
+    passwordFile = "";  # really a conf file with `apikey=...` and `secretapikey=...`
+  };
+
   security.acme.acceptTerms = true;
   # security.acme.certs = {
   #   "${secondary}".email = mail;

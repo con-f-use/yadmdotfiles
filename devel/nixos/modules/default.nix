@@ -9,6 +9,7 @@
   nixnix = import ./nix;
   perswitch = import ./perswitch.nix;
   unfreepackages = import ./unfreepackages.nix;
+  virt = import ./virt.nix;
   windowed = import ./windowed.nix;
   workstation = import ./workstation;
   zfs = import ./zfs.nix;

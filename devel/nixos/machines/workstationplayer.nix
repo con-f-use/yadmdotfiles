@@ -4,6 +4,7 @@
     essentials = { enable = true; main_user = config.users.users.jan.name; };
     dev.enable = true;
     bashbling.enable = true;
+    virt.enable = true;
     electronics.enable = true;
     windowed.enable = true;
     workstation.enable = true;
@@ -25,7 +26,7 @@
   nixpkgs.hostPlatform = "x86_64-linux";
   #nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) config.unfrees;
 
-  virtualisation.vmware.guest.enable = true;
+  # virtualisation.vmware.guest.enable = true;
   virtualisation.docker.storageDriver = "zfs";
   # config.boot.kernelPackages = pkgs.linuxPackages_5_15;
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
