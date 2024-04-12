@@ -18,7 +18,7 @@ with pkgs; [
   libappindicator-gtk3
   libdrm
   libnotify
-  libpulseaudio
+  # libpulseaudio
   libuuid
   libxkbcommon
   mesa

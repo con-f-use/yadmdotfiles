@@ -1,18 +1,18 @@
-{ lib, config, pkgs, ... }:
-{
+{ lib, config, pkgs, ... }: {
+
   options.roles.virt.enable = lib.mkEnableOption "Enable kvm virtuatization";
 
   config = lib.mkIf config.roles.virt.enable {
-    virtuatization.libvirtd = {
+    virtualisation.libvirtd = {
       enable = true;
       qemu = {
-        package = pkgs.qemu_kvm;  # only emulates host arch, smaller download
+        package = pkgs.qemu_kvm; # only emulates host arch, smaller download
         runAsRoot = true;
         swtpm.enable = true;
         ovmf = {
           enable = true;
           packages = [
-            (pkgs.unstable.OVMF.override {
+            (pkgs.OVMF.override {
               secureBoot = true;
               tpmSupport = true;
             }).fd
@@ -20,5 +20,10 @@
         };
       };
     };
+
+    programs.virt-manager.enable = true;
+
+    environment.systemPackages = with pkgs; [ qemu_kvm ];
   };
+
 }

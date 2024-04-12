@@ -9,7 +9,7 @@
         if command -v atuin 2>&1 >/dev/null; then
           [ -r "$USER/.config/atuin/config.toml" ] ||
               export ATUIN_CONFIG_DIR=/etc/atuin
-          eval "$(atuin init bash)"
+          # eval "$(atuin init bash)"
         fi
         if command -v zoxide 2>&1 >/dev/null; then
           eval "$(zoxide init bash)"
@@ -66,8 +66,8 @@
         directory.read_only = "🔒";
         directory.truncate_to_repo = false;
         directory.truncation_symbol = "…/";
-        character.success_symbol = "[](bold fg:grey)";
-        character.error_symbol = "[](bold fg:color_red)";
+        character.success_symbol = "[󰜴](bold fg:grey)";
+        character.error_symbol = "[󰜴](bold fg:color_red)";
         palette = "catppuccin_mocha";
         palettes.catppuccin_mocha.rosewater = "#f5e0dc";
         palettes.catppuccin_mocha.flamingo = "#f2cdcd";

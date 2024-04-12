@@ -86,6 +86,16 @@ in
     RestartSec = 5;
     MemoryMax = "4G"; # Transmission 3.0 leaks memory
   };
+  environment.systemPackages = [
+    (pkgs.writeShellScriptBin "transmission-add" ''
+      set -o errexit -o pipefail -o nounset
+
+      target=''${1:?Need target as first argument}
+      shift
+      TR_AUTH="transmissionrpc:$(${pkgs.jq} -r '."rpc-password"' /etc/secrets/transmission/transmission_secrets.json)" \
+          transmission-remote 127.0.0.1 --authenv --add "$target"
+    '')
+  ];
 
   systemd.tmpfiles.rules = [
     "z ${transmissionSecretLocation} 0440 root conserve"
@@ -193,10 +203,11 @@ in
   # https://thedutch.dev/setup-dynamic-dns-with-ddclient-and-porkbun
   services.ddclient = {
     enable = true;
-    protocol = "porkbun";
-    interval = "9000";
-    domains = [ "confus.me" ];
-    passwordFile = "";  # really a conf file with `apikey=...` and `secretapikey=...`
+    # protocol = "porkbun";
+    # interval = "9000";  # seconds
+    # domains = [ "confus.me" ];
+    # passwordFile = "/etc/secrets/ddclient/ddclient.conf";  # really a conf file with `apikey=...` and `secretapikey=...`
+    configFile = "/etc/secrets/ddclient/ddclient.conf";
   };
 
   security.acme.acceptTerms = true;

@@ -12,6 +12,6 @@ exec grep \
   --exclude-dir .direnv \
   --exclude-dir .venv \
   --exclude '*.min.js' \
-  --color=always \
+  --color=auto \
   "$@" | cut -f 1-120
 
