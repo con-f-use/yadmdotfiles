@@ -1,4 +1,4 @@
-{ self, nixunstable, nixos-hardware, ... }:
+{ self, nixunstable, cnsrv, nixos-hardware, ... }:
 let
   mkSystem = modules: nixunstable.lib.nixosSystem {
     specialArgs = { inherit self; };
@@ -23,10 +23,16 @@ in
   ];
 
   # env NIX_SSHOPTS=-tt nixos-rebuild switch --builders "''" --flake '/home/jan/devel/nixos/#conserve' --target-host jan@192.168.1.18 --use-remote-sudo
-  conserve = mkSystem [
-    nixos-hardware.nixosModules.framework-11th-gen-intel
-    ./conserve6
-  ];
+  # conserve = mkSystem [
+  #   nixos-hardware.nixosModules.framework-11th-gen-intel
+  #   ./conserve6
+  # ];
+  conserve = cnsrv.lib.nixosSystem {  # ToDo: remove this when cnsrv not needed
+    specialArgs = { inherit self; };
+    modules = (builtins.attrValues self.nixosModules)
+      ++ [{ nixpkgs.overlays = [ self.overlays.default ]; }]
+      ++ [ ./conserve6 ];
+  };
 
   maren = mkSystem [
     nixos-hardware.nixosModules.dell-latitude-7490

@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 let
   transmissionSecretLocation = "/etc/secrets/transmission/transmission_secrets.json";
   transmissionDownloadPath = "/mnt/Media/Downloads";
@@ -92,7 +92,7 @@ in
 
       target=''${1:?Need target as first argument}
       shift
-      TR_AUTH="transmissionrpc:$(${pkgs.jq} -r '."rpc-password"' /etc/secrets/transmission/transmission_secrets.json)" \
+      TR_AUTH="transmissionrpc:$(${lib.getExe pkgs.jq} -r '."rpc-password"' /etc/secrets/transmission/transmission_secrets.json)" \
           transmission-remote 127.0.0.1 --authenv --add "$target"
     '')
   ];

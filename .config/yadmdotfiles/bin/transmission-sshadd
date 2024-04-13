@@ -1,0 +1,5 @@
+#!/bin/sh
+
+target=${1:?First argument must be a target url/file}
+shift
+ssh jan@192.168.1.18 transmission-add "$target"

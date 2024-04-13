@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "cnsrv": {
+      "locked": {
+        "lastModified": 1708296515,
+        "narHash": "sha256-FyF489fYNAUy7b6dkYV6rGPyzp+4tThhr80KNAaF/yY=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "b98a4e1746acceb92c509bc496ef3d0e5ad8d4aa",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "b98a4e1746acceb92c509bc496ef3d0e5ad8d4aa",
+        "type": "github"
+      }
+    },
     "nixos-hardware": {
       "locked": {
         "lastModified": 1712909959,
@@ -68,6 +84,7 @@
     },
     "root": {
       "inputs": {
+        "cnsrv": "cnsrv",
         "nixos-hardware": "nixos-hardware",
         "nixunstable": "nixunstable",
         "programsdb": "programsdb"
