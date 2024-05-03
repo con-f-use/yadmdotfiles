@@ -27,7 +27,7 @@ in
         options = "--delete-older-than 14d";
       };
       channel.enable = false;
-      registry.nixpkgs.flake = self.inputs.nixunstable;
+      #registry.nixpkgs.flake = self.inputs.nixunstable;
       nixPath = [ "nixpkgs=/etc/nixpkgs" ];
       #binaryCaches = [];
       #binaryCachePublicKeys = [];
