@@ -53,7 +53,7 @@
   #hardware.opengl.extraPackages = [ pkgs.intel-ocl ];
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
-  services.xserver.libinput.enable = true; # Enable touchpad and other input periphery support.
+  services.libinput.enable = true; # Enable touchpad and other input periphery support.
   services.xserver.videoDrivers = [ "nvidia" "vmware" ];
   hardware.opengl = {
     enable = true;

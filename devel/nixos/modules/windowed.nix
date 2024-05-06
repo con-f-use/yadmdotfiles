@@ -46,6 +46,8 @@
       };
     };
 
+    # defaultSession = "none+dwm";
+    services.displayManager.defaultSession = "none+instantwm";
     services.xserver = {
       enable = true;
       videoDrivers = [ "modsetting" ]; # intel, nvidia
@@ -54,8 +56,6 @@
       autorun = true;
       verbose = 7;
       displayManager = {
-        # defaultSession = "none+dwm";
-        defaultSession = "none+instantwm";
         #startx.enable = true;
         lightdm.enable = true;
         lightdm.greeters.gtk.theme.name = "Arc-Dark";
