@@ -54,7 +54,7 @@ in
         }
       ];
       networking.networkmanager.ensureProfiles.profiles = builtins.foldl' (acc: x: acc // x) { } networks;
-      networking.networkmanager.ensureProfiles.environmentFiles = config.environmentFiles;
+      networking.networkmanager.ensureProfiles.environmentFiles = cfg.environmentFiles;
     }
   );
 }
