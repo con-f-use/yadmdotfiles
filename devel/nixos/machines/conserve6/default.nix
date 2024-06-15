@@ -14,10 +14,10 @@
     dev.enable = true;
   };
   users.groups.conserve.members = [ config.users.users.jan.name config.users.users.roomies.name ];
-  
+
   environment.systemPackages = import ./packages.nix pkgs;
 
-  programs.gnupg.agent.pinentryFlavor = "gtk2"; # ToDo: remove this when cnsrv not needed
+  #programs.gnupg.agent.pinentryFlavor = "gtk2"; # ToDo: remove this when cnsrv not needed
 }
 
 # Bus 002 Device 003: ID 0bda:8156 Realtek Semiconductor Corp. USB 10/100/1G/2.5G LAN

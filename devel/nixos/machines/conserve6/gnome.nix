@@ -2,11 +2,13 @@
 {
   services.xserver = {
     enable = true;
-    libinput.enable = true;
     updateDbusEnvironment = true;
     displayManager.gdm.enable = true;
     desktopManager.gnome.enable = true;
+    #libinput.enable = true;
   };
+
+  services.libinput.enable = true;
 
   services.gnome = {
     gnome-browser-connector.enable = true;
