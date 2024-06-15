@@ -6,6 +6,7 @@
   electronics = import ./electronics.nix;
   essential = import ./essential.nix;
   gaming = import ./gaming.nix;
+  network = import ./networkmanager;
   nixnix = import ./nix;
   perswitch = import ./perswitch.nix;
   unfreepackages = import ./unfreepackages.nix;
