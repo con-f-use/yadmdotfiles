@@ -170,14 +170,18 @@ set inccommand=split
 
 command! -bang ProjectFiles call fzf#vim#files('~/devel', <bang>0)
 
+" Most used
+nnoremap <leader><SPACE> :Files<CR>
+nnoremap <leader>b :Buffers<CR>
+nnoremap <leader>r :Rg<CR>
+nnoremap <leader>g :GitFiles<CR>
+nnoremap <leader>l :Lines<CR>
+nnoremap <leader>m :Marks<CR>
+nnoremap <leader>n :Neoformat<CR>
+
 nmap <leader>? <plug>(fzf-maps-n)
 nnoremap <leader>o :ProjectFiles<CR>
-nnoremap <leader><SPACE> :Files<CR>
-nnoremap <leader>n :Neoformat<CR>
-nnoremap <leader>b :Buffers<CR>
-nnoremap <leader>L :Lines<CR>
-nnoremap <leader>r :Tags<CR>
-nnoremap <leader>m :Marks<CR>
+nnoremap <leader>t :Tags<CR>
 nnoremap <leader>z :Goyo<CR>
 nnoremap <leader>P :Pytest project<CR>
 nnoremap <leader>C :call CocAction('pickColor')<CR>
@@ -185,11 +189,9 @@ nnoremap <leader>d :cd %:p:h<CR>
 nnoremap <leader>e :CocCommand explorer<CR>
 nnoremap <leader>F :CocSearch -S
 " nnoremap <leader>g :Gcd<CR>
- nnoremap <leader>g :GitFiles<CR>
 nnoremap <leader>h :GitGutterPreviewHunk<CR>
 "nnoremap <leader>j :.!nextline %:p 5<Enter>G'
 nnoremap <leader>j :.!nextline de.md 5<Enter>G'
-nnoremap <leader>l :Rg<CR>
 nnoremap <leader>s :G<CR>
 nnoremap <leader>q :q<CR>
 nnoremap <leader>p :vsplit<CR> \| :terminal git push<CR>i

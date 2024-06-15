@@ -2,6 +2,7 @@
 {
   roles = {
     essentials = { enable = true; main_user = config.users.users.jan.name; };
+    bashbling.enable = true;
     dev.enable = true;
     windowed.enable = true;
     workstation.enable = true;
