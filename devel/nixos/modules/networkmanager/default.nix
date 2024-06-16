@@ -16,9 +16,8 @@ in
       description = "Ethernet interface for pre-configured networks";
     };
     environmentFiles = lib.mkOption {
-      default = [ ];
       type = with lib.types; listOf path;
-      example = [ "/var/lib/nm_secrets.env" ];
+      default = [ "/var/lib/secrets/nm_secrets.env" ];
       description = ''
         Files to load as environment file. Environment variables from this file
         will be substituted into the static configuration file using [envsubst](https://github.com/a8m/envsubst).
@@ -54,7 +53,7 @@ in
         }
       ];
       networking.networkmanager.ensureProfiles.profiles = builtins.foldl' (acc: x: acc // x) { } networks;
-      networking.networkmanager.ensureProfiles.environmentFiles = cfg.environmentFiles;
+      networking.networkmanager.ensureProfiles.environmentFiles = builtins.trace "Files ${toString cfg.environmentFiles}" cfg.environmentFiles;
     }
   );
 }

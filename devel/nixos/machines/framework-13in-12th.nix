@@ -12,6 +12,11 @@
     };
     cudawork.novpn = false;
     cudawork.use_builders = true;
+    networks = {
+      enable = true;
+      ethernet = "";
+      wifi = "wlp166s0";
+    };
   };
   users.users.root.openssh.authorizedKeys.keys = config.users.users.jan.openssh.authorizedKeys.keys;
   users.mutableUsers = false;
