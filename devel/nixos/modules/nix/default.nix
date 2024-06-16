@@ -21,6 +21,13 @@ in
         use-xdg-base-directories = true;
         nix-path = "nixpkgs=/etc/nixpkgs";
         flake-registry = "${./registry.json}";
+        # URI  ARCHS_COMMASEP  SSH_PRIV_KEY  MAX_PARA_BUILDS  SPEED  FEATURES_SUPPORTED_COMMASEP  FEATURES_REQUIRED_COMMASEP  SSH_HOST_PUB
+        builders = builtins.concatStringsSep ";" [
+          "ssh://nixbuilder@10.17.6.60 x86_64-linux /etc/nix/nixbuilder 4 10 big-parallel,kvm,nixos-test,benchmark - c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUNIMk1WSHUrV1lOeHpsWUFJMXRWdzd3OWhjNHRSbXhyY2xZbjc0ZUlheW8="
+          "ssh://nixbuilder@nixbld01.qa.ngdev.eu.ad.cuda-inc.com x86_64-linux /etc/nix/nixbuilder 2 1 big-parallel,kvm,nixos-test,benchmark - c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUNaeWNKQUlHMWJ1WWYrcEplNklDL2lHaFJZejJ1UXZUb1lleHh2VzhsS2k="
+          "ssh://nixbuilder@nixbld02.qa.ngdev.eu.ad.cuda-inc.com x86_64-linux /etc/nix/nixbuilder 2 1 big-parallel,kvm,nixos-test,benchmark - c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUMzWmh2V2hkWTIxREVtYjdMWFdaM1dOclBaRUxZMzNPN3FSNlNhOXRJWGw="
+          "ssh://nixbuilder@nixbld03.qa.ngdev.eu.ad.cuda-inc.com x86_64-linux /etc/nix/nixbuilder 2 1 big-parallel,kvm,nixos-test,benchmark - c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUtBbFVVYWVmN0tIQ2JqRWFVR1FKdDg3N1ViVDRDOTFPYk55WjVRbXo5Y00="
+        ];
       };
       gc = {
         automatic = true;
