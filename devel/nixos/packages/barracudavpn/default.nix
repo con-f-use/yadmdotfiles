@@ -1,4 +1,4 @@
-{ stdenv, lib, requireFile, binutils-unwrapped, autoPatchelfHook, version ? "5.2.2" }:
+{ stdenv, lib, requireFile, binutils-unwrapped, iproute2, autoPatchelfHook, version ? "5.2.2" }:
 
 let
 
@@ -45,6 +45,7 @@ stdenv.mkDerivation (finalAttrs: {
   };
   src = null;
   nativeBuildInputs = [ binutils-unwrapped autoPatchelfHook ];
+  propagatedBuildInputs = [ iproute2 ];
   unpackPhase = ''
     tar xf "${finalAttrs.vpnfile}" &&
       ar -x *.deb &&

@@ -4,6 +4,7 @@
     essentials = { enable = true; main_user = config.users.users.jan.name; };
     dev.enable = true;
     bashbling.enable = true;
+    virt.enable = true;
     electronics.enable = true;
     windowed.enable = true;
     workstation.enable = true;
@@ -20,12 +21,12 @@
 
   # ToDo: This is a dirty hack so I can merge this with unfrees from other modles
   # no idea how to do it properly.
-  allowUnfreePackages = [ "discord" "typora" "hplip" "joypixels" "barracudavpn" "faac" "vault.*" "nvidia.*" ];
+  allowUnfreePackages = [ "discord" "typora" "hplip" "joypixels" "barracudavpn" "faac" "vault.*" "nvidia.*" "libXNVCtrl*" ];
   # config.nixpkgs.config.allowAliases = false;
   nixpkgs.hostPlatform = "x86_64-linux";
   #nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) config.unfrees;
 
-  virtualisation.vmware.guest.enable = true;
+  # virtualisation.vmware.guest.enable = true;
   virtualisation.docker.storageDriver = "zfs";
   # config.boot.kernelPackages = pkgs.linuxPackages_5_15;
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
@@ -52,7 +53,7 @@
   #hardware.opengl.extraPackages = [ pkgs.intel-ocl ];
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
-  services.xserver.libinput.enable = true; # Enable touchpad and other input periphery support.
+  services.libinput.enable = true; # Enable touchpad and other input periphery support.
   services.xserver.videoDrivers = [ "nvidia" "vmware" ];
   hardware.opengl = {
     enable = true;

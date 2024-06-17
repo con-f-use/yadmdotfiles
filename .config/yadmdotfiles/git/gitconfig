@@ -129,6 +129,8 @@
     format = ssh
 
 [maintenance]
+    auto = false
+    strategy = incremental
     repo = /home/jan/devel/cuda/qanix/incremental_changes
     repo = /home/jan/devel/cuda/qanix
     repo = /home/jan/devel/cuda/docker-registry

@@ -44,7 +44,7 @@ main() {
 
             # Do it again if containing dir has pictures
             dir="$(readlink -f "$dir/..")"
-            if [ ! "$search_dir" = "$dir" ] && find "$dir" -maxdepth 1 -type f -regextype egrep -iregex ".*(jpg|jpeg|png|gif|bmp|tiff)$" -print -quit | grep -E ".+"; then
+            if [ -n "$dir" ] && [ ! "$search_dir" = "$dir" ] && find "$dir" -maxdepth 1 -type f -regextype egrep -iregex ".*(jpg|jpeg|png|gif|bmp|tiff)$" -print -quit | grep -E ".+"; then
                 ,fiximgext "$dir"
                 create_cbzs "$dir" "$dir/$(basename "$(readlink -f "$dir") | sed 's/ /_/g'").cbz" "$*"
             fi

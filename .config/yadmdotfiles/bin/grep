@@ -2,6 +2,7 @@
 # More sensible defaults for grep.
 
 export PATH=/bin:/usr/bin:/usr/local/bin:/nix/var/nix/profiles/defaul/bin:/run/current-system/sw/bin
+
 exec grep \
   --color=auto \
   --devices=skip \
@@ -12,6 +13,6 @@ exec grep \
   --exclude-dir .direnv \
   --exclude-dir .venv \
   --exclude '*.min.js' \
-  --color=always \
-  "$@" | cut -f 1-120
+  --color=auto \
+  "$@"
 

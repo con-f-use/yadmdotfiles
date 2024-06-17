@@ -6,10 +6,19 @@
     programs.bash = {
       blesh.enable = true;
       interactiveShellInit = lib.mkAfter ''
+      shopt -s histappend   # Append to hist file instead of overwriting it on session quit
+      shopt -s cmdhist      # Multi-line commands --> one history entry
+      shopt -s histreedit   # If history expansion fails, reload the command
+      shopt -s histverify   # Load history expansion as the next command
+      #shopt -s lithist      # Don't change newlines to semicolons in history
+      export HISTIGNORE='ignoreboth:ls:[bf]g:exit:pwd:clear:history';  # don't include trivial stuff in command history
+      export HISTSIZE=10000000
+      export HISTFILESIZE='Unlimited'
+      export HISTTIMEFORMAT='%F %T '; # human readable history format
         if command -v atuin 2>&1 >/dev/null; then
           [ -r "$USER/.config/atuin/config.toml" ] ||
               export ATUIN_CONFIG_DIR=/etc/atuin
-          eval "$(atuin init bash)"
+          # eval "$(atuin init bash)"
         fi
         if command -v zoxide 2>&1 >/dev/null; then
           eval "$(zoxide init bash)"
@@ -66,8 +75,8 @@
         directory.read_only = "🔒";
         directory.truncate_to_repo = false;
         directory.truncation_symbol = "…/";
-        character.success_symbol = "[](bold fg:grey)";
-        character.error_symbol = "[](bold fg:color_red)";
+        character.success_symbol = "[󰜴](bold fg:grey)";
+        character.error_symbol = "[󰜴](bold fg:color_red)";
         palette = "catppuccin_mocha";
         palettes.catppuccin_mocha.rosewater = "#f5e0dc";
         palettes.catppuccin_mocha.flamingo = "#f2cdcd";

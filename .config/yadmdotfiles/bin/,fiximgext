@@ -5,11 +5,11 @@ description=\
 appropriate file extention. Extentions are choosen according to Linux'
 'file' utility."
 
-[ -z "$1" ] && { 1>&2 echo "$description\n"; exit 1; }
+[ -z "$1" ] && { echo "$description\n" 1>&2; exit 1; }
 
 find "$1" -type f -print0 | \
     while IFS= read -r -d $'\0' fl; do
-        ext=$(file -bi "$fl" | grep -Po "(?<=image/|video/)[a-zA-Z0-9]+(?=;)")
+        ext=$(file -bi "$fl" | /run/current-system/sw/bin/grep -Po "(?<=image/|video/)[a-zA-Z0-9]+(?=;)")
         if [ -z "$ext" ] || [[ "$fl" =~ \."$ext"$ ]] ; then 
             continue
         fi

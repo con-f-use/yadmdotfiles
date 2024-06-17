@@ -2,6 +2,7 @@
 {
   roles = {
     essentials = { enable = true; main_user = config.users.users.jan.name; };
+    bashbling.enable = true;
     dev.enable = true;
     windowed.enable = true;
     workstation.enable = true;
@@ -11,6 +12,11 @@
     };
     cudawork.novpn = false;
     cudawork.use_builders = true;
+    networks = {
+      enable = true;
+      ethernet = "";
+      wifi = "wlp166s0";
+    };
   };
   users.users.root.openssh.authorizedKeys.keys = config.users.users.jan.openssh.authorizedKeys.keys;
   users.mutableUsers = false;

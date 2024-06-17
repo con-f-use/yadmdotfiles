@@ -16,3 +16,4 @@ done
 
 eval "$(direnv hook bash)"
 complete -C /run/current-system/sw/bin/vault vault
+export EDITOR=/run/current-system/sw/bin/vim

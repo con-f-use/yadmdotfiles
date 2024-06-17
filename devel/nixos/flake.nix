@@ -13,6 +13,8 @@
     programsdb.url = "github:wamserma/flake-programs-sqlite";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixunstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    cnsrv.url = "github:NixOS/nixpkgs/b98a4e1746acceb92c509bc496ef3d0e5ad8d4aa";  # ToDo: remove this
+    # cnsrv.url = "github:NixOS/nixpkgs/nixos-unstable";  # ToDo: remove this
   };
 }
 

@@ -33,7 +33,9 @@ if [ "$0" = "$BASH_SOURCE" ]; then
     else
         fl="${1:-}"
         shift
-        exec "$EDITOR" "$(follow "$fl")" "$@"
+        to_be_opened="$(follow "$fl")"
+        echo "$to_be_opened"
+        exec "$EDITOR" "$to_be_opened" "$@"
     fi
 fi
 
