@@ -8,6 +8,11 @@
     electronics.enable = true;
     windowed.enable = true;
     workstation.enable = true;
+    networks = {
+      enable = true;
+      wifi = "wlp166s0";
+      ethernet = "enp5s0";
+    };
     cudawork = {
       enable = true;
       use_builders = true;
@@ -26,7 +31,7 @@
   nixpkgs.hostPlatform = "x86_64-linux";
   #nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) config.unfrees;
 
-  # virtualisation.vmware.guest.enable = true;
+  virtualisation.vmware.guest.enable = true;
   virtualisation.docker.storageDriver = "zfs";
   # config.boot.kernelPackages = pkgs.linuxPackages_5_15;
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

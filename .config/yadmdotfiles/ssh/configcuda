@@ -18,6 +18,10 @@ Host qa*
     ControlPath /tmp/ssh-%l@%n.%r@%h.%p
     ControlPersist 360000
 
+Host qanixer
+    HostName 10.17.6.60
+    User root
+
 Host qashare
     HostName 10.17.6.4
     User root
@@ -25,23 +29,22 @@ Host qashare
 Host qaportal
     HostName 10.17.36.250
 
-Host qajenkins
-    HostName 10.17.36.245
+Host qanixjenkins
+    HostName 10.17.50.248
+    User root
+    IdentityFile ~/.ssh/id_ed25519_cuda
 
 Host qastjen
-    HostName 10.17.36.246
+    HostName 10.17.50.246
 
 Host qawebuijen
     HostName 10.17.50.247
-
-Host qamain
-    HostName 10.17.36.241
 
 Host qadns
     HostName 10.17.6.120
 
 Host qavault
-    HostName 10.17.79.11
+    HostName 10.17.50.11
 
 Host qdavault
     HostName 10.17.50.11
@@ -53,24 +56,12 @@ Host qdavault
     ControlPath /tmp/ssh-%l@%n.%r@%h.%p
     ControlPersist 360000
 
-Host qdavault2
-    HostName 10.17.36.12
-    User main
-    IdentitiesOnly = yes
-    IdentityFile ~/.ssh/id_rsa_cuda
-    IdentityFile ~/.ssh/id_rsa_cuda-cert.pub
-    PreferredAuthentications publickey
-    ControlMaster auto
-    ControlPath /tmp/ssh-%l@%n.%r@%h.%p
-    ControlPersist 360000
-
 Host qdaproxie
     HostName 10.17.6.11
     User main
     IdentitiesOnly = yes
     IdentityFile ~/.ssh/id_rsa_cuda
     PreferredAuthentications publickey
-    # Sudo password in vaul
 
 Host atregistry
     HostName 10.17.65.201
@@ -94,16 +85,6 @@ Host czdev
     ControlPersist 360000
     # HP pw
 
-Host czdev2
-    HostName 10.17.36.102
-    # User czangerle
-    User qa
-    PreferredAuthentications publickey,password,keyboard-interactive
-    ControlMaster auto
-    ControlPath /tmp/ssh-%l@%n.%r@%h.%p
-    ControlPersist 360000
-    # HP pw
-
 Host vmspanni
     HostName 10.17.37.200
     User root
@@ -113,35 +94,7 @@ Host vmspanni
     ControlPath /tmp/ssh-%l@%n.%r@%h.%p
     ControlPersist 360000
 
-Host aherb
-    HostName 10.14.8.120
-    User aherbert
-    PreferredAuthentications publickey,password,keyboard-interactive
-    ControlMaster auto
-    ControlPath /tmp/ssh-%l@%n.%r@%h.%p
-    ControlPersist 360000
-
-Host vmhost
-    HostName 10.17.70.254
-    User root
-    Compression yes
-    PreferredAuthentications publickey,password,keyboard-interactive
-    ForwardX11 no
-    ControlMaster auto
-    PreferredAuthentications password,keyboard-interactive,publickey
-    ControlPath /tmp/ssh-%l@%n.%r@%h.%p
-    ControlPersist 360000
-
-Host frskvm 
-    HostName 10.17.6.217
-    User root
-    PreferredAuthentications publickey,password,keyboard-interactive
-    ControlMaster auto
-    ControlPath /tmp/ssh-%l@%n.%r@%h.%p
-    ControlPersist 360000
-
 Host devpi
-# Cudadevpi Master, Zeroblobber, apt-cacher-ng
     HostName 10.17.65.203
     User root
     # IdentityFile ~/.ssh/id_rsa##Cuda
@@ -163,23 +116,9 @@ Host rike
     HostName friederike.ngdev.eu.ad.cuda-inc.com
     User jbischko
 
-# ssh://git@folsom.ngdev.eu.ad.cuda-inc.com:7999/bnnga/qa_pypackage.git
 Host fol
     HostName folsom.ngdev.eu.ad.cuda-inc.com
     Port 7999
-    User jbischko
-    IdentitiesOnly yes
-    IdentityFile ~/.ssh/id_ed25519_cuda
-
-Host stash
-    HostName stash.cudaops.com
-    Port 7999
-    User jbischko
-    IdentitiesOnly yes
-    IdentityFile ~/.ssh/id_ed25519_cuda
-
-Host stash.cudaops.com
-    HostName stash.cudaops.com
     User jbischko
     IdentitiesOnly yes
     IdentityFile ~/.ssh/id_ed25519_cuda
@@ -201,43 +140,3 @@ Host cudaws
     Port 3022
     User jan
 
-Host zangdocker
-# pakcatcher
-    HostName 10.17.36.103
-    User jan
-    PreferredAuthentications publickey,password,keyboard-interactive
-
-Host frs
-    HostName 10.17.70.192
-    User root
-    PreferredAuthentications publickey,password,keyboard-interactive
-
-Host frscz
-    HostName 10.17.79.130
-    User root
-    PreferredAuthentications publickey,password,keyboard-interactive
-
-
-# Probably gone
-# Host jcdocker
-#     HostName 10.17.36.203
-#     User jan
-#     PreferredAuthentications publickey,password
-#     ControlMaster auto
-#     ControlPath /tmp/ssh-%l@%n.%r@%h.%p
-#     ControlPersist 360000
-
-#### Zangerle
-
-# Probably gone
-# Host rancher
-#     HostName 10.17.70.244
-#     User rancher
-#     PreferredAuthentications publickey,password,keyboard-interactive
-#     ControlMaster auto
-#     ControlPath /tmp/ssh-%l@%n.%r@%h.%p
-#     ControlPersist 360000
-# Host zangdocker2
-#     HostName 10.17.65.100
-#     User rancher
-#     PreferredAuthentications publickey,password,keyboard-interactive
