@@ -41,7 +41,7 @@
   boot.extraModulePackages = [ ];
   # networking.interfaces.ens33.useDHCP = true;
   networking.hostId = "1c47b078";
-  config.networking.hosts= { "192.168.1.10" = [ "confus.me" "conserve" "conserve.dynu.net" ]; };
+  networking.hosts= { "192.168.1.10" = [ "confus.me" "conserve" "conserve.dynu.net" ]; };
   #console.font = "latarcyrheb-sun32";  # larger bootmode fonts
   #boot.loader.systemd-boot.consoleMode = lib.mkDefault "max";
   #hardware.video.hidpi.enable = true;
@@ -54,16 +54,12 @@
   networking.networkmanager.enable = true;
   programs.nm-applet.enable = true;
   time.timeZone = "Europe/Vienna";
-  hardware.opengl.driSupport32Bit = true;
   #hardware.opengl.extraPackages = [ pkgs.intel-ocl ];
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
   services.libinput.enable = true; # Enable touchpad and other input periphery support.
   services.xserver.videoDrivers = [ "nvidia" "vmware" ];
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-  };
+  hardware.graphics.enable = true;
   hardware.nvidia = {
     modesetting.enable = true;
     forceFullCompositionPipeline = true;

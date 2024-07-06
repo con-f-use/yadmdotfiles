@@ -134,14 +134,14 @@
       wmctrl
       xorg.xwininfo # wmctrl-1.07 xwininfo-1.1.4 
       xdotool
-      gnome.file-roller
+      file-roller
       font-manager
       libadwaita
       papirus-icon-theme
       arc-theme
-      gnome.nautilus
+      nautilus
       gsettings-desktop-schemas
-      gnome.dconf-editor
+      dconf-editor
       youtube-dl
       signal-desktop
       tdesktop

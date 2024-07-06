@@ -49,7 +49,6 @@ with pkgs; [
   nixpkgs-review
   nix-tree
   manix
-  nix-top
   nil
   nix-output-monitor
   nix-info
