@@ -1,4 +1,4 @@
-{ self, nixunstable, cnsrv, nixos-hardware, ... }:
+{ self, nixunstable, nixos-hardware, ... }:
 let
   mkSystem = modules: nixunstable.lib.nixosSystem {
     specialArgs = { inherit self; };
@@ -27,8 +27,7 @@ in
   #   nixos-hardware.nixosModules.framework-11th-gen-intel
   #   ./conserve6
   # ];
-  # conserve = cnsrv.lib.nixosSystem {  # ToDo: remove this when cnsrv not needed
-  conserve = nixunstable.lib.nixosSystem {  # ToDo: remove this when cnsrv not needed
+  conserve = nixunstable.lib.nixosSystem {
     specialArgs = { inherit self; };
     modules = (builtins.attrValues self.nixosModules)
       ++ [{ nixpkgs.overlays = [ self.overlays.default ]; }]

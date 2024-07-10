@@ -54,12 +54,16 @@
   networking.networkmanager.enable = true;
   programs.nm-applet.enable = true;
   time.timeZone = "Europe/Vienna";
+  hardware.opengl.driSupport32Bit = true;
   #hardware.opengl.extraPackages = [ pkgs.intel-ocl ];
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
   services.libinput.enable = true; # Enable touchpad and other input periphery support.
   services.xserver.videoDrivers = [ "nvidia" "vmware" ];
-  hardware.graphics.enable = true;
+  hardware.opengl = {
+    enable = true;
+    driSupport = true;
+  };
   hardware.nvidia = {
     modesetting.enable = true;
     forceFullCompositionPipeline = true;
