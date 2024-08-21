@@ -12,8 +12,8 @@
   inputs = {
     programsdb.url = "github:wamserma/flake-programs-sqlite";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
-    # nixunstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixunstable.url = "github:NixOS/nixpkgs/051f920625ab5aabe37c920346e3e69d7d34400e";  # ToDo: remove this
+    nixunstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    # nixunstable.url = "github:NixOS/nixpkgs/051f920625ab5aabe37c920346e3e69d7d34400e";  # ToDo: remove this
   };
 }
 

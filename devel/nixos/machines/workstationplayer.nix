@@ -27,6 +27,7 @@
   # ToDo: This is a dirty hack so I can merge this with unfrees from other modles
   # no idea how to do it properly.
   allowUnfreePackages = [ "discord" "typora" "hplip" "joypixels" "barracudavpn" "faac" "vault.*" "nvidia.*" "libXNVCtrl*" ];
+  # permittedInsecurePackages = [ "python3.12-youtube-dl-2021.12.17" ];
   # config.nixpkgs.config.allowAliases = false;
   nixpkgs.hostPlatform = "x86_64-linux";
   #nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) config.unfrees;
@@ -54,16 +55,12 @@
   networking.networkmanager.enable = true;
   programs.nm-applet.enable = true;
   time.timeZone = "Europe/Vienna";
-  hardware.opengl.driSupport32Bit = true;
   #hardware.opengl.extraPackages = [ pkgs.intel-ocl ];
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
   services.libinput.enable = true; # Enable touchpad and other input periphery support.
   services.xserver.videoDrivers = [ "nvidia" "vmware" ];
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-  };
+  hardware.graphics.enable = true;
   hardware.nvidia = {
     modesetting.enable = true;
     forceFullCompositionPipeline = true;

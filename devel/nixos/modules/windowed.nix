@@ -6,8 +6,6 @@
 
   config = lib.mkIf config.roles.windowed.enable {
 
-    sound.enable = true;
-
     hardware.pulseaudio = { enable = true; package = pkgs.pulseaudioFull; };
 
     services.gvfs.enable = true;
@@ -134,15 +132,18 @@
       wmctrl
       xorg.xwininfo # wmctrl-1.07 xwininfo-1.1.4 
       xdotool
-      gnome.file-roller
-      font-manager
+      file-roller
+      nautilus
+      dconf-editor
+      # gnome.file-roller
+      # gnome.nautilus
+      # gnome.dconf-editor
       libadwaita
       papirus-icon-theme
       arc-theme
-      gnome.nautilus
       gsettings-desktop-schemas
-      gnome.dconf-editor
-      youtube-dl
+      # youtube-dl
+      yt-dlp
       signal-desktop
       tdesktop
       discord
@@ -151,11 +152,10 @@
       # Multimedia
       mpv
       sox  # audio manipulation
-      yt-dlp
       sxiv
       flameshot
       kazam
-      mcomix #zathura
+      # mcomix #zathura # ToDo: Broken in pkgs because of pymupdf
       rar # needed by mcomix for cbr support
       v4l-utils
 
