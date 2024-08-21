@@ -4,7 +4,7 @@ Description=play a 20kHz sinewave with sox
 
 [Service]
 Type=oneshot
-ExecStart=/run/current-system/sw/bin/play -v 0.2 -n synth 5 sin 20000
+ExecStart=/bin/sh -c '/run/current-system/sw/bin/bluetoothctl devices Connected | /run/current-system/sw/bin/grep -iqF "teufel cinebar" && /run/current-system/sw/bin/play -v 0.2 -n synth 2 sin 20000'
 #Environment="XDG_RUNTIME_DIR=/run/user/1000"
 
 [Install]

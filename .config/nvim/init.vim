@@ -395,6 +395,8 @@ set secure
 set title
 set ruler
 set colorcolumn=72
+set spell
+set spelllang=en,de
 " set conceallevel=0
 let g:indentLine_fileTypeExclude = ['json', 'markdown']
 highlight ColorColumn ctermbg=233

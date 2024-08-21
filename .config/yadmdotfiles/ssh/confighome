@@ -27,6 +27,10 @@ Host contest
     # unix_listener: cannot bind to path: ~/.local/nvim_sockets/me
     # Could not request local forwarding.
 
+Host con
+    HostName 192.168.1.18
+    User jan
+    IdentityFile ~/.ssh/id_ed25519_confusion
 
 Host naserve
     User conserve
