@@ -6,8 +6,6 @@
 
   config = lib.mkIf config.roles.windowed.enable {
 
-    hardware.pulseaudio = { enable = true; package = pkgs.pulseaudioFull; };
-
     services.gvfs.enable = true;
 
     services.udev.extraRules = ''

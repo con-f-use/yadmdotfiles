@@ -78,6 +78,17 @@
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
+  hardware.pulseaudio.enable = false;  # replaced by pipewire
+  services.pipewire = {
+    enable = true;
+    audio.enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    wireplumber.enable = true;
+    # systemWide = true;
+  };
+
   services.perswitch.enable = true;
   services.printing.enable = true;
   # config.services.printing.drivers = [ pkgs.hplipWithPlugin ];  #pkgs.hplip
