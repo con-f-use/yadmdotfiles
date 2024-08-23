@@ -1,5 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 {
+  system.nixos.tags = "conix-305";
   roles = {
     essentials = { enable = true; main_user = config.users.users.jan.name; };
     dev.enable = true;
@@ -60,6 +61,7 @@
   services.blueman.enable = true;
   services.libinput.enable = true; # Enable touchpad and other input periphery support.
   services.xserver.videoDrivers = [ "nvidia" "vmware" ];
+  # services.xserver.videoDrivers = [ "nvidia" ];
   hardware.graphics.enable = true;
   hardware.nvidia = {
     modesetting.enable = true;
@@ -75,7 +77,9 @@
     # Currently alpha-quality/buggy, so false is currently the recommended setting.
     open = false;
     nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    # package = config.boot.kernelPackages.nvidiaPackages.stable;
+    # package = pkgs.linuxKernel.packages.linux_6_6.nvidia_x11_beta;
+    package = pkgs.linuxKernel.packages.linux_6_6.nvidia_x11_legacy535;
   };
 
   hardware.pulseaudio.enable = false;  # replaced by pipewire
