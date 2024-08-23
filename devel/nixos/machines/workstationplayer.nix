@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 {
-  system.nixos.tags = "conix-305";
+  system.nixos.tags = [ "conix-305" ];
   roles = {
     essentials = { enable = true; main_user = config.users.users.jan.name; };
     dev.enable = true;
@@ -79,7 +79,8 @@
     nvidiaSettings = true;
     # package = config.boot.kernelPackages.nvidiaPackages.stable;
     # package = pkgs.linuxKernel.packages.linux_6_6.nvidia_x11_beta;
-    package = pkgs.linuxKernel.packages.linux_6_6.nvidia_x11_legacy535;
+    # package = pkgs.linuxKernel.packages.linux_6_6.nvidia_x11_legacy535;
+    package = config.boot.kernelPackages.nvidiaPackages.legacy_535;
   };
 
   hardware.pulseaudio.enable = false;  # replaced by pipewire
