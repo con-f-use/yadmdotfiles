@@ -43,7 +43,7 @@
 
   # services.printing.enable = true;
 
-  services.xserver.libinput.enable = true;
+  services.libinput.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
