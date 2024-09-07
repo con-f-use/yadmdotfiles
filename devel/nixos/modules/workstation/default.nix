@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   kitty-xterm-link = pkgs.writeScriptBin "xterm" "${pkgs.kitty}/bin/kitty \"$@\"";
 in
@@ -14,7 +19,7 @@ in
       enable = true;
       enableSSHSupport = true;
       # pinentryFlavor = "gtk2"; # "curses" "tty" "gnome3" "qt"
-      pinentryPackage = pkgs.pinentry-gtk2;  # new from 30.03.2024 on
+      pinentryPackage = pkgs.pinentry-gtk2; # new from 30.03.2024 on
     };
     #services.dbus.packages = [ pkgs.gcr ];
     #services.pcscd.enable = true;
@@ -31,4 +36,3 @@ in
     environment.systemPackages = import ./workstationpkgs.nix { inherit pkgs; };
   };
 }
-

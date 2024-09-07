@@ -18,7 +18,7 @@
 
   services.printing.enable = false;
 
-  hardware.pulseaudio.enable = false;  # replaced by pipewire
+  hardware.pulseaudio.enable = false; # replaced by pipewire
   services.pipewire = {
     enable = true;
     audio.enable = true;

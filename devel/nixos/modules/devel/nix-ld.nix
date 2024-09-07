@@ -1,5 +1,6 @@
 { pkgs, ... }:
-with pkgs; [
+with pkgs;
+[
   stdenv.cc.cc
   zlib
   fuse3

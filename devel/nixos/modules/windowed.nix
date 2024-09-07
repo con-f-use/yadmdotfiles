@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 {
   options.roles.windowed = {
     enable = lib.mkEnableOption "My graphical system based on X and instantOS";
@@ -50,12 +55,12 @@
       xkb.layout = "us";
       xkb.variant = "intl";
       autorun = true;
-      verbose = 7;
+      # verbose = 7;
       displayManager = {
         #startx.enable = true;
         lightdm.enable = true;
         lightdm.greeters.gtk.theme.name = "Arc-Dark";
-        xserverArgs = [ "-verbose" ];
+        # xserverArgs = [ "-verbose" ];
       };
       # desktopManager = {
       #   gnome.enable = false;
@@ -113,12 +118,21 @@
       dina-font
       proggyfonts
       joypixels
-      (nerdfonts.override { fonts = [ "FiraCode" "FiraMono" ]; })
+      (nerdfonts.override {
+        fonts = [
+          "FiraCode"
+          "FiraMono"
+        ];
+      })
     ];
 
     nixpkgs.config.joypixels.acceptLicense = true;
 
-    allowUnfreePackages = [ "discord" "rar" "joypixels" ];
+    allowUnfreePackages = [
+      "discord"
+      "rar"
+      "joypixels"
+    ];
     environment.systemPackages = with pkgs; [
       # X
       xorg.xrandr
@@ -128,7 +142,7 @@
       xclip
       fribidi
       wmctrl
-      xorg.xwininfo # wmctrl-1.07 xwininfo-1.1.4 
+      xorg.xwininfo # wmctrl-1.07 xwininfo-1.1.4
       xdotool
       file-roller
       nautilus
@@ -149,7 +163,7 @@
 
       # Multimedia
       mpv
-      sox  # audio manipulation
+      sox # audio manipulation
       sxiv
       flameshot
       kazam
@@ -170,4 +184,3 @@
 
   };
 }
-

@@ -1,7 +1,10 @@
 { config, lib, ... }:
 {
   roles = {
-    essentials = { enable = true; main_user = config.users.users.jan.name; };
+    essentials = {
+      enable = true;
+      main_user = config.users.users.jan.name;
+    };
     dev.enable = true;
     electronics.enable = true;
     windowed.enable = true;
@@ -22,7 +25,14 @@
   # nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) config.unfrees;
   nixpkgs.hostPlatform = "x86_64-linux";
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usb_storage" "sd_mod" "sdhci_pci" ];
+  boot.initrd.availableKernelModules = [
+    "xhci_pci"
+    "ehci_pci"
+    "ahci"
+    "usb_storage"
+    "sd_mod"
+    "sdhci_pci"
+  ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
@@ -46,29 +56,25 @@
   services.logind.lidSwitch = "ignore";
   networking.hostId = "5b07dc72";
 
-  fileSystems."/" =
-    {
-      device = "rpool/root";
-      fsType = "zfs";
-    };
+  fileSystems."/" = {
+    device = "rpool/root";
+    fsType = "zfs";
+  };
 
-  fileSystems."/nix" =
-    {
-      device = "rpool/nix";
-      fsType = "zfs";
-    };
+  fileSystems."/nix" = {
+    device = "rpool/nix";
+    fsType = "zfs";
+  };
 
-  fileSystems."/home" =
-    {
-      device = "rpool/home";
-      fsType = "zfs";
-    };
+  fileSystems."/home" = {
+    device = "rpool/home";
+    fsType = "zfs";
+  };
 
-  fileSystems."/boot" =
-    {
-      device = "/dev/disk/by-uuid/6EB0-B7B8";
-      fsType = "vfat";
-    };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/6EB0-B7B8";
+    fsType = "vfat";
+  };
 
   swapDevices = [ ];
 

@@ -12,7 +12,10 @@
       #   "autotest-docker-registry.qa.ngdev.eu.ad.cuda-inc.com:5000"
       #   "jenkins-jupiter.ngdev.eu.ad.cuda-inc.com"
       # ];
-      dns = [ "10.17.6.120" "1.1.1.1" ];
+      dns = [
+        "10.17.6.120"
+        "1.1.1.1"
+      ];
     };
   };
 
@@ -24,10 +27,20 @@
     in
     {
       "docker/cert.d/10.17.65.200:5000/certificate.crt" = {
-        inherit enable user group text;
+        inherit
+          enable
+          user
+          group
+          text
+          ;
       };
       "docker/cert.d/10.17.65.201:5000/certificate.crt" = {
-        inherit enable user group text;
+        inherit
+          enable
+          user
+          group
+          text
+          ;
       };
       "docker/cert.d/docker-registry.qa.ngdev.eu.ad.cuda-inc.com:5000/certificate.crt" = {
         inherit enable user group;

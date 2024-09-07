@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   hashedPasswordFile = builtins.trace "reminder: password files needs to be present at activation!" "/etc/secrets/janpw";
   pub_keys = [

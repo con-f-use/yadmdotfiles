@@ -1,7 +1,18 @@
-{ config, lib, pkgs, inputs, nixrepo, modulesPath, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  nixrepo,
+  modulesPath,
+  ...
+}:
 {
   roles = {
-    essentials = { enable = true; main_user = config.users.users.jan.name; };
+    essentials = {
+      enable = true;
+      main_user = config.users.users.jan.name;
+    };
     bashbling.enable = true;
     dev.enable = true;
     windowed.enable = true;
@@ -26,7 +37,13 @@
   system.stateVersion = "22.05";
   virtualisation.docker.storageDriver = "zfs";
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
+  boot.initrd.availableKernelModules = [
+    "xhci_pci"
+    "thunderbolt"
+    "nvme"
+    "usb_storage"
+    "sd_mod"
+  ];
   # boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
@@ -53,29 +70,25 @@
   networking.hostId = "f3dc4d2a";
 
   roles.zfs.enable = true;
-  fileSystems."/" =
-    {
-      device = "rpool/root";
-      fsType = "zfs";
-    };
+  fileSystems."/" = {
+    device = "rpool/root";
+    fsType = "zfs";
+  };
 
-  fileSystems."/nix" =
-    {
-      device = "rpool/nix";
-      fsType = "zfs";
-    };
+  fileSystems."/nix" = {
+    device = "rpool/nix";
+    fsType = "zfs";
+  };
 
-  fileSystems."/home" =
-    {
-      device = "rpool/home";
-      fsType = "zfs";
-    };
+  fileSystems."/home" = {
+    device = "rpool/home";
+    fsType = "zfs";
+  };
 
-  fileSystems."/boot" =
-    {
-      device = "/dev/disk/by-uuid/C1DA-4C5B";
-      fsType = "vfat";
-    };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/C1DA-4C5B";
+    fsType = "vfat";
+  };
   swapDevices = [ ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";

@@ -1,4 +1,10 @@
-{ config, lib, pkgs, secrets, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  secrets,
+  ...
+}:
 
 rec {
   #users.groups.tobi = { gid = 1000; };
@@ -13,4 +19,3 @@ rec {
   };
   users.users.root.openssh.authorizedKeys.keys = users.users.tobi.openssh.authorizedKeys.keys;
 }
-

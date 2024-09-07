@@ -1,4 +1,11 @@
-{ self, config, lib, pkgs, inputs, ... }:
+{
+  self,
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
 {
 
   options.roles.dev = {
@@ -14,7 +21,10 @@
     fileSystems."/var/tmp" = {
       fsType = "tmpfs";
       device = "tmpfs";
-      options = [ "defaults" "size=5%" ];
+      options = [
+        "defaults"
+        "size=5%"
+      ];
     };
 
     boot.supportedFilesystems = [ "ntfs" ];
@@ -62,7 +72,12 @@
     #   id = [ "17296814" "26700997" ];
     # };
 
-    networking.firewall.allowedTCPPorts = [ 8000 8080 8081 8443 ];
+    networking.firewall.allowedTCPPorts = [
+      8000
+      8080
+      8081
+      8443
+    ];
 
     #services.tor = { enable = true; client.enable = true; };
 
@@ -80,10 +95,11 @@
     environment.variables.TWINE_CERT = "/etc/ssl/certs/ca-bundle.crt";
 
     environment.systemPackages =
-      (import ./develpkgs.nix { inherit pkgs; }) ++
-      (lib.optionals (config.services.xserver.enable) [ pkgs.meld pkgs.xournalpp ])
-    ;
+      (import ./develpkgs.nix { inherit pkgs; })
+      ++ (lib.optionals (config.services.xserver.enable) [
+        pkgs.meld
+        pkgs.xournalpp
+      ]);
   };
 
 }
-

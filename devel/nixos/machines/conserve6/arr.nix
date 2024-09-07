@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   transmissionSecretLocation = "/etc/secrets/transmission/transmission_secrets.json";
   transmissionDownloadPath = "/mnt/Media/Downloads";
@@ -12,22 +17,52 @@ let
   secondary = "conserve.dynu.net";
   webhome = "/var/www/html";
 
-  tls-cert = { alt ? [ ] }: builtins.trace "WARNING: tls-cert ends up in the nix store (world readable) & will change on every evaluation!"
-    (pkgs.runCommand "selfSignedCert" { buildInputs = [ pkgs.openssl ]; } ''
-      mkdir -p $out
-      openssl req -x509 -newkey ec -pkeyopt ec_paramgen_curve:secp384r1 -days 365 -nodes \
-        -keyout $out/cert.key -out $out/cert.crt \
-        -subj "/CN=localhost" \
-        -addext "subjectAltName=DNS:localhost,${builtins.concatStringsSep "," (["IP:127.0.0.1"] ++ alt)}"
-    '');
-  certout = tls-cert { alt = [ "IP:192.168.1.18" "DNS:*.confus.me" "DNS:*.conserve.dynu.net" ]; };
-  crtcfg = { sslCertificate = "${certout}/cert.crt"; sslCertificateKey = "${certout}/cert.key"; };
+  tls-cert =
+    {
+      alt ? [ ],
+    }:
+    builtins.trace
+      "WARNING: tls-cert ends up in the nix store (world readable) & will change on every evaluation!"
+      (
+        pkgs.runCommand "selfSignedCert" { buildInputs = [ pkgs.openssl ]; } ''
+          mkdir -p $out
+          openssl req -x509 -newkey ec -pkeyopt ec_paramgen_curve:secp384r1 -days 365 -nodes \
+            -keyout $out/cert.key -out $out/cert.crt \
+            -subj "/CN=localhost" \
+            -addext "subjectAltName=DNS:localhost,${
+              builtins.concatStringsSep "," ([ "IP:127.0.0.1" ] ++ alt)
+            }"
+        ''
+      );
+  certout = tls-cert {
+    alt = [
+      "IP:192.168.1.18"
+      "DNS:*.confus.me"
+      "DNS:*.conserve.dynu.net"
+    ];
+  };
+  crtcfg = {
+    sslCertificate = "${certout}/cert.crt";
+    sslCertificateKey = "${certout}/cert.key";
+  };
 in
 {
-  services.jellyfin = { enable = true; group = "conserve"; }; # WebUI for Streaming
-  services.sonarr = { enable = true; group = "conserve"; }; # Shows
-  services.radarr = { enable = true; group = "conserve"; }; # Movies
-  services.lidarr = { enable = true; group = "conserve"; }; # Audio
+  services.jellyfin = {
+    enable = true;
+    group = "conserve";
+  }; # WebUI for Streaming
+  services.sonarr = {
+    enable = true;
+    group = "conserve";
+  }; # Shows
+  services.radarr = {
+    enable = true;
+    group = "conserve";
+  }; # Movies
+  services.lidarr = {
+    enable = true;
+    group = "conserve";
+  }; # Audio
   services.prowlarr.enable = true; # Sources
   # services.jackett = {
   #   enable = true;
@@ -198,7 +233,10 @@ in
         #   "jelly.${primary}" = virtualHosts."jelly.${secondary}";
       };
     };
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+  ];
 
   # https://thedutch.dev/setup-dynamic-dns-with-ddclient-and-porkbun
   services.ddclient = {

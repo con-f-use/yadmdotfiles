@@ -18,7 +18,7 @@
 
   systemd.tmpfiles.rules = [
     # See: https://www.freedesktop.org/software/systemd/man/latest/tmpfiles.d.html
-    "d!- /etc/secrets 0750 root root"  # 4:read 2:write 1:execute
+    "d!- /etc/secrets 0750 root root" # 4:read 2:write 1:execute
     "Z- /etc/secrets 0750 root root"
   ];
 }
