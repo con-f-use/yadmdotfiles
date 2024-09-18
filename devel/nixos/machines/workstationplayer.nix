@@ -1,10 +1,9 @@
-{
-  self,
-  config,
-  lib,
-  pkgs,
-  inputs,
-  ...
+{ self
+, config
+, lib
+, pkgs
+, inputs
+, ...
 }:
 {
   system.nixos.tags = [ "conix-305" ];
@@ -56,6 +55,11 @@
   nixpkgs.hostPlatform = "x86_64-linux";
   #nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) config.unfrees;
 
+  boot.binfmt.emulatedSystems = [
+    "aarch64-linux"
+    "riscv64-linux"
+    "wasm64-wasi"
+  ];
   virtualisation.vmware.guest.enable = true;
   virtualisation.docker.storageDriver = "zfs";
   # config.boot.kernelPackages = pkgs.linuxPackages_5_15;

@@ -48,6 +48,8 @@
       };
     };
 
+    services.envfs.enable = true;
+
     programs.nix-ld = {
       enable = true;
       libraries = import ./nix-ld.nix { inherit pkgs; };

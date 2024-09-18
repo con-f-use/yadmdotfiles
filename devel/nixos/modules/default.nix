@@ -10,6 +10,7 @@
   network = import ./networkmanager;
   nixnix = import ./nix;
   perswitch = import ./perswitch.nix;
+  sane = import ./sane.nix;
   unfreepackages = import ./unfreepackages.nix;
   virt = import ./virt.nix;
   windowed = import ./windowed.nix;

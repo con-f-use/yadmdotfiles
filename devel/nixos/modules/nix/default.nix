@@ -24,6 +24,7 @@ in
         # - https://github.com/NixOS/nix/issues/2208
         keep-outputs = true;
         keep-derivations = true;
+        allow-import-from-derivation = false;
         sandbox = true; # newer
         allowed-users = [ "@wheel" ];
         trusted-users = [ "@wheel" ];
@@ -40,6 +41,8 @@ in
             "ssh://nixbuilder@nixbld03.qa.ngdev.eu.ad.cuda-inc.com x86_64-linux /etc/nix/nixbuilder 2 1 big-parallel,kvm,nixos-test,benchmark - c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUtBbFVVYWVmN0tIQ2JqRWFVR1FKdDg3N1ViVDRDOTFPYk55WjVRbXo5Y00="
           ]
         );
+        builders-use-substitutes = true;
+        connect-timeout = 5;  # for establishing connections in the binary cache substituter"
       };
       gc = {
         automatic = true;
