@@ -1,7 +1,12 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
-  imports = [ ./system.nix ];  # ToDo: make bash a module
+  imports = [ ./system.nix ]; # ToDo: make bash a module
 
   roles = {
     essentials = {

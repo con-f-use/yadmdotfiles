@@ -1,11 +1,21 @@
-{ self, nixunstable, nixos-hardware, ... }:
+{
+  self,
+  nixunstable,
+  nixos-hardware,
+  ...
+}:
 let
-  mkSystem = modules: nixunstable.lib.nixosSystem {
-    specialArgs = { inherit self; };
-    modules = (builtins.attrValues self.nixosModules)
-      ++ [{ nixpkgs.overlays = [ self.overlays.default ]; }]
-      ++ modules;
-  };
+  mkSystem =
+    modules:
+    nixunstable.lib.nixosSystem {
+      specialArgs = {
+        inherit self;
+      };
+      modules =
+        (builtins.attrValues self.nixosModules)
+        ++ [ { nixpkgs.overlays = [ self.overlays.default ]; } ]
+        ++ modules;
+    };
 in
 {
   conix = mkSystem [ ./workstationplayer.nix ];
@@ -28,10 +38,13 @@ in
   #   ./conserve6
   # ];
   conserve = nixunstable.lib.nixosSystem {
-    specialArgs = { inherit self; };
-    modules = (builtins.attrValues self.nixosModules)
-      ++ [{ nixpkgs.overlays = [ self.overlays.default ]; }]
-      ++ [ ./conserve6 ];  # framework 11th-gen intel
+    specialArgs = {
+      inherit self;
+    };
+    modules =
+      (builtins.attrValues self.nixosModules)
+      ++ [ { nixpkgs.overlays = [ self.overlays.default ]; } ]
+      ++ [ ./conserve6 ]; # framework 11th-gen intel
   };
 
   maren = mkSystem [

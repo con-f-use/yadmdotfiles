@@ -1,0 +1,48 @@
+# track version, if format ever chagnes
+version = 1
+
+# do we want messages from packages imported before the point that logging
+# config was called?
+disable_existing_loggers = false
+
+[formatters.simple]
+format = "%(asctime)s [%(levelname)-8.8s|%(module)-14.14s]: %(message)s :[%(name)s]"
+datefmt = "%Y-%m-%dZ%H:%M:%S"  # UTC via logging.Formatter.converter = time.gmtime, so zwe don't need "%z" at the end
+
+[formatters.json]
+"()" = "json_logger.JSONFormatter"
+
+  [formatters.json.fmt_keys]
+  level = "levelname"
+  message = "message"
+  timestamp = "timestamp"
+  logger = "name"
+  module = "module"
+  function = "funcName"
+  line = "lineno"
+  thread_name = "threadName"
+
+[handlers.stderr]
+class = "logging.StreamHandler"
+level = "WARNING"
+formatter = "simple"
+stream = "ext://sys.stderr"
+
+[handlers.file_json]
+class = "logging.handlers.RotatingFileHandler"
+level = "DEBUG"
+formatter = "json"
+filename = "/tmp/my_app.log.jsonl"
+maxBytes = 10_000
+backupCount = 3
+
+# Queue-handler so logging calls don't block the program flow when they
+# trigger lengthy IO or networking
+[handlers.queue_handler]
+class = "logging.handlers.QueueHandler"
+handlers = [ "stderr", "file_json" ]
+respect_handler_level = true
+
+[loggers.root]
+level = "DEBUG"
+handlers = [ "queue_handler" ]

@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 {
   fileSystems = {
     "/" = {
@@ -54,7 +59,6 @@
   #  gpu_mem=192
   #'';
   # END RASPBERRY PI 4 B
-
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -112,22 +116,32 @@
     fira-code-symbols
     dina-font
     joypixels
-    (pkgs.python3.withPackages (ps: with ps; [
-      setuptools
-      virtualenv
-      requests
-      beautifulsoup4
-      pygls
-    ]))
-    (nerdfonts.override { fonts = [ "FiraCode" "FiraMono" ]; })
+    (pkgs.python3.withPackages (
+      ps: with ps; [
+        setuptools
+        virtualenv
+        requests
+        beautifulsoup4
+        pygls
+      ]
+    ))
+    (nerdfonts.override {
+      fonts = [
+        "FiraCode"
+        "FiraMono"
+      ];
+    })
   ];
   nixpkgs.config.joypixels.acceptLicense = true;
   nixpkgs.config.allowUnfree = true;
   nixpkgs.hostPlatform = "aarch64-linux";
 
-
   # Shell Convenience
-  environment.shellAliases = { ll = "ls -al --color=auto"; ff = "sudo vi /etc/nixos/configuration.nix"; ss = "sudo nixos-rebuild switch"; };
+  environment.shellAliases = {
+    ll = "ls -al --color=auto";
+    ff = "sudo vi /etc/nixos/configuration.nix";
+    ss = "sudo nixos-rebuild switch";
+  };
   environment.homeBinInPath = true;
   environment.etc."gitconfig".text = ''
     [user]
@@ -178,15 +192,17 @@
     vim
     papirus-icon-theme
     arc-theme
-    (python3.withPackages (ps: with ps; [
-      setuptools
-      wheel
-      appdirs
-      virtualenv
-      requests
-      beautifulsoup4
-      pygls
-    ]))
+    (python3.withPackages (
+      ps: with ps; [
+        setuptools
+        wheel
+        appdirs
+        virtualenv
+        requests
+        beautifulsoup4
+        pygls
+      ]
+    ))
     black
   ];
 
@@ -214,7 +230,11 @@
   services.openssh.enable = true;
 
   # Firewall
-  networking.firewall.allowedTCPPorts = [ 60022 60043 60080 ];
+  networking.firewall.allowedTCPPorts = [
+    60022
+    60043
+    60080
+  ];
   #networking.firewall.allowedUDPPorts = [ ... ];
   #networking.firewall.enable = false;
 
@@ -226,4 +246,3 @@
   };
   system.stateVersion = "21.03"; # It‘s perfectly fine and recommended to leave this value at the release version of the first install of this system.
 }
-

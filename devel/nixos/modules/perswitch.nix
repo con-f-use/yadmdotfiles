@@ -1,4 +1,10 @@
-{ self, config, lib, pkgs, ... }:
+{
+  self,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 {
   options.services.perswitch = {
     enable = lib.mkEnableOption "Custom periphery power switch";
@@ -11,4 +17,3 @@
     environment.systemPackages = [ pkgs.perscom ];
   };
 }
-

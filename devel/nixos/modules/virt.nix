@@ -1,4 +1,10 @@
-{ lib, config, pkgs, ... }: {
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
+{
 
   options.roles.virt.enable = lib.mkEnableOption "Enable kvm virtuatization";
 

@@ -1,2 +1,1 @@
-{ writeScriptBin, ... }:
-writeScriptBin "flakeroot" (builtins.readFile ./flakeroot.sh)
+{ writeScriptBin, ... }: writeScriptBin "flakeroot" (builtins.readFile ./flakeroot.sh)

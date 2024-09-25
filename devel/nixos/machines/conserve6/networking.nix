@@ -4,7 +4,7 @@
     hostName = "conserve6";
     hostId = "7ca45f2c"; # head -c 8 /etc/machine-id  # system (used by zfs)
     # interfaces.enp0s13f0u4u3c2.useDHCP = true;  # anker mini dongle top left
-    interfaces.enp0s13f0u1u3c2.useDHCP = true;  # anker mini dongle top right
+    interfaces.enp0s13f0u1u3c2.useDHCP = true; # anker mini dongle top right
     # interfaces.enp0s13f0u3.useDHCP = true;  # framework adapter module bottom left
     networkmanager.enable = true;
   };

@@ -1,5 +1,6 @@
 { pkgs, ... }:
-with pkgs; [
+with pkgs;
+[
   firefox
   ffmpeg
   fribidi
@@ -12,4 +13,3 @@ with pkgs; [
   gparted
   parted
 ]
-

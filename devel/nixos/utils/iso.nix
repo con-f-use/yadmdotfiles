@@ -113,9 +113,19 @@ in
           endif
         '';
         vam.knownPlugins = pkgs.vimPlugins;
-        vam.pluginDictionaries = [{
-          names = [ "surround" "vim-nix" "tabular" "vim-commentary" "vim-obsession" "indentLine" "ale" ];
-        }];
+        vam.pluginDictionaries = [
+          {
+            names = [
+              "surround"
+              "vim-nix"
+              "tabular"
+              "vim-commentary"
+              "vim-obsession"
+              "indentLine"
+              "ale"
+            ];
+          }
+        ];
       };
     })
   ];

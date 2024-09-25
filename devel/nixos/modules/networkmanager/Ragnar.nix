@@ -1,5 +1,6 @@
 # secrets via: https://search.nixos.org/options?channel=unstable&show=networking.networkmanager.ensureProfiles.environmentFiles&query=networkmanager.ensureProfiles
-{ wifi, ethernet }: {
+{ wifi, ethernet }:
+{
   "Ragnar" = {
     connection = {
       id = "Ragnar";
@@ -23,7 +24,6 @@
       addr-gen-mode = "default";
       method = "auto";
     };
-    proxy = {
-    };
+    proxy = { };
   };
 }

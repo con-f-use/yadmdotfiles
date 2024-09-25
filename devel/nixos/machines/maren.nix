@@ -1,7 +1,15 @@
-{ self, config, lib, ... }:
+{
+  self,
+  config,
+  lib,
+  ...
+}:
 {
   roles = {
-    essentials = { enable = true; main_user = config.users.users.jan.name; };
+    essentials = {
+      enable = true;
+      main_user = config.users.users.jan.name;
+    };
     dev.enable = true;
     windowed.enable = true;
     workstation.enable = true;
@@ -33,9 +41,18 @@
   # grep channel /iso/nixos/yadmdotfiles-master/devel/nixos/utils/install_nixos.sh | grep -o "sudo .*hardware" 
 
   #boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usb_storage" "sd_mod" "sdhci_pci" ];
-  boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
+  boot.initrd.availableKernelModules = [
+    "xhci_pci"
+    "nvme"
+    "usb_storage"
+    "sd_mod"
+    "rtsx_pci_sdmmc"
+  ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" "r8152" ];
+  boot.kernelModules = [
+    "kvm-intel"
+    "r8152"
+  ];
   #boot.blacklistedKernelModules = [ "psmouse" ];
   boot.extraModulePackages = [ ];
   #services.xserver.videoDrivers = lib.mkDefault [ "intel" ];
@@ -59,32 +76,27 @@
   services.logind.lidSwitch = "ignore";
   networking.hostId = "2684da09";
 
-  fileSystems."/" =
-    {
-      device = "rpool/root";
-      fsType = "zfs";
-    };
+  fileSystems."/" = {
+    device = "rpool/root";
+    fsType = "zfs";
+  };
 
-  fileSystems."/nix" =
-    {
-      device = "rpool/nix";
-      fsType = "zfs";
-    };
+  fileSystems."/nix" = {
+    device = "rpool/nix";
+    fsType = "zfs";
+  };
 
-  fileSystems."/home" =
-    {
-      device = "rpool/home";
-      fsType = "zfs";
-    };
+  fileSystems."/home" = {
+    device = "rpool/home";
+    fsType = "zfs";
+  };
 
-  fileSystems."/boot" =
-    {
-      device = "/dev/disk/by-uuid/889E-4233";
-      fsType = "vfat";
-    };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/889E-4233";
+    fsType = "vfat";
+  };
 
   swapDevices = [ ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 }
-

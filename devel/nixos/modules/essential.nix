@@ -1,9 +1,18 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 {
   options = with lib; {
     roles.essentials = {
       enable = mkEnableOption "Things I can't linux without"; # Linux is a verb now!
-      main_user = mkOption { description = "User name of the main user"; type = types.str; default = false; };
+      main_user = mkOption {
+        description = "User name of the main user";
+        type = types.str;
+        default = false;
+      };
     };
   };
   config = lib.mkIf config.roles.essentials.enable {
@@ -14,7 +23,10 @@
         {
           users = [ "${config.roles.essentials.main_user}" ];
           commands = [
-            { command = "${pkgs.systemd}/bin/shutdown"; options = [ "NOPASSWD" ]; }
+            {
+              command = "${pkgs.systemd}/bin/shutdown";
+              options = [ "NOPASSWD" ];
+            }
           ];
         }
       ];
