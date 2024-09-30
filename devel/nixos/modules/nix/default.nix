@@ -24,7 +24,7 @@ in
         # - https://github.com/NixOS/nix/issues/2208
         keep-outputs = true;
         keep-derivations = true;
-        allow-import-from-derivation = false;
+        # allow-import-from-derivation = false;
         sandbox = true; # newer
         allowed-users = [ "@wheel" ];
         trusted-users = [ "@wheel" ];
