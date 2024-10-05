@@ -1,7 +1,10 @@
 with import <nixpkgs> { };
 
 mkShell {
-  buildInputs = [ pkgs.curl pkgs.wally-cli ];
+  buildInputs = [
+    pkgs.curl
+    pkgs.wally-cli
+  ];
 
   NIX_LD_LIBRARY_PATH = lib.makeLibraryPath [
     glib

@@ -1,8 +1,22 @@
-{ self, config, lib, pkgs, ... }:
+{
+  self,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   imports = [
-    ./filesystem.nix ./boot.nix ./system.nix ./networking.nix ./gnome.nix ./locale.nix ./arr.nix ../../users/roomies.nix ./vcs.nix
+    ./filesystem.nix
+    ./boot.nix
+    ./system.nix
+    ./networking.nix
+    ./gnome.nix
+    ./locale.nix
+    ./arr.nix
+    ../../users/roomies.nix
+    ./vcs.nix
     { options.programs.gnupg.agent.pinentryPackage = lib.mkOption { type = lib.types.package; }; } # ToDo: remove this when cnsrv not needed
   ];
   roles = {
@@ -13,7 +27,10 @@
     bashbling.enable = true;
     dev.enable = true;
   };
-  users.groups.conserve.members = [ config.users.users.jan.name config.users.users.roomies.name ];
+  users.groups.conserve.members = [
+    config.users.users.jan.name
+    config.users.users.roomies.name
+  ];
 
   environment.systemPackages = import ./packages.nix pkgs;
 

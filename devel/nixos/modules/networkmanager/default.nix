@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.roles.networks;
 in
@@ -27,19 +32,17 @@ in
 
   config = lib.mkIf cfg.enable (
     let
-      networks = builtins.map
-        (x: import x { inherit (cfg) wifi ethernet; })
-        [
-          ./Aragorn.nix
-          ./AsgarD.nix
-          ./Basti27.nix
-          ./Midgard.nix
-          ./NETGEAR.nix
-          ./Ragnar.nix
-          ./cuda-inc.nix
-          ./schregolas.nix
-          ./worklap_ethernet.nix
-        ];
+      networks = builtins.map (x: import x { inherit (cfg) wifi ethernet; }) [
+        ./Aragorn.nix
+        ./AsgarD.nix
+        ./Basti27.nix
+        ./Midgard.nix
+        ./NETGEAR.nix
+        ./Ragnar.nix
+        ./cuda-inc.nix
+        ./schregolas.nix
+        ./worklap_ethernet.nix
+      ];
     in
     {
       assertions = [

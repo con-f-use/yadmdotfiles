@@ -1,2 +1,1 @@
-{ writeScriptBin, ... }:
-writeScriptBin "qda-repos" (builtins.readFile ./qda-repos.sh)
+{ writeScriptBin, ... }: writeScriptBin "qda-repos" (builtins.readFile ./qda-repos.sh)

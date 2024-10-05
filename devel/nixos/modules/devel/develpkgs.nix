@@ -1,5 +1,6 @@
 { pkgs, ... }:
-with pkgs; [
+with pkgs;
+[
   # Essential
   htop
   gnupg
@@ -48,6 +49,9 @@ with pkgs; [
   nix-index
   nixpkgs-review
   nix-tree
+  nix-visualize
+  nix-du
+  # nix-melt # broken
   manix
   nil
   nix-output-monitor
@@ -57,22 +61,24 @@ with pkgs; [
   flakeroot
 
   # Python
-  (python3.withPackages (ps: with ps; [
-    setuptools
-    virtualenv
-    #virtualenv-tools3
-    requests
-    beautifulsoup4
-    pygls
-    #pynvim
-    jedi
-    # python-language-server
-    matplotlib
-    coloredlogs
-    numpy
-    dill
-    #ps.pygrep
-  ]))
+  (python3.withPackages (
+    ps: with ps; [
+      setuptools
+      virtualenv
+      #virtualenv-tools3
+      requests
+      beautifulsoup4
+      pygls
+      #pynvim
+      jedi
+      # python-language-server
+      matplotlib
+      coloredlogs
+      numpy
+      dill
+      #ps.pygrep
+    ]
+  ))
   black
 
   # Rust

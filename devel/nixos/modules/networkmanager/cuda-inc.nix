@@ -1,5 +1,6 @@
 # secrets via: https://search.nixos.org/options?channel=unstable&show=networking.networkmanager.ensureProfiles.environmentFiles&query=networkmanager.ensureProfiles
-{ wifi, ethernet }: {
+{ wifi, ethernet }:
+{
   "cuda-inc" = {
     connection = {
       id = "cuda-inc";

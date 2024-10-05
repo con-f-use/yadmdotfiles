@@ -1,5 +1,6 @@
 # secrets via: https://search.nixos.org/options?channel=unstable&show=networking.networkmanager.ensureProfiles.environmentFiles&query=networkmanager.ensureProfiles
-{ wifi, ethernet }: {
+{ wifi, ethernet }:
+{
   "Asgard" = {
     connection = {
       id = "Asgard";
@@ -23,7 +24,6 @@
       addr-gen-mode = "stable-privacy";
       method = "auto";
     };
-    proxy = {
-    };
+    proxy = { };
   };
 }

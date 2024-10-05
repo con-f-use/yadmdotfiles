@@ -32,18 +32,23 @@ in
       fsType = "vfat";
     };
     "/" = {
-      device = id2d "dedcd975-a6f5-4583-8420-1c39d6a6183a";  # root inner
+      device = id2d "dedcd975-a6f5-4583-8420-1c39d6a6183a"; # root inner
       fsType = "ext4";
     };
     "/mnt/Media/Shows" = {
-      device = id2d "e2dc30f5-0bec-464c-a29f-49814f5e9fe3";  # shows inner
+      device = id2d "e2dc30f5-0bec-464c-a29f-49814f5e9fe3"; # shows inner
       fsType = "ext4";
     };
     "/mnt/Media/Movies" = {
-      device = id2d "db1bb22b-f02b-43b3-842b-9006cee84b0f";  # movies inner
+      device = id2d "db1bb22b-f02b-43b3-842b-9006cee84b0f"; # movies inner
       fsType = "ext4";
     };
   };
 
-  swapDevices = [{ device = "/swapfile"; size = 33000; }];
+  swapDevices = [
+    {
+      device = "/swapfile";
+      size = 33000;
+    }
+  ];
 }

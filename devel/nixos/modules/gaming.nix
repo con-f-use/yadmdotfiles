@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 {
 
   options.my.roles.gaming-client = {
@@ -10,13 +15,18 @@
     hardware.pulseaudio.support32Bit = true;
 
     # Firewall ports used by Steam in-home streaming.
-    networking.firewall.allowedTCPPorts = [ 27036 27037 ];
-    networking.firewall.allowedUDPPorts = [ 27031 27036 ];
+    networking.firewall.allowedTCPPorts = [
+      27036
+      27037
+    ];
+    networking.firewall.allowedUDPPorts = [
+      27031
+      27036
+    ];
 
     environment.systemPackages = with pkgs; [
       steam
-      xorg.libxcb #chiaki
+      xorg.libxcb # chiaki
     ];
   };
 }
-

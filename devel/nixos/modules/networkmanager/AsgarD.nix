@@ -24,7 +24,6 @@
       addr-gen-mode = "default";
       method = "auto";
     };
-    proxy = {
-    };
+    proxy = { };
   };
 }

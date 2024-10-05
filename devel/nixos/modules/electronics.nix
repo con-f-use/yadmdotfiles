@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   options.roles.electronics = {
@@ -20,4 +25,3 @@
     ];
   };
 }
-

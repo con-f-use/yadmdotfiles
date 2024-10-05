@@ -48,13 +48,13 @@ for p in map(lambda s: str(s.resolve()), p"~/.local/lib/".glob("python*/site-pac
 for x in {'.config/yadmdotfiles/bin', '.local/bin', 'bin'}:
     $PATH.insert(0, os.path.join($HOME, x))
 $PATH = list(dict.fromkeys(${'PATH'}))
-$PASSWORD_STORE_DIR=f"{$HOME}/.config/password-store/"
+$PASSWORD_STORE_DIR=$HOME+"/.config/password-store/"
 #from xonsh.commands_cache import predict_false
 #__xonsh__.commands_cache.threadable_predictors["more"] = predict_false
 #$UPDATE_OS_ENVIRON = True
 #$XONSH_SHOW_TRACEBACK = True
 $XONSH_TRACEBACK_LOGFILE = '/tmp/xonsh-tracebacks.log'
-$c = f"{$HOME}/.config/yadmdotfiles"
+$c = $HOME + "/.config/yadmdotfiles"
 $VI_MODE=false
 # $THREAD_SUBPROCS = False # remove after https://github.com/xonsh/xonsh/pull/4283
 $XONSH_CAPTURE_INTERACTIVE=false

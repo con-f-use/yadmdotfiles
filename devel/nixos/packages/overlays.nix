@@ -3,9 +3,7 @@
   # Make default contain all other "real" overlays defined here
   default = lib.composeManyExtensions (
     builtins.attrValues (
-      lib.filterAttrs
-        (name: _: name != "default" && name != "pythonLibraries")
-        self.overlays
+      lib.filterAttrs (name: _: name != "default" && name != "pythonLibraries") self.overlays
     )
   );
 
@@ -17,9 +15,6 @@
   pythonLibraries = final: prev: import ./python/default.nix { pkgs = final; };
 
   extendPythonPackages = final: prev: {
-    pythonPackagesExtensions =
-      prev.pythonPackagesExtensions ++ [
-        self.overlays.pythonLibraries
-      ];
+    pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [ self.overlays.pythonLibraries ];
   };
 }
