@@ -48,9 +48,20 @@
   #hardware.opengl.extraPackages = [ pkgs.intel-ocl ];
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
-  services.xserver.libinput.enable = true; # Enable touchpad support.
+  services.libinput.enable = true; # Enable touchpad support.
   services.logind.lidSwitch = "ignore";
   networking.hostId = "f3dc4d2a";
+
+  hardware.pulseaudio.enable = false;  # replaced by pipewire
+  services.pipewire = {
+    enable = true;
+    audio.enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    wireplumber.enable = true;
+    # systemWide = true;
+  };
 
   roles.zfs.enable = true;
   fileSystems."/" =
