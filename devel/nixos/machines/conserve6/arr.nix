@@ -240,7 +240,7 @@ in
 
   # https://thedutch.dev/setup-dynamic-dns-with-ddclient-and-porkbun
   services.ddclient = {
-    enable = true;
+    enable = builtins.trace "ToDo: re-enable ddclient" false;
     # protocol = "porkbun";
     # interval = "9000";  # seconds
     # domains = [ "confus.me" ];

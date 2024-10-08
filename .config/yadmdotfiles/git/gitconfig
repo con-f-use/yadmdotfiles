@@ -27,6 +27,7 @@
     s = status
     st = status
     ci = commit
+    wt = worktree
     b = branch
     co = checkout
     fp = push --force-with-lease origin HEAD

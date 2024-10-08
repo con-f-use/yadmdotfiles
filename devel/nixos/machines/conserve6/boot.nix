@@ -53,6 +53,9 @@
         "/etc/secrets/initrd/ssh_host_ed25519_key"
       ];
     };
-    initrd.preLVMCommands = lib.mkOrder 400 "sleep 5"; # wait for interfaces
+
+    # wait for interfaces and devices to be powered (takes a bit for some usb devs)
+    initrd.preDeviceCommands = lib.mkOrder 400 "sleep 5";
+    initrd.preLVMCommands = lib.mkOrder 400 "sleep 5";
   };
 }

@@ -28,4 +28,5 @@
     wireplumber.enable = true;
     # systemWide = true;
   };
+  hardware.alsa.enablePersistence = builtins.trace "alsa persistence needed?" true;
 }
