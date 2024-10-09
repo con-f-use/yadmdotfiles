@@ -62,6 +62,7 @@
     wget
     wofi
     flameshot
+    unzip  # or stylua vim plugin cannot install O_o
   ];
 
   nixpkgs.config.joypixels.acceptLicense = true;
