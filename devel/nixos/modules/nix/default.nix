@@ -32,6 +32,10 @@ in
         use-xdg-base-directories = true;
         nix-path = "nixpkgs=/etc/nixpkgs";
         flake-registry = "${./registry.json}";
+        extra-trusted-public-keys = [
+          "nixbld.qa.ngdev.eu.ad.cuda-inc.com:gSZJQ+2fKb4FCoUM6KBFWecAe7hgfEzrPu0TLo2s8q0="
+          "qanixer:b7ZREXUdm9DRsmgQ1hrhmc6gxSVa5Uttf2YV20Et5Ts=" 
+        ];
         # URI  ARCHS_COMMASEP  SSH_PRIV_KEY  MAX_PARA_BUILDS  SPEED  FEATURES_SUPPORTED_COMMASEP  FEATURES_REQUIRED_COMMASEP  SSH_HOST_PUB
         builders = lib.mkDefault (
           builtins.concatStringsSep ";" [

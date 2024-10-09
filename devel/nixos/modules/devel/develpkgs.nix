@@ -71,7 +71,7 @@ with pkgs;
       pygls
       #pynvim
       jedi
-      # python-language-server
+      python-lsp-server
       matplotlib
       coloredlogs
       numpy

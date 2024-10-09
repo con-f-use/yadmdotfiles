@@ -38,6 +38,8 @@
 
   time.timeZone = "Europe/Vienna";
 
+  hardware.pulseaudio.enable = false;
+
   services.xserver.enable = true;
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
@@ -48,7 +50,7 @@
 
   # services.printing.enable = true;
 
-  services.xserver.libinput.enable = true;
+  services.libinput.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -60,6 +62,7 @@
     wget
     wofi
     flameshot
+    unzip  # or stylua vim plugin cannot install O_o
   ];
 
   nixpkgs.config.joypixels.acceptLicense = true;
