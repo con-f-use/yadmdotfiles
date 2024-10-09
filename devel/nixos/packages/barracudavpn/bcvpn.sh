@@ -35,7 +35,7 @@ script "$logpath" --append --force --flush --command "
     }
     trap clean_bcvpn EXIT
     clean_bcvpn
-    sudo barracudavpn --verbose --start --config '/home/jan/.config/yadmdotfiles/cuda/barracudavpn' -l 'jbischko' -r '$serverpw'
+    sudo barracudavpn --verbose --start --config '/home/jan/.config/yadmdotfiles/cuda/barracudavpn' -l 'jbischko@barracuda.com' -r '$serverpw'
     if ! grep -Eq 'Tunnel read[y]' '$logpath'; then
         echo 'Error: barracudavpn did not respond with ready tunnel' 1>&2
         exit 1

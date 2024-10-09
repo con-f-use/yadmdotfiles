@@ -143,7 +143,7 @@
 
   services.perswitch.enable = true;
   services.printing.enable = true;
-  # config.services.printing.drivers = [ pkgs.hplipWithPlugin ];  #pkgs.hplip
+  services.printing.drivers = [ pkgs.hplipWithPlugin ];  #pkgs.hplip
   programs.system-config-printer.enable = true;
 
   fileSystems."/" = {
