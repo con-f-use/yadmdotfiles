@@ -37,6 +37,8 @@
     self.inputs.mcomnix.legacyPackages.${pkgs.system}.mcomix
   ];
 
+  veil.machineName = "conix";
+
   # ToDo: This is a dirty hack so I can merge this with unfrees from other modles
   # no idea how to do it properly.
   allowUnfreePackages = [

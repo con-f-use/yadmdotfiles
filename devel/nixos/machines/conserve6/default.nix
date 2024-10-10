@@ -19,6 +19,7 @@
     ./vcs.nix
     { options.programs.gnupg.agent.pinentryPackage = lib.mkOption { type = lib.types.package; }; } # ToDo: remove this when cnsrv not needed
   ];
+
   roles = {
     essentials = {
       enable = true;
@@ -27,6 +28,14 @@
     bashbling.enable = true;
     dev.enable = true;
   };
+
+  veil.mainIP = "192.168.1.18";
+  veil.machineName = "conserve6";
+  veil.secrets.yt = {
+    target = "/etc/secrets/yt/teo.conserve@gmail.com";
+    script = "gopass show -o web/accounts.google.com/teo.conserv@gmail.com";
+  };
+
   users.groups.conserve.members = [
     config.users.users.jan.name
     config.users.users.roomies.name

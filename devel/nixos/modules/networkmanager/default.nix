@@ -57,6 +57,10 @@ in
       ];
       networking.networkmanager.ensureProfiles.profiles = builtins.foldl' (acc: x: acc // x) { } networks;
       networking.networkmanager.ensureProfiles.environmentFiles = builtins.trace "Files ${toString cfg.environmentFiles}" cfg.environmentFiles;
+      veil.secrets.networkmanager = {
+        target = builtins.elemAt cfg.environmentFiles 0;  # ToDo: treat them all
+        script = "gopass show Infrastructure/networkmanager";
+      };
     }
   );
 }

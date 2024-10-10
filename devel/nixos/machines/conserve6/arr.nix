@@ -1,10 +1,10 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
+{ config
+, lib
+, pkgs
+, ...
 }:
 let
+  ddclientSecretLocation = "/etc/secrets/ddclient/ddclient.conf";
   transmissionSecretLocation = "/etc/secrets/transmission/transmission_secrets.json";
   transmissionDownloadPath = "/mnt/Media/Downloads";
   transmissionIncompletePath = "${transmissionDownloadPath}/.incomplete";
@@ -18,8 +18,8 @@ let
   webhome = "/var/www/html";
 
   tls-cert =
-    {
-      alt ? [ ],
+    { alt ? [ ]
+    ,
     }:
     builtins.trace
       "WARNING: tls-cert ends up in the nix store (world readable) & will change on every evaluation!"
@@ -127,10 +127,16 @@ in
 
       target=''${1:?Need target as first argument}
       shift
-      TR_AUTH="transmissionrpc:$(${lib.getExe pkgs.jq} -r '."rpc-password"' /etc/secrets/transmission/transmission_secrets.json)" \
+      TR_AUTH="transmissionrpc:$(${lib.getExe pkgs.jq} -r '."rpc-password"' '${transmissionSecretLocation}')" \
           transmission-remote 127.0.0.1 --authenv --add "$target"
     '')
   ];
+
+  veil.secrets.transmission = {
+    target = transmissionSecretLocation;
+    script = "gopass show Infrastructure/conserve6_transmission";
+    group = "conserve";
+  };
 
   systemd.tmpfiles.rules = [
     "z ${transmissionSecretLocation} 0440 root conserve"
@@ -245,7 +251,12 @@ in
     # interval = "9000";  # seconds
     # domains = [ "confus.me" ];
     # passwordFile = "/etc/secrets/ddclient/ddclient.conf";  # really a conf file with `apikey=...` and `secretapikey=...`
-    configFile = "/etc/secrets/ddclient/ddclient.conf";
+    configFile = ddclientSecretLocation;
+  };
+
+  veil.secrets.ddclient = {
+    target = ddclientSecretLocation;
+    script = "gopass show Infrastructure/conserve6_ddclient";
   };
 
   security.acme.acceptTerms = true;
