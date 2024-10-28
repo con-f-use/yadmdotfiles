@@ -4,7 +4,6 @@
   nixpkgs.hostPlatform = "x86_64-linux";
   nixpkgs.config.allowUnfree = true;
   hardware.enableAllFirmware = true;
-  boot.blacklistedKernelModules = [ "snd_hda_intel" "snd_soc_skl" ];  # might solve sound issues
   hardware.cpu.intel.updateMicrocode = true;
 
   security.rtkit.enable = true;

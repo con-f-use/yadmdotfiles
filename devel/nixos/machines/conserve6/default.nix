@@ -1,3 +1,5 @@
+# Last gen with somewhat working sound was the first gen BEFORE Okt. 28 2024
+
 {
   self,
   config,
