@@ -5,6 +5,9 @@
 , inputs
 , ...
 }:
+let
+  mocondat = pkgs.writeScriptBin "mocondat" ''sudo cryptsetup luksOpen /dev/disk/by-uuid/bcca372b-f99a-41f1-8a86-c9431a3cee78 crydat1 --key-file=/home/jan/.cry-con/cry-con-dat; sudo mount -o defaults,users /dev/mapper/crydat1 /media/condat1/'';
+in
 {
   system.nixos.tags = [ "conix-305" ];
   roles = {
@@ -31,7 +34,7 @@
   users.users.root.openssh.authorizedKeys.keys = config.users.users.jan.openssh.authorizedKeys.keys;
   environment.systemPackages = with pkgs; [
     gst_all_1.gstreamer
-    (pkgs.writeScriptBin "mocondat" ''sudo cryptsetup luksOpen /dev/disk/by-uuid/bcca372b-f99a-41f1-8a86-c9431a3cee78 crydat1 --key-file=/home/jan/.cry-con/cry-con-dat; sudo mount -o defaults,users /dev/mapper/crydat1 /media/condat1/'')
+    mocondat
     pamixer
     alejandra
     self.inputs.mcomnix.legacyPackages.${pkgs.system}.mcomix
@@ -145,7 +148,7 @@
 
   services.perswitch.enable = true;
   services.printing.enable = true;
-  services.printing.drivers = [ pkgs.hplipWithPlugin ];  #pkgs.hplip
+  services.printing.drivers = [ pkgs.hplipWithPlugin ]; #pkgs.hplip
   programs.system-config-printer.enable = true;
 
   fileSystems."/" = {
@@ -176,6 +179,13 @@
     #  #device = "4c5e5e6c-01";
     #  #randomEncryption.enable = true;
     #}
+  ];
+
+  security.sudo.extraRules = [
+    {
+      users = [ "jan" ];
+      commands = [{ command = "${mocondat}/bin/mocondat"; options = [ "NOPASSWD" ]; }];
+    }
   ];
 
   system.stateVersion = "21.11";

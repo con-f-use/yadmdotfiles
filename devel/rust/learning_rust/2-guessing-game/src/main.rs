@@ -5,7 +5,7 @@ use rand::Rng;  // `cargo doc --open` gives docs on everything you use
 
 fn main() {
     //! A small guessing game with an attitude
-    println!("Guess the number, yo! Is integer beween 0 and 100!");
+    println!("Guess the number, yo! Is integer beween 0 and 10!");
 
     print!("Gimme ya guess, brah <-- ");
     io::stdout().flush().unwrap();

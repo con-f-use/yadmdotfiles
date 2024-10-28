@@ -57,10 +57,10 @@
 
   veil.secrets.host_rsa = {
     target = "/etc/secrets/initrd/ssh_host_ed25519_key";
-    script = "gopass show Infrastrucutre/conserve6_rsa";
+    script = "gopass show Infrastructure/conserve6_ed";
   };
   veil.secrets.host_ed = {
     target = "/etc/secrets/initrd/ssh_host_rsa_key";
-    script = "gopass show Infrastrucutre/conserve6_ed";
+    script = "gopass show Infrastructure/conserve6_rsa";
   };
 }
