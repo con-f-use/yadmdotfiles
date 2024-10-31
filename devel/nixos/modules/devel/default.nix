@@ -1,10 +1,9 @@
-{
-  self,
-  config,
-  lib,
-  pkgs,
-  inputs,
-  ...
+{ self
+, config
+, lib
+, pkgs
+, inputs
+, ...
 }:
 {
 
@@ -49,6 +48,7 @@
     };
 
     services.envfs.enable = true;
+    environment.variables.ENVFS_RESOLVE_ALWAYS = "1";
 
     programs.nix-ld = {
       enable = true;

@@ -40,9 +40,9 @@ in
         builders = lib.mkDefault (
           builtins.concatStringsSep ";" [
             "ssh-ng://nixbuilder@10.17.6.60 x86_64-linux /root/.ssh/id_rsa 4 10 big-parallel,kvm,nixos-test,benchmark - c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUNIMk1WSHUrV1lOeHpsWUFJMXRWdzd3OWhjNHRSbXhyY2xZbjc0ZUlheW8="
-            "ssh://nixbuilder@nixbld01.qa.ngdev.eu.ad.cuda-inc.com x86_64-linux /etc/nix/nixbuilder 2 1 big-parallel,kvm,nixos-test,benchmark - c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUNaeWNKQUlHMWJ1WWYrcEplNklDL2lHaFJZejJ1UXZUb1lleHh2VzhsS2k="
-            "ssh://nixbuilder@nixbld02.qa.ngdev.eu.ad.cuda-inc.com x86_64-linux /etc/nix/nixbuilder 2 1 big-parallel,kvm,nixos-test,benchmark - c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUMzWmh2V2hkWTIxREVtYjdMWFdaM1dOclBaRUxZMzNPN3FSNlNhOXRJWGw="
-            "ssh://nixbuilder@nixbld03.qa.ngdev.eu.ad.cuda-inc.com x86_64-linux /etc/nix/nixbuilder 2 1 big-parallel,kvm,nixos-test,benchmark - c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUtBbFVVYWVmN0tIQ2JqRWFVR1FKdDg3N1ViVDRDOTFPYk55WjVRbXo5Y00="
+            "ssh://nixbuilder@nixbld01.qa.ngdev.eu.ad.cuda-inc.com x86_64-linux ${config.veil.secrets.nixbuild.target} 2 1 big-parallel,kvm,nixos-test,benchmark - c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUNaeWNKQUlHMWJ1WWYrcEplNklDL2lHaFJZejJ1UXZUb1lleHh2VzhsS2k="
+            "ssh://nixbuilder@nixbld02.qa.ngdev.eu.ad.cuda-inc.com x86_64-linux ${config.veil.secrets.nixbuild.target} 2 1 big-parallel,kvm,nixos-test,benchmark - c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUMzWmh2V2hkWTIxREVtYjdMWFdaM1dOclBaRUxZMzNPN3FSNlNhOXRJWGw="
+            "ssh://nixbuilder@nixbld03.qa.ngdev.eu.ad.cuda-inc.com x86_64-linux ${config.veil.secrets.nixbuild.target} 2 1 big-parallel,kvm,nixos-test,benchmark - c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUtBbFVVYWVmN0tIQ2JqRWFVR1FKdDg3N1ViVDRDOTFPYk55WjVRbXo5Y00="
           ]
         );
         builders-use-substitutes = true;
@@ -67,6 +67,11 @@ in
       "programs.sqlite".source = self.inputs.programsdb.packages.${pkgs.system}.programs-sqlite;
       nixpkgs.source = pkgs.path;
       "source-${toString rev}".source = self; # system.copySystemConfiguration = true # for non-flake
+    };
+
+    veil.secrets.nixbuild = {
+      target = "/etc/nix/nixbuilder";
+      script = "gopass show Cuda/nixbuilder";
     };
 
     system.configurationRevision = toString rev;

@@ -12,6 +12,7 @@
   perswitch = import ./perswitch.nix;
   sane = import ./sane.nix;
   unfreepackages = import ./unfreepackages.nix;
+  veil = import ./veil;
   virt = import ./virt.nix;
   windowed = import ./windowed.nix;
   workstation = import ./workstation;

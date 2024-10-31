@@ -18,6 +18,7 @@ print('.'.join( '10.17.70.10'.split('.')[:4-len(comps)] + comps))
     " 2>/dev/null || echo "$host")
     echo "host: '$host'"
     ssh_cmd=$(command -v sshrc &>/dev/null && echo 'sshrc' || echo 'ssh')
+    ssh_cmd=ssh;  # Don't have an rc to copy atm
     ssh_cmd="$ssh_cmd -t -l root -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ServerAliveInterval=60 -o PreferredAuthentications=password"
     RC=5
     for pw in a ngf1r3wall kr1schnatz qa a12345 '$a12345!' f1r3wall 'A12345!' Passw0rd SIPsucks.1; do

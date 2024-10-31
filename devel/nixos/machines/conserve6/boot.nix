@@ -1,8 +1,7 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
+{ config
+, lib
+, pkgs
+, ...
 }:
 {
   boot = {
@@ -48,14 +47,20 @@
       ssh.enable = true;
       ssh.port = 3022;
       ssh.authorizedKeys = config.users.users.jan.openssh.authorizedKeys.keys;
-      ssh.hostKeys = [
-        "/etc/secrets/initrd/ssh_host_rsa_key"
-        "/etc/secrets/initrd/ssh_host_ed25519_key"
-      ];
+      ssh.hostKeys = with config.veil.secrets; [ host_rsa.target host_ed.target ];
     };
 
     # wait for interfaces and devices to be powered (takes a bit for some usb devs)
     initrd.preDeviceCommands = lib.mkOrder 400 "sleep 5";
     initrd.preLVMCommands = lib.mkOrder 400 "sleep 5";
+  };
+
+  veil.secrets.host_rsa = {
+    target = "/etc/secrets/initrd/ssh_host_ed25519_key";
+    script = "gopass show Infrastructure/conserve6_ed";
+  };
+  veil.secrets.host_ed = {
+    target = "/etc/secrets/initrd/ssh_host_rsa_key";
+    script = "gopass show Infrastructure/conserve6_rsa";
   };
 }

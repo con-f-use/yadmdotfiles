@@ -1,4 +1,5 @@
 {
+  self,
   config,
   lib,
   pkgs,
@@ -167,7 +168,7 @@
       sxiv
       flameshot
       kazam
-      # mcomix #zathura # ToDo: Broken in pkgs because of pymupdf
+      self.inputs.mcomnix.legacyPackages.${pkgs.system}.mcomix
       rar # needed by mcomix for cbr support
       v4l-utils
 
