@@ -76,7 +76,7 @@ flakeroot() {
   while [[ ! -f "${flakeroot=$PWD}/flake.nix" && -d "$flakeroot" ]]; do
       flakeroot=${flakeroot%/*}
   done
-  echo "$flakeroot"
+  echo "$(readlink -f "$flakeroot")"
 }
 
 
@@ -85,7 +85,7 @@ if [ "$0" = "${BASH_SOURCE[0]}" ]; then
   shift
   machine=${1:?Need a target machine as second argument}
   shift
-  ${DEBUG:+set -o xtrace}
+  set -o errexit -o pipefail -o nounset ${DEBUG:+-o xtrace}
   data "$machine"
   veil:"$cmd" "$@"
 fi
