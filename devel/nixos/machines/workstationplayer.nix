@@ -6,7 +6,11 @@
 , ...
 }:
 let
-  mocondat = pkgs.writeScriptBin "mocondat" ''sudo cryptsetup luksOpen /dev/disk/by-uuid/bcca372b-f99a-41f1-8a86-c9431a3cee78 crydat1 --key-file=/home/jan/.cry-con/cry-con-dat; sudo mount -o defaults,users /dev/mapper/crydat1 /media/condat1/'';
+  mocondat = pkgs.writeScriptBin "mocondat" ''
+    gopass show -o Infrastructure/janwp | sudo -S
+    sudo cryptsetup luksOpen /dev/disk/by-uuid/bcca372b-f99a-41f1-8a86-c9431a3cee78 crydat1 --key-file=/home/jan/.cry-con/cry-con-dat
+    sudo mount -o defaults,users /dev/mapper/crydat1 /media/condat1/
+  '';
 in
 {
   system.nixos.tags = [ "conix-305" ];
@@ -31,6 +35,7 @@ in
       use_builders = true;
     };
   };
+  services.envfs.enable = lib.mkForce true;  # ToDo: remove this
   users.users.root.openssh.authorizedKeys.keys = config.users.users.jan.openssh.authorizedKeys.keys;
   environment.systemPackages = with pkgs; [
     gst_all_1.gstreamer

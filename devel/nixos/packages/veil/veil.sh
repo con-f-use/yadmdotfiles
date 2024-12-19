@@ -57,6 +57,16 @@ veil:push() {
 }
 
 
+veil:deploy() {
+  sudo nixos-rebuild \
+    --option 'extra-experimental-features' 'nix-command flakes' \
+    --builders '' \
+    --target-host "$VEIL_REMOTE_USER@$VEIL_TARGET_HOST" \
+    "$@" \
+    "$(flakeroot)/#$machine"
+}
+
+
 veil:unlock() {
   target="ssh://root@$VEIL_TARGET_HOST:3022"
   gopass show -o "Infrastructure/$machine" |
