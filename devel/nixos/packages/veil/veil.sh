@@ -23,6 +23,11 @@ veil:data() {
 }
 
 
+veil:machines() {
+  nix eval "$(flakeroot)/#nixosConfigurations" --apply 'builtins.attrNames' --json |
+    jq -r '.[]'
+}
+
 veil:push() {
   to_clean=()
   while IFS= read -r -d $'\0' d <&3; do
@@ -93,6 +98,10 @@ flakeroot() {
 if [ "$0" = "${BASH_SOURCE[0]}" ]; then
   cmd=${1:?Need an action to perform as first argument (push, unlock)}
   shift
+  if [ "$cmd" = "machines" ]; then
+    veil:"$cmd" "$@"
+    exit
+  fi
   machine=${1:?Need a target machine as second argument}
   shift
   set -o errexit -o pipefail -o nounset ${DEBUG:+-o xtrace}
