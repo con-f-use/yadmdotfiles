@@ -42,6 +42,8 @@ with pkgs;
   # ungoogled-chromium # in unstable!
 
   gparted
+  pciutils
+  transmission-gtk
 
   # Nix
   nix-prefetch-scripts

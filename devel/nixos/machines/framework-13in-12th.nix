@@ -1,11 +1,10 @@
-{
-  config,
-  lib,
-  pkgs,
-  inputs,
-  nixrepo,
-  modulesPath,
-  ...
+{ config
+, lib
+, pkgs
+, inputs
+, nixrepo
+, modulesPath
+, ...
 }:
 {
   roles = {
@@ -65,11 +64,17 @@
   #hardware.opengl.extraPackages = [ pkgs.intel-ocl ];
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
+  services.printing.enable = true;
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+  };
   services.libinput.enable = true; # Enable touchpad support.
   services.logind.lidSwitch = "ignore";
   networking.hostId = "f3dc4d2a";
 
-  hardware.pulseaudio.enable = false;  # replaced by pipewire
+  hardware.pulseaudio.enable = false; # replaced by pipewire
   services.pipewire = {
     enable = true;
     audio.enable = true;
@@ -104,8 +109,5 @@
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.enableAllFirmware = true;
-  # hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   hardware.cpu.intel.updateMicrocode = true;
 }
-
-#lrwxrwxrwx 1 root root 15 Aug 21 23:38  -> ../../nvme0n1p1
