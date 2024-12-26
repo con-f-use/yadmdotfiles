@@ -8,7 +8,7 @@
   essential = import ./essential.nix;
   gaming = import ./gaming.nix;
   network = import ./networkmanager;
-  nixnix = import ./nix;
+  nix = import ./nix;
   perswitch = import ./perswitch.nix;
   sane = import ./sane.nix;
   unfreepackages = import ./unfreepackages.nix;
