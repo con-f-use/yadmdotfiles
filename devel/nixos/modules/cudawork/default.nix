@@ -1,8 +1,7 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
+{ config
+, lib
+, pkgs
+, ...
 }:
 let
 
@@ -100,6 +99,13 @@ in
       (lib.mkIf config.services.xserver.enable {
         environment.systemPackages = with pkgs; [
           zoom-us
+          # (zoom-us.overrideAttrs {
+          #   version = "6.3.5.6065";
+          #   src = pkgs.fetchurl {
+          #     url = "https://zoom.us/client/6.3.5.6065/zoom_x86_64.pkg.tar.xz";
+          #     hash = "sha256-JOkQsiYWcVq3LoMI2LyMZ1YXBtiAf612T2bdbduqry8=";
+          #   };
+          # })
           slack
           robo3t
         ];

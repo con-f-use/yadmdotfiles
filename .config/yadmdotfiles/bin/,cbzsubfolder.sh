@@ -38,7 +38,7 @@ main() {
 
             cbzname=$(basename "$dir")
             bla=$(basename "$(dirname "$dir")")
-            grep -iqE '^(gallery|issue|part|vol|volume|extra|extras|artwork|no text|comic|color|covers)' <<< "$cbzname" && cbzname="$bla-$cbzname"
+            grep -iqE '^(bonus|gallery|issue|part|vol|volume|extra|extras|artwork|no.text|comic|color|covers)' <<< "$cbzname" && cbzname="$bla-$cbzname"
             cbzname=$(sed 's/ /_/g' <<< "$cbzname")
             create_cbzs "$dir" "$dir/../$cbzname.cbz" "$*"
 

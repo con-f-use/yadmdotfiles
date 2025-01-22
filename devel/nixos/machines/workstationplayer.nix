@@ -7,7 +7,7 @@
 }:
 let
   mocondat = pkgs.writeScriptBin "mocondat" ''
-    gopass show -o Infrastructure/janwp | sudo -S
+    gopass show -o Infrastructure/janpw | sudo -S
     sudo cryptsetup luksOpen /dev/disk/by-uuid/bcca372b-f99a-41f1-8a86-c9431a3cee78 crydat1 --key-file=/home/jan/.cry-con/cry-con-dat
     sudo mount -o defaults,users /dev/mapper/crydat1 /media/condat1/
   '';
@@ -140,7 +140,7 @@ in
     package = config.boot.kernelPackages.nvidiaPackages.legacy_535;
   };
 
-  hardware.pulseaudio.enable = false; # replaced by pipewire
+  services.pulseaudio.enable = false; # replaced by pipewire
   services.pipewire = {
     enable = true;
     audio.enable = true;
