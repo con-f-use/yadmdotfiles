@@ -36,7 +36,7 @@ let
       );
   certout = tls-cert {
     alt = [
-      "IP:192.168.1.18"
+      "IP:${config.veil.mainIP}"
       "DNS:*.confus.me"
       "DNS:*.conserve.dynu.net"
     ];
@@ -163,7 +163,7 @@ in
         "${secondary}" = {
           forceSSL = true;
           # enableACME = true;
-          serverAliases = [ "192.168.1.18" ];
+          serverAliases = [ "${config.veil.mainIP}" ];
           default = true;
 
           locations = {

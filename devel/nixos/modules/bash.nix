@@ -122,6 +122,8 @@
       fira-code-symbols
       proggyfonts
       joypixels
+      nerd-fonts.fira-code
+      nerd-fonts.fira-mono
     ];
 
     nixpkgs.config.joypixels.acceptLicense = true;

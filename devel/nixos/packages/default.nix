@@ -1,7 +1,7 @@
-{ pkgs, ... }:
+{ self, pkgs, ... }:
 {
   barracudavpn = pkgs.callPackage ./barracudavpn { };
-  conservetool = pkgs.callPackage ./conservetool { };
+  conservetool = pkgs.callPackage ./conservetool { conserveIP = self.nixosConfigurations.conserve.config.veil.mainIP; };
   qda-repos = pkgs.callPackage ./qda-repos { };
   flakeroot = pkgs.callPackage ./flakeroot { };
   veil = pkgs.callPackage ./veil { };

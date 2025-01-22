@@ -177,6 +177,7 @@
       kitty
 
       zathura
+      marktext
     ];
 
   };
