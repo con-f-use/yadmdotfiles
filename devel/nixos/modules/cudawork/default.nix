@@ -130,26 +130,26 @@ in
         };
 
         nix.buildMachines =
-          builtins.map
+          (builtins.map
             (idx: {
               hostName = "nixbld0${toString idx}.qa.ngdev.eu.ad.cuda-inc.com";
               system = "x86_64-linux";
               maxJobs = 2;
               speedFactor = 1;
-              supportedFeatures = [
-                "big-parallel"
-                "kvm"
-                "nixos-test"
-                "benchmark"
-              ];
+              supportedFeatures = [ "big-parallel" "kvm" "nixos-test" "benchmark" ];
               sshUser = "nixbuilder";
               sshKey = "/etc/${nixbuilderkeypath}";
             })
-            [
-              1
-              2
-              3
-            ];
+            [ 1 2 3 ]
+          ) ++ [{
+            hostName = "10.17.6.60";
+            system = "x86_64-linux";
+            maxJobs = 2;
+            speedFactor = 1;
+            supportedFeatures = [ "big-parallel" "kvm" "nixos-test" "benchmark" ];
+            sshUser = "nixbuilder";
+            sshKey = "/root/.ssh/id_rsa";
+          }];
 
         nix.distributedBuilds = true;
         nix.extraOptions = ''builders-use-substitutes = true'';
