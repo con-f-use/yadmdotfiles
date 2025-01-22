@@ -39,6 +39,7 @@
   time.timeZone = "Europe/Vienna";
 
   services.pulseaudio.enable = false;
+  services.flatpak.enable = true;
 
   services.xserver.enable = true;
   services.xserver.displayManager.gdm.enable = true;
