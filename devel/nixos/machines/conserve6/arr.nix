@@ -16,35 +16,6 @@ let
   primary = "confus.me";
   secondary = "conserve.dynu.net";
   webhome = "/var/www/html";
-
-  tls-cert =
-    { alt ? [ ]
-    ,
-    }:
-    builtins.trace
-      "WARNING: tls-cert ends up in the nix store (world readable) & will change on every evaluation!"
-      (
-        pkgs.runCommand "selfSignedCert" { buildInputs = [ pkgs.openssl ]; } ''
-          mkdir -p $out
-          openssl req -x509 -newkey ec -pkeyopt ec_paramgen_curve:secp384r1 -days 365 -nodes \
-            -keyout $out/cert.key -out $out/cert.crt \
-            -subj "/CN=localhost" \
-            -addext "subjectAltName=DNS:localhost,${
-              builtins.concatStringsSep "," ([ "IP:127.0.0.1" ] ++ alt)
-            }"
-        ''
-      );
-  certout = tls-cert {
-    alt = [
-      "IP:${config.veil.mainIP}"
-      "DNS:*.confus.me"
-      "DNS:*.conserve.dynu.net"
-    ];
-  };
-  crtcfg = {
-    sslCertificate = "${certout}/cert.crt";
-    sslCertificateKey = "${certout}/cert.key";
-  };
 in
 {
   services.jellyfin = {
@@ -161,8 +132,8 @@ in
       virtualHosts = {
 
         "${primary}" = {
-          forceSSL = false;
-          addSSL = true;
+          forceSSL = true;
+          # addSSL = true;
           enableACME = true;
           # serverAliases = [ "${config.veil.mainIP}" ];
           default = true;
