@@ -18,6 +18,7 @@
     ./arr.nix
     ../../users/roomies.nix
     ./vcs.nix
+    self.inputs.mothershipper.nixosModules.mothershipper
     { options.programs.gnupg.agent.pinentryPackage = lib.mkOption { type = lib.types.package; }; } # ToDo: remove this when cnsrv not needed
   ];
 

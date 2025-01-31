@@ -160,10 +160,11 @@ in
     let
       virtualHosts = {
 
-        "${secondary}" = {
-          forceSSL = true;
-          # enableACME = true;
-          serverAliases = [ "${config.veil.mainIP}" ];
+        "${primary}" = {
+          forceSSL = false;
+          addSSL = true;
+          enableACME = true;
+          # serverAliases = [ "${config.veil.mainIP}" ];
           default = true;
 
           locations = {
@@ -213,10 +214,11 @@ in
               # '';
             };
 
+            "^~ /mothershipper".proxyPass = "http://127.0.0.1:9280";
             # ToDo: factor out html root
             "/".root = webhome;
           };
-        } // crtcfg;
+        }; # // crtcfg;
 
       }; # end: virtualHosts;
     in
@@ -234,9 +236,9 @@ in
       recommendedTlsSettings = true;
 
       virtualHosts = virtualHosts // {
-        # "${primary}" = virtualHosts."${secondary}"; # ToDo: move when refactoring html root
-        #   "transmission.${primary}" = virtualHosts."transmission.${secondary}";
-        #   "jelly.${primary}" = virtualHosts."jelly.${secondary}";
+        # "${secondary}" = virtualHosts."${primary}"; # ToDo: move when refactoring html root
+        #   "transmission.${secondary}" = virtualHosts."transmission.${primary}";
+        #   "jelly.${secondar}" = virtualHosts."jelly.${primary}";
       };
     };
   networking.firewall.allowedTCPPorts = [
@@ -246,7 +248,7 @@ in
 
   # https://thedutch.dev/setup-dynamic-dns-with-ddclient-and-porkbun
   services.ddclient = {
-    enable = builtins.trace "ToDo: re-enable ddclient" false;
+    enable = true;
     # protocol = "porkbun";
     # interval = "9000";  # seconds
     # domains = [ "confus.me" ];
@@ -260,7 +262,13 @@ in
   };
 
   security.acme.acceptTerms = true;
-  # security.acme.certs = {
+  security.acme.defaults.dnsProvider = "porkbun";
+  security.acme.defaults.email = mail;
+  security.acme.defaults.credentialFiles = {
+    PORKBUN_API_KEY_FILE = "/etc/secrets/letsencrypt/api_key";
+    PORKBUN_SECRET_API_KEY_FILE = "/etc/secrets/letsencrypt/secret_api_key";
+  };
+  security.acme.certs = {
   #   "${secondary}".email = mail;
   #   "trasmission.${secondary}".email = mail;
   #   "jelly.${secondary}".email = mail;
@@ -268,12 +276,12 @@ in
   #   "radarr.${secondary}".email = mail;
   #   "lidarr.${secondary}".email = mail;
   #   "prowlarr.${secondary}".email = mail;
-  #   "${primary}".email = mail;
-  #   "transmission.${primary}".email = mail;
-  #   "jelly.${primary}".email = mail;
-  #   "sonarr.${primary}".email = mail;
-  #   "radarr.${primary}".email = mail;
-  #   "lidarr.${primary}".email = mail;
-  #   "prowlarr.${primary}" .email = mail;
-  # };
+    "${primary}".email = mail;
+    "transmission.${primary}".email = mail;
+    "jelly.${primary}".email = mail;
+    "sonarr.${primary}".email = mail;
+    "radarr.${primary}".email = mail;
+    "lidarr.${primary}".email = mail;
+    "prowlarr.${primary}" .email = mail;
+  };
 }

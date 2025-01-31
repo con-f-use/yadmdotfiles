@@ -43,7 +43,8 @@ in
     mocondat
     pamixer
     alejandra
-    self.inputs.mcomnix.legacyPackages.${pkgs.system}.mcomix
+    # self.inputs.mcomnix.legacyPackages.${pkgs.system}.mcomix
+    mcomix
     transmission_4-gtk
   ];
 
