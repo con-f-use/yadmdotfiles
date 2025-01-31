@@ -7,13 +7,14 @@
 }:
 let
   mocondat = pkgs.writeScriptBin "mocondat" ''
-    gopass show -o Infrastructure/janpw | sudo -S
+    gopass show -o Infrastructure/janpw | sudo -S true
+    sleep .5
     sudo cryptsetup luksOpen /dev/disk/by-uuid/bcca372b-f99a-41f1-8a86-c9431a3cee78 crydat1 --key-file=/home/jan/.cry-con/cry-con-dat
     sudo mount -o defaults,users /dev/mapper/crydat1 /media/condat1/
   '';
 in
 {
-  system.nixos.tags = [ "conix-305" ];
+  #system.nixos.tags = [ "conix-305" ];
   roles = {
     essentials = {
       enable = true;
@@ -43,6 +44,7 @@ in
     pamixer
     alejandra
     self.inputs.mcomnix.legacyPackages.${pkgs.system}.mcomix
+    transmission_4-gtk
   ];
 
   veil.machineName = "conix";
@@ -91,13 +93,7 @@ in
   boot.extraModulePackages = [ ];
   # networking.interfaces.ens33.useDHCP = true;
   networking.hostId = "1c47b078";
-  networking.hosts = {
-    "192.168.1.10" = [
-      "confus.me"
-      "conserve"
-      "conserve.dynu.net"
-    ];
-  };
+  # networking.hosts = { "192.168.1.10" = [ "confus.me" "conserve" "conserve.dynu.net" ]; };
   #console.font = "latarcyrheb-sun32";  # larger bootmode fonts
   #boot.loader.systemd-boot.consoleMode = lib.mkDefault "max";
   #hardware.video.hidpi.enable = true;
@@ -151,6 +147,12 @@ in
     # systemWide = true;
   };
 
+  # services.flatpak.enable = true;
+  # xdg.portal = {
+  #   enable = true;
+  #   extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
+  #   config.common.default = "gtk";
+  # };
   services.perswitch.enable = true;
   services.printing.enable = true;
   services.printing.drivers = [ pkgs.hplipWithPlugin ]; #pkgs.hplip
