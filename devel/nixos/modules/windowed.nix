@@ -164,7 +164,8 @@
       sxiv
       flameshot
       kazam
-      self.inputs.mcomnix.legacyPackages.${pkgs.system}.mcomix
+      # self.inputs.mcomnix.legacyPackages.${pkgs.system}.mcomix
+      mcomix
       rar # needed by mcomix for cbr support
       v4l-utils
 
