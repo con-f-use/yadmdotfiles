@@ -64,6 +64,7 @@
     wofi
     flameshot
     unzip  # or stylua vim plugin cannot install O_o
+    mpv
   ];
 
   nixpkgs.config.joypixels.acceptLicense = true;

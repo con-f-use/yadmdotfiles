@@ -37,6 +37,9 @@ with pkgs;
   bat
   lnav
   libtool
+  wakeonlan
+  nvme-cli
+  pciutils
   #texlive.combined.scheme-medium
   # (texlive.combine { inherit (texlive) scheme-medium xargs bigfoot moderncv lipsum footmisc multibib soul; })
   # ungoogled-chromium # in unstable!

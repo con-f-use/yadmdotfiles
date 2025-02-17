@@ -1,39 +1,53 @@
 #!/usr/bin/env bash
-# Install script helper for NixOs distribution.
-#
-# Author: con-f-use (at gmx net)
-# Date: 24.06.2020
+description="
+Install script helper for NixOs distribution.
+
+Author: con-f-use (at gmx net)
+Date: 24.06.2020
+
+Commands:
+"
 
 export EDITOR=$(which vim)
-export DISK=/dev/disk/by-id/
-ls /dev/disk/by-id/ # !!bash to view list of suggestions in vim
-export middle='-part'
 export SUDO="sudo"
 
 log() { echo "$@" 1>&2; }
+regf() { description+="  $*\n"; }
 
 echo "Functions defined in ${BASH_SOURCE}:"
 
-echo partition
-partition() {
+regf main " <disk> - prepare system for installation"
+cnfs:main() {
+    cnfs:partition "$1"
+    cnfs:mount
+    cnfs:config
+}
+
+regf partition " <disk> - partition given disk with a basic encrypted zfs setup"
+cnfs:partition() {
     echo 'Always use the by-id aliases, otherwise ZFS can choke on imports:'
     echo '  /dev/disk/by-id/...'
+    ls /dev/disk/by-id/ # !!bash to view list of suggestions in vim
     export DISK=${1:?Please give name of disk to partition (DISK=$DISK) - DANGER!}
     [ -b "$(realpath "$DISK")" ] || { echo "Error: no such disk '$DISK'."; return 1; }
-    if grep -q /by-id/ <<< "$DISK"; then
-        export middle='-part'
-    fi
     if [ -z "${noencryption:-}" ]; then
         encryptionflags=" -O encryption=on -O keyformat=passphrase"
     fi
 
     log "# PARTITIONING ${DISK}"
-    # mkpart primary linux-swap 1GiB 9GiB
     "$SUDO" parted --script "${DISK}" -- \
         mklabel gpt \
-        mkpart esp fat32 1MiB 1GiB \
+        \
+        mkpart primary 1MB 3MB \
+        name 1 grub \
+        set 1 bios_grub on \
+        \
+        mkpart esp fat32 3MiB 1GiB \
+        name 2 boot \
+        set 2 boot on \
+        \
         mkpart primary 1GiB 100% \
-        set 1 boot on
+        name 3 system
     log "Giving the system a little time to acclimate..."
     sleep 7
 
@@ -44,10 +58,10 @@ partition() {
         -O compression=on \
         -O mountpoint=none \
         rpool \
-        "${DISK}${middle}2"
+        /dev/disk/by-partlabel/system
 
     log "# RESERVE DISKSPACE SO COPY-ON-WRITE CAN WORK WHEN THE DISK IS (almost) FULL"
-    "$SUDO" zfs create -o refreservation=1G -o mountpoint=none rpool/reserved
+    "$SUDO" zfs create -o refreservation=5G -o mountpoint=none rpool/reserved
 
     log "# CREATE A ROOT PARTITION"
     "$SUDO" zfs create \
@@ -87,11 +101,11 @@ partition() {
     fi
 
     log "# CREATE A BOOT PARTITON"
-    "$SUDO" mkfs.fat -F 32 -n BOOT "${DISK}${middle}1"
+    "$SUDO" mkfs.fat -F 32 -n BOOT /dev/disk/by-partlabel/boot
 }
 
-echo mount_system
-mount_system() {
+regf mount " - mount zfs setup as created by 'partition' command"
+cnfs:mount() {
     log "# MOUNTING NEW FILE SYSTEM"
     "$SUDO" zpool import -a -f -l
     "$SUDO" mkdir -p /mnt
@@ -104,8 +118,8 @@ mount_system() {
     "$SUDO" mount -t vfat "${DISK}${middle}1" /mnt/boot
 }
 
-echo generate_config
-generate_config() {
+regf config " - write a basic config"
+cnfs:config() {
     zfs_cfg=${1:-/mnt/etc/nixos/zfs-configuration.nix}
     "$SUDO" nixos-generate-config --root /mnt
 
@@ -114,7 +128,7 @@ generate_config() {
 {
    boot.initrd.supportedFilesystems = [ \"zfs\" ];
    boot.supportedFilesystems = [ \"zfs\" ];
-   boot.zfs.enableUnstable = true;
+   # boot.zfs.package = pkgs.zfs_unstable;
    # boot.kernelPackages = pkgs.linuxPackages_5_15;  # pkgs.linuxKernel.packages.linux_5_15
    services.zfs.autoScrub.enable = true;
    boot.zfs.devNodes = \"/dev/disk/by-partuuid\";  # https://discourse.nixos.org/t/cannot-import-zfs-pool-at-boot/4805/14
@@ -129,15 +143,12 @@ generate_config() {
 }
 " | "$SUDO" tee "${zfs_cfg}"
     echo "# {$zfs_cfg}" | "$SUDO" tee -a /mnt/etc/nixos/configuration.nix
-    echo "DO NOT FORGET TO ENABLE EFI BOOT!"
+    echo "DO NOT FORGET TO ENABLE EFI BOOT if you need it!"
     echo -e "EDIT CONFIG, then run:\n    nixos-install"
-    $SUDO nix-channel --add https://github.com/NixOS/nixos-hardware/archive/master.tar.gz nixos-hardware
-    $SUDO nix-channel --add https://github.com/Mic92/nix-ld/archive/main.tar.gz nix-ld
-    $SUDO nix-channel --add https://nixos.org/channels/nixos-unstable unstable
 }
 
-echo wifi
-wifi() {
+regf wifi "<interfave> <ssid> <password> - basic wifi setup"
+cnfs:wifi() {
     # Use this for temorary wifi connection, if needed.
     interface=${1:?First argument must be interface name}
     ssid=${2:?Second argument must be ssid}
@@ -146,9 +157,8 @@ wifi() {
     wpa_supplicant -i "$interface" -B -c<(wpa_passphrase "$ssid" "$wifipw")
 }
 
-echo cleanup
-cleanup() {
-    # NOW CLEANUP & REBOOT
+regf cleanup " - unmount zfs setup"
+cnfs:cleanup() {
     cd /
     "$SUDO" umount /mnt/{home,boot}
     "$SUDO" umount /mnt
@@ -156,17 +166,14 @@ cleanup() {
     "$SUDO" zpool export rpool # -a
 }
 
-if [ "$0" = "$BASH_SOURCE" ]; then
-    # Ctrl+x Ctrl+e edit long shell line in editor
-    if [[ "${DEBUG^^}" =~ ^(1|Y(ES)?|ON|T(RUE)?|ENABLE(ED)?)$ ]]; then
-        set -o xtrace
-        shopt -s shift_verbose
-    fi
+if [ "$0" = "${BASH_SOURCE[0]}" ]; then
+    for itm in "$@"; do if [[ "$itm" =~ ^(-h|--help|-help|-\?)$ ]]; then echo -e "$description" 1>&2; exit 0; fi; done
+    debug=${DEBUG:-no}
+    if [[ "${debug^^}" =~ ^(1|Y(ES)?|ON|T(RUE)?|ENABLE(ED)?)$ ]]; then set -o xtrace; shopt -s shift_verbose; fi
     set -o errexit -o nounset -o pipefail
-    partition "$1"
-    mount_system
-    generate_config
-    cleanup
+    cmd=${1:?"Command missing, when in doubt, use 'main' or consult --help"}
+    shift
+    "cnfs:$cmd" "$@"
 fi
 
 # zpool list
@@ -174,3 +181,7 @@ fi
 # zfs list
 # zfs set dedup=on rpool/home  # RAM hog and only for new data after the fact
 # sudo zpool get all
+# zpool events -v
+# zpool status -v rpool
+# zfs list -r  -t snapshot -o create,name rpool
+# zpool import -N -f -l -F
