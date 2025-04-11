@@ -43,7 +43,7 @@ with pkgs;
 
   gparted
   pciutils
-  transmission-gtk
+  transmission_4-gtk
 
   # Nix
   nix-prefetch-scripts

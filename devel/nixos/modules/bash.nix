@@ -122,8 +122,8 @@
       fira-code-symbols
       proggyfonts
       joypixels
-      nerdfonts
-      # (nerdfonts.override { fonts = [ "FiraCode" "FiraMono" ]; })
+      nerd-fonts.fira-code
+      nerd-fonts.fira-mono
     ];
 
     nixpkgs.config.joypixels.acceptLicense = true;
