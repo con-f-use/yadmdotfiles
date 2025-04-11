@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-IP=192.168.1.18
-
 csrv:push() {
   if ! got_root; then
     username=jan

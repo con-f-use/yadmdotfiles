@@ -12,7 +12,7 @@
 
   config = lib.mkIf config.my.roles.gaming-client.enable {
     # hardware.opengl.driSupport32Bit = true;
-    hardware.pulseaudio.support32Bit = true;
+    services.pulseaudio.support32Bit = true;
 
     # Firewall ports used by Steam in-home streaming.
     networking.firewall.allowedTCPPorts = [

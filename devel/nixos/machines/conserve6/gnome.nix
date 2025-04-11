@@ -18,7 +18,7 @@
 
   services.printing.enable = false;
 
-  hardware.pulseaudio.enable = false; # replaced by pipewire
+  services.pulseaudio.enable = false; # replaced by pipewire
   services.pipewire = {
     enable = true;
     audio.enable = true;
@@ -28,5 +28,5 @@
     wireplumber.enable = true;
     # systemWide = true;
   };
-  hardware.alsa.enablePersistence = builtins.trace "alsa persistence needed?" true;
+  # hardware.alsa.enablePersistence = builtins.trace "alsa persistence needed?" true;
 }

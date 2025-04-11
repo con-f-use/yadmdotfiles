@@ -1,8 +1,7 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
+{ config
+, lib
+, pkgs
+, ...
 }:
 let
 
@@ -100,6 +99,18 @@ in
       (lib.mkIf config.services.xserver.enable {
         environment.systemPackages = with pkgs; [
           zoom-us
+          # (zoom-us.overrideAttrs rec {
+          #   # All these versions leak and get OOM-killed shortly after startup:
+          #   #version = "6.3.0.5527";
+          #   #version = "6.3.5.6065";
+          #   version = "6.3.6.6315";
+          #   src = pkgs.fetchurl {
+          #     url = "https://zoom.us/client/${version}/zoom_x86_64.pkg.tar.xz";
+          #     # hash = "sha256-5Tk8lU6D0cgyr5pe1oVZFCURQ1YznBpWPPM9nogOT6Q="; # 5527
+          #     # hash = "sha256-JOkQsiYWcVq3LoMI2LyMZ1YXBtiAf612T2bdbduqry8=";  # 6065
+          #     hash = "sha256-QJR8SsMtyYBvd5G+mEjEEISkJJukCYeHErKrgs1uDQc="; # 6315
+          #   };
+          # })
           slack
           robo3t
         ];
@@ -130,26 +141,26 @@ in
         };
 
         nix.buildMachines =
-          builtins.map
+          (builtins.map
             (idx: {
               hostName = "nixbld0${toString idx}.qa.ngdev.eu.ad.cuda-inc.com";
               system = "x86_64-linux";
               maxJobs = 2;
               speedFactor = 1;
-              supportedFeatures = [
-                "big-parallel"
-                "kvm"
-                "nixos-test"
-                "benchmark"
-              ];
+              supportedFeatures = [ "big-parallel" "kvm" "nixos-test" "benchmark" ];
               sshUser = "nixbuilder";
               sshKey = "/etc/${nixbuilderkeypath}";
             })
-            [
-              1
-              2
-              3
-            ];
+            [ 1 2 3 ]
+          ) ++ [{
+            hostName = "10.17.6.60";
+            system = "x86_64-linux";
+            maxJobs = 2;
+            speedFactor = 1;
+            supportedFeatures = [ "big-parallel" "kvm" "nixos-test" "benchmark" ];
+            sshUser = "nixbuilder";
+            sshKey = "/root/.ssh/id_rsa";
+          }];
 
         nix.distributedBuilds = true;
         nix.extraOptions = ''builders-use-substitutes = true'';

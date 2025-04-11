@@ -119,8 +119,8 @@
       dina-font
       proggyfonts
       joypixels
-      pkgs.nerd-fonts.fira-code
-      pkgs.nerd-fonts.fira-mono
+      nerd-fonts.fira-code
+      nerd-fonts.fira-mono
     ];
 
     nixpkgs.config.joypixels.acceptLicense = true;
@@ -164,7 +164,8 @@
       sxiv
       flameshot
       kazam
-      self.inputs.mcomnix.legacyPackages.${pkgs.system}.mcomix
+      # self.inputs.mcomnix.legacyPackages.${pkgs.system}.mcomix
+      mcomix
       rar # needed by mcomix for cbr support
       v4l-utils
 

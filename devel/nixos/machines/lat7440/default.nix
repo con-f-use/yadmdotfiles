@@ -38,7 +38,8 @@
 
   time.timeZone = "Europe/Vienna";
 
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
+  services.flatpak.enable = true;
 
   services.xserver.enable = true;
   services.xserver.displayManager.gdm.enable = true;
@@ -55,6 +56,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    sox
     curl
     firefox
     signal-desktop
@@ -63,6 +65,7 @@
     wofi
     flameshot
     unzip  # or stylua vim plugin cannot install O_o
+    mpv
   ];
 
   nixpkgs.config.joypixels.acceptLicense = true;

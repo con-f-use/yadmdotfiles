@@ -1,11 +1,10 @@
 # Last gen with somewhat working sound was the first gen BEFORE Okt. 28 2024
 
-{
-  self,
-  config,
-  lib,
-  pkgs,
-  ...
+{ self
+, config
+, lib
+, pkgs
+, ...
 }:
 
 {
@@ -19,6 +18,7 @@
     ./arr.nix
     ../../users/roomies.nix
     ./vcs.nix
+    self.inputs.mothershipper.nixosModules.mothershipper
     { options.programs.gnupg.agent.pinentryPackage = lib.mkOption { type = lib.types.package; }; } # ToDo: remove this when cnsrv not needed
   ];
 
@@ -31,7 +31,8 @@
     dev.enable = true;
   };
 
-  veil.mainIP = "192.168.1.18";
+  # veil.mainIP = "192.168.1.18";
+  veil.mainIP = "192.168.0.18";
   veil.machineName = "conserve6";
   veil.secrets.yt = {
     target = "/etc/secrets/yt/teo.conserve@gmail.com";
@@ -42,6 +43,14 @@
     config.users.users.jan.name
     config.users.users.roomies.name
   ];
+
+  system.nixos.tags = [ "ip-change" ];
+  permittedInsecurePackages = builtins.trace
+    "ToDo: unallow dotnet deps once secure again"
+    [
+      "dotnet-sdk-6.0.428"
+      "aspnetcore-runtime-6.0.36"
+    ];
 
   environment.systemPackages = import ./packages.nix pkgs;
 

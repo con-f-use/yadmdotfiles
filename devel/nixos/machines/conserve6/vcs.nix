@@ -2,7 +2,7 @@
 let
   secretDir = "/etc/secrets/${config.services.forgejo.user}";
   port = 7030;
-  secondary = "conserve.dynu.net";
+  primary = "confus.me";
 in
 {
   services.forgejo = {
@@ -29,7 +29,7 @@ in
     config.services.forgejo.settings.server.SSH_PORT
   ];
 
-  services.nginx.virtualHosts.${secondary}.locations = {
+  services.nginx.virtualHosts.${primary}.locations = {
     # see: https://docs.gitea.com/administration/reverse-proxies#nginx-with-a-sub-path
     "^~ /forgejo/" = {
       proxyPass = "http://127.0.0.1:${builtins.toString port}/"; # trailing slash seems to be important

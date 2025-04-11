@@ -10,7 +10,7 @@
   rudeSudo = (final: prev: { sudo = prev.sudo.override { withInsults = true; }; });
 
   # Overlay all pacakges defined in this flake
-  packages = final: prev: import ./default.nix { pkgs = final; };
+  packages = final: prev: import ./default.nix { pkgs = final; inherit self; };
 
   pythonLibraries = final: prev: import ./python/default.nix { pkgs = final; };
 
