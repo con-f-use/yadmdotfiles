@@ -172,6 +172,7 @@
       # Office
       libreoffice
       gimp
+      pdftk
       tessen
       rofi
 
