@@ -4,8 +4,9 @@
   requireFile,
   binutils-unwrapped,
   iproute2,
+  zstd,
   autoPatchelfHook,
-  version ? "5.2.2",
+  version ? "5.3.6",
 }:
 
 let
@@ -15,6 +16,7 @@ let
     "5.1.5rc1" = "0gdn8rw0r9d4vb0vwy9ylwmbqd6zdaafgjfhx7l3b3ngy1syz56n";
     "5.1.4" = "00qwq3ma5whfws9i2z205q48j8z9i3vgbvaqgx6rvcbip6ld14zy";
     "5.2.2" = "1bp47179rvs2ahv02f0hna210n886bg7bj8x68qclkk3xj39hici";
+    "5.3.6" = "16anhxhjwyw5xdlazlj9pyy5b5zb8m9993ifr3rqnn7fjwi5pj5y";
   };
 
 in
@@ -37,11 +39,11 @@ stdenv.mkDerivation (finalAttrs: {
       # First line restores state (also useful after disconnect)
       # Then wait for the output and confirm MFA. After that copy the
       # output and:
-      eval "$(
+      eval "\$(
         xclip -o -selection primary |
         sed -n 's/executing:/sudo ip/p'
       )"; sudo chmod a+r /etc/resolv.conf;
-         
+
       # Download from: ${finalAttrs.meta.homepage}/#/search?page=1&search=Linux&type=6
       # Disclaimer: The Licences of that file may apply!
       nix-store --add-fixed sha256 VPNClient_${finalAttrs.version}_Linux.tar.gz
@@ -55,17 +57,21 @@ stdenv.mkDerivation (finalAttrs: {
   nativeBuildInputs = [
     binutils-unwrapped
     autoPatchelfHook
+    zstd
   ];
   propagatedBuildInputs = [ iproute2 ];
   unpackPhase = ''
     tar xf "${finalAttrs.vpnfile}" &&
       ar -x *.deb &&
-      tar xf data.tar.xz ||
+      tar xf data.tar.* ||
         echo "'${finalAttrs.vpnfile}' is not an archive type, using as executable..." 1>&2
   '';
   installPhase = ''
     mkdir -p "$out/bin"
-    cp "${./bcvpn.sh}" "$out/bin/bcvpn" && chmod a+x "$out/bin/bcvpn"
+    sed -E "s@sudo barracudavpn@sudo $out/bin/barracudavpn@g" \
+      "${if (builtins.compareVersions "${version}" "5.3.5") == -1 then ./bcvpn_pre_5_3_5.sh else ./bcvpn.sh}" \
+      > "$out/bin/bcvpn"
+    chmod +x usr/local/bin/barracudavpn "$out/bin/bcvpn"
     cp usr/local/bin/barracudavpn "$out/bin/barracudavpn" ||
       cp ${finalAttrs.vpnfile} "$out/bin/barracudavpn"
   '';

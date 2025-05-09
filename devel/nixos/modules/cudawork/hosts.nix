@@ -11,9 +11,8 @@
     "portal-staging.qa.ngdev.eu.ad.cuda-inc.com"
     "portal-staging.qa"
   ];
-  "10.17.50.246" = [
+  "10.17.50.248" = [
     "jenkins-cgf.qa.ngdev.eu.ad.cuda-inc.com"
-    "jenkins2.qa"
   ];
   "10.17.210.76" = [ "jenkins-jupiter.ngdev.eu.ad.cuda-inc.com" ];
   "10.17.50.238" = [ "jenkins-cloud.qa.ngdev.eu.ad.cuda-inc.com" ];
