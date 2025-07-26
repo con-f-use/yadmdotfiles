@@ -1,10 +1,10 @@
 { ... }:
 {
+  services.desktopManager.gnome.enable = true;
+  services.displayManager.gdm.enable = true;
   services.xserver = {
     enable = true;
     updateDbusEnvironment = true;
-    displayManager.gdm.enable = true;
-    desktopManager.gnome.enable = true;
     #libinput.enable = true;
   };
 
