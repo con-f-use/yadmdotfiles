@@ -64,12 +64,14 @@ get_tmpsh() {
     gpg -d --batch --passphrase "$(systemd-ask-password smspw)" keys.gpg > keys.tgz
     tar xvf keys.tgz
     echo 'pinentry-program /run/current-system/sw/bin/pinentry' >> ~/.gnupg/gpg-agent.conf
-    gpg --pinentry-mode loopback --import keys/* 
+    gpg --pinentry-mode loopback --import keys/*
     echo trust 5
     gpg --edit-key EEF19B71F9C734D8
     rm -rf keys keys.tgz keys.gpg
     gpgconf --kill gpg-agent
+    echo '~/.config/password-store or use PASSWORD_STORE_DIR=...'
     echo "gopass remote/cuda > ~/...; gopass remote/confusion > ~/..."
+    echo "don't forget pinentry (curses, gtk2/3/4?)"
 }
 
 
