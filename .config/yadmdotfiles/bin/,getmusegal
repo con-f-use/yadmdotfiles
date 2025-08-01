@@ -152,13 +152,13 @@ def get_fldr(gs):
     if fldr:
         fldr = "/".join(fldr)
     else:
-        fldr = re.sub(" \|.*$", "", gs.title.text)
+        fldr = re.sub(r" \|.*$", "", gs.title.text)
     return unescape(fldr)
 
 
 def is_img(img):
     """Find out if we're an image leaf."""
-    return re.search("/\d+$", img)
+    return re.search(r"/\d+$", img)
 
 
 def get_imgs(gs, dom):

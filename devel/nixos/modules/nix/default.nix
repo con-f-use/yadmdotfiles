@@ -31,7 +31,7 @@ in
         cores = 4;
         use-xdg-base-directories = true;
         nix-path = "nixpkgs=/etc/nixpkgs";
-        flake-registry = "${./registry.json}";
+        flake-registry = "/etc/nix/registry.json";
         extra-trusted-public-keys = [
           "nixbld.qa.ngdev.eu.ad.cuda-inc.com:gSZJQ+2fKb4FCoUM6KBFWecAe7hgfEzrPu0TLo2s8q0="
           "qanixer:b7ZREXUdm9DRsmgQ1hrhmc6gxSVa5Uttf2YV20Et5Ts=" 
@@ -53,7 +53,7 @@ in
         options = "--delete-older-than 14d";
       };
       channel.enable = false;
-      #registry.nixpkgs.flake = self.inputs.nixunstable;
+      registry.nixpkgs.flake = self.inputs.nixunstable;
       nixPath = [ "nixpkgs=/etc/nixpkgs" ];
       #binaryCaches = [];
       #binaryCachePublicKeys = [];
