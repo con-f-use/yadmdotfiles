@@ -8,7 +8,7 @@ let
   certs = import ./certs.nix;
   systemCerts = with certs; [
     interceptionCert
-    qacaCert
+    qdacaCert
     folsomCert
     idefixCert
     dockregCert
