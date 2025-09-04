@@ -64,6 +64,7 @@
     wget
     wofi
     flameshot
+    remmina
     ungoogled-chromium
     unzip  # or stylua vim plugin cannot install O_o
     mpv
