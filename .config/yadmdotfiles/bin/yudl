@@ -102,4 +102,5 @@ if [ "$0" = "$BASH_SOURCE" ]; then
     usage "$@"
     set -x
     yudl_agg "$@"
+    echo "Dir: ${fldir:-none}"
 fi
