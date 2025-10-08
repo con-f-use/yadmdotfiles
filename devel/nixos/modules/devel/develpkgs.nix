@@ -66,6 +66,7 @@ with pkgs;
   flakeroot
 
   # Python
+  ruff
   (python3.withPackages (
     ps: with ps; [
       setuptools

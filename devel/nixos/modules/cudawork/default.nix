@@ -52,10 +52,6 @@ in
         programs.ssh = {
           # knownHostsFiles = [ ./known_hosts ];
           extraConfig = ''
-            Host stash st
-              HostName stash.cudaops.com
-              Port 7999
-              IdentitiesOnly yes
             Host folsom fol fl
               HostName folsom.ngdev.eu.ad.cuda-inc.com
               Port 7999

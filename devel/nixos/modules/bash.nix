@@ -64,6 +64,7 @@
     environment.systemPackages = with pkgs; [
       atuin
       fzf
+      timer
       zoxide
     ];
 

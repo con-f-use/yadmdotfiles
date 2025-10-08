@@ -1,12 +1,14 @@
 { pkgs, ... }:
 with pkgs;
 [
-  poetry
-  pipenv
-  jq
   docker-compose
-  postgresql
+  gnumake
   groovy # devpi-client
-  vault
+  jq
+  pipenv
+  poetry
+  postgresql
   qda-repos
+  uv
+  vault
 ]
