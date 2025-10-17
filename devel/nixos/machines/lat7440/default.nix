@@ -42,8 +42,8 @@
   services.flatpak.enable = true;
 
   services.xserver.enable = true;
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  services.displayManager.gdm.enable = true;
+  services.desktopManager.gnome.enable = true;
   services.xserver.xkb.layout = "us";
   services.xserver.xkb.variant = "intl";
   services.xserver.xkb.options = "caps:escape";
@@ -64,6 +64,7 @@
     wget
     wofi
     flameshot
+    remmina
     ungoogled-chromium
     unzip  # or stylua vim plugin cannot install O_o
     mpv

@@ -5,6 +5,8 @@
   ...
 }:
 {
+  # jan@192.168.178.27 -i ~/.ssh/id_rsa_confusion
+  # 192.168.178.27
   fileSystems = {
     "/" = {
       device = "/dev/disk/by-label/NIXOS_SD";
@@ -90,12 +92,12 @@
   services.xserver.exportConfiguration = true;
   #services.dconf.enable = true;
   services.gvfs.enable = true;
-  services.xserver.displayManager = {
+  services.displayManager = {
     defaultSession = "none+instantwm";
     #startx.enable = true;
-    gdm.enable = false;
     sddm.enable = false;
   };
+  services.xserver.displayManager.gdm.enable = false;
   services.xserver.desktopManager = {
     gnome.enable = false;
     plasma5.enable = false;
@@ -125,16 +127,19 @@
         pygls
       ]
     ))
-    (nerdfonts.override {
-      fonts = [
-        "FiraCode"
-        "FiraMono"
-      ];
-    })
+    nerd-fonts.fira-code
+    nerd-fonts.fira-mono
   ];
   nixpkgs.config.joypixels.acceptLicense = true;
   nixpkgs.config.allowUnfree = true;
   nixpkgs.hostPlatform = "aarch64-linux";
+
+  services.zerotierone = {
+    enable = true;
+    joinNetworks = [
+      "A0CBF4B62ABCE52E"
+    ];
+  };
 
   # Shell Convenience
   environment.shellAliases = {

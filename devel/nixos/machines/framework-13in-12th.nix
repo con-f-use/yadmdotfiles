@@ -36,12 +36,27 @@
   system.stateVersion = "22.05";
   virtualisation.docker.storageDriver = "zfs";
 
+  services.zerotierone = {
+    enable = true;
+    joinNetworks = [
+      "A0CBF4B62ABCE52E"
+    ];
+    # localConfig = { allowDNS = true; };
+  };
+  services.zeronsd.servedNetworks."A0CBF4B62ABCE52E".settings = {
+    domain = "zero.tier";
+    token = "/var/lib/zerotier-one/token";
+  };
+
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
   boot.initrd.availableKernelModules = [
     "xhci_pci"
     "thunderbolt"
     "nvme"
     "usb_storage"
     "sd_mod"
+    "xe"
   ];
   # boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.initrd.kernelModules = [ ];
@@ -73,8 +88,8 @@
   services.libinput.enable = true; # Enable touchpad support.
   services.logind.lidSwitch = "ignore";
   networking.hostId = "f3dc4d2a";
-
-  hardware.pulseaudio.enable = false; # replaced by pipewire
+  my.roles.gaming-client.enable = true;
+  services.pulseaudio.enable = false; # replaced by pipewire
   services.pipewire = {
     enable = true;
     audio.enable = true;
