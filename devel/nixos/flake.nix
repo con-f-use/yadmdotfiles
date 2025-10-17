@@ -11,7 +11,7 @@
       nixosModules = import ./modules args;
       nixosConfigurations = import ./machines args;
       packages = args.forPkgs ./packages;
-      formatter = args.forSystems (system: args.${system}.nixfmt-rfc-style);
+      formatter = args.forSystems (system: args.${system}.nixfmt-tree);
     };
 
   inputs = {
