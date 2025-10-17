@@ -30,13 +30,13 @@ veil:machines() {
 
 veil:push() {
   to_clean=()
+  trap 'rm --force --verbose "${to_clean[@]}"' ERR EXIT
   while IFS= read -r -d $'\0' d <&3; do
     eval "$(jq -r 'to_entries | .[] | .key + "=" + (.value | @sh) + ";"' <<< "$d")"
     # for x in name group target user script; do echo "$x: ${!x}" done
 
     path=$(mktemp -t veil_XXXXXXX)
     to_clean+=("$path")
-    trap 'rm -f "${to_clean[@]}"' ERR EXIT
     remote="$VEIL_REMOTE_USER@$VEIL_TARGET_HOST"
 
     echo "$script" > "$path"

@@ -187,6 +187,10 @@ in
 
             "^~ /mothershipper".proxyPass = "http://127.0.0.1:9280";
             # ToDo: factor out html root
+            "^~ /share/indexed/" = {
+              root = "${webhome}/share/indexed";
+              extraConfig = "autoindex on;";
+            };
             "/".root = webhome;
           };
         }; # // crtcfg;
