@@ -50,6 +50,8 @@ in
 
   veil.machineName = "conix";
 
+  hardware.keyboard.zsa.enable = true;
+
   # ToDo: This is a dirty hack so I can merge this with unfrees from other modles
   # no idea how to do it properly.
   allowUnfreePackages = [
