@@ -1,3 +1,4 @@
 inherits = "onedarker"
 "ui.background" = {}
 rainbow = ["red", "yellow", "green", "blue", "teal", "pink"]
+"ui.linenr" = "#606060"

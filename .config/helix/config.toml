@@ -3,11 +3,17 @@ theme = "onedarker_transparent"
 [editor]
 color-modes = true
 auto-pairs = true
+line-number = "relative"
+rulers = [ 78 ]
+trim-final-newlines = true
+trim-trailing-whitespace = true
+cursorline = true
 
 [editor.statusline]
 mode.normal = "NORMAL"
 mode.insert = "INSERT"
 mode.select = "SELECT"
+left = ["mode", "spinner", "version-control", "file-name"]
 
 [editor.cursor-shape]
 insert = "bar"
@@ -15,4 +21,12 @@ insert = "bar"
 [editor.indent-guides]
 render = true
 # evil-helix only
+character = "▏" # "❘" "▏", "┆", "┊", "⸽" "╎"
 rainbow-option = "dim"
+
+# [editor.whitespace]
+# render = "all"
+
+# [editor.lsp]
+# auto-signature-help = false
+# display-messages = true
