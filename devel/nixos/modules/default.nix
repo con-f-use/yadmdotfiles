@@ -17,6 +17,7 @@
   windowed = import ./windowed.nix;
   workstation = import ./workstation;
   zfs = import ./zfs.nix;
+  zsa-keyboards = import ./zsa-keyboards.nix;
 
   users = ../users/default.nix;
 }
