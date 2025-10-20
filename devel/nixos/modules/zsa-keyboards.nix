@@ -5,5 +5,5 @@
       wally-cli
       # keymapp
     ];
-  }
+  };
 }
