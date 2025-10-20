@@ -1,0 +1,18 @@
+theme = "onedarker_transparent"
+
+[editor]
+color-modes = true
+auto-pairs = true
+
+[editor.statusline]
+mode.normal = "NORMAL"
+mode.insert = "INSERT"
+mode.select = "SELECT"
+
+[editor.cursor-shape]
+insert = "bar"
+
+[editor.indent-guides]
+render = true
+# evil-helix only
+rainbow-option = "dim"
