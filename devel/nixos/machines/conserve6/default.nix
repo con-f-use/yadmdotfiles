@@ -44,7 +44,7 @@
     config.users.users.roomies.name
   ];
 
-  system.nixos.tags = [ "ip-change" ];
+  system.nixos.tags = [ "share-index" ];
   permittedInsecurePackages = builtins.trace
     "ToDo: unallow dotnet deps once secure again"
     [

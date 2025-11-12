@@ -11,6 +11,7 @@
       nixosModules = import ./modules args;
       nixosConfigurations = import ./machines args;
       packages = args.forPkgs ./packages;
+      devShells = args.forPkgs ./environments;
       formatter = args.forSystems (system: args.${system}.nixfmt-tree);
     };
 

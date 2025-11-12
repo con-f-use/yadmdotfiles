@@ -186,10 +186,16 @@ in
             };
 
             "^~ /mothershipper".proxyPass = "http://127.0.0.1:9280";
+
             # ToDo: factor out html root
             "^~ /share/indexed/" = {
               root = "${webhome}/share/indexed";
-              extraConfig = "autoindex on;";
+              extraConfig = ''
+                rewrite ^/share/indexed(.*)$ $1 break;
+                autoindex on;
+                autoindex_exact_size off;
+                autoindex_format html;
+              '';
             };
             "/".root = webhome;
           };
