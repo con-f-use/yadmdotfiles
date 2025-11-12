@@ -4,7 +4,6 @@ with pkgs;
   # Essential
   htop
   gnupg
-  screen
   tree
   file
   binutils-unwrapped
