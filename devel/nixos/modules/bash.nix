@@ -31,6 +31,10 @@
       '';
     };
 
+    environment.shellAliases = {
+      ll = "ls -hl";
+    };
+
     environment.variables = {
       # Colored less mangages
       LESSHISTFILE = ''''${XDG_CACHE_HOME:-$HOME/.cache}/less/history'';

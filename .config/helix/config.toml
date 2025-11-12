@@ -8,6 +8,7 @@ rulers = [ 78 ]
 trim-final-newlines = true
 trim-trailing-whitespace = true
 cursorline = true
+default-yank-register = "+"
 
 [editor.statusline]
 mode.normal = "NORMAL"
@@ -30,3 +31,7 @@ rainbow-option = "dim"
 # [editor.lsp]
 # auto-signature-help = false
 # display-messages = true
+
+[keys.normal]
+"%" = "select_all"
+"D" = "@d$"
