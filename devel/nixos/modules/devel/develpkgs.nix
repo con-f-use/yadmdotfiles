@@ -60,7 +60,7 @@ with pkgs;
   nil
   nix-output-monitor
   nix-info
-  nixpkgs-fmt
+  nixfmt
   cachix
   flakeroot
 

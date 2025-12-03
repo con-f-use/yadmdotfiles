@@ -3,6 +3,7 @@ theme = "onedarker_transparent"
 [editor]
 color-modes = true
 auto-pairs = true
+auto-format = true
 line-number = "relative"
 rulers = [ 78 ]
 trim-final-newlines = true
