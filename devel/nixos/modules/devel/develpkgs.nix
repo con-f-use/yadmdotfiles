@@ -39,6 +39,7 @@ with pkgs;
   wakeonlan
   nvme-cli
   pciutils
+  prettier
   #texlive.combined.scheme-medium
   # (texlive.combine { inherit (texlive) scheme-medium xargs bigfoot moderncv lipsum footmisc multibib soul; })
   # ungoogled-chromium # in unstable!
