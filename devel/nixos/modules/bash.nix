@@ -31,6 +31,10 @@
       '';
     };
 
+    environment.shellAliases = {
+      ll = "ls -hl";
+    };
+
     environment.variables = {
       # Colored less mangages
       LESSHISTFILE = ''''${XDG_CACHE_HOME:-$HOME/.cache}/less/history'';
@@ -64,6 +68,7 @@
     environment.systemPackages = with pkgs; [
       atuin
       fzf
+      timer
       zoxide
     ];
 
@@ -124,6 +129,7 @@
       joypixels
       nerd-fonts.fira-code
       nerd-fonts.fira-mono
+      nerd-fonts.open-dyslexic
     ];
 
     nixpkgs.config.joypixels.acceptLicense = true;

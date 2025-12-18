@@ -112,6 +112,14 @@
       };
     };
 
+    programs.screen = {
+      enable = true;
+      screenrc = ''
+        defscrollback 10000
+        startup_message off
+      '';
+    };
+
     documentation.nixos.enable = false; # When multiple output, don't install docs
     #system.autoUpgrade.enable = true;
     #system.autoUpgrade.allowReboot = true;
@@ -125,7 +133,6 @@
       file
       gnupg
       htop
-      screen
       gcc
       tree
       w3m

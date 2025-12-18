@@ -4,7 +4,6 @@ with pkgs;
   # Essential
   htop
   gnupg
-  screen
   tree
   file
   binutils-unwrapped
@@ -40,6 +39,7 @@ with pkgs;
   wakeonlan
   nvme-cli
   pciutils
+  prettier
   #texlive.combined.scheme-medium
   # (texlive.combine { inherit (texlive) scheme-medium xargs bigfoot moderncv lipsum footmisc multibib soul; })
   # ungoogled-chromium # in unstable!
@@ -61,11 +61,12 @@ with pkgs;
   nil
   nix-output-monitor
   nix-info
-  nixpkgs-fmt
+  nixfmt
   cachix
   flakeroot
 
   # Python
+  ruff
   (python3.withPackages (
     ps: with ps; [
       setuptools

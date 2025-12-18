@@ -1,0 +1,46 @@
+[[language]]
+name = "c"
+file-types = ["c", "h"]
+formatter = { command = "clang-format" }
+auto-format = true
+
+[[language]]
+name = "cpp"
+file-types = ["cpp", "cc", "cxx", "hpp", "hcc", "hxx"]
+formatter = { command = "clang-format" }
+auto-format = true
+
+[[language]]
+name = "fish"
+formatter = { command = "fish_indent" }
+auto-format = true
+
+[[language]]
+name = "go"
+auto-format = true
+
+[[language]]
+name = "json"
+formatter = { command = "prettier", args = ["--parser", "json"] }
+
+[[language]]
+name = "nix"
+formatter = { command = "nixfmt" }
+auto-format = true
+
+[[language]]
+name = "python"
+formatter = { command = "ruff", args = ["format", "--line-length", "88", "-"] }
+auto-format = true
+
+[[language]]
+name = "rust"
+formatter = { command = "bash", args = ["-c", "rustfmt | dx fmt -f -"] }
+
+[[language]]
+name = "toml"
+formatter = { command = "taplo", args = ["format", "-"] }
+auto-format = true
+
+[language-server.gopls.config]
+gofumpt = true
