@@ -4,7 +4,7 @@
   conservetool = pkgs.callPackage ./conservetool { conserveIP = self.nixosConfigurations.conserve.config.veil.mainIP; };
   qda-repos = pkgs.callPackage ./qda-repos { };
   flakeroot = pkgs.callPackage ./flakeroot { };
-  veil = pkgs.callPackage ./veil { };
+  veil = pkgs.callPackage ./veil { inherit self; };
   perscom =
     let
       ref = "4ddf0c5f12d7ff7259672de0c7278c76ddb229a9";

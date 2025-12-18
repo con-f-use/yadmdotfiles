@@ -4,7 +4,6 @@ export VEIL_TARGET_HOST
 export VEIL_REMOTE_USER
 export VEIL_DATA
 
-
 data() {
   machine=${1:?need machine name as first argument}
   VEIL_DATA=$(nix eval "$(flakeroot)/#nixosConfigurations.$machine.config.veil" --json)
@@ -24,7 +23,9 @@ veil:data() {
 
 
 veil:machines() {
-  nix eval "$(flakeroot)/#nixosConfigurations" --apply 'builtins.attrNames' --json |
+  flakeref="@flakeref@"
+  flakeref="$(flakeroot)/#nixosConfigurations"
+  nix eval "$flakeref" --apply 'builtins.attrNames' --json |
     jq -r '.[]'
 }
 
