@@ -111,7 +111,7 @@
     fonts.packages = with pkgs; [
       cantarell-fonts
       noto-fonts
-      noto-fonts-emoji
+      noto-fonts-color-emoji
       noto-fonts-cjk-sans
       liberation_ttf
       fira-code
@@ -154,7 +154,8 @@
       # youtube-dl
       yt-dlp
       signal-desktop
-      tdesktop
+      # tdesktop
+      telegram-desktop
       discord
       thunderbird
 
@@ -168,6 +169,8 @@
       mcomix
       rar # needed by mcomix for cbr support
       v4l-utils
+      alsa-utils
+      pamixer
 
       # Office
       libreoffice
