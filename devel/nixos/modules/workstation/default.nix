@@ -41,7 +41,6 @@ in
           yadm
           gopass
           gopass-jsonapi
-          pinentry
           pinentry-curses
           pinentry-gtk2
           mkpasswd
@@ -49,7 +48,7 @@ in
           trash-cli
           st
           kitty
-          oathToolkit
+          oath-toolkit
           qrencode
           ripgrep
           usbutils
