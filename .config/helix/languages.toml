@@ -22,6 +22,7 @@ auto-format = true
 [[language]]
 name = "json"
 formatter = { command = "prettier", args = ["--parser", "json"] }
+auto-format = true
 
 [[language]]
 name = "nix"

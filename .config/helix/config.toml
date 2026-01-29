@@ -3,9 +3,10 @@ theme = "onedarker_transparent"
 [editor]
 color-modes = true
 auto-pairs = true
+#auto-format = false
 auto-format = true
 line-number = "relative"
-rulers = [ 78 ]
+rulers = [78]
 trim-final-newlines = true
 trim-trailing-whitespace = true
 cursorline = true
@@ -23,7 +24,7 @@ insert = "bar"
 [editor.indent-guides]
 render = true
 # evil-helix only
-character = "▏" # "❘" "▏", "┆", "┊", "⸽" "╎"
+character = "▏"  # "❘" "▏", "┆", "┊", "⸽" "╎"
 rainbow-option = "dim"
 
 # [editor.whitespace]
