@@ -1,7 +1,9 @@
-{ writeShellApplication, openssh, coreutils, jq }:
+{ writeShellApplication, openssh, coreutils, jq, self ? "./" }:
 writeShellApplication {
   name = "veil";
-  runtimeInputs = [ jq openssh coreutils ];
   text = builtins.readFile ./veil.sh;
-  checkPhase = "";
+  runtimeInputs = [ jq openssh coreutils ];
+  checkPhase = ''
+      substituteInPlace "$out/bin/veil" --subst-var-by flakeref "${self}"
+  '';
 }
