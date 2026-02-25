@@ -137,9 +137,8 @@
       tree
       w3m
       wget
-      exfat-porgs
+      exfatprogs
     ];
-
 
     boot.supportedFilesystems = [
       "btrfs"
