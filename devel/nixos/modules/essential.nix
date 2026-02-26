@@ -57,6 +57,8 @@
     programs.git = {
       enable = true;
       lfs.enable = true;
+      lfs.enablePureSSHTransfer = true;
+      prompt.enable = true;
       config.alias = {
         st = "status";
         ci = "commit";

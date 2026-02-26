@@ -34,6 +34,8 @@ with pkgs;
   pandoc
   figlet
   bat
+  glow
+  delta
   lnav
   libtool
   wakeonlan
