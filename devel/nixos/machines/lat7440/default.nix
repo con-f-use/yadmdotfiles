@@ -20,6 +20,10 @@
       interception = true;
       use_builders = true;
     };
+    claude = {
+      enable = true;
+      auth-token-file = "";
+    };
     dev.enable = true;
     bashbling.enable = true;
     zfs.enable = true;
@@ -62,12 +66,12 @@
     docker-language-server
     jq-lsp
     marksman
-    superhtml
+    # superhtml # ToDo:2026-02-09 broken in unstable
     systemd-lsp
     tombi
     typescript-language-server
     yaml-language-server
-    zls
+    # zls # ToDo:2026-02-09 broken in unstable
 
     curl
     firefox
@@ -79,9 +83,10 @@
     sox
     tessen
     ungoogled-chromium
-    unzip  # or stylua vim plugin cannot install O_o
+    unzip # or stylua vim plugin cannot install O_o
     wget
     wofi
+    file-roller
   ];
 
   nixpkgs.config.joypixels.acceptLicense = true;
