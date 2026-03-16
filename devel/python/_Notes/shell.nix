@@ -16,7 +16,7 @@ pkgs.mkShell {
 
   buildInputs = with pkgs; [
     python3Packages.python python3Packages.venvShellHook  # we need a python interpreter for the venv hook
-    python3Packages.requests # a nixpkgs-packaged python requirements
+    python3Packages.requests # a nixpkgs-packaged python requirement
     git openssl # system dependencies (runtime or for pip install ...)
   ];
 
