@@ -1,7 +1,8 @@
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 let
 
@@ -108,6 +109,7 @@ in
           #   };
           # })
           slack
+          # teams # unsupported for x86_64-linux???
           robo3t
         ];
 
@@ -119,6 +121,7 @@ in
           "zoom-us"
           "zoom"
           "vault.*"
+          "teams"
         ];
       })
 
@@ -143,23 +146,40 @@ in
               system = "x86_64-linux";
               maxJobs = 2;
               speedFactor = 1;
-              supportedFeatures = [ "big-parallel" "kvm" "nixos-test" "benchmark" ];
+              supportedFeatures = [
+                "big-parallel"
+                "kvm"
+                "nixos-test"
+                "benchmark"
+              ];
               sshUser = "nixbuilder";
               sshKey = "/etc/${nixbuilderkeypath}";
             })
-            [ 1 2 3 ]
-          ) ++ [{
-            hostName = "10.17.6.60";
-            system = "x86_64-linux";
-            maxJobs = 2;
-            speedFactor = 1;
-            supportedFeatures = [ "big-parallel" "kvm" "nixos-test" "benchmark" ];
-            sshUser = "nixbuilder";
-            sshKey = "/root/.ssh/id_rsa";
-          }];
+            [
+              1
+              2
+              3
+            ]
+          )
+          ++ [
+            {
+              hostName = "10.17.6.60";
+              system = "x86_64-linux";
+              maxJobs = 2;
+              speedFactor = 1;
+              supportedFeatures = [
+                "big-parallel"
+                "kvm"
+                "nixos-test"
+                "benchmark"
+              ];
+              sshUser = "nixbuilder";
+              sshKey = "/root/.ssh/id_rsa";
+            }
+          ];
 
         nix.distributedBuilds = true;
-        nix.extraOptions = ''builders-use-substitutes = true'';
+        nix.extraOptions = "builders-use-substitutes = true";
 
         programs.ssh.knownHostsFiles = [ ./known_hosts ];
       })

@@ -14,6 +14,7 @@ in
     auth-token-file = lib.mkOption {
       type = lib.types.str;
       description = "The path to the claude auth token";
+      default = "/etc/secrets/claude";
     };
   };
 
@@ -34,7 +35,8 @@ in
           "DISABLE_PROMPT_CACHING": "0",
           "DISABLE_TELEMETRY": "1",
           "DISABLE_ERROR_REPORTING": "1",
-          "CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS": "1"
+          "CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS": "1",
+          "CLAUDE_CONFIG_DIR": "~/.config/claude"
         },
         "model": "opus"
       }

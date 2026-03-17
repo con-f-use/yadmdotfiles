@@ -22,7 +22,7 @@
     };
     claude = {
       enable = true;
-      auth-token-file = "";
+      auth-token-file = "/etc/secrets/claude";
     };
     dev.enable = true;
     bashbling.enable = true;
