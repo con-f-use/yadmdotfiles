@@ -34,7 +34,7 @@ in
         flake-registry = "/etc/nix/registry.json";
         extra-trusted-public-keys = [
           "nixbld.qa.ngdev.eu.ad.cuda-inc.com:gSZJQ+2fKb4FCoUM6KBFWecAe7hgfEzrPu0TLo2s8q0="
-          "qanixer:b7ZREXUdm9DRsmgQ1hrhmc6gxSVa5Uttf2YV20Et5Ts=" 
+          "qanixer:b7ZREXUdm9DRsmgQ1hrhmc6gxSVa5Uttf2YV20Et5Ts="
         ];
         # URI  ARCHS_COMMASEP  SSH_PRIV_KEY  MAX_PARA_BUILDS  SPEED  FEATURES_SUPPORTED_COMMASEP  FEATURES_REQUIRED_COMMASEP  SSH_HOST_PUB
         builders = lib.mkDefault (
@@ -46,7 +46,7 @@ in
           ]
         );
         builders-use-substitutes = true;
-        connect-timeout = 5;  # for establishing connections in the binary cache substituter"
+        connect-timeout = 5; # for establishing connections in the binary cache substituter"
       };
       gc = {
         automatic = true;
@@ -61,10 +61,11 @@ in
       #buildMachines = [ { hostname=; system="x86_64-linux"; maxJobs=100; supportedFeatures=["benchmark" "big-parallel"] } ];
     };
 
-    programs.command-not-found.dbPath = "/etc/programs.sqlite";
+    programs.command-not-found.dbPath =
+      lib.mkForce
+        self.inputs.programsdb.packages.${pkgs.stdenv.hostPlatform.system}.programs-sqlite;
 
     environment.etc = {
-      "programs.sqlite".source = self.inputs.programsdb.packages.${pkgs.system}.programs-sqlite;
       nixpkgs.source = pkgs.path;
       "source-${toString rev}".source = self; # system.copySystemConfiguration = true # for non-flake
     };

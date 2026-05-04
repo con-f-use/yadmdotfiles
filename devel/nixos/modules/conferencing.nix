@@ -34,6 +34,9 @@
     #   # SUBSYSTEM=="video4linux", KERNEL=="video[0-9]*", ATTRS{product}=="HD Pro Webcam C920", ATTRS{serial}=="BBBBFFFF", ATTR{index}=="0", RUN+="/usr/bin/v4l2-ctl -d $devnode --set-ctrl=zoom_absolute=170"
     # '';
 
-    environment.systemPackages = with pkgs; [ v4l-utils ];
+    environment.systemPackages = with pkgs; [
+      v4l-utils
+      teams
+    ];
   };
 }

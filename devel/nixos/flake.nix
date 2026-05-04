@@ -16,9 +16,13 @@
     };
 
   inputs = {
-    programsdb.url = "github:wamserma/flake-programs-sqlite";
-    nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixunstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+    programsdb.url = "github:wamserma/flake-programs-sqlite";
+    programsdb.inputs.nixpkgs.follows = "nixunstable";
+
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
+
     mothershipper.url = "github:con-f-use/mothershipper";
     mothershipper.inputs.nixpkgs.follows = "nixunstable";
   };

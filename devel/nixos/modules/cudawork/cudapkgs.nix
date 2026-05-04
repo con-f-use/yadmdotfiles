@@ -9,6 +9,7 @@ with pkgs;
   poetry
   postgresql
   qda-repos
+  # teams  # currently only packaged for darwin
   uv
   vault
 ]

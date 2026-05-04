@@ -14,6 +14,7 @@ let
       modules =
         (builtins.attrValues self.nixosModules)
         ++ [ { nixpkgs.overlays = [ self.overlays.default ]; } ]
+        ++ [ self.inputs.programsdb.nixosModules.programs-sqlite ]
         ++ modules;
     };
 in
