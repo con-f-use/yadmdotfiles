@@ -2,6 +2,7 @@
 with pkgs;
 [
   docker-compose
+  gh
   gnumake
   groovy # devpi-client
   jq
