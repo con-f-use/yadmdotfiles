@@ -11,6 +11,7 @@
   };
   config = lib.mkIf config.roles.zfs.enable {
 
+    boot.zfs.forceImportRoot = false;
     boot.initrd.supportedFilesystems = [ "zfs" ];
     boot.supportedFilesystems = [ "zfs" ];
     # boot.zfs.package = pkgs.zfs_unstable;
