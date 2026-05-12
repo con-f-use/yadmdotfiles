@@ -3,6 +3,8 @@ with pkgs;
 [
   docker-compose
   gh
+  git-sizer
+  git-filter-repo
   gnumake
   groovy # devpi-client
   jq
