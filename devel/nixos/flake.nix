@@ -16,7 +16,8 @@
     };
 
   inputs = {
-    nixunstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    # nixunstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixunstable.url = "github:NixOS/nixpkgs/nixos-26.05";
 
     programsdb.url = "github:wamserma/flake-programs-sqlite";
     programsdb.inputs.nixpkgs.follows = "nixunstable";

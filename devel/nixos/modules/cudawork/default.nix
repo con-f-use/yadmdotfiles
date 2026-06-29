@@ -82,7 +82,7 @@ in
             REQUESTS_CA_BUNDLE = cert-bundle;
             GIT_SSL_CAINFO = cert-bundle;
             CURL_CA_BUNDLE = cert-bundle;
-            UV_NATIVE_TLS = "true";
+            UV_SYSTEM_CERTS = "true";
             DOCKER_BUILDKIT = "1";
           };
 

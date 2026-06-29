@@ -41,6 +41,7 @@
       XDG_DATA_HOME = "\${HOME}/.local/share";
       XDG_STATE_HOME = "\${HOME}/.local/state";
       CLAUDE_CONFIG_DIR = "\${XDG_CONFIG_HOME:-\$HOME/.config}/claude";
+      PYTHONSTARTUP = toString ./pycustom.py;
 
       PATH = [ "\${XDG_BIN_HOME}" ];
     };
