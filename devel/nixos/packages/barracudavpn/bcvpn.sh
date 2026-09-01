@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -o errexit -o pipefail -o nounset ${DEBUG:+-o xtrace}
-err() { echo "Error: $&" 1>&2; exit 1; }
+err() { echo -e "\033[0;31mError:\033[0m $&" 1>&2; exit 1; }
 
 test -t 0 ||
-    err 'Not in login shell!'
+    err 'Not in an interactive shell, but user prompts necessary!'
 
 # serverpw=$(mktemp -t bcvpn_cache_XXXX)
 # trap "rm -f '$serverpw'" ERR EXIT
