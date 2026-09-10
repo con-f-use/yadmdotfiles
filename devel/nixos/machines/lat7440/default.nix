@@ -29,6 +29,13 @@
     zfs.enable = true;
   };
 
+  # Additional binary caches (public keys come from modules/nix)
+  nix.settings.extra-substituters = [
+    "http://nixbld01.qa.ngdev.eu.ad.cuda-inc.com"
+    "http://nixbld02.qa.ngdev.eu.ad.cuda-inc.com"
+    "http://nixbld03.qa.ngdev.eu.ad.cuda-inc.com"
+  ];
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
