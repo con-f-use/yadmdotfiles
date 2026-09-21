@@ -2,7 +2,7 @@
 # Dirty workaround the misguided "security" behavior of barracudavpn
 # on NixOS.
 
-err() { echo "Error: $&" 1>&2; exit 1; }
+err() { echo "Error: $*" 1>&2; exit 1; }
 
 test -t 0 ||
     err 'Not in login shell!'
