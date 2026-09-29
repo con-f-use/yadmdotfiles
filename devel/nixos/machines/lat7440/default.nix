@@ -31,9 +31,9 @@
 
   # Additional binary caches (public keys come from modules/nix)
   nix.settings.extra-substituters = [
-    "http://nixbld01.qa.ngdev.eu.ad.cuda-inc.com"
-    "http://nixbld02.qa.ngdev.eu.ad.cuda-inc.com"
-    "http://nixbld03.qa.ngdev.eu.ad.cuda-inc.com"
+    "https://nixbld01.qa.ngdev.eu.ad.cuda-inc.com"
+    "https://nixbld02.qa.ngdev.eu.ad.cuda-inc.com"
+    "https://nixbld03.qa.ngdev.eu.ad.cuda-inc.com"
   ];
 
   boot.loader.systemd-boot.enable = true;
