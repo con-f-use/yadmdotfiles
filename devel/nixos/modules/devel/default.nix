@@ -1,9 +1,10 @@
-{ self
-, config
-, lib
-, pkgs
-, inputs
-, ...
+{
+  self,
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
 }:
 {
 
@@ -56,7 +57,7 @@
     };
 
     services.kubo = {
-      enable = true;
+      enable = lib.mkDefault false;
       autoMount = true;
       settings.Datastore.StorageMax = "100GB";
     };
