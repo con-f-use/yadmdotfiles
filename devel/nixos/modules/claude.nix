@@ -31,11 +31,12 @@ in
       env = {
         ANTHROPIC_BASE_URL = "https://api.iq.cudasvc.com";
         # ANTHROPIC_BASE_URL = "https://eu.api.iq.cudasvc.com";
-        CLAUDE_CODE_SUBAGENT_MODEL = "claude-sonnet-4-6";
-        ANTHROPIC_MODEL = "claude-opus-5[1m]";
-        ANTHROPIC_DEFAULT_OPUS_MODEL = "claude-opus-5[1m]";
-        ANTHROPIC_DEFAULT_SONNET_MODEL = "claude-sonnet-4-6";
-        ANTHROPIC_DEFAULT_HAIKU_MODEL = "claude-haiku-4-5";
+        CLAUDE_CODE_SUBAGENT_MODEL = "claude-sonnet-5-5";
+        ANTHROPIC_MODEL = "claude-opus-5-5[1m]";
+        ANTHROPIC_DEFAULT_FABLE_MODEL = "claude-fable-5-1[1m]";
+        ANTHROPIC_DEFAULT_OPUS_MODEL = "claude-opus-5-5[1m]";
+        ANTHROPIC_DEFAULT_SONNET_MODEL = "claude-sonnet-5-5";
+        ANTHROPIC_DEFAULT_HAIKU_MODEL = "claude-haiku-5-5";
         DISABLE_PROMPT_CACHING = "0";
         DISABLE_TELEMETRY = "1";
         DISABLE_ERROR_REPORTING = "1";
