@@ -7,6 +7,7 @@
   devel = import ./devel;
   electronics = import ./electronics.nix;
   essential = import ./essential.nix;
+  firefox = import ./firefox.nix;
   gaming = import ./gaming.nix;
   network = import ./networkmanager;
   nix = import ./nix;

@@ -34,20 +34,6 @@
       GTK_THEME = "Arc-Dark";
     };
 
-    programs.firefox = {
-      enable = true;
-      preferences = {
-        "ui.systemUsesDarkTheme" = 1;
-        "toolkit.telemetry.pioneer-new-studies-available" = false;
-        "toolkit.telemetry.reportingpolicy.firstRun" = false;
-        "browser.urlbar.suggest.history" = false;
-        "extensions.activeThemeID" = "firefox-compact-dark@mozilla.org";
-        "browser.newtabpage.activity-stream.showSearch" = false;
-        "browser.search.hiddenOneOffs" = "Google,Bing,Amazon.com,eBay,Twitter,Wikipedia (en)";
-        "browser.tabs.unloadOnLowMemory" = true;
-      };
-    };
-
     # defaultSession = "none+dwm";
     services.displayManager.defaultSession = "none+instantwm";
     services.xserver = {

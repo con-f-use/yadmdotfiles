@@ -30,6 +30,7 @@ let
     "video"
     "wheel"
     "wireshark"
+    "ssh-users"
     config.services.kubo.group
   ];
 in
