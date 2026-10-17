@@ -17,6 +17,8 @@ let
     "5.1.4" = "00qwq3ma5whfws9i2z205q48j8z9i3vgbvaqgx6rvcbip6ld14zy";
     "5.2.2" = "1bp47179rvs2ahv02f0hna210n886bg7bj8x68qclkk3xj39hici";
     "5.3.6" = "16anhxhjwyw5xdlazlj9pyy5b5zb8m9993ifr3rqnn7fjwi5pj5y";
+    "5.3.9" = "04pqpbqh7m4ski00fzhwlxmi6c3rp2hbrnw6ay96vapqmjh6c527";
+    "5.3.10" = "0k6djxk8zmgpwsrgdafzdym2crc2g966p8j081bxxfjdsr8k8jfv";
   };
 
 in
@@ -69,7 +71,9 @@ stdenv.mkDerivation (finalAttrs: {
   installPhase = ''
     mkdir -p "$out/bin"
     sed -E "s@sudo barracudavpn@sudo $out/bin/barracudavpn@g" \
-      "${if (builtins.compareVersions "${version}" "5.3.5") == -1 then ./bcvpn_pre_5_3_5.sh else ./bcvpn.sh}" \
+      "${
+        if (builtins.compareVersions "${version}" "5.3.5") == -1 then ./bcvpn_pre_5_3_5.sh else ./bcvpn.sh
+      }" \
       > "$out/bin/bcvpn"
     chmod +x usr/local/bin/barracudavpn "$out/bin/bcvpn"
     cp usr/local/bin/barracudavpn "$out/bin/barracudavpn" ||

@@ -40,6 +40,7 @@ veil:push() {
     # Write script executable & setup its cleanup
     path=$(mktemp -t veil_XXXXXXX)
     to_clean+=("$path")
+
     echo "$script" > "$path"
     chmod +x "$path"
 

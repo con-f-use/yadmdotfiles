@@ -3,9 +3,11 @@
   bash = import ./bash.nix;
   conferencing = import ./conferencing.nix;
   cudawork = import ./cudawork;
+  claude = import ./claude.nix;
   devel = import ./devel;
   electronics = import ./electronics.nix;
   essential = import ./essential.nix;
+  firefox = import ./firefox.nix;
   gaming = import ./gaming.nix;
   network = import ./networkmanager;
   nix = import ./nix;

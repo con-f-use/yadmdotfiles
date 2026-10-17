@@ -18,7 +18,7 @@
     };
 
     environment.systemPackages = with pkgs; [
-      xorg.libxcb # chiaki
+      libxcb # chiaki
     ];
   };
 }

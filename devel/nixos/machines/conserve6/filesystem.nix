@@ -12,7 +12,6 @@ let
   id2d = uuid: "/dev/disk/by-uuid/${uuid}";
 in
 {
-  # boot.zfs.forceImportRoot = false;
   boot.supportedFilesystems = [
     "ntfs"
     "btrfs" # "zfs"  # zfs pending vet for latest nixos kernel

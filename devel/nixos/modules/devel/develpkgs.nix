@@ -34,11 +34,14 @@ with pkgs;
   pandoc
   figlet
   bat
+  glow
+  delta
   lnav
   libtool
   wakeonlan
   nvme-cli
   pciutils
+  prettier
   #texlive.combined.scheme-medium
   # (texlive.combine { inherit (texlive) scheme-medium xargs bigfoot moderncv lipsum footmisc multibib soul; })
   # ungoogled-chromium # in unstable!
@@ -60,7 +63,7 @@ with pkgs;
   nil
   nix-output-monitor
   nix-info
-  nixpkgs-fmt
+  nixfmt
   cachix
   flakeroot
 

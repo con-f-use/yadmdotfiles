@@ -20,10 +20,36 @@
       interception = true;
       use_builders = true;
     };
+    claude = {
+      enable = true;
+      auth-token-file = "/etc/secrets/claude";
+    };
     dev.enable = true;
     bashbling.enable = true;
     zfs.enable = true;
+    myfox.enable = true;
   };
+
+  users.users."confus" = {
+    isNormalUser = true;
+    uid = 1002;
+    inherit (config.users.users.jan) extraGroups hashedPasswordFile;
+    openssh.authorizedKeys.keys = config.users.users.jan.openssh.authorizedKeys.keys;
+    packages = with pkgs; [
+      mcomix
+      yt-dlp
+      discord
+      transmission_4-gtk
+      thunderbird
+    ];
+  };
+
+  # Additional binary caches (public keys come from modules/nix)
+  # nix.settings.extra-substituters = [
+  #   "https://nixbld01.qa.ngdev.eu.ad.cuda-inc.com"
+  #   "https://nixbld02.qa.ngdev.eu.ad.cuda-inc.com"
+  #   "https://nixbld03.qa.ngdev.eu.ad.cuda-inc.com"
+  # ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -62,15 +88,14 @@
     docker-language-server
     jq-lsp
     marksman
-    superhtml
+    # superhtml # ToDo:2026-02-09 broken in unstable
     systemd-lsp
     tombi
     typescript-language-server
     yaml-language-server
-    zls
+    # zls # ToDo:2026-02-09 broken in unstable
 
     curl
-    firefox
     flameshot
     evil-helix
     mpv
@@ -79,13 +104,17 @@
     sox
     tessen
     ungoogled-chromium
-    unzip  # or stylua vim plugin cannot install O_o
+    unzip # or stylua vim plugin cannot install O_o
     wget
     wofi
+    file-roller
   ];
 
   nixpkgs.config.joypixels.acceptLicense = true;
-  allowUnfreePackages = [ "joypixels.*" ];
+  allowUnfreePackages = [
+    "joypixels.*"
+    "discord"
+  ];
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;

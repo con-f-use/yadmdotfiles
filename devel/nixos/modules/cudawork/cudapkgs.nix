@@ -2,6 +2,9 @@
 with pkgs;
 [
   docker-compose
+  gh
+  git-sizer
+  git-filter-repo
   gnumake
   groovy # devpi-client
   jq
@@ -9,6 +12,7 @@ with pkgs;
   poetry
   postgresql
   qda-repos
+  # teams  # currently only packaged for darwin
   uv
   vault
 ]
