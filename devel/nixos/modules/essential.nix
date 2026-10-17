@@ -40,6 +40,8 @@
       XDG_BIN_HOME = "\${HOME}/.local/bin";
       XDG_DATA_HOME = "\${HOME}/.local/share";
       XDG_STATE_HOME = "\${HOME}/.local/state";
+      CLAUDE_CONFIG_DIR = "\${XDG_CONFIG_HOME:-\$HOME/.config}/claude";
+      PYTHONSTARTUP = toString ./pycustom.py;
 
       PATH = [ "\${XDG_BIN_HOME}" ];
     };
@@ -54,9 +56,19 @@
 
     environment.enableAllTerminfo = true;
 
+    environment.etc."terminal-colors.d/cal.scheme".text = ''
+      header  38;2;250;189;47;1
+      weeks   38;2;131;165;152
+      workday 38;2;235;219;178
+      weekend 38;2;146;131;116
+      today   48;2;254;128;25;38;2;31;31;31;1
+    '';
+
     programs.git = {
       enable = true;
       lfs.enable = true;
+      lfs.enablePureSSHTransfer = true;
+      prompt.enable = true;
       config.alias = {
         st = "status";
         ci = "commit";
@@ -137,6 +149,24 @@
       tree
       w3m
       wget
+      exfatprogs
+
+      # cal default args
+      (lib.hiPrio (
+        writeShellScriptBin "cal" ''
+          if [ "$#" -eq 0 ]; then
+            exec ${util-linux}/bin/cal --monday --three --week --color=auto
+          else
+            exec ${util-linux}/bin/cal "$@"
+          fi
+        ''
+      ))
+    ];
+
+    boot.supportedFilesystems = [
+      "btrfs"
+      "vfat"
+      "exfat"
     ];
 
   };

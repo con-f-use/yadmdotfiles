@@ -97,12 +97,12 @@
     #startx.enable = true;
     sddm.enable = false;
   };
-  services.xserver.displayManager.gdm.enable = false;
-  services.xserver.desktopManager = {
+  services.displayManager.gdm.enable = false;
+  services.desktopManager = {
     gnome.enable = false;
-    plasma5.enable = false;
-    xterm.enable = false;
+    plasma6.enable = false;
   };
+  services.xserver.desktopManager.xterm.enable = false;
   services.xserver.windowManager = {
     session = pkgs.lib.singleton {
       name = "instantwm";
@@ -188,8 +188,6 @@
     openssl
     mkpasswd
     flameshot
-    gitAndTools.git
-    git-lfs
     nix-prefetch-scripts
     nix-update
     nixpkgs-review
@@ -210,6 +208,8 @@
     ))
     black
   ];
+
+  programs.git = { enable = true; lfs.enable = true; };
 
   ## Porkbun update
   # Disable until recovered script
