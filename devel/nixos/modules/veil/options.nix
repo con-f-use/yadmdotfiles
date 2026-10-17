@@ -20,15 +20,6 @@ let
           '';
         };
 
-        # command = mkOption {
-        #   type = with types; nullOr (listOf str);
-        #   default = null;
-        #   example = [ "gopass" "show" "-o" "MySystem/Mypass" ];
-        #   description = ''
-        #     Command to run to get the secret
-        #   '';
-        # };
-
         script = mkOption {
           type = with types; nullOr lines;
           default = null;
@@ -42,12 +33,6 @@ let
             Script to run to get the secret
           '';
         };
-
-        # file = mkOption {
-        #   type = with types; nullOr str;
-        #   default = null;
-        #   example =  "/etc/secrets/pw";
-        # };
 
         user = mkOption {
           type = with types; str;

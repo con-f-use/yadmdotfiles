@@ -38,7 +38,7 @@
     services.displayManager.defaultSession = "none+instantwm";
     services.xserver = {
       enable = true;
-      videoDrivers = [ "modsetting" ]; # intel, nvidia
+      # videoDrivers = [ "modsetting" ]; # intel, nvidia
       xkb.layout = "us";
       xkb.variant = "intl";
       autorun = true;
@@ -118,14 +118,14 @@
     ];
     environment.systemPackages = with pkgs; [
       # X
-      xorg.xrandr
-      xorg.xinit
-      xorg.xsetroot
-      xorg.xkill
+      xrandr
+      xinit
+      xsetroot
+      xkill
       xclip
       fribidi
       wmctrl
-      xorg.xwininfo # wmctrl-1.07 xwininfo-1.1.4
+      xwininfo # wmctrl-1.07 xwininfo-1.1.4
       xdotool
       file-roller
       nautilus

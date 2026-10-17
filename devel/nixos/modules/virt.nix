@@ -15,16 +15,6 @@
         package = pkgs.qemu_kvm; # only emulates host arch, smaller download
         runAsRoot = true;
         swtpm.enable = true;
-        ovmf = {
-          enable = true;
-          # ToDo: Broken in current pkgs
-          # packages = [
-          #   (pkgs.OVMF.override {
-          #     secureBoot = true;
-          #     tpmSupport = true;
-          #   }).fd
-          # ];
-        };
       };
     };
 
