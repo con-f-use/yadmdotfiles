@@ -6,7 +6,7 @@
   iproute2,
   zstd,
   autoPatchelfHook,
-  version ? "5.3.6",
+  version ? "5.3.9",
 }:
 
 let
