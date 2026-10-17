@@ -2,7 +2,6 @@
 #!nix-shell --builders '' -I nixpkgs=/etc/nixpkgs -i python3 -p python3Packages.beautifulsoup4 python3Packages.docopt python3Packages.pyperclip python3Packages.html5-parser python3Packages.urllib3
 
 
-
 # coding: UTF-8, break: linux, indent: 4 spaces, lang: python/eng
 """
 Download images from given URL files ('-' for standard input) or URLs.
@@ -30,16 +29,20 @@ Examples:
 """
 
 # =======================================================================
-#ToDo count failed "x" requests
-from __future__ import division, print_function, unicode_literals
-from logging import info, debug, error, warning as warn
-import sys, os, re, logging, time
-import pyperclip as clp
-from docopt import docopt
-from bs4 import BeautifulSoup
+# ToDo count failed "x" requests
+import logging
 import multiprocessing
-
+import os
+import re
+import sys
+import time
 from html import unescape
+from logging import debug, error
+from logging import warning as warn
+
+import pyperclip as clp
+from bs4 import BeautifulSoup
+from docopt import docopt
 
 try:  # Python 2.6-2.7
     from HTMLParser import HTMLParser
@@ -78,7 +81,7 @@ def get_urllist(args):
                     line = line.strip()
                     if line.startswith("http"):
                         yield line
-        except IOError:
+        except OSError:
             typ, val, tb = sys.exc_info()
             if arg.startswith("http"):
                 yield arg
@@ -114,8 +117,9 @@ def save_image(img):  # Main worker function for image node
     try:
         imgRequest = url_request(url)
         imgData = imgRequest.read()
-    except:
-        print("x")
+    except Exception:  # not BaseException: keep Ctrl-C working
+        print("x", end="")
+        sys.stdout.flush()
         return
     # nm = os.path.basename(fldr)
     nm = "_-_".join(path_split(fldr)[-2:])
@@ -182,11 +186,15 @@ def get_splits(gs, domain, url=None):
     curr = int(curr.text) if curr else -1
     debug("curr: " + str(curr))
 
-    if not (curr == 1 or curr%5==0):
+    if not (curr == 1 or curr % 5 == 0):
         return ret
 
     pages = fpgs.find_all("span", class_="page")
-    pages = [url.rstrip("/") + "/" + x.text for x in pages if x.text.isnumeric() and int(x.text)>curr]
+    pages = [
+        url.rstrip("/") + "/" + x.text
+        for x in pages
+        if x.text.isnumeric() and int(x.text) > curr
+    ]
     debug("pages: %s", pages)
 
     return pages
@@ -240,23 +248,30 @@ def walk_urls(url, maxdepth=10, nodl=False, lvl=0):
     return imgcnt
 
 
-def worker():
+def worker(q):
     """Handle worker in the global queue."""
-    for item in iter(q.get, None):
-        save_image(item)
-        q.task_done()
-    q.task_done()
+    while True:
+        item = q.get()
+        try:
+            if item is None:
+                return
+            save_image(item)
+        except Exception:
+            error("worker failed on %r", item, exc_info=True)
+        finally:
+            # Must run for every get(), sentinel included, or q.join() hangs.
+            q.task_done()
 
 
 def queue_download(args):
     """Retrieve images from galaries."""
 
-    # Setup worker processes in Queue
+    # Setup worker processes in Queue. Pass q explicitly: under spawn/forkserver
+    # children re-import this module and would build their own empty queue.
     num_procs = int(args["--processes"])
     procs = []
     for i in range(num_procs):
-        procs.append(multiprocessing.Process(target=worker))
-        procs[-1].daemon = True
+        procs.append(multiprocessing.Process(target=worker, args=(q,), daemon=True))
         procs[-1].start()
 
     # Add to download queue
@@ -265,34 +280,23 @@ def queue_download(args):
     for gal in get_urllist(args["ARGS"]):
         totimgs += walk_urls(gal, int(args["--maxdepth"]), args["--no-download"])
 
-    # Status update
-    while q.qsize() > 0:
-        time.sleep(1)
-        progress = 100.0 * (1 - q.qsize() / totimgs)
-        print("\r{:.2f}% done".format(progress), end="")
-        sys.stdout.flush()
-    print("100% done.")
-    q.join()
+    q.join()  # All queued images processed
 
     # Cleanup
     for p in procs:
         q.put(None)  # Make sure the worker loop terminates
-    q.join()
     for p in procs:
         p.join()  # Terminate processes
-    print("\nFinished everything ({} images downloaded).".format(totimgs))
+    print(f"\nFinished everything ({totimgs} images downloaded).")
 
 
 if __name__ == "__main__":
     progname = os.path.splitext(os.path.basename(__file__))[0]
-    vstring = (
-        " v0.8.6\nWritten by confus\n" "(Sun Aug 21 23:20:09 CEST 2016) on confusion"
-    )
+    vstring = " v0.8.6\n(Sun Aug 21 23:20:09 CEST 2016)"
     args = docopt(__doc__.format(**locals()), version=progname + vstring)
     logging.basicConfig(
         level=logging.ERROR - int(args["--verbose"]) * 10,
-        format="[%(levelname)-7.7s] (%(asctime)s "
-        "%(filename)s:%(lineno)s) %(message)s",
+        format="[%(levelname)-7.7s] (%(asctime)s %(filename)s:%(lineno)s) %(message)s",
         datefmt="%y%m%d %H:%M",  # , stream=, mode=, filename=
     )
     if args["--clipboard"]:

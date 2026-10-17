@@ -7,9 +7,9 @@ export VEIL_DATA
 
 data() {
   machine=${1:?need machine name as first argument}
-  VEIL_DATA=$(nix eval "$(flakeroot)/#nixosConfigurations.$machine.config.veil" --json)
-  VEIL_TARGET_HOST=$(jq -r .mainIP <<< "$VEIL_DATA")
-  VEIL_REMOTE_USER=$(jq -r .mainUser 2>/dev/null <<< "$VEIL_DATA")
+  VEIL_DATA=$(nix eval --option warn-dirty false "./#nixosConfigurations.$machine.config.veil" --json)
+  VEIL_TARGET_HOST=$(jq --raw-output .mainIP <<< "$VEIL_DATA")
+  VEIL_REMOTE_USER=$(jq --raw-output .mainUser 2>/dev/null <<< "$VEIL_DATA")
   if [ "$VEIL_REMOTE_USER" = "null" ]; then
     VEIL_REMOTE_USER="$USER"
   fi
@@ -24,25 +24,29 @@ veil:data() {
 
 
 veil:machines() {
-  nix eval "$(flakeroot)/#nixosConfigurations" --apply 'builtins.attrNames' --json |
-    jq -r '.[]'
+  nix eval --option warn-dirty false "./#nixosConfigurations" --apply 'builtins.attrNames' --json |
+    jq --raw-output --exit-status '.[]'
 }
+
 
 veil:push() {
   to_clean=()
   trap 'rm --force --verbose "${to_clean[@]}"' ERR EXIT
   while IFS= read -r -d $'\0' d <&3; do
-    eval "$(jq -r 'to_entries | .[] | .key + "=" + (.value | @sh) + ";"' <<< "$d")"
-    # for x in name group target user script; do echo "$x: ${!x}" done
-
-    path=$(mktemp -t veil_XXXXXXX)
-    to_clean+=("$path")
+    # Get secret & host data from veil
+    eval "$(jq --raw-output --exit-status 'to_entries | .[] | .key + "=" + (.value | @sh) + ";"' <<< "$d")"
     remote="$VEIL_REMOTE_USER@$VEIL_TARGET_HOST"
 
+    # Write script executable & setup its cleanup
+    path=$(mktemp -t veil_XXXXXXX)
+    to_clean+=("$path")
     echo "$script" > "$path"
     chmod +x "$path"
+
+    # Run script and save its value
     value=$("$path" | cat -)
 
+    # Sanity check
     echo "$name: ${value:0:1}...${value: -1} (${#value} characters) --> ${remote%@null}:$target" 1>&2
     [ ${#value} -gt 4 ] || {
       echo "script: '$script'" 1>&2
@@ -50,6 +54,7 @@ veil:push() {
       exit 1
     }
 
+    # Copy secret to final destination
     if [ "$VEIL_TARGET_HOST" = "null" ]; then
       sudo mkdir -p "${target%/*}"
       echo "$value" | sudo tee "$target" >/dev/null
@@ -63,12 +68,17 @@ veil:push() {
 
 
 veil:deploy() {
+  local deploy_opts=()
+  if [ "$VEIL_REMOTE_USER" != "root" ]; then
+    deploy_opts+=(--ask-sudo-password --use-remote-sudo)
+  fi
   nixos-rebuild \
     --option 'extra-experimental-features' 'nix-command flakes' \
+    --target-host "$VEIL_REMOTE_USER@$VEIL_TARGET_HOST" \
+    "${deploy_opts[@]}" \
     "$@" \
     --builders '' \
-    --target-host "$VEIL_REMOTE_USER@$VEIL_TARGET_HOST" \
-    --flake "$(flakeroot)/#$machine"
+    --flake "./#$machine"
 }
 
 
@@ -87,14 +97,6 @@ veil:unlock() {
 got_root() { timeout 5 ssh "root@$VEIL_TARGET_HOST" whoami | grep -q root; }
 
 
-flakeroot() {
-  while [[ ! -f "${flakeroot=$PWD}/flake.nix" && -d "$flakeroot" ]]; do
-      flakeroot=${flakeroot%/*}
-  done
-  echo "$(readlink -f "$flakeroot")"
-}
-
-
 if [ "$0" = "${BASH_SOURCE[0]}" ]; then
   cmd=${1:?Need an action to perform as first argument (push, unlock)}
   shift
@@ -102,9 +104,9 @@ if [ "$0" = "${BASH_SOURCE[0]}" ]; then
     veil:"$cmd" "$@"
     exit
   fi
-  machine=${1:?Need a target machine as second argument}
+  machine=${1:?Need a target machine as second argument. Possibilities:$'\n\n'$(veil:machines)}
   shift
-  set -o errexit -o pipefail -o nounset ${DEBUG:+-o xtrace}
+  set -o errexit -o errtrace -o pipefail -o nounset ${DEBUG:+-o xtrace}
   data "$machine"
   veil:"$cmd" "$@"
 fi
